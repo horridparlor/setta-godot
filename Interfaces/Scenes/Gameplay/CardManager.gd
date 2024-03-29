@@ -1,11 +1,14 @@
 static func build_decks(gameplay : Gameplay):
-	gameplay.player_1 = build_deck(GameplayEnums.OwningPlayer.PLAYER_1, gameplay);
-	gameplay.player_2 = build_deck(GameplayEnums.OwningPlayer.PLAYER_2, gameplay);
+	gameplay.player_1 = build_deck(GameplayEnums.OwningPlayer.YOU, gameplay);
+	gameplay.player_2 = build_deck(GameplayEnums.OwningPlayer.OPPONENT, gameplay);
 	for player in gameplay.get_players():
 		player.cards_in_deck.shuffle();
 
 static func build_deck(owning_player : GameplayEnums.OwningPlayer, gameplay : Gameplay):
-	return PlayerData.new(System.Decklist.DEFAULT, owning_player, gameplay.random);
+	return PlayerData.new(
+		System.Decklist.premade(System.Decklist.Premade.DEFAULT),
+		owning_player, gameplay.random
+	);
 
 static func draw_phase(gameplay : Gameplay):
 	for player in gameplay.get_players():

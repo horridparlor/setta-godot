@@ -21,36 +21,13 @@ static func rotate_turn_player(gameplay : Gameplay) -> void:
 	var turn_player : PlayerData = gameplay.turn_player;
 	var owning_player : GameplayEnums.OwningPlayer = turn_player.owning_player;
 	gameplay.hand.turn_to_player(owning_player);
-	rotate_cards_on_field(gameplay);
-
-static func get_is_final_phase(gameplay : Gameplay) -> bool:
-	return gameplay.turn_phase == GameplayEnums.TurnPhase.FINAL_PHASE
-
-static func rotate_cards_on_field(gameplay : Gameplay) -> void:
-	var player : PlayerData = gameplay.turn_player;
-	var rotation : int = GameplayEnums.get_rotation(player.owning_player);
-	gameplay.field.reorder_cards(gameplay);
-	for card in gameplay.cards:
-		var card_data : CardData = card.card_data;
-		if card.card_data.zone == CardEnums.Zone.FIELD:
-			card.base_rotation = rotation;
-			card.is_moving = true;
-
-static func rotation_ready(gameplay : Gameplay) -> void:
-	for card_data in gameplay.turn_player.cards_in_hand:
-		instance_card(card_data, gameplay.hand, gameplay);
-	match gameplay.turn_phase:
-		GameplayEnums.TurnPhase.FINAL_PHASE:
-			gameplay.controls.toggle_final_phase(true);
 
 static func pass_turn(gameplay : Gameplay) -> void:
-	var is_final_phase : bool = get_is_final_phase(gameplay);
 	if gameplay.focused_card != null:
 		return;
 	for c in gameplay.cards:
 		var card : GameplayCard = c;
 		card.can_return_to_hand = false;
-	gameplay.turn_phase = GameplayEnums.TurnPhase.BETWEEN_PHASES;
 
 static func check_if_start_final_phase(gameplay : Gameplay) -> bool:
 	var card_was_played : bool = gameplay.turn_player.cards_played_this_turn > 0;

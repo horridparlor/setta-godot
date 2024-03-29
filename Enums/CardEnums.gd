@@ -31,11 +31,19 @@ static var subtype_to_string = {
 }
 
 enum Zone {
+	BACKROW,
 	DECK,
 	FIELD,
 	GRAVE,
 	HAND,
 	NONE,
+	REMOVED,
+}
+
+enum Face {
+	DOWN,
+	NONE,
+	UP	
 }
 
 enum Class {
@@ -62,8 +70,22 @@ static var ClassName = {
 
 enum Card {
 	HAMMER_WAIFU,
+	NONE
 }
 
 static var CardName = {
 	Card.HAMMER_WAIFU: "Hammer Waifu",
+}
+
+enum MaximumMonster {
+	HORSE_RAVEN,
+	NITROPUS,
+	NONE
+}
+
+enum MaximumPiece {
+	LEFT,
+	MIDDLE,
+	NONE,
+	RIGHT
 }

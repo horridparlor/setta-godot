@@ -1,8 +1,12 @@
 extends GameplayCard
 
-@onready var effect_text: RichTextLabel = $Stats/EffectText;
+@onready var effect_label: RichTextLabel = $Stats/EffectText;
 @onready var artwork: Sprite2D = $Frame/ArtFrame/Artwork;
 @onready var name_label : RichTextLabel = $Stats/CardName;
+@onready var level_label : Label = $Monster/Level/LevelFrame/Level;
+@onready var atk_label : Label = $Monster/Attack/AttackFrame/Atk;
+@onready var def_label : Label = $Monster/Defense/DefenseFrame/Def;
+@onready var attribute_sprite : Sprite2D = $Attribute/AttributeFrame/Attribute;
 
 const Core : GDScript = preload("res://Prefabs/Gameplay/GameplayCard/Core.gd");
 const Movement : GDScript = preload("res://Prefabs/Gameplay/GameplayCard/Movement.gd");

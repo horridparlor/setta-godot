@@ -54,15 +54,9 @@ func set_focused_zone(zone : Zone = hand) -> void:
 
 func _process(delta : float) -> void:
 	if focused_card != null:
-		match focused_card.card_data.near_zone:
-			CardEnums.Zone.FIELD:
-				field.reorder_cards(self);
-			CardEnums.Zone.HAND:
-				hand.reorder_cards(self);
+		hand.reorder_cards(self);
 
 func _on_controls_pass_turn() -> void:
-	if is_loading():
-		return;
 	GameManager.pass_turn(self);
 
 func _on_controls_update_stats() -> void:

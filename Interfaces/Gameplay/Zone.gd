@@ -49,7 +49,7 @@ func compare_x_position(cardA : GameplayCard, cardB : GameplayCard):
 
 func get_reorder_position(card : GameplayCard):
 	var direction : int = -1 if card == licked_card && \
-		card.card_data.owning_player == GameplayEnums.OwningPlayer.PLAYER_2 else 1;
+		card.card_data.owning_player == GameplayEnums.OwningPlayer.OPPONENT else 1;
 	return direction * card.position.x;
 
 func sort_card_position(height : int, turn_player : GameplayEnums.OwningPlayer):
@@ -59,7 +59,7 @@ func sort_card_position(height : int, turn_player : GameplayEnums.OwningPlayer):
 	var player_1_cards : Array = [];
 	var player_2_cards : Array = [];
 	var turn_player_margin : int = TURN_PLAYER_MARGIN \
-		if turn_player == GameplayEnums.OwningPlayer.PLAYER_2 else -TURN_PLAYER_MARGIN;
+		if turn_player == GameplayEnums.OwningPlayer.OPPONENT else -TURN_PLAYER_MARGIN;
 	get_cards_by_player(player_1_cards, player_2_cards);
 	if player_1_cards.is_empty() || player_2_cards.is_empty():
 		give_equal_positions(player_1_cards + player_2_cards, height, card_margin);
@@ -77,7 +77,7 @@ func give_equal_positions(cards_to_position : Array, height : int, card_margin :
 		x += card_margin;
 
 func get_owned_by_player_1(card : GameplayCard):
-	return GameplayEnums.OwningPlayer.PLAYER_1 == GameplayEnums.OwningPlayer.PLAYER_1;
+	return GameplayEnums.OwningPlayer.YOU == GameplayEnums.OwningPlayer.YOU;
 
 func get_cards_by_player(player_1_cards : Array, player_2_cards : Array):
 	var cards_to_position : Array = cards + ([] if licked_card == null else [licked_card]);

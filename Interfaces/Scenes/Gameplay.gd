@@ -26,8 +26,5 @@ func get_starting_player():
 func other_player():
 	return player_1 if turn_player == player_2 else player_2;
 
-func is_loading() -> bool:
-	return turn_phase == GameplayEnums.TurnPhase.BETWEEN_PHASES;
-
 func get_cards_on_field():
 	return player_1.cards_on_field + player_2.cards_on_field;

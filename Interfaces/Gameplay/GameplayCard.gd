@@ -7,6 +7,8 @@ signal update_playstate(_self);
 
 const ARTWORK_LOAD_PREFIX : String = "res://Assets/CardArt/";
 const ARTWORK_LOAD_SUBFIX : String = ".png";
+const ATTRIBUTE_SPRITE_PREFIX : String = "res://Assets/Icons/Attributes/";
+const ATTRIBUTE_SPRITE_SUBFIX : String = ".png";
 
 const MOVEMENT_SPEED : int = 10;
 const MAX_FOCUSED_SPEED : int = 3200;

@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 System="*res://Scripts/System.gd"
 CardEnums="*res://Enums/CardEnums.gd"
 GameplayEnums="*res://Enums/GameplayEnums.gd"
+EffectEnums="*res://Enums/EffectEnums.gd"
 
 [display]
 
