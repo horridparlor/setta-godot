@@ -1,0 +1,251 @@
+[gd_scene load_steps=19 format=3 uid="uid://bko6nkn2o2a03"]
+
+[ext_resource type="Script" path="res://Scripts/Gameplay/GameplayCard.gd" id="1_qv78s"]
+[ext_resource type="StyleBox" uid="uid://c46wek121dsq7" path="res://Styles/Gameplay/GameplayCard/Frame.tres" id="1_wepbm"]
+[ext_resource type="StyleBox" uid="uid://cpo1f3ojxs270" path="res://Styles/Gameplay/GameplayCard/InnerFrame.tres" id="2_vsabb"]
+[ext_resource type="StyleBox" uid="uid://lqfkll4ys1f3" path="res://Styles/Gameplay/GameplayCard/EffectFrame.tres" id="4_b6hw7"]
+[ext_resource type="StyleBox" uid="uid://sw6ogwvacywo" path="res://Styles/Gameplay/GameplayCard/ArtFrame.tres" id="4_ukgfp"]
+[ext_resource type="StyleBox" uid="uid://ca6uvva5oyf7p" path="res://Styles/Gameplay/GameplayCard/AttackFrame.tres" id="8_fpb1h"]
+[ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="8_ql110"]
+[ext_resource type="StyleBox" uid="uid://r7vudu283lxh" path="res://Styles/Gameplay/GameplayCard/DefenseFrame.tres" id="9_yxr4p"]
+[ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/GameplayCard/AttributeCut.tres" id="11_sla2s"]
+[ext_resource type="Texture2D" uid="uid://copv5i04xfeuv" path="res://Assets/Icons/Attribute.png" id="12_e0tm5"]
+[ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="12_ni4lf"]
+[ext_resource type="Texture2D" uid="uid://cq7mrwqd4igrt" path="res://Assets/Icons/Dragon.png" id="13_7eocq"]
+[ext_resource type="Texture2D" uid="uid://bw8ggdbx8bh43" path="res://Assets/Icons/LevelFrame.png" id="14_c8yup"]
+[ext_resource type="FontFile" uid="uid://3kkavvgbrq0y" path="res://Assets/FontFiles/Montserrat/Montserrat-Medium.ttf" id="15_3t5ub"]
+[ext_resource type="FontFile" uid="uid://mmieoswfypmq" path="res://Assets/FontFiles/Montserrat/Montserrat-LightItalic.ttf" id="16_ljo6m"]
+[ext_resource type="FontFile" uid="uid://blgr74hnsnmp3" path="res://Assets/FontFiles/Montserrat/Montserrat-BoldItalic.ttf" id="17_yjmg6"]
+[ext_resource type="FontFile" uid="uid://yxygawtc05lh" path="res://Assets/FontFiles/Montserrat/Montserrat-SemiBold.ttf" id="18_hv6sk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1xlx4"]
+size = Vector2(428, 592)
+
+[node name="GameplayCard" type="Node2D"]
+script = ExtResource("1_qv78s")
+
+[node name="Frame" type="Node2D" parent="."]
+
+[node name="Frame" type="Panel" parent="Frame"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -214.0
+offset_top = -296.0
+offset_right = 214.0
+offset_bottom = 296.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_wepbm")
+
+[node name="InnerFrame" type="Panel" parent="Frame"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -204.0
+offset_top = -286.0
+offset_right = 204.0
+offset_bottom = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_vsabb")
+
+[node name="ArtFrame" type="Panel" parent="Frame"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = -222.0
+offset_right = 188.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_ukgfp")
+
+[node name="Artwork" type="Sprite2D" parent="Frame/ArtFrame"]
+position = Vector2(188, 162)
+
+[node name="EffectFrame" type="Panel" parent="Frame"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = 110.0
+offset_right = 188.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_b6hw7")
+
+[node name="Monster" type="Node2D" parent="."]
+
+[node name="Level" type="Node2D" parent="Monster"]
+
+[node name="LevelFrame" type="Sprite2D" parent="Monster/Level"]
+position = Vector2(-123, 41)
+texture = ExtResource("14_c8yup")
+
+[node name="Level" type="Label" parent="Monster/Level/LevelFrame"]
+offset_left = -38.0
+offset_top = -30.0
+offset_right = 42.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_ql110")
+theme_override_font_sizes/font_size = 48
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Attack" type="Node2D" parent="Monster"]
+
+[node name="AttackFrame" type="Panel" parent="Monster/Attack"]
+offset_left = -58.0
+offset_top = 18.0
+offset_right = 46.0
+offset_bottom = 90.0
+theme_override_styles/panel = ExtResource("8_fpb1h")
+
+[node name="Atk" type="Label" parent="Monster/Attack/AttackFrame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -24.0
+offset_right = 44.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_ql110")
+theme_override_font_sizes/font_size = 32
+text = "1200"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Defense" type="Node2D" parent="Monster"]
+
+[node name="DefenseFrame" type="Panel" parent="Monster/Defense"]
+offset_left = 64.0
+offset_top = 18.0
+offset_right = 168.0
+offset_bottom = 90.0
+theme_override_styles/panel = ExtResource("9_yxr4p")
+
+[node name="Def" type="Label" parent="Monster/Defense/DefenseFrame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -24.0
+offset_right = 44.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_ql110")
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Attribute" type="Node2D" parent="."]
+
+[node name="AttributeCut2" type="Panel" parent="Attribute"]
+offset_left = 92.0
+offset_top = -146.0
+offset_right = 172.0
+offset_bottom = -50.0
+rotation = -1.5708
+theme_override_styles/panel = ExtResource("11_sla2s")
+
+[node name="AttributeCut1" type="Panel" parent="Attribute"]
+offset_left = 60.0
+offset_top = -221.0
+offset_right = 140.0
+offset_bottom = -141.0
+rotation = -0.392699
+theme_override_styles/panel = ExtResource("11_sla2s")
+
+[node name="ArtCutFix" type="ColorRect" parent="Attribute"]
+offset_left = 91.0
+offset_top = -148.0
+offset_right = 93.0
+offset_bottom = -146.0
+color = Color(0, 0, 0, 1)
+
+[node name="AttributeName" type="Label" parent="Attribute"]
+offset_left = 92.0
+offset_top = -193.0
+offset_right = 196.0
+offset_bottom = -147.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_ni4lf")
+theme_override_font_sizes/font_size = 24
+text = "Dragon"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttributeFrame" type="Sprite2D" parent="Attribute"]
+position = Vector2(146, -232)
+texture = ExtResource("12_e0tm5")
+
+[node name="Attribute" type="Sprite2D" parent="Attribute/AttributeFrame"]
+texture = ExtResource("13_7eocq")
+
+[node name="Stats" type="Node2D" parent="."]
+
+[node name="CardName" type="RichTextLabel" parent="Stats"]
+offset_left = -188.0
+offset_top = -272.0
+offset_right = 94.0
+offset_bottom = -224.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_ni4lf")
+theme_override_font_sizes/normal_font_size = 32
+text = "Name"
+
+[node name="EffectText" type="RichTextLabel" parent="Stats"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = 118.0
+offset_right = 180.0
+offset_bottom = 262.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("15_3t5ub")
+theme_override_fonts/bold_font = ExtResource("12_ni4lf")
+theme_override_fonts/italics_font = ExtResource("16_ljo6m")
+theme_override_fonts/bold_italics_font = ExtResource("17_yjmg6")
+theme_override_fonts/mono_font = ExtResource("18_hv6sk")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+bbcode_enabled = true
+text = "[i]Cost:[/i]
+[i]Effect:[/i]"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+shape = SubResource("RectangleShape2D_1xlx4")
+
+[connection signal="pressed" from="TouchScreenButton" to="." method="_on_button_pressed"]
+[connection signal="released" from="TouchScreenButton" to="." method="_on_button_released"]
