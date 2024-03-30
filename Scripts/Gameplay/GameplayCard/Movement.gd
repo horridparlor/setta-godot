@@ -2,14 +2,26 @@ static func set_origin(origin_point : Vector2, card : GameplayCard):
 	card.origin_point = origin_point;
 	card.is_moving = true;
 
-static func focused(card : GameplayCard):
-	card.is_focused = true;
+static func focus(card : GameplayCard):
+	card.focus_state = GameplayEnums.FocusState.WAITING;
+
+static func examine(card : GameplayCard, gameplay : Gameplay):
+	card.focus_state = GameplayEnums.FocusState.EXAMINE;
+	if card.card_data.zone != CardEnums.Zone.HAND:
+		gameplay.Focuser.unfocus_card(card, gameplay);
+		return;
+	card.Core.examine(card, gameplay);
+
+static func interact(card : GameplayCard, gameplay : Gameplay):
+	card.Core.close_modal(card, gameplay);
+	card.focus_state = GameplayEnums.FocusState.INTERACT;
 	card.is_moving = true;
 	card.scale_up = true;
 	System.Children.focus(card, card.zone);
 		
-static func unfocused(card : GameplayCard):
-	card.is_focused = false;
+static func unfocus(card : GameplayCard, gameplay : Gameplay):
+	card.focus_state = GameplayEnums.FocusState.NONE;
+	card.Core.close_modal(card, gameplay);
 	card.scale_down = true;
 	
 static func movement_frame(delta : float, card : GameplayCard):
@@ -21,7 +33,7 @@ static func movement_frame(delta : float, card : GameplayCard):
 	zoom(card, delta);
 	
 static func stop_moving(card : GameplayCard):
-	if !card.is_focused && System.Vectors.equal(card.position, card.origin_point)\
+	if !card.do_interact() && System.Vectors.equal(card.position, card.origin_point)\
 	and System.Scale.equal(card.rotation_degrees, card.base_rotation):
 		card.is_moving = false;
 		if card.is_despawned:
@@ -30,13 +42,13 @@ static func stop_moving(card : GameplayCard):
 static func move_towards_mouse(delta : float, card : GameplayCard):
 	var current_position = card.position;
 	var target_position = get_mouse_position(card)\
-	if card.is_focused else card.origin_point;
+	if card.do_interact() else card.origin_point;
 	if target_position == null:
 		return;
 	var distance = current_position.distance_to(target_position);
 	card.position = current_position.move_toward(target_position, \
 		delta * min(card.MOVEMENT_SPEED * distance, \
-		card.MAX_FOCUSED_SPEED if card.is_focused else card.MAX_UNFOCUSED_SPEED));
+		card.MAX_FOCUSED_SPEED if card.do_interact() else card.MAX_UNFOCUSED_SPEED));
 	rotate(card, current_position, true, delta);
 
 static func get_mouse_position(card : GameplayCard):
@@ -50,12 +62,9 @@ static func get_mouse_position(card : GameplayCard):
 
 static func make_room_for_finger(y : float, card : GameplayCard):
 	var card_data : CardData = card.card_data;
-	var direction : int = -1 \
-		if card_data.zone == CardEnums.Zone.FIELD \
-		and card.base_rotation == GameplayEnums.ROTATION_PLAYER_2 else 1;
-	return y - direction * card.SIZE.y * (card.MAX_SCALE\
-	if card.is_focused and (card.card_data.zone != CardEnums.Zone.HAND)\
-	else get_base_scale(card)).x / 2 * card.FINGER_SIZE;
+	var direction : int = 1 \
+		if card_data.owning_player == GameplayEnums.OwningPlayer.YOU else -1;
+	return y - direction * card.SIZE.y * get_base_scale(card).x / 2 * card.FINGER_SIZE;
 
 static func rotate(card : GameplayCard, original_position : Vector2, do_rotate : bool, delta : float):
 	if do_rotate || card.is_despawned:
@@ -65,7 +74,7 @@ static func rotate(card : GameplayCard, original_position : Vector2, do_rotate :
 			card.rotation_degrees = System.Scale.baseline(card.rotation_degrees, card.base_rotation, delta);
 
 static func zoom(card : GameplayCard, delta : float):
-	if card.is_focused and card.scale_up:
+	if card.do_interact() and card.scale_up:
 		card.scale = card.scale.move_toward(card.MAX_SCALE, delta * card.ZOOM_IN_SPEED);
 		if System.Vectors.equal(card.scale, card.MAX_SCALE):
 			card.scale_up = false;
@@ -77,4 +86,4 @@ static func zoom(card : GameplayCard, delta : float):
 
 static func get_base_scale(card : GameplayCard):
 	return card.BASE_SCALE_HAND \
-		if CardEnums.Zone.HAND == CardEnums.Zone.HAND else card.BASE_SCALE_FIELD;
+		if card.card_data.zone == CardEnums.Zone.HAND else card.BASE_SCALE_FIELD;

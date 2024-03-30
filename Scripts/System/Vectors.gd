@@ -13,3 +13,6 @@ static func synchronize(target : Vector2, current : Vector2) -> Vector2:
 	var direction : Vector2 = Vector2(System.Floats.direction(current.x), System.Floats.direction(current.y));
 	target = Vector2(direction.x * abs(target.x), direction.y * abs(target.y));
 	return target;
+
+static func have_distance(point_a : Vector2, point_b : Vector2, min_distance : float) -> bool:
+	return point_a.distance_to(point_b) >= min_distance;

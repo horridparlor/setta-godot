@@ -46,3 +46,10 @@ script = ExtResource("5_exgpb")
 
 [node name="Sky" type="Node2D" parent="."]
 script = ExtResource("6_ksy72")
+
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="CardFocusTimer" type="Timer" parent="Timers"]
+wait_time = 0.26
+
+[connection signal="timeout" from="Timers/CardFocusTimer" to="." method="_on_card_focus_timer_timeout"]

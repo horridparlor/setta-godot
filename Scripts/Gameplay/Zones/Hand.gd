@@ -1,4 +1,6 @@
 extends Hand
 
-func reorder_cards(gameplay : Gameplay):
-	sort_card_position(HAND_HEIGHT, GameplayEnums.OwningPlayer.YOU);
+func _ready():
+	zone = CardEnums.Zone.HAND;
+	zone_height = HAND_HEIGHT;
+	zone_width = HAND_WIDTH;

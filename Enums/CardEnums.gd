@@ -89,3 +89,15 @@ enum MaximumPiece {
 	NONE,
 	RIGHT
 }
+
+enum CardAction {
+	ACTIVATE,
+	ATTACK,
+	BATTLE,
+	DEFENSE,
+	FLIP,
+	MAXIMUM,
+	SCALE,
+	SET,
+	SUMMON,
+}

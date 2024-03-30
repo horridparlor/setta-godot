@@ -5,13 +5,29 @@ enum OwningPlayer {
 	OPPONENT
 }
 
+static func get_owning_players() -> Array:
+	return [OwningPlayer.YOU, OwningPlayer.OPPONENT]
+
 enum TurnPhase {
+	ATTACK_PHASE,
 	DRAW_PHASE,
 	MAIN_PHASE,
-	ATTACK_PHASE
+	NONE,
 }
 
 enum DecklistType {
 	PLAYER_MADE,
 	PREMADE,
+}
+
+enum FocusState {
+	EXAMINE,
+	INTERACT,
+	NONE,
+	WAITING
+}
+
+enum GlowState {
+	GLOW,
+	SHUTTER
 }

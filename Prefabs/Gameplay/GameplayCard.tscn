@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://bko6nkn2o2a03"]
+[gd_scene load_steps=19 format=3 uid="uid://bko6nkn2o2a03"]
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/GameplayCard.gd" id="1_qv78s"]
 [ext_resource type="StyleBox" uid="uid://c46wek121dsq7" path="res://Styles/Gameplay/GameplayCard/Frame.tres" id="1_wepbm"]
+[ext_resource type="Script" path="res://Interfaces/Common/GlowNode.gd" id="2_08f7v"]
 [ext_resource type="StyleBox" uid="uid://cpo1f3ojxs270" path="res://Styles/Gameplay/GameplayCard/InnerFrame.tres" id="2_vsabb"]
 [ext_resource type="StyleBox" uid="uid://lqfkll4ys1f3" path="res://Styles/Gameplay/GameplayCard/EffectFrame.tres" id="4_b6hw7"]
 [ext_resource type="StyleBox" uid="uid://sw6ogwvacywo" path="res://Styles/Gameplay/GameplayCard/ArtFrame.tres" id="4_ukgfp"]
@@ -23,9 +24,12 @@ size = Vector2(428, 592)
 [node name="GameplayCard" type="Node2D"]
 script = ExtResource("1_qv78s")
 
-[node name="Frame" type="Node2D" parent="."]
+[node name="GlowNode" type="Node2D" parent="."]
+script = ExtResource("2_08f7v")
 
-[node name="Frame" type="Panel" parent="Frame"]
+[node name="Frame" type="Node2D" parent="GlowNode"]
+
+[node name="Frame" type="Panel" parent="GlowNode/Frame"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -39,7 +43,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("1_wepbm")
 
-[node name="InnerFrame" type="Panel" parent="Frame"]
+[node name="InnerFrame" type="Panel" parent="GlowNode/Frame"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -53,7 +57,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("2_vsabb")
 
-[node name="ArtFrame" type="Panel" parent="Frame"]
+[node name="ArtFrame" type="Panel" parent="GlowNode/Frame"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -67,10 +71,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("4_ukgfp")
 
-[node name="Artwork" type="Sprite2D" parent="Frame/ArtFrame"]
+[node name="Artwork" type="Sprite2D" parent="GlowNode/Frame/ArtFrame"]
 position = Vector2(188, 162)
 
-[node name="EffectFrame" type="Panel" parent="Frame"]
+[node name="EffectFrame" type="Panel" parent="GlowNode/Frame"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -84,15 +88,15 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("4_b6hw7")
 
-[node name="Monster" type="Node2D" parent="."]
+[node name="Monster" type="Node2D" parent="GlowNode"]
 
-[node name="Level" type="Node2D" parent="Monster"]
+[node name="Level" type="Node2D" parent="GlowNode/Monster"]
 
-[node name="LevelFrame" type="Sprite2D" parent="Monster/Level"]
+[node name="LevelFrame" type="Sprite2D" parent="GlowNode/Monster/Level"]
 position = Vector2(-123, 41)
 texture = ExtResource("14_c8yup")
 
-[node name="Level" type="Label" parent="Monster/Level/LevelFrame"]
+[node name="Level" type="Label" parent="GlowNode/Monster/Level/LevelFrame"]
 offset_left = -40.0
 offset_top = -30.0
 offset_right = 40.0
@@ -104,16 +108,16 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Attack" type="Node2D" parent="Monster"]
+[node name="Attack" type="Node2D" parent="GlowNode/Monster"]
 
-[node name="AttackFrame" type="Panel" parent="Monster/Attack"]
+[node name="AttackFrame" type="Panel" parent="GlowNode/Monster/Attack"]
 offset_left = -58.0
 offset_top = 18.0
 offset_right = 46.0
 offset_bottom = 90.0
 theme_override_styles/panel = ExtResource("8_fpb1h")
 
-[node name="Atk" type="Label" parent="Monster/Attack/AttackFrame"]
+[node name="Atk" type="Label" parent="GlowNode/Monster/Attack/AttackFrame"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -132,16 +136,16 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Defense" type="Node2D" parent="Monster"]
+[node name="Defense" type="Node2D" parent="GlowNode/Monster"]
 
-[node name="DefenseFrame" type="Panel" parent="Monster/Defense"]
+[node name="DefenseFrame" type="Panel" parent="GlowNode/Monster/Defense"]
 offset_left = 64.0
 offset_top = 18.0
 offset_right = 168.0
 offset_bottom = 90.0
 theme_override_styles/panel = ExtResource("9_yxr4p")
 
-[node name="Def" type="Label" parent="Monster/Defense/DefenseFrame"]
+[node name="Def" type="Label" parent="GlowNode/Monster/Defense/DefenseFrame"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -160,9 +164,9 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Attribute" type="Node2D" parent="."]
+[node name="Attribute" type="Node2D" parent="GlowNode"]
 
-[node name="AttributeCut2" type="Panel" parent="Attribute"]
+[node name="AttributeCut2" type="Panel" parent="GlowNode/Attribute"]
 offset_left = 92.0
 offset_top = -146.0
 offset_right = 172.0
@@ -170,7 +174,7 @@ offset_bottom = -50.0
 rotation = -1.5708
 theme_override_styles/panel = ExtResource("11_sla2s")
 
-[node name="AttributeCut1" type="Panel" parent="Attribute"]
+[node name="AttributeCut1" type="Panel" parent="GlowNode/Attribute"]
 offset_left = 60.0
 offset_top = -221.0
 offset_right = 140.0
@@ -178,14 +182,14 @@ offset_bottom = -141.0
 rotation = -0.392699
 theme_override_styles/panel = ExtResource("11_sla2s")
 
-[node name="ArtCutFix" type="ColorRect" parent="Attribute"]
+[node name="ArtCutFix" type="ColorRect" parent="GlowNode/Attribute"]
 offset_left = 91.0
 offset_top = -148.0
 offset_right = 93.0
 offset_bottom = -146.0
 color = Color(0, 0, 0, 1)
 
-[node name="AttributeName" type="Label" parent="Attribute"]
+[node name="AttributeName" type="Label" parent="GlowNode/Attribute"]
 offset_left = 92.0
 offset_top = -193.0
 offset_right = 196.0
@@ -197,15 +201,15 @@ text = "Dragon"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AttributeFrame" type="Sprite2D" parent="Attribute"]
+[node name="AttributeFrame" type="Sprite2D" parent="GlowNode/Attribute"]
 position = Vector2(146, -232)
 texture = ExtResource("12_e0tm5")
 
-[node name="Attribute" type="Sprite2D" parent="Attribute/AttributeFrame"]
+[node name="Attribute" type="Sprite2D" parent="GlowNode/Attribute/AttributeFrame"]
 
-[node name="Stats" type="Node2D" parent="."]
+[node name="Stats" type="Node2D" parent="GlowNode"]
 
-[node name="CardName" type="RichTextLabel" parent="Stats"]
+[node name="CardName" type="RichTextLabel" parent="GlowNode/Stats"]
 offset_left = -188.0
 offset_top = -272.0
 offset_right = 94.0
@@ -215,7 +219,7 @@ theme_override_fonts/normal_font = ExtResource("12_ni4lf")
 theme_override_font_sizes/normal_font_size = 32
 text = "Name"
 
-[node name="EffectText" type="RichTextLabel" parent="Stats"]
+[node name="EffectText" type="RichTextLabel" parent="GlowNode/Stats"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
