@@ -5,6 +5,7 @@ var level : int;
 var atk : int;
 var def : int;
 
+var monster_position : CardEnums.MonsterPosition;
 var atk_gain : int;
 var def_gain : int;
 var atk_long_gain : int;
@@ -20,3 +21,9 @@ func _init(
 	level = level_;
 	atk = atk_;
 	def = def_;
+
+func to_attack_position() -> void:
+	monster_position = CardEnums.MonsterPosition.ATTACK;
+
+func to_defense_position() -> void:
+	monster_position = CardEnums.MonsterPosition.DEFENSE;

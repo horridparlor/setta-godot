@@ -3,6 +3,7 @@ class_name Zone
 
 const CARD_MARGIN : int = 448;
 const SPAWN_Y : int = System.Window_.y;
+const SIDEWAYS_MARGIN_MULTIPLIER : float = 1.2;
 
 var cards : Array;
 var zone : CardEnums.Zone;
@@ -67,25 +68,32 @@ func sort_card_position(height : int, max_width : int, turn_player : GameplayEnu
 	give_equal_positions(height, card_margin);
 
 func give_equal_positions(height : int, card_margin : int):
+	var card : GameplayCard;
+	var previous_cards : Array;
+	var is_sideways : bool;
 	var card_count : int = cards.size();
 	var x : int = -card_margin *\
 		(card_count / 2 if card_count % 2 == 1 else (card_count - 2) / 2 + 0.5);
 	cards.sort_custom(compare_x_position);
-	for card in cards:
+	for c in cards:
+		card = c;
 		card.Movement.set_origin(Vector2(x, height), card);
-		x += card_margin;
+		is_sideways = card.Movement.is_sideways(card);
+		if is_sideways:
+			move_previous_left(previous_cards, card_margin);
+		x += card_margin * \
+			(SIDEWAYS_MARGIN_MULTIPLIER if is_sideways else 1);
 		System.Children.focus(card, self);
+		previous_cards.append(card);
 
-func get_owned_by_player_1(card : GameplayCard):
-	return GameplayEnums.OwningPlayer.YOU == GameplayEnums.OwningPlayer.YOU;
-
-func get_cards_by_player(player_1_cards : Array, player_2_cards : Array):
-	var cards_to_position : Array = [];
-	for card in cards_to_position:
-		if get_owned_by_player_1(card):
-			player_1_cards.append(card);
-		else:
-			player_2_cards.append(card);
+func move_previous_left(cards : Array, card_margin : int) -> void:
+	var card : GameplayCard;
+	for c in cards:
+		card = c;
+		card.Movement.move_left(
+			SIDEWAYS_MARGIN_MULTIPLIER * card_margin - card_margin,
+			card
+		);
 
 func get_spawn_point() -> Vector2:
 	return Vector2(0, SPAWN_Y);

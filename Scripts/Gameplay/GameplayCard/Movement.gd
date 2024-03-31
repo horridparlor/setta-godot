@@ -1,6 +1,19 @@
-static func set_origin(origin_point : Vector2, card : GameplayCard):
+static func set_origin(origin_point : Vector2, card : GameplayCard) -> void:
 	card.origin_point = origin_point;
 	card.is_moving = true;
+	set_rotation(card);
+
+static func move_left(amount : float, card : GameplayCard) -> void:
+	card.origin_point.x -= amount;
+
+static func set_rotation(card : GameplayCard) -> void:
+	card.base_rotation = card.ROTATION_DEFENSE \
+	if !card.do_interact() and is_sideways(card) \
+	else card.ROTATION_ATTACK;
+
+static func is_sideways(card : GameplayCard) -> bool:
+	var monster_data : MonsterData = card.card_data.monster_data;
+	return monster_data and monster_data.monster_position == CardEnums.MonsterPosition.DEFENSE;
 
 static func focus(card : GameplayCard):
 	card.focus_state = GameplayEnums.FocusState.WAITING;
@@ -17,12 +30,14 @@ static func interact(card : GameplayCard, gameplay : Gameplay):
 	card.focus_state = GameplayEnums.FocusState.INTERACT;
 	card.is_moving = true;
 	card.scale_up = true;
+	set_rotation(card);
 	System.Children.focus(card, card.zone);
 		
 static func unfocus(card : GameplayCard, gameplay : Gameplay):
 	card.focus_state = GameplayEnums.FocusState.NONE;
 	card.Core.close_modal(card, gameplay);
 	card.scale_down = true;
+	set_rotation(card);
 	
 static func movement_frame(delta : float, card : GameplayCard):
 	if !card.is_moving:

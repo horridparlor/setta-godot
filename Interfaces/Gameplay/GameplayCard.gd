@@ -20,6 +20,8 @@ const MAX_UNFOCUSED_SPEED : int = 1800;
 const ROTATION_SCALE : float = 0.2;
 const PLAYLINE : int = 42;
 const SIZE : Vector2 = Vector2(428, 592);
+const ROTATION_ATTACK : int = 0;
+const ROTATION_DEFENSE : int = 90;
 
 const MAX_SCALE_VALUE : float = 1.0;
 const MAX_SCALE : Vector2 = Vector2(MAX_SCALE_VALUE, MAX_SCALE_VALUE);

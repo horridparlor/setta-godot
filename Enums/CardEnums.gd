@@ -46,6 +46,11 @@ enum Face {
 	UP	
 }
 
+enum MonsterPosition {
+	ATTACK,
+	DEFENSE
+}
+
 enum Class {
 	ABYSS,
 	DRAGON,

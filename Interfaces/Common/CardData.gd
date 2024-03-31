@@ -38,3 +38,7 @@ func _init(
 	zone = CardEnums.Zone.HAND;
 	monster_data = monster_data_;
 	
+func set_card() -> void:
+	face = CardEnums.Face.DOWN;
+	if monster_data:
+		monster_data.to_defense_position();

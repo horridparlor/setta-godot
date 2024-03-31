@@ -41,13 +41,19 @@ static func unfocus_card(card : GameplayCard, gameplay : Gameplay) -> void:
 
 static func examine_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	match card.card_data.zone:
+		CardEnums.Zone.FIELD:
+			try_activate_card(card, gameplay);
 		CardEnums.Zone.HAND:
 			try_play_card(card, gameplay);
 
 static func try_play_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	if !gameplay.game_state.can_play_card(card.card_data, GameplayEnums.OwningPlayer.YOU):
+		unfocus_card(card, gameplay);
 		return;
 	card.Movement.examine(card, gameplay);
+
+static func try_activate_card(card : GameplayCard, gameplay : Gameplay) -> void:
+	unfocus_card(card, gameplay);
 
 static func set_focused_zone(zone : Zone, gameplay : Gameplay) -> void:
 	System.Children.focus(zone, gameplay);
