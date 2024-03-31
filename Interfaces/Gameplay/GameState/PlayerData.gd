@@ -50,6 +50,9 @@ func draw_cards(amount : int) -> void:
 func count_hand() -> int:
 	return cards_in_hand.size();
 
+func count_deck() -> int:
+	return cards_in_deck.size();
+
 func commit_draw_phase() -> void:
 	draw_cards(max(DRAW_PHASE_HAND_SIZE - count_hand(), 1));
 

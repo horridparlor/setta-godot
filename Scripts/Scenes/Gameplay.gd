@@ -3,6 +3,8 @@ extends Gameplay
 @onready var hand : Hand = $Hand;
 @onready var field : Field = $Field;
 @onready var sky : Zone = $Sky;
+@onready var your_stats : PlayerStats = $Widgets/YourStats;
+@onready var opponents_stats : PlayerStats = $Widgets/OpponentsStats;
 
 @onready var card_focus_timer : Timer = $Timers/CardFocusTimer;
 
@@ -48,3 +50,7 @@ func _on_card_focus_timer_timeout() -> void:
 	if !focused_card:
 		return;
 	focused_card.Movement.interact(focused_card, self);
+
+func update_player_stats() -> void:
+	your_stats.update_stats(game_state.you);
+	opponents_stats.update_stats(game_state.opponent);

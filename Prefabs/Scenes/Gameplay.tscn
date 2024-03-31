@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bns8a2x72n00v"]
+[gd_scene load_steps=8 format=3 uid="uid://bns8a2x72n00v"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/Gameplay.gd" id="1_a3pif"]
 [ext_resource type="StyleBox" uid="uid://ccc36hf5utp4o" path="res://Styles/Gameplay/Background/BehindLayer.tres" id="2_luo7y"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/Gameplay/Zones/Hand.gd" id="4_u5pia"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/Zones/Field.gd" id="5_exgpb"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/Zones/Sky.gd" id="6_ksy72"]
+[ext_resource type="PackedScene" uid="uid://bsefox2a4aw4l" path="res://Prefabs/Gameplay/Widgets/PlayerStats.tscn" id="7_fdicw"]
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_a3pif")
@@ -51,5 +52,29 @@ script = ExtResource("6_ksy72")
 
 [node name="CardFocusTimer" type="Timer" parent="Timers"]
 wait_time = 0.26
+
+[node name="Widgets" type="Node2D" parent="."]
+
+[node name="YourStats" parent="Widgets" instance=ExtResource("7_fdicw")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -960.0
+offset_top = 340.0
+offset_right = -660.0
+offset_bottom = 540.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="OpponentsStats" parent="Widgets" instance=ExtResource("7_fdicw")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -660.0
+offset_bottom = -340.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="timeout" from="Timers/CardFocusTimer" to="." method="_on_card_focus_timer_timeout"]

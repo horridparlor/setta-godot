@@ -11,7 +11,7 @@ var zone_height : int;
 var zone_width : int;
 var zone_rotation : int;
 
-func count_cards():
+func count_cards() -> int:
 	return cards.size();
 	
 func push_card(card : GameplayCard, gameplay : Gameplay):
@@ -24,14 +24,18 @@ func push_card(card : GameplayCard, gameplay : Gameplay):
 
 func take_over(card : GameplayCard, previous_zone : Zone, gameplay : Gameplay):
 	var card_data : CardData = card.card_data;
+	move_card_data(card_data, previous_zone, gameplay);
+	previous_zone.pull_card(card, gameplay);
+	System.Children.move(card, previous_zone, self);
+
+func move_card_data(card_data : CardData, previous_zone : Zone, gameplay : Gameplay) -> void:
 	gameplay.game_state.move_card(
 		card_data,
 		ZoneData.new(previous_zone.zone, card_data.owning_player),
 		ZoneData.new(zone, card_data.owning_player)
 	);
-	previous_zone.pull_card(card, gameplay);
-	System.Children.move(card, previous_zone, self);
-	
+	gameplay.update_player_stats();
+
 func reorder_cards(gameplay : Gameplay):
 	var card : GameplayCard = gameplay.focused_card;
 	sort_card_position(zone_height, zone_width, GameplayEnums.OwningPlayer.YOU);
@@ -42,14 +46,6 @@ func pull_card(card : GameplayCard, gameplay : Gameplay):
 	cards.erase(card);
 	reorder_cards(gameplay);
 	card.zone = null;
-	
-func get_other_cards(card : GameplayCard):
-	var other_cards = cards.duplicate();
-	other_cards.erase(card);
-	return other_cards;
-
-func turn_to_player(owning_player : GameplayEnums.OwningPlayer):
-	pass;
 
 func compare_x_position(cardA : GameplayCard, cardB : GameplayCard):
 	return get_reorder_position(cardA) < get_reorder_position(cardB);

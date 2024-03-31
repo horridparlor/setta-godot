@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsefox2a4aw4l"]
+
+[ext_resource type="Script" path="res://Scripts/Gameplay/Widgets/PlayerStats.gd" id="1_n6d15"]
+[ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="1_wuxk7"]
+[ext_resource type="FontFile" uid="uid://3kkavvgbrq0y" path="res://Assets/FontFiles/Montserrat/Montserrat-Medium.ttf" id="2_1a5ki"]
+[ext_resource type="FontFile" uid="uid://yxygawtc05lh" path="res://Assets/FontFiles/Montserrat/Montserrat-SemiBold.ttf" id="3_wiy5t"]
+[ext_resource type="FontFile" uid="uid://mmieoswfypmq" path="res://Assets/FontFiles/Montserrat/Montserrat-LightItalic.ttf" id="4_qavgg"]
+
+[node name="PlayerStats" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n6d15")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -16
+
+[node name="LifeCount" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_wuxk7")
+theme_override_font_sizes/font_size = 88
+text = "0000"
+
+[node name="CardCounts" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_1a5ki")
+theme_override_fonts/bold_font = ExtResource("3_wiy5t")
+theme_override_fonts/italics_font = ExtResource("4_qavgg")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+bbcode_enabled = true
+fit_content = true
