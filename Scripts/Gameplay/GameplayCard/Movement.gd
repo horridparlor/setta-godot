@@ -13,7 +13,11 @@ static func move_left(amount : float, card : GameplayCard) -> void:
 static func set_rotation(card : GameplayCard) -> void:
 	card.base_rotation = card.ROTATION_DEFENSE \
 	if !card.do_interact() and is_sideways(card) \
-	else card.ROTATION_ATTACK;
+	else get_up_rotation(card);
+
+static func get_up_rotation(card : GameplayCard) -> float:
+	return card.zone.get_card_rotation(card.origin_point.x) \
+		if card.zone else card.ROTATION_ATTACK;
 
 static func is_sideways(card : GameplayCard) -> bool:
 	var monster_data : MonsterData = card.card_data.monster_data;

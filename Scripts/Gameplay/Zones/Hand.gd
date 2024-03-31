@@ -4,3 +4,4 @@ func _ready():
 	zone = CardEnums.Zone.HAND;
 	zone_height = HAND_HEIGHT;
 	zone_width = HAND_WIDTH;
+	zone_rotation = HAND_ROTATION;

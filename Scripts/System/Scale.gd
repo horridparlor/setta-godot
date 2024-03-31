@@ -21,8 +21,7 @@ static func round_base(base : float) -> float:
 	return 0 if base == FULL_CYCLE else base;
 
 static func get_min_distance(value : float, base : float) -> float:
-	return (-1 if value < 0 and base <= 0 else 1) \
-		* base - value;
+	return base - value;
 
 static func equal(value : float, base : float) -> bool:
 	return abs(round_base(base) - value) <= MIN_BASE;

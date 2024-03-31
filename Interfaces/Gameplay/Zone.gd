@@ -9,6 +9,7 @@ var cards : Array;
 var zone : CardEnums.Zone;
 var zone_height : int;
 var zone_width : int;
+var zone_rotation : int;
 
 func count_cards():
 	return cards.size();
@@ -68,23 +69,31 @@ func sort_card_position(height : int, max_width : int, turn_player : GameplayEnu
 	give_equal_positions(height, card_margin);
 
 func give_equal_positions(height : int, card_margin : int):
-	var card : GameplayCard;
 	var previous_cards : Array;
-	var is_sideways : bool;
 	var card_count : int = cards.size();
 	var x : int = -card_margin *\
 		(card_count / 2 if card_count % 2 == 1 else (card_count - 2) / 2 + 0.5);
 	cards.sort_custom(compare_x_position);
-	for c in cards:
-		card = c;
-		card.Movement.set_origin(Vector2(x, height), card);
-		is_sideways = card.Movement.is_sideways(card);
-		if is_sideways:
-			move_previous_left(previous_cards, card_margin);
-		x += card_margin * \
-			(SIDEWAYS_MARGIN_MULTIPLIER if is_sideways else 1);
-		System.Children.focus(card, self);
-		previous_cards.append(card);
+	for card in cards:
+		x = give_position(x, height, card_margin, card, previous_cards);
+		
+
+func give_position(
+	x : int, height : int, card_margin : int,
+	card : GameplayCard, previous_cards : Array
+) -> int:
+	var is_sideways : bool = card.Movement.is_sideways(card);
+	card.Movement.set_origin(Vector2(x, height - get_rotation_fall(x)), card);
+	if is_sideways:
+		move_previous_left(previous_cards, card_margin);
+	x += card_margin * \
+		(SIDEWAYS_MARGIN_MULTIPLIER if is_sideways else 1);
+	System.Children.focus(card, self);
+	previous_cards.append(card);
+	return x;
+
+func get_rotation_fall(x : float) -> float:
+	return -pow(get_card_rotation(x), 2);
 
 func move_previous_left(cards : Array, card_margin : int) -> void:
 	var card : GameplayCard;
@@ -97,3 +106,6 @@ func move_previous_left(cards : Array, card_margin : int) -> void:
 
 func get_spawn_point() -> Vector2:
 	return Vector2(0, SPAWN_Y);
+
+func get_card_rotation(x : float) -> float:
+	return (x / System.Window_.x) * zone_rotation;
