@@ -21,6 +21,7 @@ System="*res://Scripts/System.gd"
 CardEnums="*res://Enums/CardEnums.gd"
 GameplayEnums="*res://Enums/GameplayEnums.gd"
 EffectEnums="*res://Enums/EffectEnums.gd"
+SystemEnums="*res://Enums/SystemEnums.gd"
 
 [display]
 
@@ -30,6 +31,10 @@ window/size/mode=3
 window/size/borderless=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[editor]
+
+movie_writer/movie_file="/home/eero/Documents/Arxhives/Godot/Movie/movie.avi"
 
 [input_devices]
 

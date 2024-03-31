@@ -1,6 +1,6 @@
 extends Node
 
-static func out(random : RandomNumberGenerator):
+static func out(init_data : CardInitData):
 	var card : CardEnums.Card = CardEnums.Card.HAMMER_WAIFU;
 	var card_class : CardEnums.Class = CardEnums.Class.DRAGON;
 	var card_type : CardEnums.CardType = CardEnums.CardType.MONSTER;
@@ -30,6 +30,6 @@ static func out(random : RandomNumberGenerator):
 		card, card_class,
 		card_type, subtype, special_types,
 		effects, effect_text,
-		random,
+		init_data,
 		monster_data
 	);

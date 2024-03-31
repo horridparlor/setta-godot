@@ -1,7 +1,11 @@
 static func set_origin(origin_point : Vector2, card : GameplayCard) -> void:
 	card.origin_point = origin_point;
 	card.is_moving = true;
+	set_visual_effects(card);
+
+static func set_visual_effects(card : GameplayCard) -> void:
 	set_rotation(card);
+	card.Sleeves.set_face(card);
 
 static func move_left(amount : float, card : GameplayCard) -> void:
 	card.origin_point.x -= amount;
@@ -23,21 +27,21 @@ static func examine(card : GameplayCard, gameplay : Gameplay):
 	if card.card_data.zone != CardEnums.Zone.HAND:
 		gameplay.Focuser.unfocus_card(card, gameplay);
 		return;
-	card.Core.examine(card, gameplay);
+	card.Modals.examine(card, gameplay);
 
 static func interact(card : GameplayCard, gameplay : Gameplay):
-	card.Core.close_modal(card, gameplay);
+	card.Modals.close_modal(card, gameplay);
 	card.focus_state = GameplayEnums.FocusState.INTERACT;
 	card.is_moving = true;
 	card.scale_up = true;
-	set_rotation(card);
+	set_visual_effects(card);
 	System.Children.focus(card, card.zone);
 		
 static func unfocus(card : GameplayCard, gameplay : Gameplay):
 	card.focus_state = GameplayEnums.FocusState.NONE;
-	card.Core.close_modal(card, gameplay);
+	card.Modals.close_modal(card, gameplay);
 	card.scale_down = true;
-	set_rotation(card);
+	set_visual_effects(card);
 	
 static func movement_frame(delta : float, card : GameplayCard):
 	if !card.is_moving:

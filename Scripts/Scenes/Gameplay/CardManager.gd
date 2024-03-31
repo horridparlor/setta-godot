@@ -8,5 +8,6 @@ static func init_game_state(gameplay : Gameplay) -> void:
 static func build_player(owning_player : GameplayEnums.OwningPlayer, gameplay : Gameplay) -> PlayerData:
 	return PlayerData.new(
 		System.Decklist.premade(System.Decklist.Premade.DEFAULT),
-		owning_player, gameplay.random
+		owning_player,
+		CardInitData.new(gameplay.random, CardEnums.CardSleeve.DEFAULT)
 	);

@@ -17,13 +17,17 @@ var cards_removed : Array = [];
 var life : int = STARTING_LIFE;
 var owning_player : GameplayEnums.OwningPlayer;
 
-func _init(decklist : Decklist, player : GameplayEnums.OwningPlayer, random : RandomNumberGenerator):
+func _init(
+	decklist : Decklist,
+	player : GameplayEnums.OwningPlayer,
+	init_data : CardInitData,
+):
 	var cardlist : Dictionary = decklist.get_cardlist();
 	var card_data : CardData;
 	owning_player = player;
 	for card in cardlist:
 		for i in range(cardlist[card]):
-			card_data = System.CardData.create(card, random, owning_player);
+			card_data = System.CardData.create(card, init_data, owning_player);
 			cards_in_deck.append(card_data);
 	shuffle_deck();
 	draw_starting_hand();

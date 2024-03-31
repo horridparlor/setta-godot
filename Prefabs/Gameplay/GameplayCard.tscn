@@ -246,6 +246,8 @@ bbcode_enabled = true
 text = "[i]Cost:[/i]
 [i]Effect:[/i]"
 
+[node name="Sleeve" type="Node2D" parent="GlowNode"]
+
 [node name="TouchScreenButton" type="TouchScreenButton" parent="."]
 shape = SubResource("RectangleShape2D_1xlx4")
 

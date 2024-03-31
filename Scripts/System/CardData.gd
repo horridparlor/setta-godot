@@ -19,9 +19,9 @@ static func discard_from_hand(card : CardData, player : PlayerData, erased : Dic
 static func get_is_negated(card : CardData, gameplay : Gameplay) -> bool:
 	return card.subtype in gameplay.negated_subtypes;
 
-static func create(card : CardEnums.Card, random : RandomNumberGenerator, \
+static func create(card : CardEnums.Card, init_data : CardInitData, \
  owning_player : GameplayEnums.OwningPlayer = GameplayEnums.OwningPlayer.YOU) -> CardData:
-	var card_data : CardData = load(CARD_DATA_PREFIX + System.Card.get_card_path(card) + SUBFIX).out(random);
+	var card_data : CardData = load(CARD_DATA_PREFIX + System.Card.get_card_path(card) + SUBFIX).out(init_data);
 	card_data.owning_player = owning_player;
 	return card_data;
 

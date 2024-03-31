@@ -10,6 +10,7 @@ var monster_data : MonsterData;
 var effects : CardEffects;
 var effect_text : String;
 var instance_id : int;
+var sleeve : CardEnums.CardSleeve;
 
 var owning_player : GameplayEnums.OwningPlayer;
 var controlling_player : GameplayEnums.OwningPlayer;
@@ -24,7 +25,7 @@ func _init(
 	special_types_ : SpecialTypes,
 	effects_ : CardEffects,
 	effect_text_ : String,
-	random : RandomNumberGenerator,
+	init_data : CardInitData,
 	monster_data_ : MonsterData = null
 ):
 	card = card_;
@@ -34,8 +35,9 @@ func _init(
 	special_types = special_types_;
 	effects = effects_;
 	effect_text = effect_text_;
-	instance_id = System.Random.instance_id(random);
-	zone = CardEnums.Zone.HAND;
+	instance_id = System.Random.instance_id(init_data.random);
+	sleeve = init_data.sleeve;
+	zone = CardEnums.Zone.DECK;
 	monster_data = monster_data_;
 	
 func set_card() -> void:

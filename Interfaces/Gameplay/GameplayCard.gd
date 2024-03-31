@@ -7,12 +7,11 @@ signal update_playstate(_self);
 signal card_action(action, _self);
 
 const ARTWORK_LOAD_PREFIX : String = "res://Assets/CardArt/";
-const ARTWORK_LOAD_SUBFIX : String = ".png";
 const ATTRIBUTE_SPRITE_PREFIX : String = "res://Assets/Icons/Attributes/";
-const ATTRIBUTE_SPRITE_SUBFIX : String = ".png";
 
 const SUMMON_MODAL_PATH : String = "res://Prefabs/Gameplay/CardModals/SummonModal.tscn";
 const MODAL_OPTION_HEIGHT : int = 290;
+const SLEEVE_LOAD_PREFIX : String = "res://Prefabs/Gameplay/CardSleeves/";
 
 const MOVEMENT_SPEED : int = 10;
 const MAX_FOCUSED_SPEED : int = 3200;
@@ -50,12 +49,14 @@ var scale_down : bool = false;
 var is_despawned : bool = false;
 var debug : bool = false;
 var base_rotation : int = 0;
+var random : RandomNumberGenerator;
 
 var zone : Zone;
 var card_data : CardData;
 var focus_state : GameplayEnums.FocusState = GameplayEnums.FocusState.NONE;
 var glow_state : GameplayEnums.GlowState = GameplayEnums.GlowState.GLOW;
 var modal : Control;
+var card_sleeve : CardSleeve;
 
 func do_interact() -> bool:
 	return focus_state == GameplayEnums.FocusState.INTERACT;

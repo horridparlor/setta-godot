@@ -106,3 +106,11 @@ enum CardAction {
 	SET,
 	SUMMON,
 }
+
+enum CardSleeve {
+	DEFAULT,
+}
+
+static var CardSleevePath = {
+	CardSleeve.DEFAULT: "DefaultSleeve",
+}

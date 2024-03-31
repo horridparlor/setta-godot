@@ -8,9 +8,12 @@ extends GameplayCard
 @onready var atk_label : Label = $GlowNode/Monster/Attack/AttackFrame/Atk;
 @onready var def_label : Label = $GlowNode/Monster/Defense/DefenseFrame/Def;
 @onready var attribute_sprite : Sprite2D = $GlowNode/Attribute/AttributeFrame/Attribute;
+@onready var sleeve_layer : Node2D = $GlowNode/Sleeve;
 
 const Core : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Core.gd");
+const Modals : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Modals.gd");
 const Movement : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Movement.gd");
+const Sleeves : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Sleeves.gd");
 
 func _ready():
 	self.scale = BASE_SCALE_HAND;
