@@ -42,6 +42,7 @@ enum Zone {
 	FIELD,
 	GRAVE,
 	HAND,
+	MODAL,
 	NONE,
 	REMOVED,
 	SHOWCASE,

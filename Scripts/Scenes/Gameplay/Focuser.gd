@@ -9,6 +9,8 @@ static func is_invalid_click(card : GameplayCard, gameplay : Gameplay) -> bool:
 	if card == gameplay.focused_card:
 		gameplay.card_focus_timer.start();
 		return true;
+	if gameplay.focus_on not in [GameplayEnums.FocusOn.CARD, GameplayEnums.FocusOn.NONE]:
+		true;
 	return (gameplay.focused_card != null \
 		and (gameplay.focused_card.focus_state != GameplayEnums.FocusState.EXAMINE \
 			or card.card_data.zone != gameplay.focused_card.card_data.zone)) \
@@ -29,15 +31,23 @@ static func card_released(card : GameplayCard, gameplay : Gameplay) -> void:
 static func focus_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	gameplay.focus_point = gameplay.get_global_mouse_position();
 	gameplay.focused_card = card;
-	card.Movement.focus(card);
+	focus_on_card(card, gameplay);
 	set_focused_zone(card.zone, gameplay);
 	gameplay.card_focus_timer.start();
+
+static func focus_on_card(card : GameplayCard, gameplay : Gameplay) -> void:
+	card.Movement.focus(card);
+	gameplay.focus_on = GameplayEnums.FocusOn.CARD;
 
 static func unfocus_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	if card == gameplay.focused_card:
 		gameplay.focused_card = null;
 	card.Movement.unfocus(card, gameplay);
+	release_focus(gameplay);
+
+static func release_focus(gameplay : Gameplay) -> void:
 	set_focused_zone(gameplay.hand, gameplay);
+	gameplay.release_focus();
 
 static func examine_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	match card.card_data.zone:

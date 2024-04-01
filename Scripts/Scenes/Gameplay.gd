@@ -4,12 +4,14 @@ extends Gameplay
 @onready var field : Field = $Field;
 @onready var sky : Zone = $Sky;
 @onready var extra_deck : Zone = $Widgets/ExtraDeckStand/ExtraDeck;
+@onready var modal : Zone = $Modal;
 
 @onready var your_stats : PlayerStats = $Widgets/YourStats;
 @onready var opponents_stats : PlayerStats = $Widgets/OpponentsStats;
 @onready var extra_deck_stand : CardStand = $Widgets/ExtraDeckStand;
 
 @onready var card_focus_timer : Timer = $Timers/CardFocusTimer;
+@onready var zone_focus_timer : Timer = $Timers/ZoneFocusTimer;
 
 const CardActions : GDScript = preload("res://Scripts/Scenes/Gameplay/CardActions.gd");
 const CardManager : GDScript = preload("res://Scripts/Scenes/Gameplay/CardManager.gd");
@@ -62,3 +64,6 @@ func _on_widget_pressed(widget_type : GameplayEnums.WidgetType) -> void:
 
 func _on_widget_released(widget_type : GameplayEnums.WidgetType) -> void:
 	Widgets.widget_released(widget_type, self);
+
+func _on_zone_focus_timer_timeout() -> void:
+	pass;

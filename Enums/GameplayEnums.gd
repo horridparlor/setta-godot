@@ -33,5 +33,13 @@ enum GlowState {
 }
 
 enum WidgetType {
-	EXTRA_DECK
+	EXTRA_DECK,
+	NONE,
+}
+
+enum FocusOn {
+	ATTACK,
+	CARD,
+	MODAL,
+	NONE,
 }

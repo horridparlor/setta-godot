@@ -10,7 +10,7 @@ static func widget_released(widget_type : GameplayEnums.WidgetType, gameplay : G
 
 static func show_extra_deck(gameplay : Gameplay) -> void:
 	var cards : Array = gameplay.game_state.you.cards_in_extra_deck;
-	gameplay.GameManager.render_cards(cards, gameplay.extra_deck, gameplay);
+	gameplay.GameManager.render_cards(cards, gameplay.modal, gameplay);
 
 static func hide_extra_deck(gameplay : Gameplay) -> void:
 	var cards : Array = gameplay.game_state.you.cards_in_extra_deck;
