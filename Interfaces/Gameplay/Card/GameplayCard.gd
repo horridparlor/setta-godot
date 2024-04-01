@@ -12,6 +12,8 @@ const ATTRIBUTE_SPRITE_PREFIX : String = "res://Assets/Icons/Attributes/";
 const SUMMON_MODAL_PATH : String = "res://Prefabs/Gameplay/CardModals/SummonModal.tscn";
 const MODAL_OPTION_HEIGHT : int = 290;
 const SLEEVE_LOAD_PREFIX : String = "res://Prefabs/Gameplay/CardSleeves/";
+const MIDDLE_FRAME_PATH : String = "res://Prefabs/Gameplay/CardFragment/MiddleFrame/";
+const FIX_LAYER_PATH : String = "res://Prefabs/Gameplay/CardFragment/FixLayer/";
 
 const MOVEMENT_SPEED : int = 10;
 const MAX_FOCUSED_SPEED : int = 3200;

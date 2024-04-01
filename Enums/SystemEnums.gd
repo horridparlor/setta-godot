@@ -12,6 +12,23 @@ static var FileExtensionPath = {
 	FileExtension.SCRIPT: ".gd",
 }
 
+enum Fonts {
+	HEAVY
+}
+
+static var FontPath = {
+	Fonts.HEAVY: "res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf"	
+}
+
+static func get_font_paths(fonts : Array) -> Array:
+	var paths : Array;
+	for font in fonts:
+		paths.append(FontPath[font]);
+	return paths;
+
+static func extra_deck_text(plain_text : String) -> String:
+	return plain_text % get_font_paths([Fonts.HEAVY]);
+
 static func get_extension_path(extension : FileExtension) -> String:
 	return FileExtensionPath[extension];
 

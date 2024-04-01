@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://0vh68bhwvm13"]
+
+[ext_resource type="StyleBox" uid="uid://cpo1f3ojxs270" path="res://Styles/Gameplay/CardFragments/MiddleFrame/InnerFrame/Effect.tres" id="1_xehjj"]
+[ext_resource type="StyleBox" uid="uid://lqfkll4ys1f3" path="res://Styles/Gameplay/CardFragments/MiddleFrame/EffectFrame/Effect.tres" id="2_3aas2"]
+
+[node name="MiddleFrame" type="Node2D"]
+
+[node name="InnerFrame" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -204.0
+offset_top = -286.0
+offset_right = 204.0
+offset_bottom = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_xehjj")
+
+[node name="EffectFrame" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = 110.0
+offset_right = 188.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_3aas2")

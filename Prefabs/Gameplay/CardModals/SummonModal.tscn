@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dmlyo3hwjsf57"]
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/CardModals/SummonModal.gd" id="1_4foqc"]
-[ext_resource type="Theme" uid="uid://ct5g1bcw4s11k" path="res://Styles/Gameplay/GameplayCard/ModalStyle.tres" id="1_efwgy"]
+[ext_resource type="Theme" uid="uid://ct5g1bcw4s11k" path="res://Styles/Gameplay/CardModal/ModalStyle.tres" id="2_sydtn"]
 
 [node name="SummonModal" type="Control"]
 layout_mode = 3
@@ -32,12 +32,12 @@ theme_override_constants/separation = 96
 
 [node name="Summon" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_efwgy")
+theme = ExtResource("2_sydtn")
 text = "Summon"
 
 [node name="Set" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_efwgy")
+theme = ExtResource("2_sydtn")
 text = "Set"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Summon" to="." method="_on_summon_pressed"]

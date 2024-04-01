@@ -2,15 +2,18 @@ extends GameplayCard
 
 @onready var glow_node : GlowNode = $GlowNode;
 @onready var effect_label: RichTextLabel = $GlowNode/Stats/EffectText;
-@onready var artwork: Sprite2D = $GlowNode/Frame/ArtFrame/Artwork;
+@onready var artwork: Sprite2D = $GlowNode/InnerFrame/ArtFrame/Artwork;
 @onready var name_label : RichTextLabel = $GlowNode/Stats/CardName;
 @onready var level_label : Label = $GlowNode/Monster/Level/LevelFrame/Level;
 @onready var atk_label : Label = $GlowNode/Monster/Attack/AttackFrame/Atk;
 @onready var def_label : Label = $GlowNode/Monster/Defense/DefenseFrame/Def;
 @onready var attribute_sprite : Sprite2D = $GlowNode/Attribute/AttributeFrame/Attribute;
 @onready var sleeve_layer : Node2D = $GlowNode/Sleeve;
+@onready var middle_frame_layer : Node = $GlowNode/MiddleFrame;
+@onready var fix_layer : Node = $GlowNode/InnerFrame/FixLayer;
 
 const Core : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Core.gd");
+const Fragments : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Fragments.gd");
 const Modals : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Modals.gd");
 const Movement : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Movement.gd");
 const Sleeves : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Sleeves.gd");

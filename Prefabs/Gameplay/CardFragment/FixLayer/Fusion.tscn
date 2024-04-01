@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgrf4mpfjrms7"]
+
+[ext_resource type="StyleBox" uid="uid://df62t8gdcfg74" path="res://Styles/Gameplay/CardFragments/FixLayer/Fusion.tres" id="1_x5ux6"]
+
+[node name="FixLayerEffect" type="Node2D"]
+
+[node name="AttributeCut1" type="Panel" parent="."]
+offset_left = 60.0
+offset_top = -221.0
+offset_right = 140.0
+offset_bottom = -141.0
+rotation = -0.392699
+theme_override_styles/panel = ExtResource("1_x5ux6")
+
+[node name="AttributeCut2" type="Panel" parent="."]
+offset_left = 92.0
+offset_top = -146.0
+offset_right = 172.0
+offset_bottom = -50.0
+rotation = -1.5708
+theme_override_styles/panel = ExtResource("1_x5ux6")

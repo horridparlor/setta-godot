@@ -1,15 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://bko6nkn2o2a03"]
+[gd_scene load_steps=16 format=3 uid="uid://bko6nkn2o2a03"]
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/GameplayCard.gd" id="1_qv78s"]
-[ext_resource type="StyleBox" uid="uid://c46wek121dsq7" path="res://Styles/Gameplay/GameplayCard/Frame.tres" id="1_wepbm"]
 [ext_resource type="Script" path="res://Interfaces/Common/GlowNode.gd" id="2_08f7v"]
-[ext_resource type="StyleBox" uid="uid://cpo1f3ojxs270" path="res://Styles/Gameplay/GameplayCard/InnerFrame.tres" id="2_vsabb"]
-[ext_resource type="StyleBox" uid="uid://lqfkll4ys1f3" path="res://Styles/Gameplay/GameplayCard/EffectFrame.tres" id="4_b6hw7"]
-[ext_resource type="StyleBox" uid="uid://sw6ogwvacywo" path="res://Styles/Gameplay/GameplayCard/ArtFrame.tres" id="4_ukgfp"]
-[ext_resource type="StyleBox" uid="uid://ca6uvva5oyf7p" path="res://Styles/Gameplay/GameplayCard/AttackFrame.tres" id="8_fpb1h"]
+[ext_resource type="StyleBox" uid="uid://c46wek121dsq7" path="res://Styles/Gameplay/CardFragments/Frame.tres" id="3_3hy8b"]
+[ext_resource type="StyleBox" uid="uid://sw6ogwvacywo" path="res://Styles/Gameplay/CardFragments/ArtFrame.tres" id="6_7d0u8"]
 [ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="8_ql110"]
-[ext_resource type="StyleBox" uid="uid://r7vudu283lxh" path="res://Styles/Gameplay/GameplayCard/DefenseFrame.tres" id="9_yxr4p"]
-[ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/GameplayCard/AttributeCut.tres" id="11_sla2s"]
+[ext_resource type="StyleBox" uid="uid://ca6uvva5oyf7p" path="res://Styles/Gameplay/CardFragments/AttackFrame.tres" id="9_bgow4"]
+[ext_resource type="StyleBox" uid="uid://r7vudu283lxh" path="res://Styles/Gameplay/CardFragments/DefenseFrame.tres" id="10_r3jcv"]
 [ext_resource type="Texture2D" uid="uid://copv5i04xfeuv" path="res://Assets/Icons/Attribute.png" id="12_e0tm5"]
 [ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="12_ni4lf"]
 [ext_resource type="Texture2D" uid="uid://bw8ggdbx8bh43" path="res://Assets/Icons/LevelFrame.png" id="14_c8yup"]
@@ -27,9 +24,9 @@ script = ExtResource("1_qv78s")
 [node name="GlowNode" type="Node2D" parent="."]
 script = ExtResource("2_08f7v")
 
-[node name="Frame" type="Node2D" parent="GlowNode"]
+[node name="OuterFrame" type="Node2D" parent="GlowNode"]
 
-[node name="Frame" type="Panel" parent="GlowNode/Frame"]
+[node name="Frame" type="Panel" parent="GlowNode/OuterFrame"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -41,23 +38,13 @@ offset_right = 214.0
 offset_bottom = 296.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("1_wepbm")
+theme_override_styles/panel = ExtResource("3_3hy8b")
 
-[node name="InnerFrame" type="Panel" parent="GlowNode/Frame"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -204.0
-offset_top = -286.0
-offset_right = 204.0
-offset_bottom = 286.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("2_vsabb")
+[node name="MiddleFrame" type="Node2D" parent="GlowNode"]
 
-[node name="ArtFrame" type="Panel" parent="GlowNode/Frame"]
+[node name="InnerFrame" type="Node2D" parent="GlowNode"]
+
+[node name="ArtFrame" type="Panel" parent="GlowNode/InnerFrame"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -69,24 +56,12 @@ offset_right = 188.0
 offset_bottom = 102.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("4_ukgfp")
+theme_override_styles/panel = ExtResource("6_7d0u8")
 
-[node name="Artwork" type="Sprite2D" parent="GlowNode/Frame/ArtFrame"]
+[node name="Artwork" type="Sprite2D" parent="GlowNode/InnerFrame/ArtFrame"]
 position = Vector2(188, 162)
 
-[node name="EffectFrame" type="Panel" parent="GlowNode/Frame"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -188.0
-offset_top = 110.0
-offset_right = 188.0
-offset_bottom = 270.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("4_b6hw7")
+[node name="FixLayer" type="Node2D" parent="GlowNode/InnerFrame"]
 
 [node name="Monster" type="Node2D" parent="GlowNode"]
 
@@ -115,7 +90,7 @@ offset_left = -58.0
 offset_top = 18.0
 offset_right = 46.0
 offset_bottom = 90.0
-theme_override_styles/panel = ExtResource("8_fpb1h")
+theme_override_styles/panel = ExtResource("9_bgow4")
 
 [node name="Atk" type="Label" parent="GlowNode/Monster/Attack/AttackFrame"]
 layout_mode = 1
@@ -143,7 +118,7 @@ offset_left = 64.0
 offset_top = 18.0
 offset_right = 168.0
 offset_bottom = 90.0
-theme_override_styles/panel = ExtResource("9_yxr4p")
+theme_override_styles/panel = ExtResource("10_r3jcv")
 
 [node name="Def" type="Label" parent="GlowNode/Monster/Defense/DefenseFrame"]
 layout_mode = 1
@@ -165,22 +140,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Attribute" type="Node2D" parent="GlowNode"]
-
-[node name="AttributeCut2" type="Panel" parent="GlowNode/Attribute"]
-offset_left = 92.0
-offset_top = -146.0
-offset_right = 172.0
-offset_bottom = -50.0
-rotation = -1.5708
-theme_override_styles/panel = ExtResource("11_sla2s")
-
-[node name="AttributeCut1" type="Panel" parent="GlowNode/Attribute"]
-offset_left = 60.0
-offset_top = -221.0
-offset_right = 140.0
-offset_bottom = -141.0
-rotation = -0.392699
-theme_override_styles/panel = ExtResource("11_sla2s")
 
 [node name="ArtCutFix" type="ColorRect" parent="GlowNode/Attribute"]
 offset_left = 91.0

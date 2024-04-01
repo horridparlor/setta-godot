@@ -12,6 +12,11 @@ static var card_type_to_string = {
 	CardType.TRAP: "Trap",
 }
 
+enum DeckType {
+	MAIN,
+	EXTRA
+}
+
 enum CardSubtype {
 	EFFECT,
 	FUSION,
@@ -33,6 +38,7 @@ static var subtype_to_string = {
 enum Zone {
 	BACKROW,
 	DECK,
+	EXTRA_DECK,
 	FIELD,
 	GRAVE,
 	HAND,
@@ -75,12 +81,16 @@ static var ClassName = {
 }
 
 enum Card {
+	BROTHERS_IN_WAR,
 	HAMMER_WAIFU,
-	NONE
+	NONE,
+	STONE_BASILISK,
 }
 
 static var CardName = {
+	Card.BROTHERS_IN_WAR: "Brothers in War",
 	Card.HAMMER_WAIFU: "Hammer Waifu",
+	Card.STONE_BASILISK: "Stone Basilisk"
 }
 
 enum MaximumMonster {

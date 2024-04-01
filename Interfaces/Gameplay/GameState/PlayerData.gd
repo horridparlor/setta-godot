@@ -10,6 +10,7 @@ const PENDULUM_SIZE : int = 2;
 
 var cards_in_backrow : Array = [];
 var cards_in_deck : Array = [];
+var cards_in_extra_deck : Array = [];
 var cards_in_hand : Array = [];
 var cards_in_grave : Array = [];
 var cards_on_field : Array = [];
@@ -23,14 +24,18 @@ func _init(
 	init_data : CardInitData,
 ):
 	var cardlist : Dictionary = decklist.get_cardlist();
-	var card_data : CardData;
 	owning_player = player;
-	for card in cardlist:
-		for i in range(cardlist[card]):
-			card_data = System.CardData.create(card, init_data, owning_player);
-			cards_in_deck.append(card_data);
+	create_cards(init_data, cardlist[CardEnums.DeckType.MAIN], CardEnums.Zone.DECK);
+	create_cards(init_data, cardlist[CardEnums.DeckType.EXTRA], CardEnums.Zone.EXTRA_DECK);
 	shuffle_deck();
 	draw_starting_hand();
+
+func create_cards(init_data : CardInitData, source : Dictionary, zone : CardEnums.Zone):
+	var card_data : CardData;
+	for card in source:
+		for i in range(source[card]):
+			card_data = System.CardData.create(card, init_data, owning_player);
+			get_container(zone).append(card_data);
 
 func shuffle_deck() -> void:
 	cards_in_deck.shuffle();
@@ -73,6 +78,8 @@ func get_container(zone : CardEnums.Zone) -> Array:
 			return cards_in_backrow;
 		CardEnums.Zone.DECK:
 			return cards_in_deck;
+		CardEnums.Zone.EXTRA_DECK:
+			return cards_in_extra_deck;
 		CardEnums.Zone.HAND:
 			return cards_in_hand;
 		CardEnums.Zone.GRAVE:
