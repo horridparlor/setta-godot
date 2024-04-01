@@ -1,6 +1,7 @@
 static func start_game(gameplay : Gameplay) -> void:
 	render_hand(gameplay);
 	start_turn(gameplay);
+	gameplay.Widgets.control_showcases_glow(GameplayEnums.GlowState.GLOW, gameplay);
 
 static func start_turn(gameplay : Gameplay) -> void:
 	gameplay.game_state.draw_phase();
@@ -22,7 +23,7 @@ static func render_card(card_data : CardData, zone : Zone, gameplay : Gameplay) 
 	zone.push_card(card, gameplay);
 
 static func instance_card(card_data : CardData, zone : Zone, gameplay : Gameplay) -> GameplayCard:
-	var card : GameplayCard = System.Instance.load_child(gameplay.CARD_PATH, zone);
+	var card : GameplayCard = System.Instance.load_child(SystemEnums.get_card_path(), zone);
 	card.pressed.connect(gameplay._on_card_clicked);
 	card.released.connect(gameplay._on_card_released);
 	card.card_action.connect(gameplay._on_card_action);

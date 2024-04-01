@@ -38,6 +38,7 @@ enum Zone {
 	HAND,
 	NONE,
 	REMOVED,
+	SHOWCASE,
 }
 
 enum Face {

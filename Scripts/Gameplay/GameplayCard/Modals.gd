@@ -7,12 +7,19 @@ static func render_modal(card : GameplayCard, gameplay : Gameplay) -> void:
 	card.modal.card_action.connect(card._on_modal_action);
 	card.modal.position.y -= card.MODAL_OPTION_HEIGHT * card.modal.options;
 	shutter_other_cards(card, gameplay);
-	
+
 static func glow_other_cards(card : GameplayCard, gameplay : Gameplay) -> void:
-	change_other_cards_glow(GameplayEnums.GlowState.GLOW, card, gameplay);
+	control_others_glow(GameplayEnums.GlowState.GLOW, card, gameplay);
 
 static func shutter_other_cards(card : GameplayCard, gameplay : Gameplay) -> void:
-	change_other_cards_glow(GameplayEnums.GlowState.SHUTTER, card, gameplay);
+	control_others_glow(GameplayEnums.GlowState.SHUTTER, card, gameplay);
+
+static func control_others_glow(
+	glow_state : GameplayEnums.GlowState,
+	card : GameplayCard, gameplay : Gameplay
+) -> void:
+	change_other_cards_glow(glow_state, card, gameplay);
+	gameplay.Widgets.control_showcases_glow(glow_state, gameplay);
 
 static func change_other_cards_glow(
 	glow_state : GameplayEnums.GlowState,
@@ -23,7 +30,7 @@ static func change_other_cards_glow(
 	for instance_id in cards:
 		if instance_id != card.card_data.instance_id:
 			var other_card : GameplayCard = cards[instance_id];
-			other_card.Core.change_glow(glow_state, other_card);
+			other_card.Core.control_glow(glow_state, other_card);
 
 static func close_modal(card : GameplayCard, gameplay : Gameplay) -> void:
 	if card.modal:

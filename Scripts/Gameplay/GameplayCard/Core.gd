@@ -33,7 +33,7 @@ static func activate_animations(card : GameplayCard) -> void:
 	else:
 		card.glow_node.shutter(card.random);
 
-static func change_glow(
+static func control_glow(
 	glow_state : GameplayEnums.GlowState,
 	card : GameplayCard
 ) -> void:

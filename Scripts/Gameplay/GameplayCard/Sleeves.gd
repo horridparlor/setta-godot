@@ -13,6 +13,8 @@ static func show_sleeve(card : GameplayCard) -> void:
 	set_sleeve_opacity(card);
 
 static func set_sleeve_opacity(card : GameplayCard) -> void:
+	if card.is_showcase():
+		return;
 	card.card_sleeve.activate_animations(card.random, GlowNode.GlowType.OPACITY);
 
 static func render_sleeve(card : GameplayCard) -> void:

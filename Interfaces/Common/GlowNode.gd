@@ -98,14 +98,12 @@ func set_glow_speed(random : RandomNumberGenerator) -> void:
 		(OPACITY_MAX_SPEED if is_opacity() else MAX_SPEED)
 	);
 
-func deactivate_animations() -> void:
-	animations_active = IsActive.NOT;
-
-func toggle_animations(boolean : bool, random : RandomNumberGenerator) -> void:
-	if boolean:
-		activate_animations(random);
-	else:
-		deactivate_animations();
+func control_glow(glow_state : GameplayEnums.GlowState, random : RandomNumberGenerator) -> void:
+	match glow_state:
+		GameplayEnums.GlowState.GLOW:
+			glow(random);
+		GameplayEnums.GlowState.SHUTTER:
+			shutter(random);
 
 func shutter(random : RandomNumberGenerator) -> void:
 	if !activate_animations(random):

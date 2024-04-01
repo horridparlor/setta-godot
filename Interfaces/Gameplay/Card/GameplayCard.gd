@@ -28,6 +28,9 @@ const BASE_SCALE : float = 0.5;
 const BASE_SCALE_HAND : Vector2 = Vector2(BASE_SCALE, BASE_SCALE);
 const FIELD_SCALE : float = 0.45;
 const BASE_SCALE_FIELD : Vector2 = Vector2(FIELD_SCALE, FIELD_SCALE);
+const SHOWCASE_SCALE : float = 0.39;
+const BASE_SCALE_SHOWCASE : Vector2 = Vector2(SHOWCASE_SCALE, SHOWCASE_SCALE);
+
 const ZOOM_IN_SPEED : int = 7;
 const ZOOM_OUT_SPEED : int = 12;
 const FINGER_SIZE : float = 2.8;
@@ -60,3 +63,6 @@ var card_sleeve : CardSleeve;
 
 func do_interact() -> bool:
 	return focus_state == GameplayEnums.FocusState.INTERACT;
+
+func is_showcase() -> bool:
+	return card_data.zone == CardEnums.Zone.SHOWCASE;

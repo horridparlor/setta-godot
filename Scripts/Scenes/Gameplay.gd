@@ -3,8 +3,10 @@ extends Gameplay
 @onready var hand : Hand = $Hand;
 @onready var field : Field = $Field;
 @onready var sky : Zone = $Sky;
+
 @onready var your_stats : PlayerStats = $Widgets/YourStats;
 @onready var opponents_stats : PlayerStats = $Widgets/OpponentsStats;
+@onready var extra_deck_stand : CardStand = $Widgets/ExtraDeckStand;
 
 @onready var card_focus_timer : Timer = $Timers/CardFocusTimer;
 
@@ -12,6 +14,7 @@ const CardActions : GDScript = preload("res://Scripts/Scenes/Gameplay/CardAction
 const CardManager : GDScript = preload("res://Scripts/Scenes/Gameplay/CardManager.gd");
 const Focuser : GDScript = preload("res://Scripts/Scenes/Gameplay/Focuser.gd");
 const GameManager : GDScript = preload("res://Scripts/Scenes/Gameplay/GameManager.gd");
+const Widgets : GDScript = preload("res://Scripts/Scenes/Gameplay/Widgets.gd");
 
 func _ready() -> void:
 	init_random();

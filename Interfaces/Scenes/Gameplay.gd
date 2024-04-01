@@ -1,7 +1,6 @@
 extends Node2D
 class_name Gameplay
 
-const CARD_PATH : String = "res://Prefabs/Gameplay/GameplayCard.tscn";
 const FOCUS_FOLLOW_DISTANCE : int = 160;
 
 var cards : Dictionary;

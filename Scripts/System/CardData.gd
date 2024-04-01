@@ -27,3 +27,18 @@ static func create(card : CardEnums.Card, init_data : CardInitData, \
 
 static func get_card_name(card_data : CardData):
 	return System.Card.get_card_name(card_data.card);
+
+static func default(init_data : CardInitData) -> CardData:
+	var card : CardData = CardData.new(
+		0,
+		0,
+		0,
+		0,
+		null,
+		null,
+		"",
+		init_data,
+		null
+	);
+	card.zone = CardEnums.Zone.SHOWCASE;
+	return card;

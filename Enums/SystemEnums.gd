@@ -23,3 +23,14 @@ static func get_node_extension() -> String:
 	
 static func get_script_extension() -> String:
 	return get_extension_path(SystemEnums.FileExtension.SCRIPT);
+
+enum CommonNodes {
+	GameplayCard
+}
+
+static var CommonNodePath = {
+	CommonNodes.GameplayCard: "res://Prefabs/Gameplay/GameplayCard.tscn"
+}
+
+static func get_card_path() -> String:
+	return CommonNodePath[CommonNodes.GameplayCard];
