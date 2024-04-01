@@ -17,7 +17,7 @@ static func set_rotation(card : GameplayCard) -> void:
 
 static func get_up_rotation(card : GameplayCard) -> float:
 	return card.zone.get_card_rotation(card.origin_point.x) \
-		if card.zone else card.ROTATION_ATTACK;
+		if !card.do_interact() and card.zone else card.ROTATION_ATTACK;
 
 static func is_sideways(card : GameplayCard) -> bool:
 	var monster_data : MonsterData = card.card_data.monster_data;
