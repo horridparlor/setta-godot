@@ -1,7 +1,11 @@
 extends Node2D
 class_name CardStand
 
+signal pressed(widget_type);
+signal released(widget_type);
+
 var showcase_card : GameplayCard;
+var widget_type : GameplayEnums.WidgetType;
 
 func set_showcase_card(init_data : CardInitData) -> GameplayCard:
 	showcase_card = System.Instance.load_child(SystemEnums.get_card_path(), self);

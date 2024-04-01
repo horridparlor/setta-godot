@@ -36,7 +36,7 @@ func despawn(gameplay : Gameplay):
 	glow_node.shutter(gameplay.random);
 	gameplay.sky.push_card(self, gameplay);
 	_on_button_released();
-	Movement.unfocused(self);
+	Movement.unfocus(self, gameplay);
 	fix_despawn_point();
 
 func fix_despawn_point():

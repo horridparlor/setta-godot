@@ -3,6 +3,7 @@ extends Gameplay
 @onready var hand : Hand = $Hand;
 @onready var field : Field = $Field;
 @onready var sky : Zone = $Sky;
+@onready var extra_deck : Zone = $Widgets/ExtraDeckStand/ExtraDeck;
 
 @onready var your_stats : PlayerStats = $Widgets/YourStats;
 @onready var opponents_stats : PlayerStats = $Widgets/OpponentsStats;
@@ -14,19 +15,17 @@ const CardActions : GDScript = preload("res://Scripts/Scenes/Gameplay/CardAction
 const CardManager : GDScript = preload("res://Scripts/Scenes/Gameplay/CardManager.gd");
 const Focuser : GDScript = preload("res://Scripts/Scenes/Gameplay/Focuser.gd");
 const GameManager : GDScript = preload("res://Scripts/Scenes/Gameplay/GameManager.gd");
+const Signals : GDScript = preload("res://Scripts/Scenes/Gameplay/Signals.gd");
 const Widgets : GDScript = preload("res://Scripts/Scenes/Gameplay/Widgets.gd");
 
 func _ready() -> void:
 	init_random();
-	connect_signals();
+	Signals.connect_signals(self);
 	CardManager.init_game_state(self);
 	GameManager.start_game(self);
 
 func init_random() -> void:
 	random.randomize();
-
-func connect_signals() -> void:
-	pass;
 	
 func _on_card_clicked(card : GameplayCard) -> void:
 	Focuser.card_clicked(card, self);
@@ -57,3 +56,9 @@ func _on_card_focus_timer_timeout() -> void:
 func update_player_stats() -> void:
 	your_stats.update_stats(game_state.you);
 	opponents_stats.update_stats(game_state.opponent);
+
+func _on_widget_pressed(widget_type : GameplayEnums.WidgetType) -> void:
+	Widgets.widget_pressed(widget_type, self);
+
+func _on_widget_released(widget_type : GameplayEnums.WidgetType) -> void:
+	Widgets.widget_released(widget_type, self);

@@ -1,3 +1,5 @@
+const Actions : GDScript = preload("res://Scripts/Scenes/Gameplay/Widgets/Actions.gd");
+
 static func fill_card_stands(
 	owning_player : GameplayEnums.OwningPlayer,
 	init_data : CardInitData,
@@ -34,10 +36,28 @@ static func control_showcase_glow(
 	showcase.control_glow(glow_state, gameplay.random);
 
 static func get_showcases(gameplay : Gameplay) -> Array:
-	return [
-		gameplay.extra_deck_stand
-	];
+	var showcases : Array;
+	for widget_type in [
+		GameplayEnums.WidgetType.EXTRA_DECK
+	]:
+		showcases.append(get_card_stand(widget_type, gameplay));
+	return showcases;
 
 static func control_showcases_glow(glow_state : GameplayEnums.GlowState, gameplay : Gameplay) -> void:
 	for showcase in get_showcases(gameplay):
 		control_showcase_glow(showcase, glow_state, gameplay);
+
+static func get_card_stand(
+	widget_type : GameplayEnums.WidgetType,
+	gameplay : Gameplay
+) -> CardStand:
+	match widget_type:
+		GameplayEnums.WidgetType.EXTRA_DECK:
+			return gameplay.extra_deck_stand;
+	return null;
+
+static func widget_pressed(widget_type : GameplayEnums.WidgetType, gameplay : Gameplay) -> void:
+	Actions.widget_pressed(widget_type, gameplay);
+
+static func widget_released(widget_type : GameplayEnums.WidgetType, gameplay : Gameplay) -> void:
+	Actions.widget_released(widget_type, gameplay);

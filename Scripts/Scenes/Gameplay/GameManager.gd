@@ -33,3 +33,10 @@ static func instance_card(card_data : CardData, zone : Zone, gameplay : Gameplay
 	card.Core.initialize(card);
 	card.position = zone.get_spawn_point();
 	return card;
+
+static func delete_cards(cards : Array, zone : Zone, gameplay : Gameplay) -> void:
+	for card in cards:
+		delete_card(card, zone, gameplay);
+
+static func delete_card(card_data : CardData, zone : Zone, gameplay : Gameplay) -> void:
+	gameplay.cards[card_data.instance_id].despawn(gameplay);

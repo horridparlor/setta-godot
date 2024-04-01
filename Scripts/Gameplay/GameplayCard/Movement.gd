@@ -57,7 +57,7 @@ static func movement_frame(delta : float, card : GameplayCard):
 	
 static func stop_moving(card : GameplayCard):
 	if !card.do_interact() && System.Vectors.equal(card.position, card.origin_point)\
-	and System.Scale.equal(card.rotation_degrees, card.base_rotation):
+	and (System.Scale.equal(card.rotation_degrees, card.base_rotation) or card.is_despawned):
 		card.is_moving = false;
 		if card.is_despawned:
 			card.queue_free();

@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvp35fjh2g8j4"]
+[gd_scene load_steps=5 format=3 uid="uid://bvp35fjh2g8j4"]
 
 [ext_resource type="StyleBox" uid="uid://bc3ihrohde6yn" path="res://Styles/Gameplay/Widgets/ExtraDeckStand/Frame.tres" id="1_1a67o"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/Widgets/ExtraDeckStand.gd" id="1_gamjf"]
 [ext_resource type="Script" path="res://Interfaces/Common/GlowNode.gd" id="2_3djo5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_coinl"]
+size = Vector2(214, 296)
 
 [node name="ExtraDeckStand" type="Node2D"]
 script = ExtResource("1_gamjf")
@@ -23,3 +26,9 @@ offset_bottom = 148.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("1_1a67o")
+
+[node name="Button" type="TouchScreenButton" parent="."]
+shape = SubResource("RectangleShape2D_coinl")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="released" from="Button" to="." method="_on_button_released"]

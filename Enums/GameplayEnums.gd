@@ -31,3 +31,7 @@ enum GlowState {
 	GLOW,
 	SHUTTER
 }
+
+enum WidgetType {
+	EXTRA_DECK
+}
