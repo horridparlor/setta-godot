@@ -5,6 +5,7 @@ const CardData : GDScript = preload("res://Scripts/System/CardData.gd");
 const Children : GDScript = preload("res://Scripts/System/Children.gd");
 const Decklist : GDScript = preload("res://Scripts/System/Decklist.gd");
 const Floats : GDScript = preload("res://Scripts/System/Floats.gd");
+const Ints : GDScript = preload("res://Scripts/System/Ints.gd");
 const Instance : GDScript = preload("res://Scripts/System/Instance.gd");
 const Random : GDScript = preload("res://Scripts/System/Random.gd");
 const Scale : GDScript = preload("res://Scripts/System/Scale.gd");
