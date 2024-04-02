@@ -7,7 +7,7 @@ static func card_clicked(card : GameplayCard, gameplay : Gameplay) -> void:
 
 static func is_invalid_click(card : GameplayCard, gameplay : Gameplay) -> bool:
 	if card == gameplay.focused_card:
-		gameplay.card_focus_timer.start();
+		gameplay.Timers.start(GameplayEnums.TimerType.CardFocus, gameplay);
 		return true;
 	if gameplay.focus_on not in [GameplayEnums.FocusOn.CARD, GameplayEnums.FocusOn.NONE]:
 		true;
@@ -19,7 +19,7 @@ static func is_invalid_click(card : GameplayCard, gameplay : Gameplay) -> bool:
 static func card_released(card : GameplayCard, gameplay : Gameplay) -> void:
 	if card != gameplay.focused_card:
 		return;
-	gameplay.card_focus_timer.stop();
+	gameplay.Timers.stop(GameplayEnums.TimerType.CardFocus, gameplay);
 	if card.focus_state in [
 		GameplayEnums.FocusState.EXAMINE,
 		GameplayEnums.FocusState.INTERACT
@@ -33,7 +33,7 @@ static func focus_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	gameplay.focused_card = card;
 	focus_on_card(card, gameplay);
 	set_focused_zone(card.zone, gameplay);
-	gameplay.card_focus_timer.start();
+	gameplay.Timers.start(GameplayEnums.TimerType.CardFocus, gameplay);
 
 static func focus_on_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	card.Movement.focus(card);
@@ -43,6 +43,7 @@ static func unfocus_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	if card == gameplay.focused_card:
 		gameplay.focused_card = null;
 	card.Movement.unfocus(card, gameplay);
+	card.zone.reorder_cards(gameplay);
 	release_focus(gameplay);
 
 static func release_focus(gameplay : Gameplay) -> void:

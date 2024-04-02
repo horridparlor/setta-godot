@@ -61,3 +61,6 @@ static func widget_pressed(widget_type : GameplayEnums.WidgetType, gameplay : Ga
 
 static func widget_released(widget_type : GameplayEnums.WidgetType, gameplay : Gameplay) -> void:
 	Actions.widget_released(widget_type, gameplay);
+
+static func zone_focus_timeout(gameplay : Gameplay) -> void:
+	Actions.zone_focus_timeout(gameplay);

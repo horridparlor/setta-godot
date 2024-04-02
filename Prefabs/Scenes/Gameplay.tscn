@@ -57,7 +57,7 @@ script = ExtResource("6_ksy72")
 wait_time = 0.26
 
 [node name="ZoneFocusTimer" type="Timer" parent="Timers"]
-wait_time = 2.6
+wait_time = 0.8
 
 [node name="Widgets" type="Node2D" parent="."]
 

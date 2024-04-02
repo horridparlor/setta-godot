@@ -43,3 +43,13 @@ enum FocusOn {
 	MODAL,
 	NONE,
 }
+
+enum TimerType {
+	CardFocus,
+	ZoneFocus
+}
+
+enum ZoneType {
+	ROW,
+	SCROLL
+}

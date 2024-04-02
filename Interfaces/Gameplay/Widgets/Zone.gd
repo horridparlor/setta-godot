@@ -1,7 +1,8 @@
 extends Node2D
 class_name Zone
 
-const CARD_MARGIN : int = 448;
+const CARD_MARGIN_X : int = 448;
+const CARD_MARGIN_Y : int = 296;
 const SPAWN_Y : int = System.Window_.y;
 const SIDEWAYS_MARGIN_MULTIPLIER : float = 1.2;
 
@@ -10,6 +11,7 @@ var zone : CardEnums.Zone;
 var zone_height : int;
 var zone_width : int;
 var zone_rotation : int;
+var zone_type : GameplayEnums.ZoneType = GameplayEnums.ZoneType.ROW;
 
 func count_cards() -> int:
 	return cards.size();
@@ -59,7 +61,7 @@ func sort_card_position(height : int, max_width : int, turn_player : GameplayEnu
 		return;
 	var card_count : int = cards.size();
 	var card_margin : int = min(
-		cards[0].Movement.get_base_scale(cards[0]).x * CARD_MARGIN,
+		cards[0].Movement.get_base_scale(cards[0]).x * CARD_MARGIN_X,
 		(max_width - GameplayCard.SIZE.x / 2) / (card_count - 1)
 	);
 	give_equal_positions(height, card_margin);

@@ -18,6 +18,7 @@ const CardManager : GDScript = preload("res://Scripts/Scenes/Gameplay/CardManage
 const Focuser : GDScript = preload("res://Scripts/Scenes/Gameplay/Focuser.gd");
 const GameManager : GDScript = preload("res://Scripts/Scenes/Gameplay/GameManager.gd");
 const Signals : GDScript = preload("res://Scripts/Scenes/Gameplay/Signals.gd");
+const Timers : GDScript = preload("res://Scripts/Scenes/Gameplay/Timers.gd");
 const Widgets : GDScript = preload("res://Scripts/Scenes/Gameplay/Widgets.gd");
 
 func _ready() -> void:
@@ -45,9 +46,13 @@ func _process(delta : float):
 		if System.Vectors.have_distance(get_global_mouse_position(), focus_point, FOCUS_FOLLOW_DISTANCE):
 			_on_card_focus_timer_timeout();
 		return;
-	match focused_card.zone:
-		hand:
-			hand.reorder_cards(self);
+	match focus_on:
+		GameplayEnums.FocusOn.CARD:
+			match focused_card.zone:
+				hand:
+					hand.reorder_cards(self);
+				modal:
+					modal.reorder_cards(self);
 
 func _on_card_focus_timer_timeout() -> void:
 	card_focus_timer.stop();
@@ -66,4 +71,4 @@ func _on_widget_released(widget_type : GameplayEnums.WidgetType) -> void:
 	Widgets.widget_released(widget_type, self);
 
 func _on_zone_focus_timer_timeout() -> void:
-	pass;
+	Widgets.zone_focus_timeout(self);

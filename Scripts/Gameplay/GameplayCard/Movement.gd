@@ -108,5 +108,9 @@ static func zoom(card : GameplayCard, delta : float):
 			card.scale_down = false;
 
 static func get_base_scale(card : GameplayCard):
-	return card.BASE_SCALE_HAND \
-		if card.card_data.zone == CardEnums.Zone.HAND else card.BASE_SCALE_FIELD;
+	match card.card_data.zone:
+		CardEnums.Zone.FIELD:
+			return card.BASE_SCALE_FIELD;
+		CardEnums.Zone.HAND:
+			return card.BASE_SCALE_HAND;
+	return card.BASE_SCALE_HAND;
