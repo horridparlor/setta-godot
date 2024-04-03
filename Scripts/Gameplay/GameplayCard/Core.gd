@@ -1,8 +1,15 @@
 extends Node
 
 static func initialize(card : GameplayCard) -> void:
-	card.Fragments.update_visuals(card);
+	update_visuals(card);
 	activate_animations(card);
+
+static func update_visuals(card : GameplayCard) -> void:
+	var card_data : CardData = card.card_data;
+	card.Fragments.update_artwork(card);
+	card.name_label.text = System.CardData.get_card_name(card_data);
+	card.effect_label.text = card_data.effect_text;
+	card.Fragments.update_monster_visuals(card);
 
 static func activate_animations(card : GameplayCard) -> void:
 	if card.glow_state == GameplayEnums.GlowState.GLOW:

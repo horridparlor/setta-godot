@@ -1,10 +1,3 @@
-static func update_visuals(card : GameplayCard) -> void:
-	var card_data : CardData = card.card_data;
-	update_artwork(card);
-	card.name_label.text = System.CardData.get_card_name(card_data);
-	card.effect_label.text = card_data.effect_text;
-	update_monster_visuals(card);
-
 static func update_artwork(card : GameplayCard):
 	var subfix : String = SystemEnums.get_image_extension();
 	card.artwork.texture = load(card.ARTWORK_LOAD_PREFIX + \

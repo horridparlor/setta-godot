@@ -19,6 +19,9 @@ func no_focus() -> bool:
 	return focus_on == GameplayEnums.FocusOn.NONE;
 
 func release_focus() -> void:
+	if focus_on == GameplayEnums.FocusOn.CARD and active_widget != GameplayEnums.WidgetType.NONE:
+		focus_on = GameplayEnums.FocusOn.MODAL;
+		return;
 	focus_on = GameplayEnums.FocusOn.NONE;
 	active_widget = GameplayEnums.WidgetType.NONE;
 	focus_state = GameplayEnums.FocusState.NONE;

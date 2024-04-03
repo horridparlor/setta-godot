@@ -41,7 +41,6 @@ func despawn(gameplay : Gameplay):
 
 func fix_despawn_point():
 	origin_point = DESPAWN_POINT;
-	origin_point.y = origin_point.y if position.y >= 0 else -origin_point.y;
 	if abs(position.x) <= DESPAWN_ORIGO_RANGE:
 		origin_point.x = 0;
 	else:

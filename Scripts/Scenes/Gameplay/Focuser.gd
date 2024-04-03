@@ -9,7 +9,11 @@ static func is_invalid_click(card : GameplayCard, gameplay : Gameplay) -> bool:
 	if card == gameplay.focused_card:
 		gameplay.Timers.start(GameplayEnums.TimerType.CardFocus, gameplay);
 		return true;
-	if gameplay.focus_on not in [GameplayEnums.FocusOn.CARD, GameplayEnums.FocusOn.NONE]:
+	if gameplay.focus_on not in [
+		GameplayEnums.FocusOn.CARD,
+		GameplayEnums.FocusOn.NONE,
+		GameplayEnums.FocusOn.MODAL
+	]:
 		true;
 	return (gameplay.focused_card != null \
 		and (gameplay.focused_card.focus_state != GameplayEnums.FocusState.EXAMINE \
@@ -22,7 +26,7 @@ static func card_released(card : GameplayCard, gameplay : Gameplay) -> void:
 	gameplay.Timers.stop(GameplayEnums.TimerType.CardFocus, gameplay);
 	if card.focus_state in [
 		GameplayEnums.FocusState.EXAMINE,
-		GameplayEnums.FocusState.INTERACT
+		GameplayEnums.FocusState.INTERACT,
 	]:
 		unfocus_card(card, gameplay);
 	else:
@@ -47,7 +51,9 @@ static func unfocus_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	release_focus(gameplay);
 
 static func release_focus(gameplay : Gameplay) -> void:
-	set_focused_zone(gameplay.hand, gameplay);
+	set_focused_zone(
+		gameplay.modal if gameplay.active_widget != GameplayEnums.WidgetType.NONE 
+			else gameplay.hand, gameplay);
 	gameplay.release_focus();
 
 static func examine_card(card : GameplayCard, gameplay : Gameplay) -> void:
@@ -56,6 +62,7 @@ static func examine_card(card : GameplayCard, gameplay : Gameplay) -> void:
 			try_activate_card(card, gameplay);
 		CardEnums.Zone.HAND:
 			try_play_card(card, gameplay);
+	try_activate_card(card, gameplay);
 
 static func try_play_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	if !gameplay.game_state.can_play_card(card.card_data, GameplayEnums.OwningPlayer.YOU):
