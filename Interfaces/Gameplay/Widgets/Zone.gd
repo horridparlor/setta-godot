@@ -15,6 +15,7 @@ var zone_height : int;
 var zone_width : int;
 var zone_rotation : int;
 var zone_type : GameplayEnums.ZoneType = GameplayEnums.ZoneType.ROW;
+var random : RandomNumberGenerator;
 
 func count_cards() -> int:
 	return cards.size();
@@ -43,6 +44,8 @@ func move_card_data(card_data : CardData, previous_zone : Zone, gameplay : Gamep
 
 func reorder_cards(gameplay : Gameplay):
 	var card : GameplayCard = gameplay.focused_card;
+	if random == null:
+		random = gameplay.random;
 	sort_card_position(GameplayEnums.OwningPlayer.YOU);
 	if card and card.focus_state == GameplayEnums.FocusState.INTERACT:
 		System.Children.focus(card, self);
@@ -60,7 +63,7 @@ func compare_scroll_position(cardA : GameplayCard, cardB : GameplayCard) -> bool
 
 func get_scroll_distance(card : GameplayCard) -> float:
 	var position : Vector2 = card.position;
-	return position.distance_to(System.Vectors.default());
+	return position.distance_to(System.Random.item(cards, random).position);
 
 func get_position_to_scroll_origo(card : GameplayCard) -> Vector2:
 	return card.position.direction_to(SCROLL_ORIGO);
