@@ -5,7 +5,7 @@ const CARD_MARGIN : int = 20;
 const CARD_MARGIN_VECTOR : Vector2 = GameplayCard.SIZE + Vector2(CARD_MARGIN, CARD_MARGIN);
 const SPAWN_Y : int = System.Window_.y;
 const SIDEWAYS_MARGIN_MULTIPLIER : float = 1.2;
-const CARDS_PER_SCROLL_ROW : int = 6;
+const CARDS_PER_SCROLL_ROW : int = 5;
 const SCROLL_ROW_MARGINAL : float = (CARDS_PER_SCROLL_ROW - 1) * CARD_MARGIN_VECTOR.x / 2;
 const SCROLL_ORIGO : Vector2 = Vector2(-SCROLL_ROW_MARGINAL, -CARD_MARGIN_VECTOR.y);
 

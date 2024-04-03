@@ -3,7 +3,6 @@ static func examine(card : GameplayCard, gameplay : Gameplay) -> void:
 	render_modal(card, gameplay);
 
 static func render_modal(card : GameplayCard, gameplay : Gameplay) -> void:
-	print(555);
 	card.modal = System.Instance.load_child(card.SUMMON_MODAL_PATH, card);
 	card.modal.card_action.connect(card._on_modal_action);
 	card.modal.position.y -= card.MODAL_OPTION_HEIGHT * card.modal.options;
@@ -34,7 +33,6 @@ static func change_other_cards_glow(
 			other_card.Core.control_glow(glow_state, other_card);
 
 static func close_modal(card : GameplayCard, gameplay : Gameplay) -> void:
-	print(666);
 	if card.modal:
 		card.modal.queue_free();
 		card.modal = null;

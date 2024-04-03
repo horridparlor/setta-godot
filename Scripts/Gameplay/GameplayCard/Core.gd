@@ -23,3 +23,12 @@ static func control_glow(
 ) -> void:
 	card.glow_state = glow_state;
 	activate_animations(card);
+
+static func set_initial_scale(zone : CardEnums.Zone, card : GameplayCard):
+	card.scale = get_initial_scale(zone, card);
+
+static func get_initial_scale(zone : CardEnums.Zone, card : GameplayCard) -> Vector2:
+	match zone:
+		CardEnums.Zone.MODAL:
+			return card.BASE_SCALE_MODAL;
+	return card.BASE_SCALE_HAND;

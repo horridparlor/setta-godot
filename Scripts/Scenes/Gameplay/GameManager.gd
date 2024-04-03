@@ -21,6 +21,7 @@ static func render_card(card_data : CardData, zone : Zone, gameplay : Gameplay) 
 		if cards.has(instance_id) \
 		else instance_card(card_data, zone, gameplay);
 	zone.push_card(card, gameplay);
+	card.Core.set_initial_scale(zone.zone, card);
 
 static func instance_card(card_data : CardData, zone : Zone, gameplay : Gameplay) -> GameplayCard:
 	var card : GameplayCard = System.Instance.load_child(SystemEnums.get_card_path(), zone);

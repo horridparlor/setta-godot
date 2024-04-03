@@ -46,10 +46,12 @@ static func focus_on_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	gameplay.focus_on = GameplayEnums.FocusOn.CARD;
 
 static func unfocus_card(card : GameplayCard, gameplay : Gameplay) -> void:
+	var was_interacted : bool = card.do_interact();
 	if card == gameplay.focused_card:
 		gameplay.focused_card = null;
 	card.Movement.unfocus(card, gameplay);
-	card.zone.reorder_cards(gameplay);
+	if was_interacted:
+		card.zone.reorder_cards(gameplay);
 	release_focus(gameplay);
 
 static func release_focus(gameplay : Gameplay) -> void:
@@ -80,4 +82,5 @@ static func try_activate_card(card : GameplayCard, gameplay : Gameplay) -> void:
 
 static func set_focused_zone(zone : Zone, gameplay : Gameplay) -> void:
 	System.Children.focus(zone, gameplay);
-	zone.reorder_cards(gameplay);
+	if gameplay.active_widget == GameplayEnums.WidgetType.NONE:
+		zone.reorder_cards(gameplay);

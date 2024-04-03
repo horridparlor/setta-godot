@@ -111,9 +111,11 @@ static func zoom(card : GameplayCard, delta : float):
 			card.scale_down = false;
 
 static func get_base_scale(card : GameplayCard):
-	match card.card_data.zone:
+	match card.zone.zone:
 		CardEnums.Zone.FIELD:
 			return card.BASE_SCALE_FIELD;
 		CardEnums.Zone.HAND:
 			return card.BASE_SCALE_HAND;
+		CardEnums.Zone.MODAL:
+			return card.BASE_SCALE_MODAL;
 	return card.BASE_SCALE_HAND;

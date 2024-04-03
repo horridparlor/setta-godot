@@ -32,6 +32,8 @@ const FIELD_SCALE : float = 0.45;
 const BASE_SCALE_FIELD : Vector2 = Vector2(FIELD_SCALE, FIELD_SCALE);
 const SHOWCASE_SCALE : float = 0.39;
 const BASE_SCALE_SHOWCASE : Vector2 = Vector2(SHOWCASE_SCALE, SHOWCASE_SCALE);
+const MODAL_SCALE : float = 0.56;
+const BASE_SCALE_MODAL : Vector2 = Vector2(MODAL_SCALE, MODAL_SCALE);
 
 const ZOOM_IN_SPEED : int = 7;
 const ZOOM_OUT_SPEED : int = 12;
