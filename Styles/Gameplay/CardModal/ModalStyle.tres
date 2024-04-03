@@ -1,6 +1,10 @@
 [gd_resource type="Theme" load_steps=7 format=3 uid="uid://ct5g1bcw4s11k"]
 
 [ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="1_dt3yj"]
+[ext_resource type="StyleBox" uid="uid://ctbqq6ce8fkmd" path="res://Styles/Gameplay/CardModal/ButtonFocusFrame.tres" id="2_b310e"]
+[ext_resource type="StyleBox" uid="uid://cgr1i33ba63lj" path="res://Styles/Gameplay/CardModal/ButtonHoverFrame.tres" id="3_3r1ii"]
+[ext_resource type="StyleBox" uid="uid://d1yipox7l3sud" path="res://Styles/Gameplay/CardModal/ButtonNormalFrame.tres" id="4_axm17"]
+[ext_resource type="StyleBox" uid="uid://d0x0dfpnfp4m" path="res://Styles/Gameplay/CardModal/ButtonPressedFrame.tres" id="5_h1kji"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q8diy"]
 content_margin_left = 4.0
@@ -8,67 +12,6 @@ content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
 bg_color = Color(0.1, 0.1, 0.1, 0.3)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oy04y"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 1, 1, 0.75)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d1wbf"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.225, 0.225, 0.225, 0.6)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hw0cm"]
-bg_color = Color(0.0431373, 0.160784, 0.4, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.00392157, 0.0156863, 0.0745098, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-expand_margin_left = 4.0
-expand_margin_top = 4.0
-expand_margin_right = 4.0
-expand_margin_bottom = 4.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ck3u"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0, 0, 0, 0.6)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -92,10 +35,10 @@ Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
 Button/constants/h_separation = 2
 Button/constants/icon_max_width = 0
 Button/constants/outline_size = 0
-Button/font_sizes/font_size = 32
+Button/font_sizes/font_size = 128
 Button/fonts/font = ExtResource("1_dt3yj")
 Button/styles/disabled = SubResource("StyleBoxFlat_q8diy")
-Button/styles/focus = SubResource("StyleBoxFlat_oy04y")
-Button/styles/hover = SubResource("StyleBoxFlat_d1wbf")
-Button/styles/normal = SubResource("StyleBoxFlat_hw0cm")
-Button/styles/pressed = SubResource("StyleBoxFlat_8ck3u")
+Button/styles/focus = ExtResource("2_b310e")
+Button/styles/hover = ExtResource("3_3r1ii")
+Button/styles/normal = ExtResource("4_axm17")
+Button/styles/pressed = ExtResource("5_h1kji")

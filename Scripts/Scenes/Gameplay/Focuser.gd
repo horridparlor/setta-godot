@@ -62,9 +62,12 @@ static func examine_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	match card.card_data.zone:
 		CardEnums.Zone.FIELD:
 			try_activate_card(card, gameplay);
+			return;
 		CardEnums.Zone.HAND:
 			try_play_card(card, gameplay);
+			return;
 	try_activate_card(card, gameplay);
+	
 
 static func try_play_card(card : GameplayCard, gameplay : Gameplay) -> void:
 	if !gameplay.game_state.can_play_card(card.card_data, GameplayEnums.OwningPlayer.YOU):
