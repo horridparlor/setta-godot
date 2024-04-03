@@ -18,6 +18,8 @@ static func open_widget(widget_type : GameplayEnums.WidgetType, gameplay : Gamep
 	gameplay.active_widget = widget_type;
 	gameplay.focus_state = GameplayEnums.FocusState.WAITING;
 	gameplay.Timers.start(GameplayEnums.TimerType.ZoneFocus, gameplay);
+	control_other_zones_glow(GameplayEnums.GlowState.SHUTTER, gameplay.modal, gameplay);
+	System.Children.focus(gameplay.modal, gameplay);
 
 static func widget_released(widget_type : GameplayEnums.WidgetType, gameplay : Gameplay) -> void:
 	var do_wait : bool = gameplay.do_wait();
@@ -34,6 +36,7 @@ static func close_widget(widget_type : GameplayEnums.WidgetType, gameplay : Game
 	match widget_type:
 		GameplayEnums.WidgetType.EXTRA_DECK:
 			hide_extra_deck(gameplay);
+	control_other_zones_glow(GameplayEnums.GlowState.GLOW, gameplay.modal, gameplay);
 	gameplay.release_focus();
 
 static func show_extra_deck(gameplay : Gameplay) -> void:
@@ -49,3 +52,13 @@ static func hide_extra_deck(gameplay : Gameplay) -> void:
 static func zone_focus_timeout(gameplay : Gameplay) -> void:
 	gameplay.Timers.stop(GameplayEnums.TimerType.ZoneFocus, gameplay);
 	gameplay.focus_state = GameplayEnums.FocusState.EXAMINE;
+
+static func control_other_zones_glow(
+	glow_state : GameplayEnums.GlowState, zone : Zone, gameplay : Gameplay
+) -> void:
+	var card : GameplayCard;
+	for instance_id in gameplay.cards:
+		card = gameplay.cards[instance_id];
+		if card.zone == zone or card.card_data.zone == CardEnums.Zone.SHOWCASE:
+			continue;
+		card.Core.control_glow(glow_state, card);

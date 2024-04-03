@@ -2,6 +2,8 @@ extends Node2D
 class_name Gameplay
 
 const FOCUS_FOLLOW_DISTANCE : int = 160;
+const ROTATION_POOL : int = 100;
+const POOL_MULTIPLIER : int = 9;
 
 var cards : Dictionary;
 var focused_card : GameplayCard;
@@ -11,6 +13,7 @@ var focus_point : Vector2;
 var focus_on : GameplayEnums.FocusOn = GameplayEnums.FocusOn.NONE;
 var active_widget : GameplayEnums.WidgetType = GameplayEnums.WidgetType.NONE;
 var focus_state : GameplayEnums.FocusState = GameplayEnums.FocusState.NONE;
+var current_pool : float = ROTATION_POOL;
 
 func update_player_stats() -> void:
 	pass;

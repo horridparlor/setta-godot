@@ -59,8 +59,8 @@ func compare_scroll_position(cardA : GameplayCard, cardB : GameplayCard) -> bool
 	return get_scroll_distance(cardA) < get_scroll_distance(cardB);
 
 func get_scroll_distance(card : GameplayCard) -> float:
-	var position : Vector2 = System.Vectors.default();
-	return position.distance_to(SCROLL_ORIGO);
+	var position : Vector2 = card.position;
+	return position.distance_to(System.Vectors.default());
 
 func get_position_to_scroll_origo(card : GameplayCard) -> Vector2:
 	return card.position.direction_to(SCROLL_ORIGO);

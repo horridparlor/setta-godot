@@ -38,6 +38,7 @@ func despawn(gameplay : Gameplay):
 	_on_button_released();
 	Movement.unfocus(self, gameplay);
 	fix_despawn_point();
+	Core.control_glow(GameplayEnums.GlowState.SHUTTER, self);
 
 func fix_despawn_point():
 	origin_point = DESPAWN_POINT;

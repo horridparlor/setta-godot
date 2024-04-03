@@ -15,6 +15,8 @@ static func is_invalid_click(card : GameplayCard, gameplay : Gameplay) -> bool:
 		GameplayEnums.FocusOn.MODAL
 	]:
 		true;
+	if gameplay.focus_on == GameplayEnums.FocusOn.MODAL and card.zone != gameplay.modal:
+		return true;
 	return (gameplay.focused_card != null \
 		and (gameplay.focused_card.focus_state != GameplayEnums.FocusState.EXAMINE \
 			or card.card_data.zone != gameplay.focused_card.card_data.zone)) \

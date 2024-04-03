@@ -35,6 +35,7 @@ static func change_other_cards_glow(
 static func close_modal(card : GameplayCard, gameplay : Gameplay) -> void:
 	if card.modal:
 		card.modal.queue_free();
-	card.modal = null;
+		card.modal = null;
 	card.Core.activate_animations(card);
-	glow_other_cards(card, gameplay);
+	if gameplay.active_widget == GameplayEnums.WidgetType.NONE:
+		glow_other_cards(card, gameplay);
