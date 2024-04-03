@@ -34,7 +34,7 @@ static func examine(card : GameplayCard, gameplay : Gameplay):
 	card.Modals.examine(card, gameplay);
 
 static func interact(card : GameplayCard, gameplay : Gameplay):
-	card.Modals.close_modal(card, gameplay);
+	card.Modals.interact(card, gameplay);
 	card.focus_state = GameplayEnums.FocusState.INTERACT;
 	card.is_moving = true;
 	card.scale_up = true;

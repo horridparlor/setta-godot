@@ -84,7 +84,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="ExtraDeckStand" parent="Widgets" instance=ExtResource("8_e3jog")]
-position = Vector2(-800, 340)
+position = Vector2(-810, 340)
 rotation = 0.15708
 
 [node name="ExtraDeck" type="Node2D" parent="Widgets/ExtraDeckStand"]

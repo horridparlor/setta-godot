@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Interfaces/Common/GlowNode.gd" id="2_3djo5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coinl"]
-size = Vector2(214, 296)
+size = Vector2(184, 296)
 
 [node name="ExtraDeckStand" type="Node2D"]
 script = ExtResource("1_gamjf")
@@ -28,6 +28,7 @@ grow_vertical = 2
 theme_override_styles/panel = ExtResource("1_1a67o")
 
 [node name="Button" type="TouchScreenButton" parent="."]
+position = Vector2(-15, 0)
 shape = SubResource("RectangleShape2D_coinl")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

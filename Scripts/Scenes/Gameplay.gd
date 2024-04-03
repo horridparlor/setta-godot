@@ -51,13 +51,6 @@ func _process(delta : float):
 			match focused_card.zone:
 				hand:
 					hand.reorder_cards(self);
-				modal:
-					if focused_card.focus_state != GameplayEnums.FocusState.INTERACT:
-						return;
-					current_pool -= POOL_MULTIPLIER * delta * abs(focused_card.rotation_degrees);
-					if current_pool <= 0:
-						modal.reorder_cards(self);
-						current_pool = ROTATION_POOL;
 
 func _on_card_focus_timer_timeout() -> void:
 	card_focus_timer.stop();

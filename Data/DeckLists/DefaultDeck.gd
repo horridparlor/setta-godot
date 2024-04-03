@@ -7,7 +7,7 @@ static func out():
 			CardEnums.Card.STONE_BASILISK: 20,
 		},
 		CardEnums.DeckType.EXTRA: {
-			CardEnums.Card.BROTHERS_IN_WAR: 15,
+			CardEnums.Card.BROTHERS_IN_WAR: 18,
 		}
 	};
 	
