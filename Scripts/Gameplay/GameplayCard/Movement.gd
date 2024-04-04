@@ -5,7 +5,12 @@ static func set_origin(origin_point : Vector2, card : GameplayCard) -> void:
 
 static func set_visual_effects(card : GameplayCard) -> void:
 	set_rotation(card);
+	set_modal_position(card);
 	card.Sleeves.set_face(card);
+
+static func set_modal_position(card : GameplayCard) -> void:
+	card.modal_layer.position.x = card.MODAL_X_UPRIGHT \
+		if card.base_rotation == card.ROTATION_ATTACK else card.MODAL_X_SIDEWAYS;
 
 static func move_left(amount : float, card : GameplayCard) -> void:
 	card.origin_point.x -= amount;
@@ -28,11 +33,8 @@ static func focus(card : GameplayCard):
 
 static func examine(card : GameplayCard, gameplay : Gameplay):
 	card.focus_state = GameplayEnums.FocusState.EXAMINE;
-	if card.card_data.zone != CardEnums.Zone.HAND:
-		gameplay.Focuser.unfocus_card(card, gameplay);
-		return;
 	card.Modals.examine(card, gameplay);
-
+	
 static func interact(card : GameplayCard, gameplay : Gameplay):
 	card.Modals.interact(card, gameplay);
 	card.focus_state = GameplayEnums.FocusState.INTERACT;
@@ -40,6 +42,7 @@ static func interact(card : GameplayCard, gameplay : Gameplay):
 	card.scale_up = true;
 	set_visual_effects(card);
 	System.Children.focus(card, card.zone);
+	card.Core.control_glow(GameplayEnums.GlowState.GLOW, card, gameplay);
 		
 static func unfocus(card : GameplayCard, gameplay : Gameplay):
 	card.focus_state = GameplayEnums.FocusState.NONE;
@@ -100,6 +103,7 @@ static func rotate(card : GameplayCard, original_position : Vector2, do_rotate :
 	else:
 		if !System.Scale.equal(card.rotation_degrees, card.base_rotation):
 			card.rotation_degrees = System.Scale.baseline(card.rotation_degrees, card.base_rotation, delta);
+	card.modal_layer.rotation_degrees = -card.rotation_degrees;
 
 static func zoom(card : GameplayCard, delta : float):
 	if card.do_interact() and card.scale_up:

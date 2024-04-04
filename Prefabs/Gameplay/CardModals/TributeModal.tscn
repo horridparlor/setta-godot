@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlu23prncd0mq"]
+
+[ext_resource type="Script" path="res://Scripts/Gameplay/CardModals/TributeModal.gd" id="1_ysqp3"]
+[ext_resource type="Theme" uid="uid://ct5g1bcw4s11k" path="res://Styles/Gameplay/CardModal/ModalStyle.tres" id="2_r7k7c"]
+
+[node name="TributeModal" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ysqp3")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_top = -78.5
+offset_right = 211.0
+offset_bottom = 78.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Tribute" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_r7k7c")
+text = "Tribute"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Tribute" to="." method="_on_tribute_pressed"]

@@ -210,5 +210,7 @@ text = "[i]Cost:[/i]
 [node name="TouchScreenButton" type="TouchScreenButton" parent="."]
 shape = SubResource("RectangleShape2D_1xlx4")
 
+[node name="ModalLayer" type="Node2D" parent="."]
+
 [connection signal="pressed" from="TouchScreenButton" to="." method="_on_button_pressed"]
 [connection signal="released" from="TouchScreenButton" to="." method="_on_button_released"]

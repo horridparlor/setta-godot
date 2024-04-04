@@ -117,6 +117,7 @@ enum CardAction {
 	SCALE,
 	SET,
 	SUMMON,
+	TRIBUTE,
 }
 
 enum CardSleeve {

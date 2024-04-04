@@ -21,6 +21,7 @@ static func render_card(card_data : CardData, zone : Zone, gameplay : Gameplay) 
 		if cards.has(instance_id) \
 		else instance_card(card_data, zone, gameplay);
 	zone.push_card(card, gameplay);
+	card.Core.initialize(card, gameplay);
 	card.Core.set_initial_scale(zone.zone, card);
 
 static func instance_card(card_data : CardData, zone : Zone, gameplay : Gameplay) -> GameplayCard:
@@ -31,7 +32,6 @@ static func instance_card(card_data : CardData, zone : Zone, gameplay : Gameplay
 	card.card_data = card_data;
 	card.random = gameplay.random;
 	gameplay.cards[card_data.instance_id] = card;
-	card.Core.initialize(card);
 	card.position = zone.get_spawn_point();
 	return card;
 

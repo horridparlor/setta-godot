@@ -11,11 +11,13 @@ extends GameplayCard
 @onready var sleeve_layer : Node2D = $GlowNode/Sleeve;
 @onready var middle_frame_layer : Node = $GlowNode/MiddleFrame;
 @onready var fix_layer : Node = $GlowNode/InnerFrame/FixLayer;
+@onready var modal_layer : Node2D = $ModalLayer;
 
 const Core : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Core.gd");
 const Fragments : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Fragments.gd");
 const Modals : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Modals.gd");
 const Movement : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Movement.gd");
+const Rules : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Rules.gd");
 const Sleeves : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Sleeves.gd");
 
 func _ready():
@@ -38,7 +40,7 @@ func despawn(gameplay : Gameplay):
 	_on_button_released();
 	Movement.unfocus(self, gameplay);
 	fix_despawn_point();
-	Core.control_glow(GameplayEnums.GlowState.SHUTTER, self);
+	Core.control_glow(GameplayEnums.GlowState.SHUTTER, self, gameplay);
 
 func fix_despawn_point():
 	origin_point = DESPAWN_POINT;

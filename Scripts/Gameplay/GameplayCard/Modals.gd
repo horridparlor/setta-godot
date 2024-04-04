@@ -1,12 +1,26 @@
 static func examine(card : GameplayCard, gameplay : Gameplay) -> void:
 	close_modal(card, gameplay);
-	render_modal(card, gameplay);
+	render_modal(gameplay.active_modal, card, gameplay);
 
-static func render_modal(card : GameplayCard, gameplay : Gameplay) -> void:
-	card.modal = System.Instance.load_child(card.SUMMON_MODAL_PATH, card);
+static func render_modal(
+	modal_type : GameplayEnums.CardModalType, card : GameplayCard, gameplay : Gameplay
+) -> void:
+	var modal_path : String = get_modal_path(modal_type, card);
+	print(modal_path, " ", modal_type);
+	card.modal = System.Instance.load_child(modal_path, card.modal_layer);
 	card.modal.card_action.connect(card._on_modal_action);
-	card.modal.position.y -= card.MODAL_OPTION_HEIGHT * card.modal.options;
+	card.modal.position.y -= card.MODAL_MIN_HEIGHT + card.MODAL_OPTION_HEIGHT * card.modal.options;
 	shutter_other_cards(card, gameplay);
+
+static func get_modal_path(
+	modal_type : GameplayEnums.CardModalType, card : GameplayCard
+) -> String:
+	match modal_type:
+		GameplayEnums.CardModalType.SUMMON:
+			return card.SUMMON_MODAL_PATH;
+		GameplayEnums.CardModalType.TRIBUTE:
+			return card.TRIBUTE_MODAL_PATH;
+	return card.SUMMON_MODAL_PATH;
 
 static func interact(card : GameplayCard, gameplay : Gameplay) -> void:
 	close_modal(card, gameplay);
@@ -38,7 +52,7 @@ static func change_other_cards_glow(
 				gameplay.active_widget != GameplayEnums.WidgetType.NONE and \
 				other_card.card_data.zone != CardEnums.Zone.SHOWCASE and \
 				(!other_card.zone or other_card.zone.zone != CardEnums.Zone.MODAL) \
-				else glow_state, other_card);
+				else glow_state, other_card, gameplay);
 
 static func close_modal(card : GameplayCard, gameplay : Gameplay) -> void:
 	if card.modal:

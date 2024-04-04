@@ -1,14 +1,16 @@
-[gd_scene load_steps=14 format=3 uid="uid://bns8a2x72n00v"]
+[gd_scene load_steps=16 format=3 uid="uid://bns8a2x72n00v"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/Gameplay.gd" id="1_a3pif"]
 [ext_resource type="StyleBox" uid="uid://ccc36hf5utp4o" path="res://Styles/Gameplay/Background/BehindLayer.tres" id="2_luo7y"]
 [ext_resource type="StyleBox" uid="uid://byf8maisps4qy" path="res://Styles/Gameplay/Background/InnerLayer.tres" id="3_a2chj"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/Zones/Hand.gd" id="4_u5pia"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/Zones/Field.gd" id="5_exgpb"]
+[ext_resource type="Script" path="res://Prefabs/Gameplay/Zones/Grave.gd" id="6_eb7vw"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/Zones/Sky.gd" id="6_ksy72"]
 [ext_resource type="PackedScene" uid="uid://bsefox2a4aw4l" path="res://Prefabs/Gameplay/Widgets/PlayerStats.tscn" id="7_fdicw"]
 [ext_resource type="Script" path="res://Interfaces/Common/GlowNode.gd" id="7_gvcun"]
 [ext_resource type="PackedScene" uid="uid://bvp35fjh2g8j4" path="res://Prefabs/Gameplay/Widgets/ExtraDeckStand.tscn" id="8_e3jog"]
+[ext_resource type="PackedScene" uid="uid://bfexjoiw7pujx" path="res://Prefabs/Gameplay/Widgets/ActionHint.tscn" id="9_441ao"]
 [ext_resource type="Script" path="res://Interfaces/Gameplay/Widgets/Zone.gd" id="9_s42si"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/Zones/Modal.gd" id="10_bkmoh"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/Widgets/Scroller.gd" id="11_2ehpa"]
@@ -53,6 +55,10 @@ script = ExtResource("4_u5pia")
 [node name="Field" type="Node2D" parent="."]
 script = ExtResource("5_exgpb")
 
+[node name="Grave" type="Node2D" parent="."]
+position = Vector2(800, 200)
+script = ExtResource("6_eb7vw")
+
 [node name="Sky" type="Node2D" parent="."]
 script = ExtResource("6_ksy72")
 
@@ -65,6 +71,16 @@ wait_time = 0.26
 wait_time = 0.7
 
 [node name="Widgets" type="Node2D" parent="."]
+
+[node name="ActionHint" parent="Widgets" instance=ExtResource("9_441ao")]
+layout_direction = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_top = -320.0
+offset_bottom = -320.0
+grow_vertical = 1
 
 [node name="PlayerStats" type="Node2D" parent="Widgets"]
 script = ExtResource("7_gvcun")

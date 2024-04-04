@@ -7,6 +7,8 @@ const DRAW_PHASE_HAND_SIZE : int = 5;
 const FIELD_SIZE : int = 3;
 const BACKROW_SIZE : int = 5;
 const PENDULUM_SIZE : int = 2;
+const ONE_TRIBUTE_LEVEL : int = 5;
+const TWO_TRIBUTE_LEVEL : int = 7;
 
 var cards_in_backrow : Array = [];
 var cards_in_deck : Array = [];
@@ -98,4 +100,19 @@ func push_card(card : CardData, zone : CardEnums.Zone) -> void:
 	card.zone = zone;
 
 func can_play_card(card : CardData) -> bool:
-	return cards_on_field.size() < FIELD_SIZE;
+	var tributes = get_tributes(card);
+	return field_has_room(tributes) and has_enough_tributes(tributes);
+
+func get_tributes(card : CardData) -> int:
+	var level : int = card.monster_data.level;
+	if level < ONE_TRIBUTE_LEVEL:
+		return 0;
+	elif level < TWO_TRIBUTE_LEVEL:
+		return 1;
+	return 2;
+
+func field_has_room(tributes : int) -> bool:
+	return (cards_on_field.size() - tributes) < FIELD_SIZE;
+
+func has_enough_tributes(tributes : int) -> bool:
+	return cards_on_field.size() >= tributes;

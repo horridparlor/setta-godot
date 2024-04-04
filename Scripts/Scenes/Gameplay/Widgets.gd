@@ -25,7 +25,7 @@ static func fill_stands(stands : Array, init_data : CardInitData, gameplay : Gam
 	var card : GameplayCard;
 	for s in stands:
 		stand = s;
-		card = stand.set_showcase_card(init_data);
+		card = stand.set_showcase_card(init_data, gameplay);
 		gameplay.cards[card.card_data.instance_id] = card;
 
 static func control_showcase_glow(

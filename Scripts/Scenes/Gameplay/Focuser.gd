@@ -61,24 +61,33 @@ static func release_focus(gameplay : Gameplay) -> void:
 	gameplay.release_focus();
 
 static func examine_card(card : GameplayCard, gameplay : Gameplay) -> void:
+	if gameplay.is_selecting() and !card.Core.is_selectable(card, gameplay):
+		unfocus_card(card, gameplay);
+		return;
 	match card.card_data.zone:
 		CardEnums.Zone.FIELD:
-			try_activate_card(card, gameplay);
+			if gameplay.selection_type == GameplayEnums.SelectionType.TRIBUTE:
+				try_tribute_card(card, gameplay);
 			return;
 		CardEnums.Zone.HAND:
 			try_play_card(card, gameplay);
 			return;
-	try_activate_card(card, gameplay);
+	unfocus_card(card, gameplay);
 	
-
 static func try_play_card(card : GameplayCard, gameplay : Gameplay) -> void:
-	if !gameplay.game_state.can_play_card(card.card_data, GameplayEnums.OwningPlayer.YOU):
+	if !card.Rules.can_be_played(card, gameplay):
 		unfocus_card(card, gameplay);
 		return;
+	open_modal(GameplayEnums.CardModalType.SUMMON, card, gameplay);
+
+static func open_modal(
+	modal_type : GameplayEnums.CardModalType, card : GameplayCard, gameplay : Gameplay
+) -> void:
+	gameplay.active_modal = modal_type;
 	card.Movement.examine(card, gameplay);
 
-static func try_activate_card(card : GameplayCard, gameplay : Gameplay) -> void:
-	unfocus_card(card, gameplay);
+static func try_tribute_card(card : GameplayCard, gameplay : Gameplay) -> void:
+	open_modal(GameplayEnums.CardModalType.TRIBUTE, card, gameplay);
 
 static func set_focused_zone(zone : Zone, gameplay : Gameplay) -> void:
 	System.Children.focus(zone, gameplay);

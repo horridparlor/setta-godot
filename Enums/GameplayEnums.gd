@@ -58,3 +58,20 @@ enum ButtonMode {
 	FULL,
 	PARTIAL,
 }
+
+enum CardModalType {
+	NONE,
+	SUMMON,
+	TRIBUTE,
+}
+
+enum PlayType {
+	SET,
+	SUMMON,
+}
+
+enum SelectionType {
+	NONE,
+	SUMMON,
+	TRIBUTE,
+}

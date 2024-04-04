@@ -10,7 +10,9 @@ const ARTWORK_LOAD_PREFIX : String = "res://Assets/CardArt/";
 const ATTRIBUTE_SPRITE_PREFIX : String = "res://Assets/Icons/Attributes/";
 
 const SUMMON_MODAL_PATH : String = "res://Prefabs/Gameplay/CardModals/SummonModal.tscn";
-const MODAL_OPTION_HEIGHT : int = 290;
+const TRIBUTE_MODAL_PATH : String = "res://Prefabs/Gameplay/CardModals/TributeModal.tscn";
+const MODAL_MIN_HEIGHT : int = 290;
+const MODAL_OPTION_HEIGHT : int = 140;
 const SLEEVE_LOAD_PREFIX : String = "res://Prefabs/Gameplay/CardSleeves/";
 const MIDDLE_FRAME_PATH : String = "res://Prefabs/Gameplay/CardFragment/MiddleFrame/";
 const FIX_LAYER_PATH : String = "res://Prefabs/Gameplay/CardFragment/FixLayer/";
@@ -23,6 +25,8 @@ const PLAYLINE : int = 42;
 const SIZE : Vector2 = Vector2(428, 592);
 const ROTATION_ATTACK : int = 0;
 const ROTATION_DEFENSE : int = 90;
+const MODAL_X_UPRIGHT : int = 0;
+const MODAL_X_SIDEWAYS : int = FIELD_SCALE * (SIZE.y - SIZE.x);
 
 const MAX_SCALE_VALUE : float = 1.0;
 const MAX_SCALE : Vector2 = Vector2(MAX_SCALE_VALUE, MAX_SCALE_VALUE);

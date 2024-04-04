@@ -1,6 +1,6 @@
 static func widget_pressed(widget_type : GameplayEnums.WidgetType, gameplay : Gameplay) -> void:
 	var has_open : bool = has_widget_open(widget_type, gameplay);
-	if (!has_open and !gameplay.no_focus()):
+	if gameplay.is_selecting() or (!has_open and !gameplay.no_focus()):
 		return;
 	if gameplay.do_interact():
 		close_widget(widget_type, gameplay);
@@ -70,4 +70,9 @@ static func control_other_zones_glow(
 		card = gameplay.cards[instance_id];
 		if card.zone == zone or card.card_data.zone == CardEnums.Zone.SHOWCASE:
 			continue;
-		card.Core.control_glow(glow_state, card);
+		control_card_glow(glow_state, card, gameplay);
+
+static func control_card_glow(
+	glow_state : GameplayEnums.GlowState, card : GameplayCard, gameplay : Gameplay
+) -> void:
+	card.Core.control_glow(glow_state, card, gameplay);

@@ -1,8 +1,8 @@
 extends Node
 
-static func initialize(card : GameplayCard) -> void:
+static func initialize(card : GameplayCard, gameplay : Gameplay) -> void:
 	update_visuals(card);
-	activate_animations(card);
+	control_glow(GameplayEnums.GlowState.GLOW, card, gameplay);
 
 static func update_visuals(card : GameplayCard) -> void:
 	var card_data : CardData = card.card_data;
@@ -19,10 +19,31 @@ static func activate_animations(card : GameplayCard) -> void:
 
 static func control_glow(
 	glow_state : GameplayEnums.GlowState,
-	card : GameplayCard
+	card : GameplayCard,
+	gameplay : Gameplay
 ) -> void:
+	if must_be_shuttered(card, gameplay):
+		glow_state = GameplayEnums.GlowState.SHUTTER;
 	card.glow_state = glow_state;
 	activate_animations(card);
+
+static func must_be_shuttered(card : GameplayCard, gameplay : Gameplay) -> bool:
+	if card == gameplay.focused_card:
+		return false;
+	if !card.zone:
+		return gameplay.selection_type != GameplayEnums.SelectionType.NONE;
+	if gameplay.is_selecting():
+		return !is_selectable(card, gameplay);
+	match card.zone.zone:
+		CardEnums.Zone.HAND:
+			return !card.Rules.can_be_played(card, gameplay);
+	return false;
+
+static func is_selectable(card : GameplayCard, gameplay : Gameplay) -> bool:
+	match gameplay.selection_type:
+		GameplayEnums.SelectionType.TRIBUTE:
+			return card.card_data.zone == CardEnums.Zone.FIELD;
+	return true;
 
 static func set_initial_scale(zone : CardEnums.Zone, card : GameplayCard):
 	card.scale = get_initial_scale(zone, card);
