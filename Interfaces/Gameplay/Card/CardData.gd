@@ -1,6 +1,13 @@
 extends Node
 class_name CardData
 
+const EXTRA_DECK_SUBTYPES : Array = [
+	CardEnums.CardSubtype.FUSION,
+	CardEnums.CardSubtype.REVENGE,
+	CardEnums.CardSubtype.RITUAL,
+	CardEnums.CardSubtype.ROYAL,
+];
+
 var card : CardEnums.Card;
 var card_class : CardEnums.Class;
 var card_type : CardEnums.CardType;
@@ -37,10 +44,22 @@ func _init(
 	effect_text = effect_text_;
 	instance_id = System.Random.instance_id(init_data.random);
 	sleeve = init_data.sleeve;
-	zone = CardEnums.Zone.DECK;
 	monster_data = monster_data_;
+	zone = get_starting_deck();
+
+func get_starting_deck() -> CardEnums.Zone:
+	return CardEnums.Zone.EXTRA_DECK if subtype in EXTRA_DECK_SUBTYPES \
+		else CardEnums.Zone.DECK;
 	
 func set_card() -> void:
 	face = CardEnums.Face.DOWN;
 	if monster_data:
 		monster_data.to_defense_position();
+
+func get_materials() -> Array:
+	var materials : CardMaterials = effects.materials;
+	return [
+		materials.primary_material,
+		materials.secondary_material,
+		materials.tertiary_material
+	];

@@ -72,6 +72,9 @@ static func examine_card(card : GameplayCard, gameplay : Gameplay) -> void:
 		CardEnums.Zone.HAND:
 			try_play_card(card, gameplay);
 			return;
+		CardEnums.Zone.EXTRA_DECK:
+			try_play_card(card, gameplay);
+			return;
 	unfocus_card(card, gameplay);
 	
 static func try_play_card(card : GameplayCard, gameplay : Gameplay) -> void:

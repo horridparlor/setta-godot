@@ -12,6 +12,10 @@ static func out(init_data : CardInitData):
 	var def : int = 2500;
 	var monster_data : MonsterData = MonsterData.new(level, atk, def);
 	
+	var materials : CardMaterials = CardMaterials.new(
+		CardEnums.Card.HAMMER_WAIFU,
+		CardEnums.Card.STONE_BASILISK,	
+	);
 	var effect_cost : EffectCost = EffectCost.new(
 		EffectEnums.CostType.MILL,
 		EffectTarget.new(EffectEnums.TargetType.DEFAULT),
@@ -22,7 +26,7 @@ static func out(init_data : CardInitData):
 		EffectTarget.new(EffectEnums.TargetType.TARGET_MONSTER),
 		1000
 	);
-	var effects : CardEffects = CardEffects.new(effect_cost, effect_effect);
+	var effects : CardEffects = CardEffects.new(effect_cost, effect_effect, materials);
 	var effect_text : String = SystemEnums.extra_deck_text("[font_size=20][font=%s](Hammer Waifu + Stone Basilisk)[/font][/font_size]
 [i]Cost:[/i] Mill [code]2[/code]. [i](From your deck.)[/i]
 [i]Effect:[/i] Target monster loses [code]1000[/code] [b]atk[/b]. [i](Until end of turn.)[/i]");

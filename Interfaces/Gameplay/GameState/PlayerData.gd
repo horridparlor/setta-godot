@@ -116,3 +116,23 @@ func field_has_room(tributes : int) -> bool:
 
 func has_enough_tributes(tributes : int) -> bool:
 	return cards_on_field.size() >= tributes;
+
+func has_materials(card : CardData) -> bool:
+	var found_materials : Array;
+	for material in card.get_materials():
+		if material == CardEnums.Card.NONE:
+			continue;
+		if !has_material(card, found_materials):
+			return false;
+	return true;
+
+func has_material(material : CardData, found_materials : Array) -> bool:
+	var card : CardData;
+	for c in cards_on_field:
+		card = c;
+		if card.face == CardEnums.Face.DOWN:
+			continue;
+		if card.card == material.card and card.instance_id not in found_materials:
+			found_materials.append(card.instance_id);
+			return true;
+	return false;

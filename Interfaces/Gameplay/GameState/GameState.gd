@@ -44,3 +44,6 @@ func move_card(
 
 func can_play_card(card : CardData, owning_player : GameplayEnums.OwningPlayer) -> bool:
 	return get_player(owning_player).can_play_card(card);
+
+func has_materials(card : CardData, owning_player : GameplayEnums.OwningPlayer) -> bool:
+	return get_player(owning_player).has_materials(card);

@@ -8,7 +8,7 @@ var tertiary_material : CardEnums.Card;
 func _init(
 	primary_material_ : CardEnums.Card,
 	secondary_material_ : CardEnums.Card,
-	tertiary_material_ : CardEnums.Card
+	tertiary_material_ : CardEnums.Card = CardEnums.Card.NONE
 ):
 	primary_material = primary_material_;
 	secondary_material = secondary_material_;

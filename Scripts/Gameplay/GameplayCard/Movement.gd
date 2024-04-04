@@ -106,7 +106,7 @@ static func rotate(card : GameplayCard, original_position : Vector2, do_rotate :
 	card.modal_layer.rotation_degrees = -card.rotation_degrees;
 
 static func zoom(card : GameplayCard, delta : float):
-	if card.do_interact() and card.scale_up:
+	if card.do_interact():
 		card.scale = card.scale.move_toward(card.MAX_SCALE, delta * card.ZOOM_IN_SPEED);
 		if System.Vectors.equal(card.scale, card.MAX_SCALE):
 			card.scale_up = false;

@@ -32,7 +32,7 @@ const MAX_SCALE_VALUE : float = 1.0;
 const MAX_SCALE : Vector2 = Vector2(MAX_SCALE_VALUE, MAX_SCALE_VALUE);
 const BASE_SCALE : float = 0.5;
 const BASE_SCALE_HAND : Vector2 = Vector2(BASE_SCALE, BASE_SCALE);
-const FIELD_SCALE : float = 0.45;
+const FIELD_SCALE : float = 0.48;
 const BASE_SCALE_FIELD : Vector2 = Vector2(FIELD_SCALE, FIELD_SCALE);
 const SHOWCASE_SCALE : float = 0.39;
 const BASE_SCALE_SHOWCASE : Vector2 = Vector2(SHOWCASE_SCALE, SHOWCASE_SCALE);
@@ -51,7 +51,6 @@ const SPAWN_POINT_Y_MULTIPLIER : float = 1.4;
 const DESPAWN_POINT : Vector2 = Vector2(540, 960);
 const DESPAWN_ORIGO_RANGE : int = 10;
 const DESPAWN_WIND_RESISTANCE : int = 360;
-const RETURN_TO_HAND_MARGIN : int = -10;
 
 var is_moving : bool = false;
 var origin_point : Vector2;

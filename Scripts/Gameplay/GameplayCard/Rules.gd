@@ -4,3 +4,6 @@ static func get_tributes(card : GameplayCard, gameplay : Gameplay) -> int:
 
 static func can_be_played(card : GameplayCard, gameplay : Gameplay) -> bool:
 	return gameplay.game_state.can_play_card(card.card_data, GameplayEnums.OwningPlayer.YOU);
+
+static func have_materials(card : GameplayCard, gameplay : Gameplay) -> bool:
+	return gameplay.game_state.has_materials(card.card_data, GameplayEnums.OwningPlayer.YOU);

@@ -22,14 +22,19 @@ static func control_glow(
 	card : GameplayCard,
 	gameplay : Gameplay
 ) -> void:
-	if must_be_shuttered(card, gameplay):
+	if must_be_glowing(card, gameplay):
+		glow_state = GameplayEnums.GlowState.GLOW;
+	elif must_be_shuttered(card, gameplay):
 		glow_state = GameplayEnums.GlowState.SHUTTER;
 	card.glow_state = glow_state;
 	activate_animations(card);
 
+static func must_be_glowing(card : GameplayCard, gameplay : Gameplay) -> bool:
+	if card == gameplay.card_to_be_played or card == gameplay.focused_card:
+		return true;
+	return false;
+
 static func must_be_shuttered(card : GameplayCard, gameplay : Gameplay) -> bool:
-	if card == gameplay.focused_card:
-		return false;
 	if !card.zone:
 		return gameplay.selection_type != GameplayEnums.SelectionType.NONE;
 	if gameplay.is_selecting():
@@ -37,6 +42,8 @@ static func must_be_shuttered(card : GameplayCard, gameplay : Gameplay) -> bool:
 	match card.card_data.zone:
 		CardEnums.Zone.HAND:
 			return !card.Rules.can_be_played(card, gameplay);
+		CardEnums.Zone.EXTRA_DECK:
+			return !card.Rules.have_materials(card, gameplay);
 	return false;
 
 static func is_selectable(card : GameplayCard, gameplay : Gameplay) -> bool:
