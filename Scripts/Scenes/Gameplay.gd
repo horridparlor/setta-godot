@@ -4,11 +4,13 @@ extends Gameplay
 @onready var field : Field = $Field;
 @onready var sky : Zone = $Sky;
 @onready var extra_deck : Zone = $Widgets/ExtraDeckStand/ExtraDeck;
-@onready var modal : Zone = $Modal;
+@onready var modal : Zone = $Scroller/Modal;
+@onready var scroller : Scroller = $Scroller;
 
-@onready var your_stats : PlayerStats = $Widgets/YourStats;
-@onready var opponents_stats : PlayerStats = $Widgets/OpponentsStats;
+@onready var your_stats : PlayerStats = $Widgets/PlayerStats/YourStats;
+@onready var opponents_stats : PlayerStats = $Widgets/PlayerStats/OpponentsStats;
 @onready var extra_deck_stand : CardStand = $Widgets/ExtraDeckStand;
+@onready var player_stats : GlowNode = $Widgets/PlayerStats;
 
 @onready var card_focus_timer : Timer = $Timers/CardFocusTimer;
 @onready var zone_focus_timer : Timer = $Timers/ZoneFocusTimer;

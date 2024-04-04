@@ -6,6 +6,7 @@ signal released(widget_type);
 
 var showcase_card : GameplayCard;
 var widget_type : GameplayEnums.WidgetType;
+var button_mode : GameplayEnums.ButtonMode;
 
 func set_showcase_card(init_data : CardInitData) -> GameplayCard:
 	showcase_card = System.Instance.load_child(SystemEnums.get_card_path(), self);
@@ -17,4 +18,11 @@ func set_showcase_card(init_data : CardInitData) -> GameplayCard:
 	return showcase_card;
 
 func control_glow(glow_state : GameplayEnums.GlowState, random : RandomNumberGenerator) -> void:
+	pass;
+
+func set_button_mode(button_mode_ : GameplayEnums.ButtonMode) -> void:
+	button_mode = button_mode_;
+	update_button();
+
+func update_button() -> void:
 	pass;

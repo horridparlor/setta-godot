@@ -19,7 +19,9 @@ static func open_widget(widget_type : GameplayEnums.WidgetType, gameplay : Gamep
 	gameplay.focus_state = GameplayEnums.FocusState.WAITING;
 	gameplay.Timers.start(GameplayEnums.TimerType.ZoneFocus, gameplay);
 	control_other_zones_glow(GameplayEnums.GlowState.SHUTTER, gameplay.modal, gameplay);
-	System.Children.focus(gameplay.modal, gameplay);
+	gameplay.Widgets.control_showcases_glow(GameplayEnums.GlowState.SHUTTER, gameplay);
+	System.Children.focus(gameplay.scroller, gameplay);
+	gameplay.scroller.reset();
 
 static func widget_released(widget_type : GameplayEnums.WidgetType, gameplay : Gameplay) -> void:
 	var do_wait : bool = gameplay.do_wait();
@@ -38,15 +40,22 @@ static func close_widget(widget_type : GameplayEnums.WidgetType, gameplay : Game
 			hide_extra_deck(gameplay);
 	control_other_zones_glow(GameplayEnums.GlowState.GLOW, gameplay.modal, gameplay);
 	gameplay.release_focus();
+	gameplay.Widgets.control_showcases_glow(GameplayEnums.GlowState.GLOW, gameplay);
 
 static func show_extra_deck(gameplay : Gameplay) -> void:
 	if !gameplay.no_focus():
 		return;
 	var cards : Array = gameplay.game_state.you.cards_in_extra_deck;
+	var extra_deck_stand : CardStand = gameplay.Widgets.get_card_stand(
+		GameplayEnums.WidgetType.EXTRA_DECK, gameplay);
+	gameplay.extra_deck_stand.set_button_mode(GameplayEnums.ButtonMode.PARTIAL);
 	gameplay.GameManager.render_cards(cards, gameplay.modal, gameplay);
 
 static func hide_extra_deck(gameplay : Gameplay) -> void:
 	var cards : Array = gameplay.game_state.you.cards_in_extra_deck;
+	var extra_deck_stand : CardStand = gameplay.Widgets.get_card_stand(
+		GameplayEnums.WidgetType.EXTRA_DECK, gameplay);
+	gameplay.extra_deck_stand.set_button_mode(GameplayEnums.ButtonMode.FULL);
 	gameplay.GameManager.delete_cards(cards, gameplay.sky, gameplay);
 
 static func zone_focus_timeout(gameplay : Gameplay) -> void:

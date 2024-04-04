@@ -53,3 +53,8 @@ enum ZoneType {
 	ROW,
 	SCROLL
 }
+
+enum ButtonMode {
+	FULL,
+	PARTIAL,
+}

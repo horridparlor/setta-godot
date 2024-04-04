@@ -83,6 +83,8 @@ static func get_mouse_position(card : GameplayCard):
 	(System.Window_.y - card.scale.y * card.SIZE.y) / 2);
 	position.y = make_room_for_finger(position.y, card);
 	position.x = max(min(card_edge.x, position.x), -card_edge.x);
+	if card.zone.zone == CardEnums.Zone.MODAL:
+		return position;
 	position.y = max(min(card_edge.y, position.y), -card_edge.y);
 	return position;
 
