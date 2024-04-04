@@ -68,7 +68,7 @@ static func examine_card(card : GameplayCard, gameplay : Gameplay) -> void:
 		CardEnums.Zone.FIELD:
 			if gameplay.selection_type == GameplayEnums.SelectionType.TRIBUTE:
 				try_tribute_card(card, gameplay);
-			return;
+				return;
 		CardEnums.Zone.HAND:
 			try_play_card(card, gameplay);
 			return;

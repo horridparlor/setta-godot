@@ -34,7 +34,7 @@ static func must_be_shuttered(card : GameplayCard, gameplay : Gameplay) -> bool:
 		return gameplay.selection_type != GameplayEnums.SelectionType.NONE;
 	if gameplay.is_selecting():
 		return !is_selectable(card, gameplay);
-	match card.zone.zone:
+	match card.card_data.zone:
 		CardEnums.Zone.HAND:
 			return !card.Rules.can_be_played(card, gameplay);
 	return false;
