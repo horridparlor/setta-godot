@@ -30,10 +30,10 @@ static func get_card_name(card_data : CardData) -> String:
 
 static func default(init_data : CardInitData) -> CardData:
 	var card : CardData = CardData.new(
-		0,
-		0,
-		0,
-		0,
+		CardEnums.Card.NONE,
+		CardEnums.Class.NONE,
+		CardEnums.CardType.NONE,
+		CardEnums.CardSubtype.NONE,
 		null,
 		null,
 		"",

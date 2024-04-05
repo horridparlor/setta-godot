@@ -2,6 +2,7 @@ extends Node
 
 enum CardType {
 	MONSTER,
+	NONE,
 	SPELL,
 	TRAP
 }
@@ -20,6 +21,7 @@ enum DeckType {
 enum CardSubtype {
 	EFFECT,
 	FUSION,
+	NONE,
 	NORMAL,
 	REVENGE,
 	RITUAL,
@@ -63,10 +65,9 @@ enum Class {
 	ABYSS,
 	DRAGON,
 	KAWAII,
+	NONE,
 	SLIME,
 	SPARKS,
-	SPELL,
-	TRAP,
 	ZOMBIE,
 }
 
@@ -76,8 +77,6 @@ static var ClassName = {
 	Class.KAWAII: "Kawaii",
 	Class.SLIME: "Slime",
 	Class.SPARKS: "Sparks",
-	Class.SPELL: "Spell",
-	Class.TRAP: "Trap",
 	Class.ZOMBIE: "Zombie",
 }
 
@@ -91,6 +90,7 @@ enum Card {
 static var CardName = {
 	Card.BROTHERS_IN_WAR: "Brothers in War",
 	Card.HAMMER_WAIFU: "Hammer Waifu",
+	Card.NONE: "No name",
 	Card.STONE_BASILISK: "Stone Basilisk"
 }
 

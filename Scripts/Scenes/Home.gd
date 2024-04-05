@@ -6,7 +6,11 @@ extends Home
 func _ready() -> void:
 	initialize_regex();
 	gameplay = System.Instance.load_child(GAMEPLAY_PATH, scene_layer);
-	debug_prompt.visible = System.DEBUG_MODE != SystemEnums.DebugMode.NONE;
+	update_debug_tools();
+	set_process_input(true);
+
+func update_debug_tools() -> void:
+	debug_prompt.visible = System.debug_mode != SystemEnums.DebugMode.NONE;
 
 func initialize_regex() -> void:
 	id_regex.compile("^[0-9]*$");
@@ -35,3 +39,24 @@ func try_cheat_draw(text : String) -> bool:
 
 func clear_debug_prompt() -> void:
 	debug_prompt.text = "";
+
+func _input(event : InputEvent):
+	if !(event is InputEventKey and event.pressed):
+		return;
+	if event.keycode == DEBUG_MODE_CODE[current_code_index]:
+		current_code_index += 1;
+		if current_code_index == DEBUG_MODE_CODE.size():
+			enable_debug_mode();
+			current_code_index = 0;
+	else:
+		current_code_index = 0;
+
+func enable_debug_mode() -> void:
+	var card : GameplayCard;
+	System.debug_mode = SystemEnums.DebugMode.CARD_DEBUG \
+		if System.debug_mode == SystemEnums.DebugMode.NONE \
+		else SystemEnums.DebugMode.NONE;
+	update_debug_tools();
+	for instance_id in gameplay.cards:
+		card = gameplay.cards[instance_id];
+		card.Core.update_visuals(card);

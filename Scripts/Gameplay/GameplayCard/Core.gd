@@ -5,14 +5,19 @@ static func initialize(card : GameplayCard, gameplay : Gameplay) -> void:
 	control_glow(GameplayEnums.GlowState.GLOW, card, gameplay);
 
 static func update_visuals(card : GameplayCard) -> void:
-	var card_data : CardData = card.card_data;
 	card.Fragments.update_artwork(card);
 	update_name(card);
-	card.effect_label.text = card_data.effect_text;
+	card.effect_label.text = card.card_data.effect_text;
 	card.Fragments.update_monster_visuals(card);
+	update_debug_tools(card);
+
+static func update_debug_tools(card : GameplayCard) -> void:
+	var card_debug_on : bool = System.debug_mode == SystemEnums.DebugMode.CARD_DEBUG;
+	card.copiable_name.visible = card_debug_on;
+	card.name_label.visible = !card_debug_on;
 
 static func update_name(card : GameplayCard) -> void:
-	if System.DEBUG_MODE == SystemEnums.DebugMode.CARD_DEBUG:
+	if System.debug_mode == SystemEnums.DebugMode.CARD_DEBUG:
 		card.copiable_name.text = str(card.card_data.instance_id);
 	else:
 		card.name_label.text = System.CardData.get_card_name(card.card_data);

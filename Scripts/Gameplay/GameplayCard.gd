@@ -22,9 +22,6 @@ const Rules : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Rules.gd")
 const Sleeves : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Sleeves.gd");
 
 func _ready():
-	var card_debug_on : bool = System.DEBUG_MODE == SystemEnums.DebugMode.CARD_DEBUG;
-	copiable_name.visible = card_debug_on;
-	name_label.visible = !card_debug_on;
 	self.scale = BASE_SCALE_HAND;
 
 func _on_button_pressed():
