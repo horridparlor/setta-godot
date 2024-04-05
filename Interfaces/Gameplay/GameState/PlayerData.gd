@@ -122,17 +122,17 @@ func has_materials(card : CardData) -> bool:
 	for material in card.get_materials():
 		if material == CardEnums.Card.NONE:
 			continue;
-		if !has_material(card, found_materials):
+		if !has_material(material, found_materials):
 			return false;
 	return true;
 
-func has_material(material : CardData, found_materials : Array) -> bool:
+func has_material(material : CardEnums.Card, found_materials : Array) -> bool:
 	var card : CardData;
 	for c in cards_on_field:
 		card = c;
 		if card.face == CardEnums.Face.DOWN:
 			continue;
-		if card.card == material.card and card.instance_id not in found_materials:
+		if card.card == material and card.instance_id not in found_materials:
 			found_materials.append(card.instance_id);
 			return true;
 	return false;

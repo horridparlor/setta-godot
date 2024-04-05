@@ -1,6 +1,7 @@
 extends Node
 class_name CardData
 
+const STRING_FORMAT : String = "%s: %s";
 const EXTRA_DECK_SUBTYPES : Array = [
 	CardEnums.CardSubtype.FUSION,
 	CardEnums.CardSubtype.REVENGE,
@@ -63,3 +64,6 @@ func get_materials() -> Array:
 		materials.secondary_material,
 		materials.tertiary_material
 	];
+
+func _to_string() -> String:
+	return STRING_FORMAT % [instance_id, CardEnums.CardName[card]];
