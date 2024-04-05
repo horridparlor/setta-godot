@@ -45,8 +45,6 @@ static func change_cards_glow(
 ) -> void:
 	var cards : Dictionary = gameplay.cards;
 	for instance_id in cards:
-		if instance_id == card.card_data.instance_id:
-			glow_state = GameplayEnums.GlowState.GLOW;
 		var other_card : GameplayCard = cards[instance_id];
 		other_card.Core.control_glow(GameplayEnums.GlowState.SHUTTER if \
 			gameplay.active_widget != GameplayEnums.WidgetType.NONE and \

@@ -51,3 +51,8 @@ static var CommonNodePath = {
 
 static func get_card_path() -> String:
 	return CommonNodePath[CommonNodes.GameplayCard];
+
+enum DebugMode {
+	CARD_DEBUG,
+	NONE,
+}

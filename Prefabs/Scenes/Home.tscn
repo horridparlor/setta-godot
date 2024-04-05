@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://f4svyfwh1l55"]
+[gd_scene load_steps=3 format=3 uid="uid://f4svyfwh1l55"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/Home.gd" id="1_skk3h"]
+[ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="2_5p8lo"]
 
 [node name="Home" type="Node2D"]
 script = ExtResource("1_skk3h")
@@ -20,3 +21,20 @@ offset_bottom = 2160.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.00784314, 0.00784314, 0.00784314, 1)
+
+[node name="Scenes" type="Node2D" parent="."]
+
+[node name="DebugPrompt" type="LineEdit" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 650.0
+offset_top = -530.0
+offset_right = 950.0
+offset_bottom = -470.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_5p8lo")
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Instance id"
+
+[connection signal="text_changed" from="DebugPrompt" to="." method="_on_debug_prompt_text_changed"]

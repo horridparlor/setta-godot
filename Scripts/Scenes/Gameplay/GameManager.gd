@@ -11,7 +11,7 @@ static func render_hand(gameplay : Gameplay) -> void:
 	render_cards(gameplay.game_state.you.cards_in_hand, gameplay.hand, gameplay);
 
 static func render_cards(cards : Array, zone : Zone, gameplay : Gameplay) -> void:
-	for card in cards:
+	for card in cards.duplicate():
 		render_card(card, zone, gameplay);
 
 static func render_card(card_data : CardData, zone : Zone, gameplay : Gameplay) -> void:

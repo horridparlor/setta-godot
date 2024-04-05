@@ -25,7 +25,7 @@ static func create(card : CardEnums.Card, init_data : CardInitData, \
 	card_data.owning_player = owning_player;
 	return card_data;
 
-static func get_card_name(card_data : CardData):
+static func get_card_name(card_data : CardData) -> String:
 	return System.Card.get_card_name(card_data.card);
 
 static func default(init_data : CardInitData) -> CardData:

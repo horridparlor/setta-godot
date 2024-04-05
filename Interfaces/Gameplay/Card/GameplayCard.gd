@@ -6,6 +6,7 @@ signal released(_self);
 signal update_playstate(_self);
 signal card_action(action, _self);
 
+const DEBUG_FORMAT : String = "%s: %s";
 const ARTWORK_LOAD_PREFIX : String = "res://Assets/CardArt/";
 const ATTRIBUTE_SPRITE_PREFIX : String = "res://Assets/Icons/Attributes/";
 
@@ -57,7 +58,6 @@ var origin_point : Vector2;
 var scale_up : bool = false;
 var scale_down : bool = false;
 var is_despawned : bool = false;
-var debug : bool = false;
 var base_rotation : int = 0;
 var random : RandomNumberGenerator;
 
@@ -73,3 +73,11 @@ func do_interact() -> bool:
 
 func is_showcase() -> bool:
 	return card_data.zone == CardEnums.Zone.SHOWCASE;
+
+func debug(code : int, message : String = "") -> void:
+	if !do_debug():
+		return;
+	print(DEBUG_FORMAT % [code, message]);
+
+func do_debug() -> bool:
+	return card_data.instance_id == System.debug_id;

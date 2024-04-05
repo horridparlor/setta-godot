@@ -12,6 +12,7 @@ extends GameplayCard
 @onready var middle_frame_layer : Node = $GlowNode/MiddleFrame;
 @onready var fix_layer : Node = $GlowNode/InnerFrame/FixLayer;
 @onready var modal_layer : Node2D = $ModalLayer;
+@onready var copiable_name : LineEdit = $GlowNode/Stats/CopiableName;
 
 const Core : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Core.gd");
 const Fragments : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Fragments.gd");
@@ -21,6 +22,9 @@ const Rules : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Rules.gd")
 const Sleeves : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Sleeves.gd");
 
 func _ready():
+	var card_debug_on : bool = System.DEBUG_MODE == SystemEnums.DebugMode.CARD_DEBUG;
+	copiable_name.visible = card_debug_on;
+	name_label.visible = !card_debug_on;
 	self.scale = BASE_SCALE_HAND;
 
 func _on_button_pressed():
