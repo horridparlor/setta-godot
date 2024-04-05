@@ -82,13 +82,12 @@ static func move_towards_mouse(delta : float, card : GameplayCard):
 
 static func get_mouse_position(card : GameplayCard):
 	var position : Vector2 = card.zone.get_local_mouse_position();
+	var local_public_difference : Vector2 = position - card.zone.get_global_mouse_position();
 	var card_edge : Vector2 = Vector2((System.Window_.x - card.scale.x * card.SIZE.x) / 2,\
 	(System.Window_.y - card.scale.y * card.SIZE.y) / 2);
 	position.y = make_room_for_finger(position.y, card);
 	position.x = max(min(card_edge.x, position.x), -card_edge.x);
-	if card.zone.zone == CardEnums.Zone.MODAL:
-		return position;
-	position.y = max(min(card_edge.y, position.y), -card_edge.y);
+	position.y = max(min(card_edge.y, position.y), local_public_difference.y -card_edge.y);
 	return position;
 
 static func make_room_for_finger(y : float, card : GameplayCard):
