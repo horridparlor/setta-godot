@@ -67,6 +67,7 @@ var focus_state : GameplayEnums.FocusState = GameplayEnums.FocusState.NONE;
 var glow_state : GameplayEnums.GlowState = GameplayEnums.GlowState.GLOW;
 var modal : Control;
 var card_sleeve : CardSleeve;
+var modal_rotation : float;
 
 func do_interact() -> bool:
 	return focus_state == GameplayEnums.FocusState.INTERACT;

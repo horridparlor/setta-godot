@@ -13,6 +13,7 @@ extends Gameplay
 @onready var extra_deck_stand : CardStand = $Widgets/ExtraDeckStand;
 @onready var player_stats : GlowNode = $Widgets/PlayerStats;
 @onready var action_hint : ActionHint = $Widgets/ActionHint;
+@onready var cancel_button_layer : GlowNode = $Widgets/GlowNode;
 
 @onready var card_focus_timer : Timer = $Timers/CardFocusTimer;
 @onready var zone_focus_timer : Timer = $Timers/ZoneFocusTimer;
@@ -31,6 +32,7 @@ func _ready() -> void:
 	Signals.connect_signals(self);
 	CardManager.init_game_state(self);
 	GameManager.start_game(self);
+	cancel_button_layer.activate_animations(random);
 
 func init_random() -> void:
 	random.randomize();

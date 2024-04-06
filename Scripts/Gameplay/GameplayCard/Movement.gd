@@ -10,7 +10,8 @@ static func set_visual_effects(card : GameplayCard) -> void:
 
 static func set_modal_position(card : GameplayCard) -> void:
 	card.modal_layer.position.x = card.MODAL_X_UPRIGHT \
-		if card.base_rotation == card.ROTATION_ATTACK else card.MODAL_X_SIDEWAYS;
+		if card.base_rotation == card.ROTATION_ATTACK \
+		or card.card_data.zone == CardEnums.Zone.HAND else card.MODAL_X_SIDEWAYS;
 
 static func move_left(amount : float, card : GameplayCard) -> void:
 	card.origin_point.x -= amount;
@@ -102,7 +103,9 @@ static func rotate(card : GameplayCard, original_position : Vector2, do_rotate :
 	else:
 		if !System.Scale.equal(card.rotation_degrees, card.base_rotation):
 			card.rotation_degrees = System.Scale.baseline(card.rotation_degrees, card.base_rotation, delta);
-	card.modal_layer.rotation_degrees = -card.rotation_degrees;
+	card.modal_rotation = -card.rotation_degrees;
+	card.modal_layer.rotation_degrees = 0 if card.card_data.zone == CardEnums.Zone.HAND \
+		else card.modal_rotation;
 
 static func zoom(card : GameplayCard, delta : float):
 	if card.do_interact():
