@@ -8,3 +8,4 @@ var id_regex : RegEx = RegEx.new();
 var cheat_draw_regex : RegEx = RegEx.new();
 var gameplay : Gameplay;
 var current_code_index : int = 0
+var cards : Array;

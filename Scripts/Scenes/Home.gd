@@ -5,9 +5,18 @@ extends Home
 
 func _ready() -> void:
 	initialize_regex();
+	load_cards();
 	gameplay = System.Instance.load_child(GAMEPLAY_PATH, scene_layer);
 	update_debug_tools();
 	set_process_input(true);
+
+func load_cards() -> void:
+	System.Server.request(RequestEnums.Operation.GET_CARDS, self);
+
+func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
+	match operation:
+		RequestEnums.Operation.GET_CARDS:
+			cards = response.cards;
 
 func update_debug_tools() -> void:
 	debug_prompt.visible = System.debug_mode != SystemEnums.DebugMode.NONE;

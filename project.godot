@@ -22,6 +22,7 @@ CardEnums="*res://Enums/CardEnums.gd"
 GameplayEnums="*res://Enums/GameplayEnums.gd"
 EffectEnums="*res://Enums/EffectEnums.gd"
 SystemEnums="*res://Enums/SystemEnums.gd"
+RequestEnums="*res://Enums/RequestEnums.gd"
 
 [display]
 
