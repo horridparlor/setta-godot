@@ -16,7 +16,6 @@ const MODAL_MIN_HEIGHT : int = 290;
 const MODAL_OPTION_HEIGHT : int = 140;
 const SLEEVE_LOAD_PREFIX : String = "res://Prefabs/Gameplay/CardSleeves/";
 const MIDDLE_FRAME_PATH : String = "res://Prefabs/Gameplay/CardFragment/MiddleFrame/";
-const FIX_LAYER_PATH : String = "res://Prefabs/Gameplay/CardFragment/FixLayer/";
 
 const MOVEMENT_SPEED : int = 10;
 const MAX_FOCUSED_SPEED : int = 3200;

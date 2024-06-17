@@ -17,6 +17,7 @@ const Window_ : Vector2 = Vector2(1920, 1080);
 
 var debug_mode : SystemEnums.DebugMode = SystemEnums.DebugMode.NONE;
 var debug_id : int;
+var cards : Array;
 
 static func wait(delay : float, parent : Node2D) -> void:
 	await parent.get_tree().create_timer(delay).timeout;

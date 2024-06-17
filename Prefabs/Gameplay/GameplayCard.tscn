@@ -41,8 +41,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("3_3hy8b")
 
-[node name="MiddleFrame" type="Node2D" parent="GlowNode"]
-
 [node name="InnerFrame" type="Node2D" parent="GlowNode"]
 
 [node name="ArtFrame" type="Panel" parent="GlowNode/InnerFrame"]
@@ -62,7 +60,7 @@ theme_override_styles/panel = ExtResource("6_7d0u8")
 [node name="Artwork" type="Sprite2D" parent="GlowNode/InnerFrame/ArtFrame"]
 position = Vector2(188, 162)
 
-[node name="FixLayer" type="Node2D" parent="GlowNode/InnerFrame"]
+[node name="MiddleFrame" type="Node2D" parent="GlowNode"]
 
 [node name="Monster" type="Node2D" parent="GlowNode"]
 
@@ -141,13 +139,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Attribute" type="Node2D" parent="GlowNode"]
-
-[node name="ArtCutFix" type="ColorRect" parent="GlowNode/Attribute"]
-offset_left = 91.0
-offset_top = -148.0
-offset_right = 93.0
-offset_bottom = -146.0
-color = Color(0, 0, 0, 1)
 
 [node name="AttributeName" type="Label" parent="GlowNode/Attribute"]
 offset_left = 92.0

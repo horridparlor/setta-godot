@@ -10,7 +10,6 @@ extends GameplayCard
 @onready var attribute_sprite : Sprite2D = $GlowNode/Attribute/AttributeFrame/Attribute;
 @onready var sleeve_layer : Node2D = $GlowNode/Sleeve;
 @onready var middle_frame_layer : Node = $GlowNode/MiddleFrame;
-@onready var fix_layer : Node = $GlowNode/InnerFrame/FixLayer;
 @onready var modal_layer : Node2D = $ModalLayer;
 @onready var copiable_name : LineEdit = $GlowNode/Stats/CopiableName;
 

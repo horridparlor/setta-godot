@@ -3,11 +3,11 @@ extends Node
 static func out():
 	var deck_list : Dictionary = {
 		CardEnums.DeckType.MAIN: {
-			CardEnums.Card.HAMMER_WAIFU: 40,
-			CardEnums.Card.STONE_BASILISK: 20,
+			16: 40,
+			63: 20,
 		},
 		CardEnums.DeckType.EXTRA: {
-			CardEnums.Card.BROTHERS_IN_WAR: 15,
+			71: 15,
 		}
 	};
 	

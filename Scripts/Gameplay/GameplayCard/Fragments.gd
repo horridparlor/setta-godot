@@ -15,20 +15,12 @@ static func update_layers_by_subtype(card : GameplayCard) -> void:
 	if card.card_data.subtype == CardEnums.CardSubtype.NONE:
 		return;
 	update_middle_frame(card);
-	update_fix_layer(card);
 
 static func update_middle_frame(card : GameplayCard) -> void:
 	System.Instance.load_child(
 		card.MIDDLE_FRAME_PATH + \
 		CardEnums.subtype_to_string[card.card_data.subtype] + \
 		SystemEnums.get_node_extension(), card.middle_frame_layer
-	);
-
-static func update_fix_layer(card : GameplayCard) -> void:
-	System.Instance.load_child(
-		card.FIX_LAYER_PATH + \
-		CardEnums.subtype_to_string[card.card_data.subtype] + \
-		SystemEnums.get_node_extension(), card.fix_layer
 	);
 
 static func update_monster_visuals(card : GameplayCard) -> void:
