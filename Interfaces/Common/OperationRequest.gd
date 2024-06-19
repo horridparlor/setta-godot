@@ -1,8 +1,8 @@
 extends Node
 class_name OperationRequest
 
-const DOMAIN : String = "https://setta.fi/";
-const PATH : String = DOMAIN + "setta-back/api/user/";
+const DOMAIN : String = "https://cardnot.com/";
+const PATH : String = DOMAIN + "api/user/";
 
 var operation : RequestEnums.Operation;
 var endpoint : String;
