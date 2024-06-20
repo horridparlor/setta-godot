@@ -16,7 +16,8 @@ func load_cards() -> void:
 func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:
 		RequestEnums.Operation.GET_CARDS:
-			System.cards = response.cards;
+			System.set_cards(response.cards);
+			gameplay.init();
 
 func update_debug_tools() -> void:
 	debug_prompt.visible = System.debug_mode != SystemEnums.DebugMode.NONE;

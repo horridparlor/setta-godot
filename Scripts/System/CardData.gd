@@ -26,10 +26,40 @@ static func create(card : CardEnums.Card, init_data : CardInitData, \
 	return card_data;
 
 static func get_card_name(card_data : CardData) -> String:
-	return System.Card.get_card_name(card_data.card);
+	print(System.cards);
+	return System.cards[card_data.card_id].cardName;
+
+static func get_serialized_name(card_data : CardData) -> String:
+	var card_name = get_card_name(card_data)
+	card_name = card_name\
+		.replace("á", "a")\
+		.replace("ä", "a")\
+		.replace("é", "e")\
+		.replace("€", "e")\
+		.replace("ó", "o")\
+		.replace("ö", "o")\
+		.replace("ś", "s")\
+		.replace("$", "s")\
+		.replace("-", "")\
+		.replace("'", "")\
+		.replace("!", "")\
+		.replace("?", "")\
+		.replace("–", "")\
+		.replace(",", "")\
+		.replace(":", "")\
+		.replace("[", "")\
+		.replace("]", "")
+
+	var words = card_name.split(" ");
+	for i in range(words.size()):
+		words[i] = words[i].capitalize();
+
+	card_name = "".join(words);
+	return card_name;
 
 static func default(init_data : CardInitData) -> CardData:
 	var card : CardData = CardData.new(
+		16,
 		CardEnums.Card.NONE,
 		CardEnums.Class.NONE,
 		CardEnums.CardType.NONE,

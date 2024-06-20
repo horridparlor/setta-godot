@@ -19,7 +19,7 @@ func add_parent(new_parent : Node) -> void:
 	parent.add_child(self);
 
 func complete_request(result : int, response_code : int, headers : PackedStringArray, body : PackedByteArray) -> void:
-	var response = [body];
+	var response = {"body": body} if leave_raw else [body];
 	if !leave_raw:
 		response = System.Server.parse_response(body);
 	response = parse_response(response);

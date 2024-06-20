@@ -1,2 +1,2 @@
 const REQUESTS : bool = true;
-const REQUESTS_FILTER : RequestEnums.Operation = RequestEnums.Operation.GET_CARDS;
+const REQUESTS_FILTER : RequestEnums.Operation = RequestEnums.Operation.FETCH_ARTWORK;

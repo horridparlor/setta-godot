@@ -1,6 +1,7 @@
 extends Node
 
 static func out(init_data : CardInitData):
+	var card_id : int = 16;
 	var card : CardEnums.Card = CardEnums.Card.HAMMER_WAIFU;
 	var card_class : CardEnums.Class = CardEnums.Class.DRAGON;
 	var card_type : CardEnums.CardType = CardEnums.CardType.MONSTER;
@@ -27,7 +28,7 @@ static func out(init_data : CardInitData):
 [i]Effect:[/i] Target monster loses [code]200[/code] [b]atk[/b]. [i](All stat changes only last until the end of turn.)[/i]";
 	
 	return CardData.new(
-		card, card_class,
+		card_id, card, card_class,
 		card_type, subtype, special_types,
 		effects, effect_text,
 		init_data,

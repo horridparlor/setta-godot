@@ -1,9 +1,20 @@
 static func update_artwork(card : GameplayCard):
+	fetch_artwork(card);
 	card.artwork.texture = load(card.ARTWORK_LOAD_PREFIX + \
 		System.String_.serialize(System.CardData.get_card_name(card.card_data)) + \
 		SystemEnums.get_image_extension());
 	update_attribute_sprite(card);
 	update_layers_by_subtype(card);
+
+static func fetch_artwork(card : GameplayCard) -> void:
+	var file_path : String = "%d/%d/%s.%s" \
+		% [
+			card.card_data.card_id, 1,
+			System.CardData.get_serialized_name(card.card_data),
+			RequestEnums.getWebpExtension()
+		];
+	print(file_path);
+	System.Server.request(RequestEnums.Operation.FETCH_ARTWORK, card, file_path);
 
 static func update_attribute_sprite(card : GameplayCard) -> void:
 	if card.card_data.card_class == CardEnums.Class.NONE:

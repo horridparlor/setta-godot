@@ -31,8 +31,10 @@ func _ready() -> void:
 	init_random();
 	Signals.connect_signals(self);
 	CardManager.init_game_state(self);
-	GameManager.start_game(self);
 	cancel_button_layer.activate_animations(random);
+
+func init() -> void:
+	GameManager.start_game(self);
 
 func init_random() -> void:
 	random.randomize();

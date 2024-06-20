@@ -9,6 +9,7 @@ const EXTRA_DECK_SUBTYPES : Array = [
 	CardEnums.CardSubtype.ROYAL,
 ];
 
+var card_id: int;
 var card : CardEnums.Card;
 var card_class : CardEnums.Class;
 var card_type : CardEnums.CardType;
@@ -26,6 +27,7 @@ var zone : CardEnums.Zone = CardEnums.Zone.NONE;
 var face : CardEnums.Face = CardEnums.Face.NONE;
 
 func _init(
+	card_id_ : int,
 	card_ : CardEnums.Card,
 	card_class_ : CardEnums.Class,
 	card_type_ : CardEnums.CardType,
@@ -36,6 +38,7 @@ func _init(
 	init_data : CardInitData,
 	monster_data_ : MonsterData = null
 ):
+	card_id = card_id_;
 	card = card_;
 	card_class = card_class_;
 	card_type = card_type_;
