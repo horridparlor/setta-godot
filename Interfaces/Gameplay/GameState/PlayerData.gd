@@ -9,6 +9,9 @@ const BACKROW_SIZE : int = 5;
 const PENDULUM_SIZE : int = 2;
 const ONE_TRIBUTE_LEVEL : int = 5;
 const TWO_TRIBUTE_LEVEL : int = 7;
+const MAIN_DECK_SIZE : int = 80;
+const EXTRA_DECK_SIZE : int = 30;
+const MAIN_DECK_DUPLICATES : int = 3;
 
 var cards_in_backrow : Array = [];
 var cards_in_deck : Array = [];
@@ -34,9 +37,9 @@ func _init(
 
 func create_cards(init_data : CardInitData, source : Dictionary, zone : CardEnums.Zone):
 	var card_data : CardData;
-	for card in source:
-		for i in range(source[card]):
-			card_data = System.CardData.create(card, init_data, owning_player);
+	for card_id in source:
+		for i in range(source[card_id]):
+			card_data = CardData.new(card_id, init_data);
 			get_container(zone).append(card_data);
 
 func shuffle_deck() -> void:
@@ -104,6 +107,8 @@ func can_play_card(card : CardData) -> bool:
 	return field_has_room(tributes) and has_enough_tributes(tributes);
 
 func get_tributes(card : CardData) -> int:
+	if !System.CardData.is_monster(card):
+		return 0;
 	var level : int = card.monster_data.level;
 	if level < ONE_TRIBUTE_LEVEL:
 		return 0;
@@ -119,20 +124,20 @@ func has_enough_tributes(tributes : int) -> bool:
 
 func has_materials(card : CardData) -> bool:
 	var found_materials : Array;
-	for material in card.get_materials():
-		if material == CardEnums.Card.NONE:
+	for material_id in card.get_materials():
+		if material_id == null:
 			continue;
-		if !has_material(material, found_materials):
+		if !has_material(material_id, found_materials):
 			return false;
 	return true;
 
-func has_material(material : CardEnums.Card, found_materials : Array) -> bool:
+func has_material(material_id : int, found_materials : Array) -> bool:
 	var card : CardData;
 	for c in cards_on_field:
 		card = c;
 		if card.face == CardEnums.Face.DOWN:
 			continue;
-		if card.card == material and card.instance_id not in found_materials:
+		if card.card_id == material_id and card.instance_id not in found_materials:
 			found_materials.append(card.instance_id);
 			return true;
 	return false;

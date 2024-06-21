@@ -28,9 +28,5 @@ static func out(init_data : CardInitData):
 [i]Effect:[/i] Target monster loses [code]200[/code] [b]atk[/b]. [i](All stat changes only last until the end of turn.)[/i]";
 	
 	return CardData.new(
-		card_id, card, card_class,
-		card_type, subtype, special_types,
-		effects, effect_text,
-		init_data,
-		monster_data
+		card_id, init_data
 	);

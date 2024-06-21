@@ -8,10 +8,12 @@ extends GameplayCard
 @onready var atk_label : Label = $GlowNode/Monster/Attack/AttackFrame/Atk;
 @onready var def_label : Label = $GlowNode/Monster/Defense/DefenseFrame/Def;
 @onready var attribute_sprite : Sprite2D = $GlowNode/Attribute/AttributeFrame/Attribute;
+@onready var attribute_name : Label = $GlowNode/Attribute/AttributeName;
 @onready var sleeve_layer : Node2D = $GlowNode/Sleeve;
 @onready var middle_frame_layer : Node = $GlowNode/MiddleFrame;
 @onready var modal_layer : Node2D = $ModalLayer;
 @onready var copiable_name : LineEdit = $GlowNode/Stats/CopiableName;
+@onready var monster_stats_layer : Node2D = $GlowNode/Monster;
 
 const Core : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Core.gd");
 const Fragments : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Fragments.gd");
@@ -58,4 +60,4 @@ func _on_http_response(operation : RequestEnums.Operation, response : Dictionary
 	match operation:
 		RequestEnums.Operation.FETCH_ARTWORK:
 			var image : Image = System.Image_.load_from_buffer(response.body);
-			artwork.texture = ImageTexture.new().create_from_image(image);
+			Fragments.display_artwork(image, self, true);

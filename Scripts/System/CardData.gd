@@ -19,19 +19,8 @@ static func discard_from_hand(card : CardData, player : PlayerData, erased : Dic
 static func get_is_negated(card : CardData, gameplay : Gameplay) -> bool:
 	return card.subtype in gameplay.negated_subtypes;
 
-static func create(card : CardEnums.Card, init_data : CardInitData, \
- owning_player : GameplayEnums.OwningPlayer = GameplayEnums.OwningPlayer.YOU) -> CardData:
-	var card_data : CardData = load(CARD_DATA_PREFIX + System.Card.get_card_path(card) + SUBFIX).out(init_data);
-	card_data.owning_player = owning_player;
-	return card_data;
-
-static func get_card_name(card_data : CardData) -> String:
-	print(System.cards);
-	return System.cards[card_data.card_id].cardName;
-
 static func get_serialized_name(card_data : CardData) -> String:
-	var card_name = get_card_name(card_data)
-	card_name = card_name\
+	var serialized : String = card_data.card_name\
 		.replace("á", "a")\
 		.replace("ä", "a")\
 		.replace("é", "e")\
@@ -50,25 +39,45 @@ static func get_serialized_name(card_data : CardData) -> String:
 		.replace("[", "")\
 		.replace("]", "")
 
-	var words = card_name.split(" ");
+	var words : Array = serialized.split(" ");
 	for i in range(words.size()):
 		words[i] = words[i].capitalize();
 
-	card_name = "".join(words);
-	return card_name;
+	return "".join(words);
 
 static func default(init_data : CardInitData) -> CardData:
 	var card : CardData = CardData.new(
 		16,
-		CardEnums.Card.NONE,
-		CardEnums.Class.NONE,
-		CardEnums.CardType.NONE,
-		CardEnums.CardSubtype.NONE,
-		null,
-		null,
-		"",
-		init_data,
-		null
+		init_data
 	);
 	card.zone = CardEnums.Zone.SHOWCASE;
 	return card;
+
+static func is_main_deck(card_data : CardDefaultData) -> bool:
+	return card_data.subtype in CardEnums.MAIN_DECK_SUBTYPES;
+
+static func is_extra_deck(card_data : CardDefaultData) -> bool:
+	return card_data.subtype not in CardEnums.MAIN_DECK_SUBTYPES;
+
+static func is_monster(card_data : CardDefaultData) -> bool:
+	return card_data.card_type == CardEnums.CardType.MONSTER;
+
+static func get_attribute_name(card_data : CardDefaultData) -> String:
+	if is_monster(card_data):
+		return CardEnums.ClassName[card_data.card_class];
+	return CardEnums.CardTypeName[card_data.card_type];
+
+static func is_normal(card_data : CardDefaultData) -> bool:
+	return card_data.subtype == CardEnums.CardSubtype.NORMAL;
+
+static func has_supertype(card_data : CardDefaultData) -> bool:
+	return card_data.supertype != CardEnums.CardSupertype.NONE;
+
+static func get_middle_frame_name(card_data : CardDefaultData) -> String:
+	if is_normal(card_data):
+		if is_monster(card_data):
+			if has_supertype(card_data):
+				return System.String_.serialize(CardEnums.CardSuperTypeName[card_data.supertype]);
+		else:
+			return CardEnums.CardTypeName[card_data.card_type];
+	return System.String_.serialize(CardEnums.CardSubtypeName[card_data.subtype]);

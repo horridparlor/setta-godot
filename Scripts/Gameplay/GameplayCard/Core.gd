@@ -7,7 +7,7 @@ static func initialize(card : GameplayCard, gameplay : Gameplay) -> void:
 static func update_visuals(card : GameplayCard) -> void:
 	card.Fragments.update_artwork(card);
 	update_name(card);
-	card.effect_label.text = card.card_data.effect_text;
+	card.effect_label.text = card.card_data.effects_text;
 	card.Fragments.update_monster_visuals(card);
 	update_debug_tools(card);
 
@@ -20,7 +20,7 @@ static func update_name(card : GameplayCard) -> void:
 	if System.debug_mode == SystemEnums.DebugMode.CARD_DEBUG:
 		card.copiable_name.text = str(card.card_data.instance_id);
 	else:
-		card.name_label.text = System.CardData.get_card_name(card.card_data);
+		card.name_label.text = card.card_data.card_name;
 
 static func activate_animations(card : GameplayCard) -> void:
 	if card.glow_state == GameplayEnums.GlowState.GLOW:

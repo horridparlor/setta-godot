@@ -25,15 +25,20 @@ static var Endpoint = {
 }
 
 enum ImageFileType {
+	PNG,
 	WEBP
 }
 
 static var ImageExtension = {
+	ImageFileType.PNG: 'png',
 	ImageFileType.WEBP: 'webp'
 }
 
-static func getImageExtension(type: ImageFileType) -> String:
-	return ImageExtension[type];
+static func get_image_extension(type: ImageFileType) -> String:
+	return '.' + ImageExtension[type];
 
-static func getWebpExtension() -> String:
-	return getImageExtension(ImageFileType.WEBP);
+static func get_png_extension() -> String:
+	return get_image_extension(ImageFileType.PNG);
+
+static func get_webp_extension() -> String:
+	return get_image_extension(ImageFileType.WEBP);

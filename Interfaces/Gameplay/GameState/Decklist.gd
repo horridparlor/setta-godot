@@ -1,18 +1,18 @@
 extends Node
 class_name Decklist
 
-const PREMADE_PREFIX : String = "res://Data/DeckLists/";
-const SUBFIX : String = ".gd";
-
-var decklist_type : GameplayEnums.DecklistType;
-var path : String;
+var main_deck : Dictionary;
+var extra_deck : Dictionary;
 
 func _init(
-	decklist_type_ : GameplayEnums.DecklistType,
-	path_ : String
+	main_deck_ : Dictionary,
+	extra_deck_ : Dictionary
 ):
-	decklist_type = decklist_type_;
-	path = path_;
+	main_deck = main_deck_;
+	extra_deck = extra_deck_;
 
-func get_cardlist():
-	return load(PREMADE_PREFIX + path + SUBFIX).out();
+func get_cardlist() -> Dictionary:
+	return {
+		CardEnums.DeckType.MAIN: main_deck,
+		CardEnums.DeckType.EXTRA: extra_deck	
+	};

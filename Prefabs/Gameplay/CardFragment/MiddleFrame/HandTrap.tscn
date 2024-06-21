@@ -1,13 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://0vh68bhwvm13"]
+[gd_scene load_steps=5 format=3 uid="uid://ckna2yu41h310"]
 
-[ext_resource type="StyleBox" uid="uid://lqfkll4ys1f3" path="res://Styles/Gameplay/CardFragments/MiddleFrame/EffectFrame/Effect.tres" id="2_3aas2"]
-[ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/CardFragments/FixLayer/Effect.tres" id="3_46mxp"]
+[ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/CardFragments/FixLayer/Effect.tres" id="1_t5vb1"]
+[ext_resource type="StyleBox" uid="uid://cjxd8odck45q2" path="res://Styles/Gameplay/CardFragments/MiddleFrame/EffectFrame/Trap.tres" id="2_godcn"]
+
+[sub_resource type="Gradient" id="Gradient_wu4lm"]
+colors = PackedColorArray(0.878431, 0.780392, 0.105882, 1, 0.905882, 0.486275, 0.607843, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1a5e5"]
+gradient = SubResource("Gradient_wu4lm")
 
 [node name="MiddleFrame" type="Node2D"]
 
 [node name="Polygon2" type="Polygon2D" parent="."]
-color = Color(0.92549, 0.54902, 0.341176, 1)
-texture_rotation = 1.5708
+texture = SubResource("GradientTexture1D_1a5e5")
+texture_rotation = 4.71239
 polygon = PackedVector2Array(-202, -284, 202, -284, 202, 284, -202, 284, -202, 102, -188, 102, 188, 102, 188, -146, 91, -146, 62, -222, -188, -222, -188, 102, -202, 102)
 
 [node name="AttributeCut" type="ColorRect" parent="Polygon2"]
@@ -24,7 +30,7 @@ offset_top = -221.0
 offset_right = 140.0
 offset_bottom = -141.0
 rotation = -0.392699
-theme_override_styles/panel = ExtResource("3_46mxp")
+theme_override_styles/panel = ExtResource("1_t5vb1")
 metadata/_edit_use_anchors_ = true
 
 [node name="AttributeCut2" type="Panel" parent="Polygon2"]
@@ -33,7 +39,7 @@ offset_top = -146.0
 offset_right = 172.0
 offset_bottom = -50.0
 rotation = -1.5708
-theme_override_styles/panel = ExtResource("3_46mxp")
+theme_override_styles/panel = ExtResource("1_t5vb1")
 metadata/_edit_use_anchors_ = true
 
 [node name="EffectFrame" type="Panel" parent="Polygon2"]
@@ -48,5 +54,5 @@ offset_right = 188.0
 offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("2_3aas2")
+theme_override_styles/panel = ExtResource("2_godcn")
 metadata/_edit_use_anchors_ = true

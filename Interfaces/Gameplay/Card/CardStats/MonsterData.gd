@@ -4,6 +4,7 @@ class_name MonsterData
 var level : int;
 var atk : int;
 var def : int;
+var position : CardEnums.MonsterPosition = CardEnums.MonsterPosition.ATTACK;
 
 var monster_position : CardEnums.MonsterPosition;
 var atk_gain : int;

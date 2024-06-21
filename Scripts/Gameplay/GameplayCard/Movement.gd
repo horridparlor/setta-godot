@@ -26,8 +26,7 @@ static func get_up_rotation(card : GameplayCard) -> float:
 		if !card.do_interact() and card.zone else card.ROTATION_ATTACK;
 
 static func is_sideways(card : GameplayCard) -> bool:
-	var monster_data : MonsterData = card.card_data.monster_data;
-	return monster_data and monster_data.monster_position == CardEnums.MonsterPosition.DEFENSE;
+	return card.card_data.get_position() == CardEnums.MonsterPosition.DEFENSE;
 
 static func focus(card : GameplayCard):
 	card.focus_state = GameplayEnums.FocusState.WAITING;

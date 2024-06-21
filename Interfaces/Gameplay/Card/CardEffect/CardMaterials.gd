@@ -1,15 +1,24 @@
 extends Node
 class_name CardMaterials
 
-var primary_material : CardEnums.Card;
-var secondary_material : CardEnums.Card;
-var tertiary_material : CardEnums.Card;
+var primary_material_id;
+var secondary_material_id;
+var tertiary_material_id;
 
 func _init(
-	primary_material_ : CardEnums.Card,
-	secondary_material_ : CardEnums.Card,
-	tertiary_material_ : CardEnums.Card = CardEnums.Card.NONE
+	primary_material_id_,
+	secondary_material_id_,
+	tertiary_material_id_
 ):
-	primary_material = primary_material_;
-	secondary_material = secondary_material_;
-	tertiary_material = tertiary_material_;
+	primary_material_id = primary_material_id_;
+	secondary_material_id = secondary_material_id_;
+	tertiary_material_id = tertiary_material_id_;
+
+func list() -> Array:
+	return [
+		primary_material_id,
+		secondary_material_id,
+		tertiary_material_id
+	].filter(func(id):
+		return id != null
+	);

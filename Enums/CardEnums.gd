@@ -7,11 +7,24 @@ enum CardType {
 	TRAP
 }
 
-static var card_type_to_string = {
-	CardType.MONSTER: "Monster",
-	CardType.SPELL: "Spell",
-	CardType.TRAP: "Trap",
+const JSON_TYPE_MONSTER : String = "Monster";
+const JSON_TYPE_SPELL : String = "Spell";
+const JSON_TYPE_TRAP : String = "Trap";
+
+static var CardTypeName = {
+	CardType.MONSTER: JSON_TYPE_MONSTER,
+	CardType.SPELL: JSON_TYPE_SPELL,
+	CardType.TRAP: JSON_TYPE_TRAP,
 }
+
+static func enumerate_card_type(message : String) -> CardType:
+	match message:
+		JSON_TYPE_MONSTER:
+			return CardType.MONSTER;
+		JSON_TYPE_SPELL:
+			return CardType.SPELL;
+		_:
+			return CardType.TRAP;
 
 enum DeckType {
 	MAIN,
@@ -26,16 +39,78 @@ enum CardSubtype {
 	REVENGE,
 	RITUAL,
 	ROYAL,
+	TIME_TRAVELLER
 }
 
-static var subtype_to_string = {
-	CardSubtype.EFFECT: "Effect",
-	CardSubtype.FUSION: "Fusion",
-	CardSubtype.NORMAL: "Normal",
-	CardSubtype.REVENGE: "Revenge",
-	CardSubtype.RITUAL: "Ritual",
-	CardSubtype.ROYAL: "Royal",
+const MAIN_DECK_SUBTYPES : Array = [
+	CardSubtype.EFFECT,
+	CardSubtype.NORMAL,
+]
+
+const JSON_SUBTYPE_EFFECT : String = "Effect";
+const JSON_SUBTYPE_FUSION : String = "Fusion";
+const JSON_SUBTYPE_NORMAL : String = "Normal";
+const JSON_SUBTYPE_REVENGE : String = "Revenge";
+const JSON_SUBTYPE_RITUAL : String = "Ritual";
+const JSON_SUBTYPE_ROYAL : String = "Royal";
+const JSON_SUBTYPE_TIME_TRAVELLER : String = "Time Traveller";
+
+static var CardSubtypeName = {
+	CardSubtype.EFFECT: JSON_SUBTYPE_EFFECT,
+	CardSubtype.FUSION: JSON_SUBTYPE_FUSION,
+	CardSubtype.NORMAL: JSON_SUBTYPE_NORMAL,
+	CardSubtype.REVENGE: JSON_SUBTYPE_REVENGE,
+	CardSubtype.RITUAL: JSON_SUBTYPE_RITUAL,
+	CardSubtype.ROYAL: JSON_SUBTYPE_ROYAL,
+	CardSubtype.TIME_TRAVELLER: JSON_SUBTYPE_TIME_TRAVELLER
 }
+
+static func enumerate_subtype(message : String) -> CardSubtype:
+	match message:
+		JSON_SUBTYPE_EFFECT:
+			return CardSubtype.EFFECT;
+		JSON_SUBTYPE_FUSION:
+			return CardSubtype.FUSION;
+		JSON_SUBTYPE_NORMAL:
+			return CardSubtype.NORMAL;
+		JSON_SUBTYPE_REVENGE:
+			return CardSubtype.REVENGE;
+		JSON_SUBTYPE_RITUAL:
+			return CardSubtype.RITUAL;
+		JSON_SUBTYPE_ROYAL:
+			return CardSubtype.ROYAL;
+		JSON_SUBTYPE_TIME_TRAVELLER:
+			return CardSubtype.TIME_TRAVELLER;
+		_:
+			return CardSubtype.NONE;
+
+enum CardSupertype {
+	HAND_TRAP,
+	MAXIMUM,
+	NONE,
+	PENDULUM
+}
+
+const JSON_SUPERTYPE_HAND_TRAP : String = "Hand Trap";
+const JSON_SUPERTYPE_MAXIMUM : String = "Maximum";
+const JSON_SUPERTYPE_PENDULUM : String = "Pendulum";
+
+static var CardSupertypeName = {
+	CardSupertype.HAND_TRAP: JSON_SUPERTYPE_HAND_TRAP,
+	CardSupertype.MAXIMUM: JSON_SUPERTYPE_MAXIMUM,
+	CardSupertype.PENDULUM: JSON_SUPERTYPE_PENDULUM
+}
+
+static func enumerate_supertype(message : String) -> CardSupertype:
+	match message:
+		JSON_SUPERTYPE_HAND_TRAP:
+			return CardSupertype.HAND_TRAP;
+		JSON_SUPERTYPE_MAXIMUM:
+			return CardSupertype.MAXIMUM;
+		JSON_SUPERTYPE_PENDULUM:
+			return CardSupertype.PENDULUM;
+		_:
+			return CardSupertype.NONE;
 
 enum Zone {
 	BACKROW,
@@ -71,34 +146,36 @@ enum Class {
 	ZOMBIE,
 }
 
+const JSON_CLASS_ABYSS : String = "Abyss";
+const JSON_CLASS_DRAGON : String = "Dragon";
+const JSON_CLASS_KAWAII : String = "Kawaii";
+const JSON_CLASS_SLIME : String = "Slime";
+const JSON_CLASS_SPARKS : String = "Sparks";
+const JSON_CLASS_ZOMBIE : String = "Zombie";
+
 static var ClassName = {
-	Class.ABYSS: "Abyss",
-	Class.DRAGON: "Dragon",
-	Class.KAWAII: "Kawaii",
-	Class.SLIME: "Slime",
-	Class.SPARKS: "Sparks",
-	Class.ZOMBIE: "Zombie",
+	Class.ABYSS: JSON_CLASS_ABYSS,
+	Class.DRAGON: JSON_CLASS_DRAGON,
+	Class.KAWAII: JSON_CLASS_KAWAII,
+	Class.SLIME: JSON_CLASS_SLIME,
+	Class.SPARKS: JSON_CLASS_SPARKS,
+	Class.ZOMBIE: JSON_CLASS_ZOMBIE,
 }
 
-enum Card {
-	BROTHERS_IN_WAR,
-	HAMMER_WAIFU,
-	NONE,
-	STONE_BASILISK,
-}
-
-static var CardName = {
-	Card.BROTHERS_IN_WAR: "Brothers in War",
-	Card.HAMMER_WAIFU: "Hammer Waifu",
-	Card.NONE: "No name",
-	Card.STONE_BASILISK: "Stone Basilisk"
-}
-
-enum MaximumMonster {
-	HORSE_RAVEN,
-	NITROPUS,
-	NONE
-}
+static func enumerate_class(message : String) -> Class:
+	match message:
+		JSON_CLASS_ABYSS:
+			return Class.ABYSS;
+		JSON_CLASS_DRAGON:
+			return Class.DRAGON;
+		JSON_CLASS_KAWAII:
+			return Class.KAWAII;
+		JSON_CLASS_SLIME:
+			return Class.SLIME;
+		JSON_CLASS_SPARKS:
+			return Class.SPARKS;
+		_:
+			return Class.ZOMBIE;
 
 enum MaximumPiece {
 	LEFT,

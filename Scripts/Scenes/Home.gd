@@ -16,8 +16,29 @@ func load_cards() -> void:
 func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:
 		RequestEnums.Operation.GET_CARDS:
-			System.set_cards(response.cards);
+			set_cards(response.cards);
 			gameplay.init();
+
+func set_cards(source : Array):
+	var cards : Dictionary;
+	var extra_deck_cards : Dictionary;
+	var main_deck_cards : Dictionary;
+	var card_data : CardDefaultData;
+	var json_data : Dictionary;
+	var card_id : int;
+	for card in source:
+		card_data = CardDefaultData.new(card);
+		json_data = card_data.to_json();
+		card_id = card.cardId;
+		cards[card_id] = json_data;
+		card_data.queue_free();
+		if System.CardData.is_main_deck(card_data):
+			main_deck_cards[card_id] = json_data;
+		else:
+			extra_deck_cards[card_id] = json_data;
+	System.cards = cards;
+	System.main_deck_cards = main_deck_cards;
+	System.extra_deck_cards = extra_deck_cards;
 
 func update_debug_tools() -> void:
 	debug_prompt.visible = System.debug_mode != SystemEnums.DebugMode.NONE;

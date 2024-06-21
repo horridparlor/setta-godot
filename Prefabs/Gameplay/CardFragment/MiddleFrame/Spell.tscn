@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://0vh68bhwvm13"]
+[gd_scene load_steps=3 format=3 uid="uid://c7likb8gr3adv"]
 
-[ext_resource type="StyleBox" uid="uid://lqfkll4ys1f3" path="res://Styles/Gameplay/CardFragments/MiddleFrame/EffectFrame/Effect.tres" id="2_3aas2"]
-[ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/CardFragments/FixLayer/Effect.tres" id="3_46mxp"]
+[ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/CardFragments/FixLayer/Effect.tres" id="1_s4u6l"]
+[ext_resource type="StyleBox" uid="uid://yeld5yrj8p67" path="res://Styles/Gameplay/CardFragments/MiddleFrame/EffectFrame/Spell.tres" id="2_qtvoi"]
 
 [node name="MiddleFrame" type="Node2D"]
 
 [node name="Polygon2" type="Polygon2D" parent="."]
-color = Color(0.92549, 0.54902, 0.341176, 1)
+color = Color(0.298039, 0.721569, 0.443137, 1)
 texture_rotation = 1.5708
 polygon = PackedVector2Array(-202, -284, 202, -284, 202, 284, -202, 284, -202, 102, -188, 102, 188, 102, 188, -146, 91, -146, 62, -222, -188, -222, -188, 102, -202, 102)
 
@@ -24,7 +24,7 @@ offset_top = -221.0
 offset_right = 140.0
 offset_bottom = -141.0
 rotation = -0.392699
-theme_override_styles/panel = ExtResource("3_46mxp")
+theme_override_styles/panel = ExtResource("1_s4u6l")
 metadata/_edit_use_anchors_ = true
 
 [node name="AttributeCut2" type="Panel" parent="Polygon2"]
@@ -33,7 +33,7 @@ offset_top = -146.0
 offset_right = 172.0
 offset_bottom = -50.0
 rotation = -1.5708
-theme_override_styles/panel = ExtResource("3_46mxp")
+theme_override_styles/panel = ExtResource("1_s4u6l")
 metadata/_edit_use_anchors_ = true
 
 [node name="EffectFrame" type="Panel" parent="Polygon2"]
@@ -48,5 +48,5 @@ offset_right = 188.0
 offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("2_3aas2")
+theme_override_styles/panel = ExtResource("2_qtvoi")
 metadata/_edit_use_anchors_ = true
