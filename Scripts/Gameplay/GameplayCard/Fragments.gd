@@ -32,6 +32,12 @@ static func update_layers_by_subtype(card : GameplayCard) -> void:
 	if card.card_data.subtype == CardEnums.CardSubtype.NONE:
 		return;
 	update_middle_frame(card);
+	update_text_color(card);
+
+static func update_text_color(card : GameplayCard) -> void:
+	var text_color : Color = System.CardData.get_text_color_by_frame(card.card_data);
+	card.name_label.add_theme_color_override("default_color", text_color);
+	card.attribute_name.add_theme_color_override("font_color", text_color);
 
 static func update_middle_frame(card : GameplayCard) -> void:
 	System.Instance.load_child(

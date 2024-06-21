@@ -1,5 +1,9 @@
 extends Node
 
+const TEXT_COLOR_BLACK : Color = Color(0, 0, 0);
+const TEXT_COLOR_PEARL_WHITE : Color = Color(243, 243, 243);
+const TEXT_COLOR_WHITE : Color = Color(255, 255, 255);
+
 enum FileExtension {
 	IMAGE,
 	NODE,

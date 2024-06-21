@@ -114,3 +114,14 @@ static func get_showcase_name(card_data : CardDefaultData) -> String:
 		"" if !is_maximum(card_data) \
 		else " " + "[%c]" % [CardEnums.MaximumPieceName[card_data.maximum_piece][0]];
 	return card_data.card_name + maximum_string;
+
+static func get_uses_white_text(card_data : CardDefaultData) -> bool:
+	return card_data.subtype in [
+		CardEnums.CardSubtype.ROYAL,
+		CardEnums.CardSubtype.TIME_TRAVELLER	
+	];
+
+static func get_text_color_by_frame(card_data : CardDefaultData) -> Color:
+	return SystemEnums.TEXT_COLOR_PEARL_WHITE\
+		if get_uses_white_text(card_data)\
+		else SystemEnums.TEXT_COLOR_BLACK;

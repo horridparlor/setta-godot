@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://tsgh2fxp8v7a"]
+[gd_scene load_steps=5 format=3 uid="uid://cjyfd8lnkb6rk"]
 
-[ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/CardFragments/FixLayer/Effect.tres" id="1_oob66"]
-[ext_resource type="StyleBox" uid="uid://dpx1ueite1na4" path="res://Styles/Gameplay/CardFragments/MiddleFrame/EffectFrame/Royal.tres" id="2_pgpvk"]
+[ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/CardFragments/FixLayer/Effect.tres" id="1_2ten3"]
+[ext_resource type="StyleBox" uid="uid://dpx1ueite1na4" path="res://Styles/Gameplay/CardFragments/MiddleFrame/EffectFrame/Royal.tres" id="2_thaae"]
 
 [sub_resource type="Gradient" id="Gradient_q1twu"]
-offsets = PackedFloat32Array(0, 0.00505051, 1)
-colors = PackedColorArray(0.113725, 0.113725, 0.113725, 1, 0.124859, 0.124859, 0.124859, 1, 0.389287, 0.389287, 0.389286, 1)
+offsets = PackedFloat32Array(0.00505051, 1)
+colors = PackedColorArray(0.0627451, 0.12549, 0.345098, 1, 0.14902, 0.313726, 0.917647, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_paxvn"]
 gradient = SubResource("Gradient_q1twu")
@@ -32,7 +32,7 @@ offset_top = -221.0
 offset_right = 140.0
 offset_bottom = -141.0
 rotation = -0.392699
-theme_override_styles/panel = ExtResource("1_oob66")
+theme_override_styles/panel = ExtResource("1_2ten3")
 metadata/_edit_use_anchors_ = true
 
 [node name="AttributeCut2" type="Panel" parent="Polygon2"]
@@ -41,7 +41,7 @@ offset_top = -146.0
 offset_right = 172.0
 offset_bottom = -50.0
 rotation = -1.5708
-theme_override_styles/panel = ExtResource("1_oob66")
+theme_override_styles/panel = ExtResource("1_2ten3")
 metadata/_edit_use_anchors_ = true
 
 [node name="EffectFrame" type="Panel" parent="Polygon2"]
@@ -56,5 +56,5 @@ offset_right = 188.0
 offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("2_pgpvk")
+theme_override_styles/panel = ExtResource("2_thaae")
 metadata/_edit_use_anchors_ = true
