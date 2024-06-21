@@ -34,7 +34,6 @@ static func update_layers_by_subtype(card : GameplayCard) -> void:
 	update_middle_frame(card);
 
 static func update_middle_frame(card : GameplayCard) -> void:
-	card.name_label.add_theme_color_override("font_color", Color(1, 1, 1));
 	System.Instance.load_child(
 		card.MIDDLE_FRAME_PATH + \
 		System.CardData.get_middle_frame_name(card.card_data) + \

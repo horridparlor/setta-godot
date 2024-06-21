@@ -23,3 +23,9 @@ var extra_deck_cards : Dictionary;
 
 static func wait(delay : float, parent : Node2D) -> void:
 	await parent.get_tree().create_timer(delay).timeout;
+
+static func init() -> void:
+	create_directories();
+
+static func create_directories() -> void:
+	Image_.create_directory();

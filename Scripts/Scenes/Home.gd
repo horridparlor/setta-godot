@@ -11,6 +11,7 @@ func _ready() -> void:
 	set_process_input(true);
 
 func load_cards() -> void:
+	System.init();
 	System.Server.request(RequestEnums.Operation.GET_CARDS, self);
 
 func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:

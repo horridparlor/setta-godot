@@ -1,5 +1,10 @@
 const IMAGE_WRITE_PATH_PREFIX : String = "user://small-art/";
 
+static func create_directory() -> void:
+	var dir: DirAccess = DirAccess.open(IMAGE_WRITE_PATH_PREFIX);
+	if dir == null:
+		DirAccess.make_dir_recursive_absolute(IMAGE_WRITE_PATH_PREFIX);
+
 static func load_from_buffer(buffer: PackedByteArray) -> Image:
 	var img : Image = Image.new();
 	var error = img.load_webp_from_buffer(buffer);
