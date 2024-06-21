@@ -41,7 +41,6 @@ func eat_effects_text(json_data : Dictionary) -> String:
 	var effect_text : String = eat_effect_text(json_data);
 	var flavour_text : String = eat_flavour_text(json_data);
 	var counts_as_text : String = eat_counts_as_text(json_data);
-	print(flavour_text);
 	var portions : Array = [
 		cost_text,
 		effect_text,

@@ -30,14 +30,19 @@ static func get_normalized_name(card_data : CardDefaultData) -> String:
 	result = i_the.sub(result, "{i}", 1);
 	result = encodings.sub(result, "", 1);
 
-	var special_chars : Array = [
+	const special_chars : Array = [
 		'!', '?', '–', ',', ':', 'á',
 		'ä', 'é', 'ö', '$', '[', ']', ' '
 	];
+	
+	const digits : Array = [
+		'0', '1', '2', '3', '4', '5',
+		'6', '7', '8', '9'
+	]
 
 	var normalized = "";
 	for i in result:
-		if i.is_valid_identifier() or i in special_chars:
+		if i.is_valid_identifier() or i in special_chars or i in digits:
 			normalized += i;
 
 	return normalized;
