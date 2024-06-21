@@ -31,6 +31,7 @@ func eat_default(json_data : Dictionary) -> void:
 	card_class = json_data.card_class;
 	subtype = json_data.subtype;
 	supertype = json_data.supertype;
+	maximum_piece = json_data.maximum_piece;
 	materials = from_list(json_data.materials);
 	effects_text = json_data.effects_text;
 	if System.CardData.is_monster(self):

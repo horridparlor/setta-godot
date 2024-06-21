@@ -26,7 +26,7 @@ static func get_normalized_name(card_data : CardDefaultData) -> String:
 	i_the.compile("{i}The");
 	encodings.compile("{[^}]*}");
 
-	var result : String = card_data.card_name;
+	var result : String = get_showcase_name(card_data);
 	result = i_the.sub(result, "{i}", 1);
 	result = encodings.sub(result, "", 1);
 
@@ -105,3 +105,12 @@ static func get_middle_frame_name(card_data : CardDefaultData) -> String:
 		else:
 			return CardEnums.CardTypeName[card_data.card_type];
 	return System.String_.serialize(CardEnums.CardSubtypeName[card_data.subtype]);
+
+static func is_maximum(card_data : CardDefaultData) -> bool:
+	return card_data.supertype == CardEnums.CardSupertype.MAXIMUM;
+
+static func get_showcase_name(card_data : CardDefaultData) -> String:
+	var maximum_string : String = \
+		"" if !is_maximum(card_data) \
+		else " " + "[%c]" % [CardEnums.MaximumPieceName[card_data.maximum_piece][0]];
+	return card_data.card_name + maximum_string;

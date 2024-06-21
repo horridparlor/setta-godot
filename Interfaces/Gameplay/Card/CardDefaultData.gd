@@ -8,6 +8,7 @@ var card_type : CardEnums.CardType;
 var card_class : CardEnums.Class;
 var subtype : CardEnums.CardSubtype;
 var supertype : CardEnums.CardSupertype;
+var maximum_piece : CardEnums.MaximumPiece;
 var materials : CardMaterials;
 var effects_text : String;
 var level : int;
@@ -24,6 +25,7 @@ func _init(
 	card_class = CardEnums.enumerate_class(json_data.cardClass);
 	subtype = CardEnums.enumerate_subtype(json_data.subtype);
 	supertype = CardEnums.enumerate_supertype(json_data.supertype);
+	maximum_piece = CardEnums.enumerate_maximum_piece(json_data.maximumPiece);
 	materials = eat_materials(json_data);
 	effects_text = json_data.costText + json_data.effectText + json_data.flavourText;
 	level = json_data.level;
@@ -46,6 +48,7 @@ func to_json() -> Dictionary:
 		"card_class": card_class,
 		"subtype": subtype,
 		"supertype": supertype,
+		"maximum_piece": maximum_piece,
 		"materials": materials.list(),
 		"effects_text": effects_text,
 		"level": level,

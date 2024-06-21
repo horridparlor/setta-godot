@@ -184,6 +184,27 @@ enum MaximumPiece {
 	RIGHT
 }
 
+const JSON_MAXIMUM_PIECE_LEFT : String = "Left";
+const JSON_MAXIMUM_PIECE_MIDDLE : String = "Middle";
+const JSON_MAXIMUM_PIECE_RIGHT : String = "Right";
+
+static var MaximumPieceName = {
+	MaximumPiece.LEFT: JSON_MAXIMUM_PIECE_LEFT,
+	MaximumPiece.MIDDLE: JSON_MAXIMUM_PIECE_MIDDLE,
+	MaximumPiece.RIGHT: JSON_MAXIMUM_PIECE_RIGHT
+}
+
+static func enumerate_maximum_piece(message : String) -> MaximumPiece:
+	match message:
+		JSON_MAXIMUM_PIECE_LEFT:
+			return MaximumPiece.LEFT;
+		JSON_MAXIMUM_PIECE_MIDDLE:
+			return MaximumPiece.MIDDLE;
+		JSON_MAXIMUM_PIECE_RIGHT:
+			return MaximumPiece.RIGHT;
+		_:
+			return MaximumPiece.NONE;
+
 enum CardAction {
 	ACTIVATE,
 	ATTACK,
