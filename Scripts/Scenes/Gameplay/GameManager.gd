@@ -10,6 +10,9 @@ static func start_turn(gameplay : Gameplay) -> void:
 static func render_hand(gameplay : Gameplay) -> void:
 	render_cards(gameplay.game_state.you.cards_in_hand, gameplay.hand, gameplay);
 
+static func render_grave(gameplay : Gameplay) -> void:
+	render_cards(gameplay.game_state.you.cards_in_grave, gameplay.grave, gameplay);
+
 static func render_cards(cards : Array, zone : Zone, gameplay : Gameplay) -> void:
 	for card in cards.duplicate():
 		render_card(card, zone, gameplay);

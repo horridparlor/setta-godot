@@ -45,21 +45,40 @@ func update_debug_tools() -> void:
 	debug_prompt.visible = System.debug_mode != SystemEnums.DebugMode.NONE;
 
 func initialize_regex() -> void:
-	id_regex.compile("^[0-9]*$");
-	cheat_draw_regex.compile("^draw (\\d+)\\.$");
+	id_regex.compile("^[0-9]*;$");
+	cheat_deal_regex.compile("^deal (\\d+00)\\;$");
+	cheat_discard_regex.compile("^discard (\\d+)\\;$");
+	cheat_draw_regex.compile("^draw (\\d+)\\;$");
+	cheat_gain_regex.compile("^gain (\\d+00)\\;$");
+	cheat_mill_regex.compile("^mill (\\d+)\\;$");
 
 func _process(delta : float) -> void:
 	if Input.is_action_pressed("ui_cancel"):
 		get_tree().quit();
 
 func _on_debug_prompt_text_changed(text : String) -> void:
+	if System.String_.last(text) != ";":
+		return;
 	if id_regex.search(text):
 		System.debug_id = int(text);
 	else:
 		check_cheat_codes(text);
 
 func check_cheat_codes(text : String) -> void:
-	try_cheat_draw(text);
+	try_cheat_deal(text) or\
+	try_cheat_discard(text) or\
+	try_cheat_draw(text) or\
+	try_cheat_gain(text) or\
+	try_cheat_mill(text);
+
+func try_cheat_deal(text : String) -> bool:
+	var amount : RegExMatch = cheat_deal_regex.search(text);
+	if amount:
+		gameplay.game_state.opponent.deal(int(amount.get_string(1)));
+		gameplay.update_player_stats();
+		clear_debug_prompt();
+		return true;
+	return false;
 
 func try_cheat_draw(text : String) -> bool:
 	var amount : RegExMatch = cheat_draw_regex.search(text);
@@ -67,6 +86,34 @@ func try_cheat_draw(text : String) -> bool:
 		gameplay.game_state.you.draw_cards(int(amount.get_string(1)));
 		gameplay.GameManager.render_hand(gameplay);
 		clear_debug_prompt();
+		return true;
+	return false;
+
+func try_cheat_discard(text : String) -> bool:
+	var amount : RegExMatch = cheat_discard_regex.search(text);
+	if amount:
+		gameplay.game_state.you.discard_cards(int(amount.get_string(1)));
+		gameplay.GameManager.render_grave(gameplay);
+		clear_debug_prompt();
+		return true;
+	return false;
+
+func try_cheat_gain(text : String) -> bool:
+	var amount : RegExMatch = cheat_gain_regex.search(text);
+	if amount:
+		gameplay.game_state.you.gain(int(amount.get_string(1)));
+		gameplay.update_player_stats();
+		clear_debug_prompt();
+		return true;
+	return false;
+
+func try_cheat_mill(text : String) -> bool:
+	var amount : RegExMatch = cheat_mill_regex.search(text);
+	if amount:
+		gameplay.game_state.you.mill_cards(int(amount.get_string(1)));
+		gameplay.update_player_stats();
+		clear_debug_prompt();
+		return true;
 	return false;
 
 func clear_debug_prompt() -> void:

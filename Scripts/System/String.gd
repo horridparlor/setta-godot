@@ -23,3 +23,6 @@ static func serialize(message : String) -> String:
 
 static func contains(message : String, substring : String) -> bool:
 	return substring.is_empty() || message.find(substring) != -1;
+
+static func last(message : String) -> String:
+	return message[len(message) - 1] if len(message) else "";

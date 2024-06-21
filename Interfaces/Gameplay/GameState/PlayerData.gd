@@ -57,6 +57,32 @@ func draw_cards(amount : int) -> void:
 			break;
 		draw();
 
+func discard_cards(amount : int) -> void:
+	for i in range(amount):
+		if hand_empty():
+			break;
+		discard();
+
+func discard() -> void:
+	var card : CardData = get_rightmost_in_hand();
+	move_card(card, CardEnums.Zone.HAND, CardEnums.Zone.GRAVE);
+
+func get_rightmost_in_hand() -> CardData:
+	return cards_in_hand[0];
+
+func mill_cards(amount : int) -> void:
+	for i in range(amount):
+		if deck_empty():
+			break;
+		mill();
+
+func mill() -> void:
+	var card : CardData = get_top_of_deck();
+	move_card(card, CardEnums.Zone.DECK, CardEnums.Zone.GRAVE);
+
+func hand_empty() -> bool:
+	return cards_in_hand.is_empty();
+
 func count_hand() -> int:
 	return cards_in_hand.size();
 
@@ -141,3 +167,9 @@ func has_material(material_id : int, found_materials : Array) -> bool:
 			found_materials.append(card.instance_id);
 			return true;
 	return false;
+
+func deal(amount : int) -> void:
+	life -= amount;
+
+func gain(amount : int) -> void:
+	life += amount;
