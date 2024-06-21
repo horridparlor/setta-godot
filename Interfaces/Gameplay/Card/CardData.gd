@@ -27,25 +27,20 @@ func _init(
 func eat_default(json_data : Dictionary) -> void:
 	owner_id = json_data.owner_id;
 	card_name = json_data.card_name;
+	is_ace = json_data.is_ace;
 	card_type = json_data.card_type;
 	card_class = json_data.card_class;
 	subtype = json_data.subtype;
 	supertype = json_data.supertype;
 	maximum_piece = json_data.maximum_piece;
-	materials = from_list(json_data.materials);
+	materials = CardMaterials.from_list(json_data.materials);
+	text_sizes = CardTextSizes.from_list(json_data.text_sizes);
 	effects_text = json_data.effects_text;
 	if System.CardData.is_monster(self):
 		level = json_data.level;
 		atk = json_data.atk;
 		def = json_data.def;
 		monster_data = MonsterData.new(level, atk, def);
-
-func from_list(source : Array) -> CardMaterials:
-	var count : int = len(source);
-	var primary = source[0] if count > 0 else null;
-	var secondary = source[1] if count > 1 else null;
-	var tertiary = source[2] if count > 2 else null;
-	return CardMaterials.new(primary, secondary, tertiary);
 
 func get_starting_deck() -> CardEnums.Zone:
 	return CardEnums.Zone.EXTRA_DECK if System.CardData.is_extra_deck(self) \

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bko6nkn2o2a03"]
+[gd_scene load_steps=18 format=3 uid="uid://bko6nkn2o2a03"]
 
 [ext_resource type="Script" path="res://Scripts/Gameplay/GameplayCard.gd" id="1_qv78s"]
 [ext_resource type="Script" path="res://Interfaces/Common/GlowNode.gd" id="2_08f7v"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="8_ql110"]
 [ext_resource type="StyleBox" uid="uid://ca6uvva5oyf7p" path="res://Styles/Gameplay/CardFragments/AttackFrame.tres" id="9_bgow4"]
 [ext_resource type="StyleBox" uid="uid://r7vudu283lxh" path="res://Styles/Gameplay/CardFragments/DefenseFrame.tres" id="10_r3jcv"]
+[ext_resource type="StyleBox" uid="uid://cbhed6am8m5kt" path="res://Prefabs/Gameplay/CardFragment/AceBadge/Frame.tres" id="11_mos6w"]
 [ext_resource type="Texture2D" uid="uid://copv5i04xfeuv" path="res://Assets/Icons/Attribute.png" id="12_e0tm5"]
 [ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="12_ni4lf"]
 [ext_resource type="Texture2D" uid="uid://bw8ggdbx8bh43" path="res://Assets/Icons/LevelFrame.png" id="14_c8yup"]
@@ -157,6 +158,42 @@ position = Vector2(146, -232)
 texture = ExtResource("12_e0tm5")
 
 [node name="Attribute" type="Sprite2D" parent="GlowNode/Attribute/AttributeFrame"]
+
+[node name="AceBadge" type="Node2D" parent="GlowNode"]
+position = Vector2(-126.25, -181.225)
+
+[node name="Panel" type="Panel" parent="GlowNode/AceBadge"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = 32.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("11_mos6w")
+
+[node name="Label" type="Label" parent="GlowNode/AceBadge"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -27.0
+offset_right = 48.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_ql110")
+theme_override_font_sizes/font_size = 36
+text = "ACE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Stats" type="Node2D" parent="GlowNode"]
 

@@ -2,6 +2,7 @@ static func update_artwork(card : GameplayCard) -> void:
 	load_artwork(card);
 	update_attribute_sprite(card);
 	update_layers_by_subtype(card);
+	update_ace_badge(card);
 
 static func load_artwork(card : GameplayCard) -> void:
 	var image : Image = System.Image_.read(System.CardData.get_serialized_name(card.card_data));
@@ -65,3 +66,6 @@ static func store_artwork(image : Image, card : GameplayCard) -> void:
 	if (!System.Image_.is_valid(image)):
 		return;
 	System.Image_.write(image, System.CardData.get_serialized_name(card.card_data));
+
+static func update_ace_badge(card : GameplayCard) -> void:
+	card.ace_badge.visible = card.card_data.is_ace;

@@ -14,6 +14,7 @@ extends GameplayCard
 @onready var modal_layer : Node2D = $ModalLayer;
 @onready var copiable_name : LineEdit = $GlowNode/Stats/CopiableName;
 @onready var monster_stats_layer : Node2D = $GlowNode/Monster;
+@onready var ace_badge : Node2D = $GlowNode/AceBadge;
 
 const Core : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Core.gd");
 const Fragments : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Fragments.gd");

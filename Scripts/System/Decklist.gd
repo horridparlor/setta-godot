@@ -5,8 +5,12 @@ static func get_random(random : RandomNumberGenerator) -> Decklist:
 	);
 
 static func get_random_main_deck(random : RandomNumberGenerator) -> Dictionary:
+	var size : int = PlayerData.MAIN_DECK_SIZE;
+	var overwrite_card_id : int = System.Debug.OVERWRITE_CARD_ID;
+	if overwrite_card_id:
+		return {overwrite_card_id: size}
 	return get_random_deck(
-		PlayerData.MAIN_DECK_SIZE,
+		size,
 		System.main_deck_cards,
 		random,
 		PlayerData.MAIN_DECK_DUPLICATES
