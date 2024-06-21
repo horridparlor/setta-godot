@@ -19,8 +19,32 @@ static func discard_from_hand(card : CardData, player : PlayerData, erased : Dic
 static func get_is_negated(card : CardData, gameplay : Gameplay) -> bool:
 	return card.subtype in gameplay.negated_subtypes;
 
-static func get_serialized_name(card_data : CardData) -> String:
-	var serialized : String = card_data.card_name\
+static func get_normalized_name(card_data : CardDefaultData) -> String:
+	var i_the : RegEx = RegEx.new();
+	var encodings : RegEx = RegEx.new();
+
+	i_the.compile("{i}The");
+	encodings.compile("{[^}]*}");
+
+	var result : String = card_data.card_name;
+	result = i_the.sub(result, "{i}", 1);
+	result = encodings.sub(result, "", 1);
+
+	var special_chars : Array = [
+		'!', '?', '–', ',', ':', 'á',
+		'ä', 'é', 'ö', '$', '[', ']', ' '
+	];
+
+	var normalized = "";
+	for i in result:
+		if i.is_valid_identifier() or i in special_chars:
+			normalized += i;
+
+	return normalized;
+
+
+static func get_serialized_name(card_data : CardDefaultData) -> String:
+	var serialized : String = get_normalized_name(card_data)\
 		.replace("á", "a")\
 		.replace("ä", "a")\
 		.replace("é", "e")\
@@ -41,7 +65,7 @@ static func get_serialized_name(card_data : CardData) -> String:
 
 	var words : Array = serialized.split(" ");
 	for i in range(words.size()):
-		words[i] = words[i].capitalize();
+		words[i] = System.String_.cap_first(words[i]);
 
 	return "".join(words);
 
@@ -77,7 +101,7 @@ static func get_middle_frame_name(card_data : CardDefaultData) -> String:
 	if is_normal(card_data):
 		if is_monster(card_data):
 			if has_supertype(card_data):
-				return System.String_.serialize(CardEnums.CardSuperTypeName[card_data.supertype]);
+				return System.String_.serialize(CardEnums.CardSupertypeName[card_data.supertype]);
 		else:
 			return CardEnums.CardTypeName[card_data.card_type];
 	return System.String_.serialize(CardEnums.CardSubtypeName[card_data.subtype]);

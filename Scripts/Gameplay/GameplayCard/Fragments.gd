@@ -11,10 +11,11 @@ static func load_artwork(card : GameplayCard) -> void:
 		fetch_artwork(card);
 
 static func fetch_artwork(card : GameplayCard) -> void:
+	var card_data : CardData = card.card_data;
 	var file_path : String = "%d/%d/%s%s" \
 		% [
-			card.card_data.card_id, 1,
-			System.CardData.get_serialized_name(card.card_data),
+			card_data.card_id, card_data.owner_id,
+			System.CardData.get_serialized_name(card_data),
 			RequestEnums.get_webp_extension()
 		];
 	System.Server.request(RequestEnums.Operation.FETCH_ARTWORK, card, file_path);
@@ -33,6 +34,7 @@ static func update_layers_by_subtype(card : GameplayCard) -> void:
 	update_middle_frame(card);
 
 static func update_middle_frame(card : GameplayCard) -> void:
+	card.name_label.add_theme_color_override("font_color", Color(1, 1, 1));
 	System.Instance.load_child(
 		card.MIDDLE_FRAME_PATH + \
 		System.CardData.get_middle_frame_name(card.card_data) + \

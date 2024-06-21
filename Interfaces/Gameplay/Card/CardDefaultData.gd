@@ -1,7 +1,8 @@
 extends Node
 class_name CardDefaultData
 
-var card_id: int;
+var card_id : int;
+var owner_id : int;
 var card_name : String;
 var card_type : CardEnums.CardType;
 var card_class : CardEnums.Class;
@@ -17,6 +18,7 @@ func _init(
 	json_data : Dictionary
 ):
 	card_id = json_data.cardId;
+	owner_id = json_data.ownerId;
 	card_name = json_data.cardName;
 	card_type = CardEnums.enumerate_card_type(json_data.cardType);
 	card_class = CardEnums.enumerate_class(json_data.cardClass);
@@ -38,6 +40,7 @@ func eat_materials(json_data : Dictionary) -> CardMaterials:
 func to_json() -> Dictionary:
 	return {
 		"card_id": card_id,
+		"owner_id": owner_id,
 		"card_name": card_name,
 		"card_type": card_type,
 		"card_class": card_class,
