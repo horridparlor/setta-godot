@@ -37,11 +37,13 @@ func _init(
 	text_sizes = eat_text_sizes(json_data);
 
 func eat_effects_text(json_data : Dictionary) -> String:
+	var materials_text : String = eat_materials_text(json_data);
 	var cost_text : String = eat_cost_text(json_data);
 	var effect_text : String = eat_effect_text(json_data);
 	var flavour_text : String = eat_flavour_text(json_data);
 	var counts_as_text : String = eat_counts_as_text(json_data);
 	var portions : Array = [
+		materials_text,
 		cost_text,
 		effect_text,
 		flavour_text,
@@ -51,17 +53,36 @@ func eat_effects_text(json_data : Dictionary) -> String:
 	);
 	return "\n".join(portions);
 
+func translate_encodings(message : String) -> String:
+	return message\
+		.replace(" {i}", "{i}")\
+		.replace("{i}", "[i] (")\
+		.replace("{/i}", ".)[/i]")\
+		.replace("{sb}", "[code]")\
+		.replace("{/sb}", "[/code]")\
+		.replace("{b}", "[b]")\
+		.replace("{/b}", "[/b]")\
+	;
+
+func eat_materials_text(json_data : Dictionary) -> String:
+	var raw : String = "";
+	return "" if len(raw) else "";
+
 func eat_cost_text(json_data : Dictionary) -> String:
-	var raw : String = json_data.costText;
-	return "Cost: %s" % [raw] if len(raw) else "";
+	var cost_prefix : String = "Pendulum>>" \
+		if json_data.supertype == CardEnums.JSON_SUPERTYPE_PENDULUM else "Cost:";
+	var raw : String = translate_encodings(json_data.costText);
+	return "[i]%s [/i]%s" % [cost_prefix, raw] if len(raw) else "";
 
 func eat_effect_text(json_data : Dictionary) -> String:
-	var raw : String = json_data.effectText;
-	return "Effect: %s" % [raw] if len(raw) else "";
+	var effect_prefix : String = "Hand Trap>>" \
+		if json_data.supertype == CardEnums.JSON_SUPERTYPE_HAND_TRAP else "Effect:";
+	var raw : String = translate_encodings(json_data.effectText);
+	return "[i]%s [/i]%s" % [effect_prefix, raw] if len(raw) else "";
 
 func eat_flavour_text(json_data : Dictionary) -> String:
 	var raw : String = json_data.flavourText;
-	return "%s" % [raw] if len(raw) else "";
+	return "[i]%s[/i]" % [raw] if len(raw) else "";
 
 func eat_counts_as_text(json_data : Dictionary) -> String:
 	var raw = json_data.countsAsId;

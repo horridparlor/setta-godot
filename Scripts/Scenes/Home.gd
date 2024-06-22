@@ -9,10 +9,17 @@ func _ready() -> void:
 	gameplay = System.Instance.load_child(GAMEPLAY_PATH, scene_layer);
 	update_debug_tools();
 	set_process_input(true);
+	if System.is_ready:
+		gameplay.init();
 
 func load_cards() -> void:
+	var cards : Dictionary;
 	System.init();
-	System.Server.request(RequestEnums.Operation.GET_CARDS, self);
+	cards = System.Json.read(SystemEnums.SaveFilePath[SystemEnums.SaveFile.CARDS]);
+	if System.Json.success(cards):
+		set_cards(cards.cards);
+	else:
+		System.Server.request(RequestEnums.Operation.GET_CARDS, self);
 
 func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:
@@ -40,6 +47,8 @@ func set_cards(source : Array):
 	System.cards = cards;
 	System.main_deck_cards = main_deck_cards;
 	System.extra_deck_cards = extra_deck_cards;
+	System.Json.write({"cards": source}, SystemEnums.SaveFilePath[SystemEnums.SaveFile.CARDS]);
+	System.is_ready = true;
 
 func update_debug_tools() -> void:
 	debug_prompt.visible = System.debug_mode != SystemEnums.DebugMode.NONE;

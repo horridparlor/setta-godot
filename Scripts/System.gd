@@ -8,6 +8,7 @@ const Floats : GDScript = preload("res://Scripts/System/Floats.gd");
 const Image_ : GDScript = preload("res://Scripts/System/Image.gd");
 const Ints : GDScript = preload("res://Scripts/System/Ints.gd");
 const Instance : GDScript = preload("res://Scripts/System/Instance.gd");
+const Json : GDScript = preload("res://Scripts/System/Json.gd");
 const Random : GDScript = preload("res://Scripts/System/Random.gd");
 const Scale : GDScript = preload("res://Scripts/System/Scale.gd");
 const Server : GDScript = preload("res://Scripts/System/Server.gd");
@@ -20,6 +21,7 @@ var debug_id : int;
 var cards : Dictionary;
 var main_deck_cards : Dictionary;
 var extra_deck_cards : Dictionary;
+var is_ready : bool = false;
 
 static func wait(delay : float, parent : Node2D) -> void:
 	await parent.get_tree().create_timer(delay).timeout;
@@ -29,3 +31,4 @@ static func init() -> void:
 
 static func create_directories() -> void:
 	Image_.create_directory();
+	Json.create_directory();
