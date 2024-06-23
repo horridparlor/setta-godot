@@ -52,9 +52,15 @@ func get_display_name(json_data : Dictionary) -> String:
 		.replace("{i}", "[font=%s][font_size=%d]"\
 			% [
 				SystemEnums.get_bold_italic_font(),
-				28
+				SystemEnums.get_name_font_size(json_data.nameSize - 2),
 			])\
 		.replace("{/i}", "[/font_size][/font]")\
+		.replace("{bi}", "[font=%s][font_size=%d]"\
+			% [
+				SystemEnums.get_bold_italic_font(),
+				SystemEnums.get_effects_font_size(SystemEnums.EffectsFontSize.DEFAULT),
+			])\
+		.replace("{/bi}", "[/font_size][/font]")\
 		
 	];
 

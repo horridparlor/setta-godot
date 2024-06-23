@@ -46,10 +46,12 @@ static var LabelFontSize = {
 	NameFontSize.DEFAULT: 34
 }
 
-static func get_effects_font_size(size : EffectsFontSize):
+static func get_effects_font_size(size : EffectsFontSize) -> int:
 	return CardFontSize[size];
 
-static func get_name_font_size(size : NameFontSize):
+static func get_name_font_size(size : NameFontSize) -> int:
+	if size < 0:
+		return get_effects_font_size(EffectsFontSize.DEFAULT);
 	return LabelFontSize[size];
 
 enum MontserratFont {
