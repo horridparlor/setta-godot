@@ -27,6 +27,7 @@ func _init(
 func eat_default(json_data : Dictionary) -> void:
 	owner_id = json_data.owner_id;
 	card_name = json_data.card_name;
+	display_name = json_data.display_name;
 	normalized_name = json_data.normalized_name;
 	is_ace = json_data.is_ace;
 	card_type = json_data.card_type;

@@ -4,6 +4,7 @@ class_name CardDefaultData
 var card_id : int;
 var owner_id : int;
 var card_name : String;
+var display_name : String;
 var normalized_name : String;
 var is_ace : bool;
 var card_type : CardEnums.CardType;
@@ -37,7 +38,18 @@ func _init(
 	def = json_data.def;
 	text_sizes = eat_text_sizes(json_data);
 	
+	display_name = get_display_name(json_data);
 	normalized_name = System.CardData.get_normalized_name(self);
+
+func get_display_name(json_data : Dictionary) -> String:
+	return System.CardData.get_showcase_name(self)\
+		.replace("{i}", "[font=%s][font_size=%d]"\
+			% [
+				SystemEnums.get_bold_italic_font(),
+				28
+			])\
+		.replace("{/i}", "[/font_size][/font]")\
+	;
 
 func eat_effects_text(json_data : Dictionary) -> String:
 	var materials_text : String = eat_materials_text(json_data);
@@ -168,6 +180,7 @@ func to_json() -> Dictionary:
 		"card_id": card_id,
 		"owner_id": owner_id,
 		"card_name": card_name,
+		"display_name": display_name,
 		"normalized_name": normalized_name,
 		"is_ace": is_ace,
 		"card_type": card_type,
