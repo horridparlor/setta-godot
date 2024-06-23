@@ -42,14 +42,21 @@ func _init(
 	normalized_name = System.CardData.get_normalized_name(self);
 
 func get_display_name(json_data : Dictionary) -> String:
-	return System.CardData.get_showcase_name(self)\
+	return "[font_size=%d]%s[/font_size]"\
+	% [
+		SystemEnums.get_name_font_size(json_data.nameSize - 1),
+		System.CardData.get_showcase_name(self)\
+		.replace("{i}The{", "{i}The {")\
+		.replace("{is}", "{i}[s]")\
+		.replace("{/is}", "[/s]{/i}")\
 		.replace("{i}", "[font=%s][font_size=%d]"\
 			% [
 				SystemEnums.get_bold_italic_font(),
 				28
 			])\
 		.replace("{/i}", "[/font_size][/font]")\
-	;
+		
+	];
 
 func eat_effects_text(json_data : Dictionary) -> String:
 	var materials_text : String = eat_materials_text(json_data);
@@ -93,11 +100,20 @@ func eat_materials_text(json_data : Dictionary) -> String:
 	);
 	var join_symbol : String = get_materials_join_symbol(json_data);
 	var raw : String = (" %s " % [join_symbol]).join(materials);
-	return "[font_size=%d][font=%s](%s)[/font][/font_size]"\
+	return "[font_size=%d][font=%s](%s)[/font][/font_size]%s"\
 		% [
 			translate_font_size(json_data.materialsSize),
 			SystemEnums.get_heavy_font(),
-			raw
+			raw,
+			get_materials_reminder(json_data)
+		] if len(raw) else "";
+
+func get_materials_reminder(json_data) -> String:
+	var raw : String = json_data.materialsReminder;
+	return "[font=%s] (%s.)[/font]"\
+		% [
+			SystemEnums.get_italic_font(),
+			add_materials_font_size(raw, json_data)
 		] if len(raw) else "";
 
 func translate_font_size(size : int):
@@ -155,7 +171,9 @@ func add_materials_font_size(message : String, json_data : Dictionary) -> String
 
 func eat_counts_as_text(json_data : Dictionary) -> String:
 	var raw = json_data.countsAsId;
-	return "Counts as a [font=%s]%s[/font]."\
+	return "[font_size=8]%s[/font_size]\n"\
+		% ["–".repeat(90)]+\
+	"Counts as a [font=%s]%s[/font]."\
 		% [
 			SystemEnums.get_bold_italic_font(),
 			get_name_replacement_for_card_id(raw)

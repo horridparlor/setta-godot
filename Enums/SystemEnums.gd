@@ -24,6 +24,13 @@ enum EffectsFontSize {
 	DEFAULT
 }
 
+enum NameFontSize {
+	SMALL,
+	CONCISE,
+	REGULAR,
+	DEFAULT
+}
+
 static var CardFontSize = {
 	EffectsFontSize.TINY: 15,
 	EffectsFontSize.SMALL: 17,
@@ -32,8 +39,18 @@ static var CardFontSize = {
 	EffectsFontSize.DEFAULT: 23
 }
 
+static var LabelFontSize = {
+	NameFontSize.SMALL: 25,
+	NameFontSize.CONCISE: 28,
+	NameFontSize.REGULAR: 31,
+	NameFontSize.DEFAULT: 34
+}
+
 static func get_effects_font_size(size : EffectsFontSize):
 	return CardFontSize[size];
+
+static func get_name_font_size(size : NameFontSize):
+	return LabelFontSize[size];
 
 enum MontserratFont {
 	ITALIC,
