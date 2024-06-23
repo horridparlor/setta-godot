@@ -199,13 +199,19 @@ vertical_alignment = 1
 
 [node name="CardName" type="RichTextLabel" parent="GlowNode/Stats"]
 offset_left = -188.0
-offset_top = -272.0
+offset_top = -274.0
 offset_right = 94.0
-offset_bottom = -224.0
+offset_bottom = -226.0
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("12_ni4lf")
-theme_override_font_sizes/normal_font_size = 32
-text = "Name"
+theme_override_fonts/italics_font = ExtResource("17_yjmg6")
+theme_override_font_sizes/normal_font_size = 34
+theme_override_font_sizes/italics_font_size = 30
+bbcode_enabled = true
+text = "[i]The [/i]Name"
+fit_content = true
 
 [node name="EffectText" type="RichTextLabel" parent="GlowNode/Stats"]
 anchors_preset = 8
@@ -214,9 +220,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -180.0
-offset_top = 118.0
+offset_top = 115.0
 offset_right = 180.0
-offset_bottom = 262.0
+offset_bottom = 265.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
@@ -236,14 +242,14 @@ text = "[i]Cost:[/i]
 
 [node name="CopiableName" type="LineEdit" parent="GlowNode/Stats"]
 offset_left = -188.0
-offset_top = -276.0
+offset_top = -274.0
 offset_right = 62.0
-offset_bottom = -228.0
+offset_bottom = -221.0
 theme = ExtResource("15_oinwq")
 theme_override_colors/font_uneditable_color = Color(0, 0, 0, 1)
 theme_override_colors/font_placeholder_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("12_ni4lf")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 36
 editable = false
 
 [node name="Sleeve" type="Node2D" parent="GlowNode"]

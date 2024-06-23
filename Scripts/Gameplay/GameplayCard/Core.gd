@@ -20,7 +20,7 @@ static func update_name(card : GameplayCard) -> void:
 	if System.debug_mode == SystemEnums.DebugMode.CARD_DEBUG:
 		card.copiable_name.text = str(card.card_data.instance_id);
 	else:
-		card.name_label.text = System.CardData.get_showcase_name(card.card_data);
+		card.name_label.text = card.card_data.display_name;
 
 static func activate_animations(card : GameplayCard) -> void:
 	if card.glow_state == GameplayEnums.GlowState.GLOW:

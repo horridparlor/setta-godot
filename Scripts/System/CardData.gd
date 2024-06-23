@@ -31,7 +31,7 @@ static func get_normalized_name(card_data : CardDefaultData) -> String:
 	result = encodings.sub(result, "", 1);
 
 	const special_chars : Array = [
-		'!', '?', '–', ',', ':', 'á',
+		'!', '?', '-', '–', ',', ':', 'á', '\'',
 		'ä', 'é', 'ö', '$', '[', ']', ' '
 	];
 	
@@ -42,14 +42,17 @@ static func get_normalized_name(card_data : CardDefaultData) -> String:
 
 	var normalized = "";
 	for i in result:
+		if (i == "-"):
+			print(i,i.is_valid_identifier(), i in special_chars, i in digits);
 		if i.is_valid_identifier() or i in special_chars or i in digits:
 			normalized += i;
 
-	return normalized;
+	print(normalized);
+	return normalized.replace("  ", " ");
 
 
 static func get_serialized_name(card_data : CardDefaultData) -> String:
-	var serialized : String = get_normalized_name(card_data)\
+	var serialized : String = card_data.normalized_name\
 		.replace("á", "a")\
 		.replace("ä", "a")\
 		.replace("é", "e")\

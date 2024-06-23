@@ -27,6 +27,8 @@ func _init(
 func eat_default(json_data : Dictionary) -> void:
 	owner_id = json_data.owner_id;
 	card_name = json_data.card_name;
+	display_name = json_data.display_name;
+	normalized_name = json_data.normalized_name;
 	is_ace = json_data.is_ace;
 	card_type = json_data.card_type;
 	card_class = json_data.card_class;
@@ -35,12 +37,30 @@ func eat_default(json_data : Dictionary) -> void:
 	maximum_piece = json_data.maximum_piece;
 	materials = CardMaterials.from_list(json_data.materials);
 	text_sizes = CardTextSizes.from_list(json_data.text_sizes);
-	effects_text = json_data.effects_text;
+	effects_text = add_card_names(json_data.effects_text);
 	if System.CardData.is_monster(self):
 		level = json_data.level;
 		atk = json_data.atk;
 		def = json_data.def;
 		monster_data = MonsterData.new(level, atk, def);
+
+func add_card_names(effects_text : String) -> String:
+	var regex_match : RegExMatch;
+	var regex : RegEx = RegEx.new();
+	regex.compile("{#\\d+}");
+	var matches : Array = regex.search_all(effects_text);
+	var result : String = effects_text;
+	matches.reverse();
+	for m in matches:
+		regex_match = m;
+		var card_id : int = int(regex_match.get_string());
+		var card_name : String = System.cards[card_id].normalized_name;
+		result = result.substr(
+			0, regex_match.get_start())\
+			+ card_name + result.substr(regex_match.get_end(),\
+			result.length() - regex_match.get_end()
+		);
+	return result;
 
 func get_starting_deck() -> CardEnums.Zone:
 	return CardEnums.Zone.EXTRA_DECK if System.CardData.is_extra_deck(self) \
