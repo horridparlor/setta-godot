@@ -4,6 +4,7 @@ class_name CardDefaultData
 var card_id : int;
 var owner_id : int;
 var card_name : String;
+var normalized_name : String;
 var is_ace : bool;
 var card_type : CardEnums.CardType;
 var card_class : CardEnums.Class;
@@ -35,6 +36,8 @@ func _init(
 	atk = json_data.atk;
 	def = json_data.def;
 	text_sizes = eat_text_sizes(json_data);
+	
+	normalized_name = System.CardData.get_normalized_name(self);
 
 func eat_effects_text(json_data : Dictionary) -> String:
 	var materials_text : String = eat_materials_text(json_data);
@@ -62,31 +65,89 @@ func translate_encodings(message : String) -> String:
 		.replace("{/sb}", "[/code]")\
 		.replace("{b}", "[b]")\
 		.replace("{/b}", "[/b]")\
+		.replace("{bi}", "[font=%s]" % [SystemEnums.get_bold_italic_font()])\
+		.replace("{/bi}", "[/font]")\
 	;
 
 func eat_materials_text(json_data : Dictionary) -> String:
-	var raw : String = "";
-	return "" if len(raw) else "";
+	var materials : Array = [
+		json_data.primaryMaterialId,
+		json_data.secondaryMaterialId,
+		json_data.tertiaryMaterialId
+	].filter(func(material):
+		return material != null;	
+	).map(func(material):
+		return get_name_replacement_for_card_id(material);
+	);
+	var join_symbol : String = get_materials_join_symbol(json_data);
+	var raw : String = (" %s " % [join_symbol]).join(materials);
+	return "[font_size=%d][font=%s](%s)[/font][/font_size]"\
+		% [
+			translate_font_size(json_data.materialsSize),
+			SystemEnums.get_heavy_font(),
+			raw
+		] if len(raw) else "";
+
+func translate_font_size(size : int):
+	return SystemEnums.get_effects_font_size(size - 1);
+
+func get_name_replacement_for_card_id(card_id : int) -> String:
+	return '{#' + str(card_id) + "}";
+
+func get_materials_join_symbol(json_data : Dictionary) -> String:
+	match json_data.subtype:
+		CardEnums.JSON_SUBTYPE_FUSION:
+			return "+";
+		CardEnums.JSON_SUBTYPE_REVENGE:
+			return "x";
+		CardEnums.JSON_SUBTYPE_ROYAL:
+			return "⋅";
+		CardEnums.JSON_SUBTYPE_TIME_TRAVELLER:
+			return "★";
+		CardEnums.JSON_SUBTYPE_RITUAL:
+			return "->";
+	return "?";
 
 func eat_cost_text(json_data : Dictionary) -> String:
 	var cost_prefix : String = "Pendulum>>" \
 		if json_data.supertype == CardEnums.JSON_SUPERTYPE_PENDULUM else "Cost:";
 	var raw : String = translate_encodings(json_data.costText);
-	return "[i]%s [/i]%s" % [cost_prefix, raw] if len(raw) else "";
+	return "[i]%s [/i]%s"\
+		% [
+			cost_prefix,
+			add_materials_font_size(raw, json_data)
+		] if len(raw) else "";
 
 func eat_effect_text(json_data : Dictionary) -> String:
 	var effect_prefix : String = "Hand Trap>>" \
 		if json_data.supertype == CardEnums.JSON_SUPERTYPE_HAND_TRAP else "Effect:";
 	var raw : String = translate_encodings(json_data.effectText);
-	return "[i]%s [/i]%s" % [effect_prefix, raw] if len(raw) else "";
+	return "[i]%s [/i]%s"\
+		% [
+			effect_prefix,
+			add_materials_font_size(raw, json_data)
+		] if len(raw) else "";
 
 func eat_flavour_text(json_data : Dictionary) -> String:
 	var raw : String = json_data.flavourText;
-	return "[i]%s[/i]" % [raw] if len(raw) else "";
+	return "[i]%s[/i]"\
+		% [
+			add_materials_font_size(raw, json_data)
+		] if len(raw) else "";
+
+func add_materials_font_size(message : String, json_data : Dictionary) -> String:
+	return "[font_size=%d]%s[/font_size]" % [
+		translate_font_size(json_data.effectsSize),
+		message
+	];
 
 func eat_counts_as_text(json_data : Dictionary) -> String:
 	var raw = json_data.countsAsId;
-	return "Counts as a: %d" % [raw] if raw else "";
+	return "Counts as a [font=%s]%s[/font]."\
+		% [
+			SystemEnums.get_bold_italic_font(),
+			get_name_replacement_for_card_id(raw)
+		] if raw else "";
 
 func eat_materials(json_data : Dictionary) -> CardMaterials:
 	return CardMaterials.new(
@@ -107,6 +168,7 @@ func to_json() -> Dictionary:
 		"card_id": card_id,
 		"owner_id": owner_id,
 		"card_name": card_name,
+		"normalized_name": normalized_name,
 		"is_ace": is_ace,
 		"card_type": card_type,
 		"card_class": card_class,

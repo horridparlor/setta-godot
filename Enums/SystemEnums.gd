@@ -16,22 +16,63 @@ static var FileExtensionPath = {
 	FileExtension.SCRIPT: ".gd",
 }
 
-enum Fonts {
+enum EffectsFontSize {
+	TINY,
+	SMALL,
+	CONCISE,
+	REGULAR,
+	DEFAULT
+}
+
+static var CardFontSize = {
+	EffectsFontSize.TINY: 15,
+	EffectsFontSize.SMALL: 17,
+	EffectsFontSize.CONCISE: 19,
+	EffectsFontSize.REGULAR: 21,
+	EffectsFontSize.DEFAULT: 23
+}
+
+static func get_effects_font_size(size : EffectsFontSize):
+	return CardFontSize[size];
+
+enum MontserratFont {
+	ITALIC,
+	REGULAR,
+	SEMI_BOLD,
+	BOLD,
+	BOLD_ITALIC,
 	HEAVY
 }
 
 static var FontPath = {
-	Fonts.HEAVY: "res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf"	
+	MontserratFont.ITALIC: "res://Assets/FontFiles/Montserrat/Montserrat-LightItalic.ttf",	
+	MontserratFont.REGULAR: "res://Assets/FontFiles/Montserrat/Montserrat-Regular.ttf",	
+	MontserratFont.SEMI_BOLD: "res://Assets/FontFiles/Montserrat/Montserrat-SemiBold.ttf",	
+	MontserratFont.BOLD: "res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf",	
+	MontserratFont.BOLD_ITALIC: "res://Assets/FontFiles/Montserrat/Montserrat-BoldItalic.ttf",	
+	MontserratFont.HEAVY: "res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf"
 }
 
-static func get_font_paths(fonts : Array) -> Array:
-	var paths : Array;
-	for font in fonts:
-		paths.append(FontPath[font]);
-	return paths;
+static func get_font_path(font : MontserratFont) -> String:
+	return FontPath[font];
 
-static func extra_deck_text(plain_text : String) -> String:
-	return plain_text % get_font_paths([Fonts.HEAVY]);
+static func get_italic_font() -> String:
+	return get_font_path(MontserratFont.ITALIC);
+
+static func get_regular_font() -> String:
+	return get_font_path(MontserratFont.REGULAR);
+	
+static func get_semi_bold_font() -> String:
+	return get_font_path(MontserratFont.SEMI_BOLD);
+	
+static func get_bold_font() -> String:
+	return get_font_path(MontserratFont.BOLD);
+	
+static func get_bold_italic_font() -> String:
+	return get_font_path(MontserratFont.BOLD_ITALIC);
+
+static func get_heavy_font() -> String:
+	return get_font_path(MontserratFont.HEAVY);
 
 static func get_extension_path(extension : FileExtension) -> String:
 	return FileExtensionPath[extension];
