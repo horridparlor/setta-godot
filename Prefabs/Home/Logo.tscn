@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkmnf0cpualwy"]
+
+[ext_resource type="Texture2D" uid="uid://bw8ggdbx8bh43" path="res://Assets/Icons/LevelFrame.png" id="1_o013g"]
+[ext_resource type="Theme" uid="uid://ct5g1bcw4s11k" path="res://Styles/Gameplay/CardModal/ModalStyle.tres" id="2_ica8q"]
+
+[node name="Logo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_o013g")
+stretch_mode = 4
+
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_ica8q")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 66
+text = "Setta"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Description" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ica8q")
+theme_type_variation = &"HeaderSmall"
+theme_override_font_sizes/font_size = 22
+text = "Competitive Card Game"
+horizontal_alignment = 2
+vertical_alignment = 1

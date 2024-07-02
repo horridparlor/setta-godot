@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=7 format=3 uid="uid://ct5g1bcw4s11k"]
 
-[ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="1_dt3yj"]
+[ext_resource type="FontFile" uid="uid://b5gq130biwha7" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="1_dt3yj"]
 [ext_resource type="StyleBox" uid="uid://ctbqq6ce8fkmd" path="res://Styles/Gameplay/CardModal/ButtonFocusFrame.tres" id="2_b310e"]
 [ext_resource type="StyleBox" uid="uid://cgr1i33ba63lj" path="res://Styles/Gameplay/CardModal/ButtonHoverFrame.tres" id="3_3r1ii"]
 [ext_resource type="StyleBox" uid="uid://d1yipox7l3sud" path="res://Styles/Gameplay/CardModal/ButtonNormalFrame.tres" id="4_axm17"]
