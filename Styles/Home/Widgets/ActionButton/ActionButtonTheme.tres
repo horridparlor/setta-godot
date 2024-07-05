@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://dyuuqb4rane4e"]
+
+[ext_resource type="FontFile" uid="uid://b5gq130biwha7" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="1_knbub"]
+[ext_resource type="StyleBox" uid="uid://ym6nxrl2ai08" path="res://Styles/Home/Widgets/ActionButton/NormalFrame.tres" id="2_whbne"]
+[ext_resource type="StyleBox" uid="uid://3jp7a3cvc4bf" path="res://Styles/Home/Widgets/ActionButton/PressedFrame.tres" id="3_hulr5"]
+
+[resource]
+Button/colors/font_color = Color(0.87451, 0.87451, 0.87451, 1)
+Button/colors/font_hover_color = Color(0.87451, 0.87451, 0.87451, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 25
+Button/fonts/font = ExtResource("1_knbub")
+Button/styles/hover = ExtResource("2_whbne")
+Button/styles/normal = ExtResource("2_whbne")
+Button/styles/pressed = ExtResource("3_hulr5")
