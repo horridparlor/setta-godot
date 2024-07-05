@@ -8,7 +8,7 @@
 Button/colors/font_color = Color(0.87451, 0.87451, 0.87451, 1)
 Button/colors/font_hover_color = Color(0.87451, 0.87451, 0.87451, 1)
 Button/colors/font_pressed_color = Color(1, 1, 1, 1)
-Button/font_sizes/font_size = 25
+Button/font_sizes/font_size = 55
 Button/fonts/font = ExtResource("1_knbub")
 Button/styles/hover = ExtResource("2_whbne")
 Button/styles/normal = ExtResource("2_whbne")

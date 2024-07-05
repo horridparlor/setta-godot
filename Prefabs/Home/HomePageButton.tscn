@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://b7am5n0ll070h"]
+[gd_scene load_steps=2 format=3 uid="uid://b7am5n0ll070h"]
+
+[ext_resource type="Theme" uid="uid://4hrgirwhobcy" path="res://Styles/Home/Widgets/HomePageButton/HomePageButtonTheme.tres" id="1_ag0iy"]
 
 [node name="HomePageButton" type="Control"]
 layout_mode = 3
@@ -7,6 +9,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -26,4 +30,7 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(210, 120)
 layout_mode = 2
+theme = ExtResource("1_ag0iy")
+text = "Home"

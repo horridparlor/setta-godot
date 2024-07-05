@@ -34,5 +34,4 @@ custom_minimum_size = Vector2(350, 100)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_tlj02")
-theme_override_font_sizes/font_size = 55
 text = "Login"

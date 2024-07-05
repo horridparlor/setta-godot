@@ -1,0 +1,16 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://4hrgirwhobcy"]
+
+[ext_resource type="StyleBox" uid="uid://cocvw5dif1xdr" path="res://Styles/Home/Widgets/HomePageButton/FocusFrame.tres" id="1_8alv6"]
+[ext_resource type="FontFile" uid="uid://b5gq130biwha7" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="1_t1hep"]
+[ext_resource type="StyleBox" uid="uid://b5k052i1pxeil" path="res://Styles/Home/Widgets/HomePageButton/NormalFrame.tres" id="2_xibus"]
+[ext_resource type="StyleBox" uid="uid://cmf21tqucjkn3" path="res://Styles/Home/Widgets/HomePageButton/HoverFrame.tres" id="3_2jnhf"]
+
+[resource]
+Button/colors/font_color = Color(0.87451, 0.87451, 0.87451, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 55
+Button/fonts/font = ExtResource("1_t1hep")
+Button/styles/focus = ExtResource("1_8alv6")
+Button/styles/hover = ExtResource("3_2jnhf")
+Button/styles/normal = ExtResource("2_xibus")
