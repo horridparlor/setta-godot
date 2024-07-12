@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxFlat" format=3 uid="uid://bmwthxgb0oxf3"]
+
+[resource]
+bg_color = Color(0.133333, 0.133333, 0.247059, 1)
+border_width_left = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.929412, 0.929412, 0.929412, 1)
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
