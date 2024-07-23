@@ -138,7 +138,7 @@ func get_materials_join_symbol(json_data : Dictionary) -> String:
 			return "⋅";
 		CardEnums.JSON_SUBTYPE_TIME_TRAVELLER:
 			return "★";
-		CardEnums.JSON_SUBTYPE_RITUAL:
+		CardEnums.JSON_SUBTYPE_KILLER_MOVE:
 			return "->";
 	return "?";
 

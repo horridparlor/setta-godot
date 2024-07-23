@@ -19,7 +19,7 @@ func load_cards() -> void:
 	if System.Json.success(cards):
 		set_cards(cards.cards);
 	else:
-		System.Server.request(RequestEnums.Operation.GET_CARDS, self);
+		System.Server.request(RequestEnums.Operation.GET_CARDS, {}, self);
 
 func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:
@@ -37,7 +37,7 @@ func set_cards(source : Array):
 	for card in source:
 		card_data = CardDefaultData.new(card);
 		json_data = card_data.to_json();
-		card_id = card.cardId;
+		card_id = card.cardId if card.errataOfId == null else card.errataOfId;
 		cards[card_id] = json_data;
 		card_data.queue_free();
 		if System.CardData.is_main_deck(card_data):

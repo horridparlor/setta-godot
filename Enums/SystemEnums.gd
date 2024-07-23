@@ -35,7 +35,7 @@ static var CardFontSize = {
 	EffectsFontSize.TINY: 15,
 	EffectsFontSize.SMALL: 17,
 	EffectsFontSize.CONCISE: 19,
-	EffectsFontSize.REGULAR: 21,
+	EffectsFontSize.REGULAR: 20,
 	EffectsFontSize.DEFAULT: 23
 }
 

@@ -9,8 +9,8 @@ const BACKROW_SIZE : int = 5;
 const PENDULUM_SIZE : int = 2;
 const ONE_TRIBUTE_LEVEL : int = 5;
 const TWO_TRIBUTE_LEVEL : int = 7;
-const MAIN_DECK_SIZE : int = 80;
-const EXTRA_DECK_SIZE : int = 30;
+const MAIN_DECK_SIZE : int = 60;
+const EXTRA_DECK_SIZE : int = 15;
 const MAIN_DECK_DUPLICATES : int = 3;
 
 var cards_in_backrow : Array = [];
