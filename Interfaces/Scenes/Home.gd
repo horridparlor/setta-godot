@@ -2,10 +2,12 @@ extends Node2D
 class_name Home
 
 const GAMEPLAY_PATH : String = "res://Prefabs/Scenes/Gameplay.tscn";
+const LOGIN_PATH : String = "res://Prefabs/Scenes/Login.tscn";
 const DEBUG_MODE_CODE : Array = [KEY_KP_8, KEY_KP_8, KEY_KP_2, KEY_KP_2, KEY_KP_4, KEY_KP_6, KEY_KP_4, KEY_KP_6, KEY_KP_1, KEY_KP_3];
 
 var id_regex : RegEx = RegEx.new();
 var gameplay : Gameplay;
+var login : Login;
 var current_code_index : int = 0;
 
 var cheat_deal_regex : RegEx = RegEx.new();

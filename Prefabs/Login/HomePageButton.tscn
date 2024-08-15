@@ -1,14 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://cm4wnlmay8f3a"]
+[gd_scene load_steps=2 format=3 uid="uid://b7am5n0ll070h"]
 
-[ext_resource type="Theme" uid="uid://5e5bmlg2l65t" path="res://Styles/Home/Widgets/UtilityButton/BlueVariant/UtilityButtonBlueTheme.tres" id="1_t4url"]
+[ext_resource type="Theme" uid="uid://4hrgirwhobcy" path="res://Styles/Home/Widgets/HomePageButton/HomePageButtonTheme.tres" id="1_ernmc"]
 
-[node name="UtilityButton" type="Control"]
+[node name="HomePageButton" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -480.0
+offset_top = -262.0
+offset_right = -480.0
+offset_bottom = -262.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -28,8 +34,7 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(170, 30)
+custom_minimum_size = Vector2(210, 120)
 layout_mode = 2
-focus_mode = 0
-theme = ExtResource("1_t4url")
-text = "Forgot password"
+theme = ExtResource("1_ernmc")
+text = "Home"

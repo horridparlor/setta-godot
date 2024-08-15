@@ -1,5 +1,6 @@
 extends Node
 
+const Auth : GDScript = preload("res://Scripts/System/Auth.gd");
 const CardData : GDScript = preload("res://Scripts/System/CardData.gd");
 const Children : GDScript = preload("res://Scripts/System/Children.gd");
 const Debug : GDScript = preload("res://Scripts/System/Debug.gd");

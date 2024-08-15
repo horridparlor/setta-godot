@@ -12,7 +12,7 @@ func init(request : OperationRequest, new_parent : Node, _leave_raw : bool) -> v
 	add_parent(new_parent)
 	operation = request.operation;
 	self.request_completed.connect(self.complete_request);
-	request(request.getEndpoint());
+	request(request.getEndpoint(), request.getParams());
 
 func add_parent(new_parent : Node) -> void:
 	parent = new_parent;

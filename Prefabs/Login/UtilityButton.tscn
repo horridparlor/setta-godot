@@ -1,16 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://bfeegd4tvsqs3"]
+[gd_scene load_steps=2 format=3 uid="uid://cm4wnlmay8f3a"]
 
-[ext_resource type="Theme" uid="uid://dyuuqb4rane4e" path="res://Styles/Home/Widgets/ActionButton/ActionButtonTheme.tres" id="1_tlj02"]
+[ext_resource type="Theme" uid="uid://5e5bmlg2l65t" path="res://Styles/Home/Widgets/UtilityButton/BlueVariant/UtilityButtonBlueTheme.tres" id="1_ywa3r"]
 
-[node name="ActionButton" type="Control"]
+[node name="UtilityButton" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -30,8 +28,8 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(350, 100)
+custom_minimum_size = Vector2(170, 30)
 layout_mode = 2
 focus_mode = 0
-theme = ExtResource("1_tlj02")
-text = "Login"
+theme = ExtResource("1_ywa3r")
+text = "Forgot password"

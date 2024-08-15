@@ -1,12 +1,16 @@
 [gd_scene load_steps=2 format=3 uid="uid://07l7bql71e4m"]
 
-[ext_resource type="Theme" uid="uid://cdht2om6h5002" path="res://Styles/Home/Bar/BarTheme.tres" id="1_665lr"]
+[ext_resource type="Theme" uid="uid://cdht2om6h5002" path="res://Styles/Home/Bar/BarTheme.tres" id="1_wtk2w"]
 
 [node name="Bar" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -510.0
+offset_top = -208.0
+offset_right = -510.0
+offset_bottom = -208.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -24,4 +28,4 @@ offset_right = 100.0
 offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_665lr")
+theme = ExtResource("1_wtk2w")

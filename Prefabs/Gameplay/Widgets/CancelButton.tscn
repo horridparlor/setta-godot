@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://wwgiu3ysaade" path="res://Styles/Gameplay/Widgets/CancelButton/CancelButtonTheme.tres" id="1_yup73"]
 [ext_resource type="StyleBox" uid="uid://21ekhclq3its" path="res://Styles/Gameplay/Widgets/CancelButton/NormalFrame.tres" id="2_0mwos"]
 [ext_resource type="StyleBox" uid="uid://cjm6ty58ardcs" path="res://Styles/Gameplay/Widgets/CancelButton/FocusFrame.tres" id="2_ap4b6"]
-[ext_resource type="FontFile" uid="uid://b5gq130biwha7" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="2_xgmah"]
+[ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="2_xgmah"]
 [ext_resource type="StyleBox" uid="uid://bhdq77k4ednab" path="res://Styles/Gameplay/Widgets/CancelButton/HoverFrame.tres" id="3_d5ns5"]
 [ext_resource type="StyleBox" uid="uid://ccrs4rihwxwsb" path="res://Styles/Gameplay/Widgets/CancelButton/PressedFrame.tres" id="4_gmi7q"]
 

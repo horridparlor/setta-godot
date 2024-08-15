@@ -1,21 +1,25 @@
 extends Node
 class_name OperationRequest
 
-const DOMAIN : String = "https://cardnot.com/";
-const API_PATH : String = DOMAIN + "api/user/";
-const ADMIN_PATH : String = API_PATH + "admin/";
-const ASSETS_PATH : String = DOMAIN + "setta-assets/";
-
 var operation : RequestEnums.Operation;
 var endpoint : String;
 var is_fetch : bool;
 var file_path : String;
+var params : Dictionary
 
-func _init(operation_ : RequestEnums.Operation, file_path_ : String = ""):
+func _init(operation_ : RequestEnums.Operation, params_ : Dictionary, file_path_ : String = ""):
 	operation = operation_;
 	endpoint = RequestEnums.Endpoint[operation];
 	is_fetch = RequestEnums.OperationRequestType[operation] == RequestEnums.RequestType.FETCH;
 	file_path = file_path_;
+	params = params_;
 
 func getEndpoint() -> String:
-	return (ASSETS_PATH if is_fetch else API_PATH) + endpoint + file_path;
+	return (System.Server.ASSETS_PATH if is_fetch else System.Server.API_PATH) + endpoint + file_path;
+
+func getParams() -> PackedStringArray:
+	var packed = []
+	for key in params.keys():
+		var pair = str(key) + "=" + str(params[key]);
+		packed.append(pair);
+	return packed;

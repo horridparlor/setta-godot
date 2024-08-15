@@ -1,12 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7am5n0ll070h"]
+[gd_scene load_steps=2 format=3 uid="uid://bfeegd4tvsqs3"]
 
-[ext_resource type="Theme" uid="uid://4hrgirwhobcy" path="res://Styles/Home/Widgets/HomePageButton/HomePageButtonTheme.tres" id="1_ag0iy"]
+[ext_resource type="Theme" uid="uid://dyuuqb4rane4e" path="res://Styles/Home/Widgets/ActionButton/ActionButtonTheme.tres" id="1_5ef36"]
 
-[node name="HomePageButton" type="Control"]
+[node name="ActionButton" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -561.0
+offset_top = -276.0
+offset_right = -561.0
+offset_bottom = -276.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -30,7 +34,8 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(210, 120)
+custom_minimum_size = Vector2(350, 100)
 layout_mode = 2
-theme = ExtResource("1_ag0iy")
-text = "Home"
+focus_mode = 0
+theme = ExtResource("1_5ef36")
+text = "Login"

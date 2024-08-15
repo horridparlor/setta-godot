@@ -37,7 +37,7 @@ enum CardSubtype {
 	NONE,
 	NORMAL,
 	REVENGE,
-	RITUAL,
+	KILLER_MOVE,
 	ROYAL,
 	TIME_TRAVELLER
 }
@@ -51,7 +51,7 @@ const JSON_SUBTYPE_EFFECT : String = "Effect";
 const JSON_SUBTYPE_FUSION : String = "Fusion";
 const JSON_SUBTYPE_NORMAL : String = "Normal";
 const JSON_SUBTYPE_REVENGE : String = "Revenge";
-const JSON_SUBTYPE_RITUAL : String = "Ritual";
+const JSON_SUBTYPE_KILLER_MOVE : String = "Killer Move";
 const JSON_SUBTYPE_ROYAL : String = "Royal";
 const JSON_SUBTYPE_TIME_TRAVELLER : String = "Time Traveller";
 
@@ -60,7 +60,7 @@ static var CardSubtypeName = {
 	CardSubtype.FUSION: JSON_SUBTYPE_FUSION,
 	CardSubtype.NORMAL: JSON_SUBTYPE_NORMAL,
 	CardSubtype.REVENGE: JSON_SUBTYPE_REVENGE,
-	CardSubtype.RITUAL: JSON_SUBTYPE_RITUAL,
+	CardSubtype.KILLER_MOVE: JSON_SUBTYPE_KILLER_MOVE,
 	CardSubtype.ROYAL: JSON_SUBTYPE_ROYAL,
 	CardSubtype.TIME_TRAVELLER: JSON_SUBTYPE_TIME_TRAVELLER
 }
@@ -75,8 +75,8 @@ static func enumerate_subtype(message : String) -> CardSubtype:
 			return CardSubtype.NORMAL;
 		JSON_SUBTYPE_REVENGE:
 			return CardSubtype.REVENGE;
-		JSON_SUBTYPE_RITUAL:
-			return CardSubtype.RITUAL;
+		JSON_SUBTYPE_KILLER_MOVE:
+			return CardSubtype.KILLER_MOVE;
 		JSON_SUBTYPE_ROYAL:
 			return CardSubtype.ROYAL;
 		JSON_SUBTYPE_TIME_TRAVELLER:

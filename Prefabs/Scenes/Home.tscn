@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://f4svyfwh1l55"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/Home.gd" id="1_skk3h"]
-[ext_resource type="FontFile" uid="uid://d1x527lxupsxk" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="2_5p8lo"]
+[ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="2_5p8lo"]
 [ext_resource type="Theme" uid="uid://wbkxwfy2xd3c" path="res://Styles/Home/DebugStyle.tres" id="2_bdphk"]
 
 [node name="Home" type="Node2D"]
@@ -15,10 +15,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -3840.0
-offset_top = -2160.0
-offset_right = 3840.0
-offset_bottom = 2160.0
+offset_left = -3605.0
+offset_top = -1988.0
+offset_right = 4075.0
+offset_bottom = 2332.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.00784314, 0.00784314, 0.00784314, 1)

@@ -19,7 +19,7 @@ static func fetch_artwork(card : GameplayCard) -> void:
 			System.CardData.get_serialized_name(card_data),
 			RequestEnums.get_webp_extension()
 		];
-	System.Server.request(RequestEnums.Operation.FETCH_ARTWORK, card, file_path);
+	System.Server.request(RequestEnums.Operation.FETCH_ARTWORK, {}, card, file_path);
 
 static func update_attribute_sprite(card : GameplayCard) -> void:
 	if card.card_data.card_class == CardEnums.Class.NONE:

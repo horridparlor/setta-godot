@@ -20,7 +20,7 @@ static var OperationRequestType = {
 }
 
 static var Endpoint = {
-	Operation.GET_CARDS: 'cards',
+	Operation.GET_CARDS: 'cards?isGame=true',
 	Operation.FETCH_ARTWORK: 'small-art/',
 }
 
