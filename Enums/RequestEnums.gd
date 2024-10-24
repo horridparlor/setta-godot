@@ -19,8 +19,18 @@ static var OperationRequestType = {
 	Operation.FETCH_ARTWORK: RequestType.FETCH,
 }
 
+static func getMethod(operation: Operation) -> HTTPClient.Method:
+	match OperationRequestType[operation]:
+		RequestType.POST:
+			return HTTPClient.Method.METHOD_POST;
+		RequestType.PUT:
+			return HTTPClient.Method.METHOD_PUT;
+		RequestType.DELETE:
+			return HTTPClient.Method.METHOD_DELETE;
+	return HTTPClient.Method.METHOD_GET;
+
 static var Endpoint = {
-	Operation.GET_CARDS: 'cards?isGame=true',
+	Operation.GET_CARDS: 'cards?isGame=1',
 	Operation.FETCH_ARTWORK: 'small-art/',
 }
 

@@ -8,11 +8,11 @@ var leave_raw : bool;
 func init(request : OperationRequest, new_parent : Node, _leave_raw : bool) -> void:
 	leave_raw = _leave_raw;
 	if System.Debug.REQUESTS and (System.Debug.REQUESTS_FILTER == request.operation):
-		print(request.getEndpoint());
+		request.debug();
 	add_parent(new_parent)
 	operation = request.operation;
 	self.request_completed.connect(self.complete_request);
-	request(request.getEndpoint(), request.getParams());
+	request(request.getEndpoint(), [], request.method, str(request.params));
 
 func add_parent(new_parent : Node) -> void:
 	parent = new_parent;

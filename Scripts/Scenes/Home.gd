@@ -16,12 +16,13 @@ func load_cards() -> void:
 	var cards : Dictionary;
 	System.init();
 	cards = System.Json.read(SystemEnums.SaveFilePath[SystemEnums.SaveFile.CARDS]);
-	if System.Json.success(cards):
+	if System.Json.success(cards) && !System.Debug.ALWAYS_FETCH_CARDS:
 		set_cards(cards.cards);
 	else:
-		System.Server.request(RequestEnums.Operation.GET_CARDS, {}, self);
+		System.Server.request(RequestEnums.Operation.GET_CARDS, {'isGame': true}, self);
 
 func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
+	print(response);
 	match operation:
 		RequestEnums.Operation.GET_CARDS:
 			set_cards(response.cards);
