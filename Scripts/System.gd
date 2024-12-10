@@ -23,7 +23,8 @@ var cards : Dictionary;
 var main_deck_cards : Dictionary;
 var extra_deck_cards : Dictionary;
 var is_ready : bool = false;
-var authData : AuthData;
+var auth_data : AuthData;
+var server_ip : String = Server.DEFAULT_SERVER_IP;
 
 static func wait(delay : float, parent : Node2D) -> void:
 	await parent.get_tree().create_timer(delay).timeout;

@@ -9,5 +9,11 @@ func init(input_title : String, placeholder_text : String, is_secret : bool = fa
 func focus() -> void:
 	pass;
 
+func unfocus() -> void:
+	pass;
+
 func get_text() -> String:
 	return "";
+	
+func set_text(message : String) -> void:
+	pass;

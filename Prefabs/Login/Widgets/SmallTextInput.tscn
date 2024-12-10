@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://csnk7j14b5vut"]
+
+[ext_resource type="Script" path="res://Scripts/Login/Widgets/TextInput.gd" id="1_y6med"]
+[ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="2_nx6w8"]
+[ext_resource type="Theme" uid="uid://xk5it1c50fwc" path="res://Prefabs/Login/Widgets/SmallTextInput.tres" id="3_psikh"]
+[ext_resource type="FontFile" uid="uid://3kkavvgbrq0y" path="res://Assets/FontFiles/Montserrat/Montserrat-Medium.ttf" id="4_wnuaj"]
+
+[node name="SmallTextInput" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_y6med")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = -545.0
+offset_top = -15.0
+offset_right = -415.0
+offset_bottom = 25.0
+theme_override_fonts/font = ExtResource("2_nx6w8")
+theme_override_font_sizes/font_size = 24
+text = "Name"
+horizontal_alignment = 2
+
+[node name="Input" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_psikh")
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.254902)
+theme_override_constants/outline_size = 0
+theme_override_constants/caret_width = 0
+theme_override_fonts/font = ExtResource("4_wnuaj")
+theme_override_font_sizes/font_size = 32
+placeholder_text = "placeholder"
+max_length = 32

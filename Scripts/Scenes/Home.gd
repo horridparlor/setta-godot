@@ -9,15 +9,14 @@ func _ready() -> void:
 	load_cards();
 	update_debug_tools();
 	set_process_input(true);
-	initialize_login();
+	System.Server.init();
+	if !System.Auth.try_auth(self):
+		initialize_login();
 
-func initialize_login() -> void:
-	if System.Auth.try_auth():
-		initialize_nexus();
-		return;
+func initialize_login(error_message : String = "") -> void:
 	login = System.Instance.load_child(LOGIN_PATH, scene_layer);
 	login.authenticated.connect(close_login);
-	login.init();
+	login.init(error_message);
 
 func close_login() -> void:
 	initialize_nexus();
@@ -25,7 +24,12 @@ func close_login() -> void:
 
 func initialize_nexus() -> void:
 	nexus = System.Instance.load_child(NEXUS_PATH, scene_layer);
+	nexus.logout.connect(on_logout);
 	nexus.init();
+
+func on_logout() -> void:
+	initialize_login();
+	nexus.queue_free();
 
 func initialize_gameplay() -> void:
 	gameplay = System.Instance.load_child(GAMEPLAY_PATH, scene_layer);
@@ -43,6 +47,12 @@ func load_cards() -> void:
 
 func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:
+		RequestEnums.Operation.AUTHENTICATE:
+			if response.has("error"):
+				initialize_login(response.error);
+			else:
+				System.Auth.eat(response);
+				initialize_nexus();
 		RequestEnums.Operation.GET_CARDS:
 			set_cards(response.cards);
 			if gameplay:

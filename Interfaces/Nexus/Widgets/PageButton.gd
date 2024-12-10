@@ -1,4 +1,4 @@
-extends Control
+extends GlowNode
 class_name PageButton
 
 signal pressed(_self);

@@ -48,3 +48,9 @@ static func from_json(json_data : Dictionary) -> AuthData:
 		json_data.lastname,
 		json_data.accessRights
 	)
+
+func authenticate(parent : Node) -> void:
+	System.Server.request(RequestEnums.Operation.AUTHENTICATE, {
+		"username": username,
+		"password": password
+	}, parent);

@@ -23,6 +23,10 @@ func complete_request(result : int, response_code : int, headers : PackedStringA
 	if !leave_raw:
 		response = System.Server.parse_response(body);
 	response = parse_response(response);
+	if response.is_empty():
+		response = {
+			"error": "Server could not be reached {%s}" % [System.server_ip]
+		}
 	if operation != RequestEnums.Operation.NONE:
 		parent._on_http_response(operation, response);
 	queue_free();

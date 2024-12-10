@@ -9,13 +9,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n3kc4"]
 size = Vector2(330, 240)
 
-[node name="PageButton" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[node name="PageButton" type="Node2D"]
 script = ExtResource("1_0h4pk")
 
 [node name="InactivePanel" type="Panel" parent="."]
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -29,12 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("3_ygqri")
 
-[node name="Button" type="TouchScreenButton" parent="InactivePanel"]
-position = Vector2(165, 120)
-shape = SubResource("RectangleShape2D_n3kc4")
-
 [node name="ActivePanel" type="Panel" parent="."]
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -48,8 +40,24 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("2_s40dd")
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="TouchScreenButton" parent="Control"]
+shape = SubResource("RectangleShape2D_n3kc4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+position = Vector2(0, -10)
+texture = ExtResource("2_tmh3w")
+
 [node name="Label" type="Label" parent="."]
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -68,8 +76,4 @@ text = "Page"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="Label"]
-position = Vector2(38, -89)
-texture = ExtResource("2_tmh3w")
-
-[connection signal="pressed" from="InactivePanel/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Control/Button" to="." method="_on_button_pressed"]

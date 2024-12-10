@@ -17,7 +17,9 @@ func _init(operation_ : RequestEnums.Operation, params_ : Dictionary, file_path_
 	params = params_;
 
 func getEndpoint() -> String:
-	return (System.Server.ASSETS_PATH if is_fetch else System.Server.API_PATH) + endpoint + file_path;
+	return System.Server.REQUEST_PREFIX + System.server_ip + \
+	(System.Server.ASSETS_PATH if is_fetch else System.Server.API_PATH) + \
+	endpoint + file_path;
 
 func getParams() -> PackedStringArray:
 	var packed = []

@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 class_name PageButtons
 
 const PAGE_ICON_PATH : String = "res://Assets/Icons/Nexus/";

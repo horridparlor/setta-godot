@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://cnes1anls5kle"]
+
+[ext_resource type="Script" path="res://Scripts/Login/Widgets/GameTitle.gd" id="1_pk7jq"]
+[ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="2_glfe7"]
+[ext_resource type="FontFile" uid="uid://cm2kg0uewqwes" path="res://Assets/FontFiles/Montserrat/Montserrat-Italic.ttf" id="3_imin5"]
+[ext_resource type="Script" path="res://Interfaces/Common/GlowNode.gd" id="4_icluv"]
+[ext_resource type="Texture2D" uid="uid://bw8ggdbx8bh43" path="res://Assets/Icons/LevelFrame.png" id="4_ol12c"]
+
+[node name="GameTitle" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_pk7jq")
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -174.0
+offset_top = -63.0
+offset_right = 50.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_glfe7")
+theme_override_font_sizes/font_size = 80
+text = "Setta"
+
+[node name="ValuePromise" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -197.5
+offset_top = 40.0
+offset_right = 197.5
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_imin5")
+theme_override_font_sizes/font_size = 32
+text = "Competitive Card Game"
+
+[node name="GlowNode" type="Node2D" parent="."]
+script = ExtResource("4_icluv")
+
+[node name="LevelFrame" type="Sprite2D" parent="GlowNode"]
+position = Vector2(116, -20)
+texture = ExtResource("4_ol12c")

@@ -19,6 +19,11 @@ func _ready() -> void:
 	init_buttons();
 	on_button_pressed(battle_button);
 
+func init(random : RandomNumberGenerator) -> void:
+	for b in get_buttons():
+		var button : PageButton = b;
+		button.activate_animations(random);
+
 func init_buttons() -> void:
 	shop_button.init("Shop", SHOP_PAGE_ICON_PATH);
 	decks_button.init("Decks", DECKS_PAGE_ICON_PATH);
