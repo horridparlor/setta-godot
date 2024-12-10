@@ -1,5 +1,5 @@
-const DOMAIN : String = "https://setta.fi/";
-const API_PATH : String = DOMAIN + "setta-back/api/user/";
+const DOMAIN : String = "http://localhost:8000/";
+const API_PATH : String = DOMAIN + "api/user/";
 const ASSETS_PATH : String = DOMAIN + "setta-assets/";
 
 static func parse_response(body : PackedByteArray):

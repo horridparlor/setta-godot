@@ -9,12 +9,14 @@ enum RequestType {
 }
 
 enum Operation {
+	AUTHENTICATE,
 	GET_CARDS,
 	FETCH_ARTWORK,
 	NONE
 }
 
 static var OperationRequestType = {
+	Operation.AUTHENTICATE: RequestType.POST,
 	Operation.GET_CARDS: RequestType.GET,
 	Operation.FETCH_ARTWORK: RequestType.FETCH,
 }
@@ -30,6 +32,7 @@ static func getMethod(operation: Operation) -> HTTPClient.Method:
 	return HTTPClient.Method.METHOD_GET;
 
 static var Endpoint = {
+	Operation.AUTHENTICATE: 'authenticate',
 	Operation.GET_CARDS: 'cards?isGame=1',
 	Operation.FETCH_ARTWORK: 'small-art/',
 }

@@ -4,11 +4,31 @@ extends Home
 @onready var debug_prompt : LineEdit = $DebugPrompt;
 
 func _ready() -> void:
+	DisplayServer.window_set_current_screen(1);
 	initialize_regex();
 	load_cards();
-	gameplay = System.Instance.load_child(GAMEPLAY_PATH, scene_layer);
 	update_debug_tools();
 	set_process_input(true);
+	initialize_login();
+
+func initialize_login() -> void:
+	if System.Auth.try_auth():
+		initialize_nexus();
+		return;
+	login = System.Instance.load_child(LOGIN_PATH, scene_layer);
+	login.authenticated.connect(close_login);
+	login.init();
+
+func close_login() -> void:
+	initialize_nexus();
+	login.queue_free();
+
+func initialize_nexus() -> void:
+	nexus = System.Instance.load_child(NEXUS_PATH, scene_layer);
+	nexus.init();
+
+func initialize_gameplay() -> void:
+	gameplay = System.Instance.load_child(GAMEPLAY_PATH, scene_layer);
 	if System.is_ready:
 		gameplay.init();
 
@@ -22,11 +42,11 @@ func load_cards() -> void:
 		System.Server.request(RequestEnums.Operation.GET_CARDS, {'isGame': true}, self);
 
 func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
-	print(response);
 	match operation:
 		RequestEnums.Operation.GET_CARDS:
 			set_cards(response.cards);
-			gameplay.init();
+			if gameplay:
+				gameplay.init();
 
 func set_cards(source : Array):
 	var cards : Dictionary;

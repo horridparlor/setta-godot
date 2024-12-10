@@ -1,5 +1,6 @@
 extends Node
 
+const Auth : GDScript = preload("res://Scripts/System/Auth.gd");
 const CardData : GDScript = preload("res://Scripts/System/CardData.gd");
 const Children : GDScript = preload("res://Scripts/System/Children.gd");
 const Debug : GDScript = preload("res://Scripts/System/Debug.gd");
@@ -22,6 +23,7 @@ var cards : Dictionary;
 var main_deck_cards : Dictionary;
 var extra_deck_cards : Dictionary;
 var is_ready : bool = false;
+var authData : AuthData;
 
 static func wait(delay : float, parent : Node2D) -> void:
 	await parent.get_tree().create_timer(delay).timeout;

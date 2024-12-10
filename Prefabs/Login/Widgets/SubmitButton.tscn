@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://chdrvm7emq34n"]
+
+[ext_resource type="Script" path="res://Scripts/Login/Widgets/SubmitButton.gd" id="1_myqn1"]
+[ext_resource type="Theme" uid="uid://djtpaaf5prvki" path="res://Styles/Login/Widgets/SubmitButton.tres" id="2_7qssa"]
+[ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="3_n7qu1"]
+[ext_resource type="StyleBox" uid="uid://cjm6ty58ardcs" path="res://Styles/Gameplay/Widgets/CancelButton/FocusFrame.tres" id="4_ufwwe"]
+[ext_resource type="StyleBox" uid="uid://bhdq77k4ednab" path="res://Styles/Gameplay/Widgets/CancelButton/HoverFrame.tres" id="5_dr52x"]
+[ext_resource type="StyleBox" uid="uid://ccrs4rihwxwsb" path="res://Styles/Gameplay/Widgets/CancelButton/PressedFrame.tres" id="6_cbp0l"]
+[ext_resource type="StyleBox" uid="uid://21ekhclq3its" path="res://Styles/Gameplay/Widgets/CancelButton/NormalFrame.tres" id="7_bupw6"]
+
+[node name="SubmitButton" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1920.0
+offset_bottom = -1080.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_myqn1")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -153.0
+offset_top = -57.5
+offset_right = 153.0
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_7qssa")
+theme_override_fonts/font = ExtResource("3_n7qu1")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = ExtResource("4_ufwwe")
+theme_override_styles/hover = ExtResource("5_dr52x")
+theme_override_styles/pressed = ExtResource("6_cbp0l")
+theme_override_styles/normal = ExtResource("7_bupw6")
+text = "Submit"
