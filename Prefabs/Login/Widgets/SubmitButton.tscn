@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Scripts/Login/Widgets/SubmitButton.gd" id="1_myqn1"]
 [ext_resource type="Theme" uid="uid://djtpaaf5prvki" path="res://Styles/Login/Widgets/SubmitButton.tres" id="2_7qssa"]
 [ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="3_n7qu1"]
-[ext_resource type="StyleBox" uid="uid://cjm6ty58ardcs" path="res://Styles/Gameplay/Widgets/CancelButton/FocusFrame.tres" id="4_ufwwe"]
-[ext_resource type="StyleBox" uid="uid://bhdq77k4ednab" path="res://Styles/Gameplay/Widgets/CancelButton/HoverFrame.tres" id="5_dr52x"]
-[ext_resource type="StyleBox" uid="uid://ccrs4rihwxwsb" path="res://Styles/Gameplay/Widgets/CancelButton/PressedFrame.tres" id="6_cbp0l"]
-[ext_resource type="StyleBox" uid="uid://21ekhclq3its" path="res://Styles/Gameplay/Widgets/CancelButton/NormalFrame.tres" id="7_bupw6"]
+[ext_resource type="StyleBox" uid="uid://bo7d3ypqnrf4o" path="res://Styles/Login/Widgets/SubmitButton/SubmitButtonFocus.tres" id="4_g666l"]
+[ext_resource type="StyleBox" uid="uid://b5ftgs230hqny" path="res://Styles/Login/Widgets/SubmitButton/SubmitButtonHover.tres" id="5_d45df"]
+[ext_resource type="StyleBox" uid="uid://7d1p26u8rgn7" path="res://Styles/Login/Widgets/SubmitButton/SubmitButtonPressed.tres" id="6_8ev5g"]
+[ext_resource type="StyleBox" uid="uid://cotfomte1y3y4" path="res://Styles/Login/Widgets/SubmitButton/SubmitButtonNormal.tres" id="7_rrl8k"]
 
 [node name="SubmitButton" type="Node2D"]
 script = ExtResource("1_myqn1")
@@ -26,8 +26,8 @@ grow_vertical = 2
 theme = ExtResource("2_7qssa")
 theme_override_fonts/font = ExtResource("3_n7qu1")
 theme_override_font_sizes/font_size = 80
-theme_override_styles/focus = ExtResource("4_ufwwe")
-theme_override_styles/hover = ExtResource("5_dr52x")
-theme_override_styles/pressed = ExtResource("6_cbp0l")
-theme_override_styles/normal = ExtResource("7_bupw6")
+theme_override_styles/focus = ExtResource("4_g666l")
+theme_override_styles/hover = ExtResource("5_d45df")
+theme_override_styles/pressed = ExtResource("6_8ev5g")
+theme_override_styles/normal = ExtResource("7_rrl8k")
 text = "Submit"

@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://jcxnmbx8gdq2"]
+[gd_scene load_steps=8 format=3 uid="uid://jcxnmbx8gdq2"]
 
+[ext_resource type="Script" path="res://Scripts/Gameplay/Widgets/CancelButton.gd" id="1_gej3t"]
 [ext_resource type="Theme" uid="uid://wwgiu3ysaade" path="res://Styles/Gameplay/Widgets/CancelButton/CancelButtonTheme.tres" id="1_yup73"]
 [ext_resource type="StyleBox" uid="uid://21ekhclq3its" path="res://Styles/Gameplay/Widgets/CancelButton/NormalFrame.tres" id="2_0mwos"]
 [ext_resource type="StyleBox" uid="uid://cjm6ty58ardcs" path="res://Styles/Gameplay/Widgets/CancelButton/FocusFrame.tres" id="2_ap4b6"]
@@ -14,6 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_gej3t")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -42,3 +44,5 @@ theme_override_styles/hover = ExtResource("3_d5ns5")
 theme_override_styles/pressed = ExtResource("4_gmi7q")
 theme_override_styles/normal = ExtResource("2_0mwos")
 text = "Cancel"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

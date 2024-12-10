@@ -14,6 +14,7 @@ extends Gameplay
 @onready var player_stats : GlowNode = $Widgets/PlayerStats;
 @onready var action_hint : ActionHint = $Widgets/ActionHint;
 @onready var cancel_button_layer : GlowNode = $Widgets/GlowNode;
+@onready var cancel_button : CancelButton = $Widgets/GlowNode/CancelButton;
 
 @onready var card_focus_timer : Timer = $Timers/CardFocusTimer;
 @onready var zone_focus_timer : Timer = $Timers/ZoneFocusTimer;
@@ -31,6 +32,10 @@ func _ready() -> void:
 	init_random();
 	Signals.connect_signals(self);
 	cancel_button_layer.activate_animations(random);
+	cancel_button.pressed.connect(on_surrender);
+
+func on_surrender() -> void:
+	emit_signal("surrender");
 
 func init() -> void:
 	CardManager.init_game_state(self);

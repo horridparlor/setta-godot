@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl0bjiufiql8b"]
+[gd_scene load_steps=9 format=3 uid="uid://dl0bjiufiql8b"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/Login.gd" id="1_fsub3"]
 [ext_resource type="StyleBox" uid="uid://5maur4wkmuti" path="res://Styles/Login/Background.tres" id="2_m0kqc"]
 [ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="3_dewof"]
+[ext_resource type="FontFile" uid="uid://yxygawtc05lh" path="res://Assets/FontFiles/Montserrat/Montserrat-SemiBold.ttf" id="3_pscn1"]
 [ext_resource type="PackedScene" uid="uid://v6r60b5r6hn5" path="res://Prefabs/Login/Widgets/TextInput.tscn" id="3_v002h"]
 [ext_resource type="PackedScene" uid="uid://chdrvm7emq34n" path="res://Prefabs/Login/Widgets/SubmitButton.tscn" id="5_a78yw"]
 [ext_resource type="PackedScene" uid="uid://csnk7j14b5vut" path="res://Prefabs/Login/Widgets/SmallTextInput.tscn" id="6_ykb3f"]
@@ -25,32 +26,40 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("2_m0kqc")
 
-[node name="FormName" type="Label" parent="."]
+[node name="StatusLayer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FormName" type="Label" parent="StatusLayer"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -278.0
-offset_top = -450.0
-offset_right = 278.0
-offset_bottom = -312.0
+offset_left = -298.0
+offset_top = -451.0
+offset_right = 258.0
+offset_bottom = -313.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("3_dewof")
+theme_override_fonts/font = ExtResource("3_pscn1")
 theme_override_font_sizes/font_size = 112
 text = "Welcome"
 
-[node name="ErrorLabel" type="Label" parent="."]
+[node name="ErrorLabel" type="Label" parent="StatusLayer"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -165.0
-offset_top = -260.0
-offset_right = 165.0
-offset_bottom = -181.0
+offset_left = -185.0
+offset_top = -211.0
+offset_right = 145.0
+offset_bottom = -132.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.954907, 0.951489, 0, 1)
@@ -60,25 +69,29 @@ text = "Error"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="UsernameInput" parent="." instance=ExtResource("3_v002h")]
-offset_top = -60.0
-offset_bottom = -60.0
+[node name="FormLayer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 
-[node name="PasswordInput" parent="." instance=ExtResource("3_v002h")]
-offset_top = 140.0
-offset_bottom = 140.0
+[node name="UsernameInput" parent="FormLayer" instance=ExtResource("3_v002h")]
+offset_top = 16.0
+offset_bottom = 16.0
 
-[node name="SubmitButton" parent="." instance=ExtResource("5_a78yw")]
-position = Vector2(0, 340)
+[node name="PasswordInput" parent="FormLayer" instance=ExtResource("3_v002h")]
+offset_top = 201.0
+offset_bottom = 201.0
+
+[node name="SubmitButton" parent="FormLayer" instance=ExtResource("5_a78yw")]
+position = Vector2(0, 377)
 
 [node name="IpInput" parent="." instance=ExtResource("6_ykb3f")]
-offset_left = -400.0
-offset_top = 480.0
-offset_right = -400.0
-offset_bottom = 480.0
+offset_left = 1061.0
+offset_top = -269.0
+offset_right = 1061.0
+offset_bottom = -269.0
 
 [node name="GameTitle" parent="." instance=ExtResource("7_hpoy1")]
-offset_left = 700.0
-offset_top = -380.0
-offset_right = 700.0
-offset_bottom = -380.0
+offset_left = 728.0
+offset_top = -391.0
+offset_right = 728.0
+offset_bottom = -391.0

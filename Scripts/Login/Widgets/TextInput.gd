@@ -5,6 +5,10 @@ extends TextInput
 
 func _ready() -> void:
 	input.text_submitted.connect(on_submit);
+	input.focus_entered.connect(focus_entered);
+
+func focus_entered() -> void:
+	emit_signal("focused");
 
 func on_submit(message: String):
 	emit_signal("submit");
@@ -27,3 +31,6 @@ func get_text() -> String:
 
 func set_text(message : String) -> void:
 	input.text = message;
+
+func set_placeholder_text(message : String) -> void:
+	input.placeholder_text = message;

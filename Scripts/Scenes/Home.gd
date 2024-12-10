@@ -25,16 +25,26 @@ func close_login() -> void:
 func initialize_nexus() -> void:
 	nexus = System.Instance.load_child(NEXUS_PATH, scene_layer);
 	nexus.logout.connect(on_logout);
+	nexus.enter_game.connect(on_enter_game);
 	nexus.init();
 
 func on_logout() -> void:
 	initialize_login();
 	nexus.queue_free();
 
+func on_enter_game() -> void:
+	initialize_gameplay();
+	nexus.queue_free();
+
 func initialize_gameplay() -> void:
 	gameplay = System.Instance.load_child(GAMEPLAY_PATH, scene_layer);
+	gameplay.surrender.connect(on_surrender);
 	if System.is_ready:
 		gameplay.init();
+
+func on_surrender() -> void:
+	initialize_nexus();
+	gameplay.queue_free();
 
 func load_cards() -> void:
 	var cards : Dictionary;

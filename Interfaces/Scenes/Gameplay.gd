@@ -1,6 +1,8 @@
 extends Node2D
 class_name Gameplay
 
+signal surrender();
+
 const FOCUS_FOLLOW_DISTANCE : int = 160;
 const HINT_TRIBUTE : String = "[center]Tribute [b]%s[/b] [i]more monsters[/i][/center]";
 

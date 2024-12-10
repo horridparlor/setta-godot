@@ -43,3 +43,5 @@ position = Vector2(716, 0)
 
 [node name="LogoutButton" parent="." instance=ExtResource("5_cm45s")]
 position = Vector2(720, -420)
+
+[node name="PlayButton" parent="." instance=ExtResource("5_cm45s")]
