@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://sfljpoame5xt"]
+[gd_scene load_steps=3 format=3 uid="uid://sfljpoame5xt"]
 
-[ext_resource type="Script" path="res://Scripts/Nexus/Pages/BattlePage.gd" id="1_d8vhn"]
+[ext_resource type="Script" path="res://Scripts/Nexus/Pages/DecksPage.gd" id="1_t8yx1"]
+[ext_resource type="PackedScene" uid="uid://bqua6cga77228" path="res://Prefabs/Nexus/Pages/ComingSoonLabel.tscn" id="2_07cyk"]
 
 [node name="DecksPage" type="Node2D"]
-script = ExtResource("1_d8vhn")
+script = ExtResource("1_t8yx1")
+
+[node name="ComingSoonLabel" parent="." instance=ExtResource("2_07cyk")]
