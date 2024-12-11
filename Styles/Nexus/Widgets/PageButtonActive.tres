@@ -5,4 +5,4 @@ bg_color = Color(0.132987, 0.229238, 0.530693, 1)
 border_width_left = 8
 border_width_top = 8
 border_width_right = 8
-border_color = Color(1, 1, 1, 1)
+border_color = Color(0.972549, 0.796078, 0.913725, 1)

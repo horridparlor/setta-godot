@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://sfljpoame5xt"]
+
+[ext_resource type="Script" path="res://Scripts/Nexus/Pages/BattlePage.gd" id="1_d8vhn"]
+
+[node name="DecksPage" type="Node2D"]
+script = ExtResource("1_d8vhn")
