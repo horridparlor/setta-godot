@@ -24,7 +24,8 @@ func move_catalogue_layer(delta : float) -> void:
 	if System.Vectors.equal(catalogue_layer.position, limited_target):
 		is_moving_catalogue_layer = false;
 		catalogue_layer.position = limited_target;
-	if focused_card:
+	behind_layer.position = catalogue_layer.position;
+	if focused_card || catalogue_cards.is_empty():
 		return;
 	update_card_carousel();
 
@@ -52,6 +53,8 @@ func run_catalogue_carousel(direction : int = 1) -> void:
 			head_index = last_card_shown - i;
 			tail_index = first_card_shown - i - 1;
 		card = cards_in_grid[head_index];
+		if card == focused_card:
+			drop_focused_card();
 		card.card_data = System.CardData.from_json(catalogue_cards[tail_index]);
 		card.Core.update_visuals(card);
 		card.origin_point = card_catalogue_grid.assign_position(card.card_data.instance_id, direction);
@@ -128,11 +131,15 @@ func spawn_catalogue_card(card_data : CardData) -> GameplayCard:
 	return card;
 
 func on_card_pressed(card : GameplayCard) -> void:
-	if is_moving_catalogue_layer || focused_card != null:
+	if focused_card != null:
 		return;
 	focused_card = card;
 	catalogue_click_timer.start();
-	
+
+func drop_focused_card() -> void:
+	focused_card = null;
+	catalogue_click_timer.stop();
+
 func on_card_focused() -> void:
 	var card_global_position : Vector2;
 	_on_catalogue_scroll_button_released();
@@ -148,10 +155,14 @@ func on_card_focused() -> void:
 	focused_card.Movement.interact(focused_card, self);
 	catalogue_layer.position = System.Vectors.default();
 	focused_card.global_position = card_global_position;
+	behind_layer.sort_algorithm_grid();
 
 func on_card_released(card : GameplayCard) -> void:
 	var card_global_position : Vector2;
 	if card != focused_card:
+		return;
+	if is_moving_catalogue_layer:
+		drop_focused_card();
 		return;
 	catalogue_click_timer.stop();
 	System.Children.move(top_bar, between_layer, self);
@@ -173,6 +184,12 @@ func unspawn_cards() -> void:
 		card.queue_free();
 	cards = {};
 	card_catalogue_grid.reset();
+	reset_cards_shown();
+
+func reset_cards_shown() -> void:
+	catalogue_cards = [];
+	catalogue_layer.position = System.Vectors.default();
+	catalogue_layer.cards = [];
 
 func _on_catalogue_scroll_button_pressed() -> void:
 	if !in_edit_mode || focused_card:
@@ -185,5 +202,7 @@ func _on_catalogue_scroll_button_released() -> void:
 	is_scrolling_catalogue = false;
 
 func _on_catalogue_click_timer_timeout() -> void:
+	if is_moving_catalogue_layer:
+		return;
 	catalogue_click_timer.stop();
 	on_card_focused();

@@ -73,7 +73,7 @@ func sort_card_position(turn_player : GameplayEnums.OwningPlayer) -> void:
 		GameplayEnums.ZoneType.SCROLL:
 			sort_algorithm_scroll();
 
-func sort_algorithm_grid(moving_card : GameplayCard) -> void:
+func sort_algorithm_grid(moving_card : GameplayCard = null) -> void:
 	for c in cards:
 		var card : GameplayCard = c;
 		var position : Vector2 = grid.get_origin_point(card.card_data.instance_id);
