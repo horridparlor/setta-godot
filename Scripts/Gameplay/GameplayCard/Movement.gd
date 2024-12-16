@@ -126,3 +126,6 @@ static func get_base_scale(card : GameplayCard):
 		CardEnums.Zone.MODAL:
 			return card.BASE_SCALE_MODAL;
 	return card.BASE_SCALE_HAND;
+
+static func teleport(card : GameplayCard) -> void:
+	card.position = card.origin_point;

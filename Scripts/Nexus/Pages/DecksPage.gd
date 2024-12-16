@@ -14,13 +14,16 @@ func _physics_process(delta : float) -> void:
 		move_catalogue_layer(delta);
 
 func move_catalogue_layer(delta : float) -> void:
+	var limited_target : Vector2 = Vector2(catalogue_layer_target_position.x,
+		limit_catalogue_layer_y(catalogue_layer_target_position.y));
 	if !is_active:
 		return;
 	catalogue_layer.position = System.Vectors.slide_towards(catalogue_layer.position,
 		catalogue_layer_target_position, CARD_CATALOGUE_SCROLL_SPEED, delta);
-	if System.Vectors.equal(catalogue_layer.position, catalogue_layer_target_position):
+	catalogue_layer.position.y = limit_catalogue_layer_y(catalogue_layer.position.y);
+	if System.Vectors.equal(catalogue_layer.position, limited_target):
 		is_moving_catalogue_layer = false;
-		catalogue_layer.position = catalogue_layer_target_position;
+		catalogue_layer.position = limited_target;
 	if focused_card:
 		return;
 	update_card_carousel();
@@ -66,14 +69,13 @@ func scroll_catalogue(delta : float) -> void:
 	var distance : float = get_global_mouse_position().y - scroll_position.y;
 	if !is_moving_catalogue_layer and abs(distance) < CARD_CATALOGUE_MIN_SCROLL:
 		return;
-	catalogue_layer_target_position = Vector2(catalogue_scroll_start_position.x, get_catalogue_layer_y(CARD_CATALOGUE_SCROLL_MULTIPLIER * distance));
+	catalogue_layer_target_position = Vector2(catalogue_scroll_start_position.x, catalogue_scroll_start_position.y + CARD_CATALOGUE_SCROLL_MULTIPLIER * distance);
 	if !is_moving_catalogue_layer:
 		is_moving_catalogue_layer = true;
 		catalogue_click_timer.stop();
 		focused_card = null;
 
-func get_catalogue_layer_y(distance : float) -> float:
-	var y : float = catalogue_scroll_start_position.y + distance;
+func limit_catalogue_layer_y(y : float) -> float:
 	return min(0, max(catalogue_layer_max_y, y));
 
 func initialize() -> void:
@@ -138,7 +140,9 @@ func on_card_focused() -> void:
 		var card : GameplayCard = c;
 		if card == focused_card:
 			continue;
+		card_global_position = card.global_position;
 		behind_layer.push_card(card, self);
+		card.global_position = card_global_position
 	System.Children.move(top_bar, self, between_layer);
 	card_global_position = focused_card.global_position;
 	focused_card.Movement.interact(focused_card, self);
@@ -159,7 +163,8 @@ func on_card_released(card : GameplayCard) -> void:
 	card_global_position = card.global_position;
 	catalogue_layer.sort_algorithm_grid(card);
 	card.Movement.unfocus(card, self);
-	catalogue_layer.position = catalogue_layer_target_position;
+	catalogue_layer.position = Vector2(catalogue_layer_target_position.x,
+		limit_catalogue_layer_y(catalogue_layer_target_position.y));
 	card.global_position = card_global_position;
 	focused_card = null;
 
