@@ -30,10 +30,9 @@ static func fill_stands(stands : Array, init_data : CardInitData, gameplay : Gam
 
 static func control_showcase_glow(
 	showcase : CardStand,
-	glow_state : GameplayEnums.GlowState,
-	gameplay : Gameplay
+	glow_state : GameplayEnums.GlowState
 ) -> void:
-	showcase.control_glow(glow_state, gameplay.random);
+	showcase.control_glow(glow_state);
 
 static func get_showcases(gameplay : Gameplay) -> Array:
 	var showcases : Array;
@@ -52,14 +51,14 @@ static func control_showcases_glow(
 		showcase = s;
 		if showcase.widget_type == gameplay.active_widget:
 			continue;
-		control_showcase_glow(showcase, glow_state, gameplay);
+		control_showcase_glow(showcase, glow_state);
 
 static func control_interface_nodes_glow(
 	glow_state : GameplayEnums.GlowState, gameplay : Gameplay
 ) -> void:
 	if gameplay.active_widget != GameplayEnums.WidgetType.NONE:
 		glow_state = GameplayEnums.GlowState.SHUTTER;
-	gameplay.player_stats.control_glow(glow_state, gameplay.random);
+	gameplay.player_stats.control_glow(glow_state);
 
 static func get_card_stand(
 	widget_type : GameplayEnums.WidgetType,

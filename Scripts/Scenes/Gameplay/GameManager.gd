@@ -33,7 +33,6 @@ static func instance_card(card_data : CardData, zone : Zone, gameplay : Gameplay
 	card.released.connect(gameplay._on_card_released);
 	card.card_action.connect(gameplay._on_card_action);
 	card.card_data = card_data;
-	card.random = gameplay.random;
 	gameplay.cards[card_data.instance_id] = card;
 	card.position = zone.get_spawn_point();
 	return card;

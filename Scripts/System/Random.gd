@@ -1,8 +1,8 @@
-static func item(array : Array, random : RandomNumberGenerator) -> Variant:
-	return array[random.randi()%array.size()];
+static func item(array : Array) -> Variant:
+	return array[System.random.randi()%array.size()];
 
-static func instance_id(random : RandomNumberGenerator) -> int:
-	return random.randi();
+static func instance_id() -> int:
+	return System.random.randi();
 
-static func key(dictionary : Dictionary, random : RandomNumberGenerator) -> Variant:
-	return item(dictionary.keys(), random)
+static func key(dictionary : Dictionary) -> Variant:
+	return item(dictionary.keys())

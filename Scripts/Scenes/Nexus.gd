@@ -37,7 +37,7 @@ func move_page_buttons(delta : float) -> void:
 
 func initialize_buttons() -> void:
 	page_buttons.page_switched.connect(on_page_switched);
-	page_buttons.init(random);
+	page_buttons.init();
 
 func on_page_switched(nexus_page : NexusEnums.NexusPage) -> void:
 	match nexus_page:

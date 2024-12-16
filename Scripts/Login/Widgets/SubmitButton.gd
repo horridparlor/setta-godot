@@ -5,10 +5,9 @@ extends SubmitButton
 func _ready() -> void:
 	button.pressed.connect(on_pressed);
 
-func init(button_label: String, random : RandomNumberGenerator = null) -> void:
+func init(button_label: String) -> void:
 	set_label(button_label);
-	if random:
-		activate_animations(random);
+	activate_animations();
 
 func press() -> void:
 	button.grab_focus();

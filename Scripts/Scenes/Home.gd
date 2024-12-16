@@ -5,6 +5,7 @@ extends Home
 
 func _ready() -> void:
 	DisplayServer.window_set_current_screen(System.Display);
+	System.random.randomize();
 	initialize_regex();
 	load_cards();
 	update_debug_tools();

@@ -1,34 +1,88 @@
 extends DecksPage
 
 @onready var edit_button : SubmitButton = $TopBar/EditButton;
-@onready var catalogue_layer : Node2D = $CatalogueLayer;
+@onready var catalogue_layer : Zone = $CatalogueLayer;
+@onready var behind_layer : Zone = $BehindLayer;
+@onready var between_layer : Node2D = $BetweenLayer;
+@onready var catalogue_click_timer : Timer = $Timers/CatalogueClickTimer;
+@onready var top_bar : Node2D = $TopBar;
 
 func _physics_process(delta : float) -> void:
 	if is_scrolling_catalogue:
 		scroll_catalogue(delta);
 	if is_moving_catalogue_layer:
-		catalogue_layer.position = System.Vectors.slide_towards(catalogue_layer.position,
-			catalogue_layer_target_position, CARD_CATALOGUE_SCROLL_SPEED, delta);
-		if System.Vectors.equal(catalogue_layer.position, catalogue_layer_target_position):
-			is_moving_catalogue_layer = false;
-			catalogue_layer.position = catalogue_layer_target_position;
+		move_catalogue_layer(delta);
+
+func move_catalogue_layer(delta : float) -> void:
+	if !is_active:
+		return;
+	catalogue_layer.position = System.Vectors.slide_towards(catalogue_layer.position,
+		catalogue_layer_target_position, CARD_CATALOGUE_SCROLL_SPEED, delta);
+	if System.Vectors.equal(catalogue_layer.position, catalogue_layer_target_position):
+		is_moving_catalogue_layer = false;
+		catalogue_layer.position = catalogue_layer_target_position;
+	if focused_card:
+		return;
+	update_card_carousel();
+
+func update_card_carousel() -> void:
+	var current_y : float = abs(catalogue_layer.position.y);
+	var first_row_showing : int = current_y / CARD_CATALOGUE_MARGINS.y;
+	var last_row_showing : int = first_row_showing + CARD_CATALOGUE_ROWS_SHOWN;
+	if first_row_showing - 1 > first_row_shown:
+		run_catalogue_carousel();
+	elif last_row_showing < last_row_shown:
+		run_catalogue_carousel(-1);
+
+func run_catalogue_carousel(direction : int = 1) -> void:
+	var card : GameplayCard;
+	var cards_rotated : int = min(
+		CARD_CATALOGUE_COLUMNS,
+		(catalogue_cards.size() - 1 - last_card_shown) if direction > 0 else first_card_shown
+	);
+	var head_index : int;
+	var tail_index : int;
+	for i in range(cards_rotated):
+		head_index = first_card_shown + i;
+		tail_index = last_card_shown + i + 1;
+		if direction < 0:
+			head_index = last_card_shown - i;
+			tail_index = first_card_shown - i - 1;
+		card = cards_in_grid[head_index];
+		card.card_data = System.CardData.from_json(catalogue_cards[tail_index]);
+		card.Core.update_visuals(card);
+		card.origin_point = card_catalogue_grid.assign_position(card.card_data.instance_id, direction);
+		card.position = abs(catalogue_layer.position) + Vector2(card.origin_point.x,
+			CARD_CATALOGUE_SPAWN_POINT.y if direction > 0 else CARD_CATALOGUE_TOP_SPAWN_POINT.y);
+		card.is_moving = true;
+		cards_in_grid.erase(card);
+		cards_in_grid[tail_index] = card;
+	first_card_shown += direction * cards_rotated;
+	last_card_shown += direction * cards_rotated;
+	first_row_shown += direction;
+	last_row_shown += direction;
 
 func scroll_catalogue(delta : float) -> void:
 	var distance : float = get_global_mouse_position().y - scroll_position.y;
 	if !is_moving_catalogue_layer and abs(distance) < CARD_CATALOGUE_MIN_SCROLL:
 		return;
 	catalogue_layer_target_position = Vector2(catalogue_scroll_start_position.x, get_catalogue_layer_y(CARD_CATALOGUE_SCROLL_MULTIPLIER * distance));
-	is_moving_catalogue_layer = true;
+	if !is_moving_catalogue_layer:
+		is_moving_catalogue_layer = true;
+		catalogue_click_timer.stop();
+		focused_card = null;
 
 func get_catalogue_layer_y(distance : float) -> float:
 	var y : float = catalogue_scroll_start_position.y + distance;
 	return min(0, max(catalogue_layer_max_y, y));
 
 func initialize() -> void:
-	initialize_buttons(random);
+	initialize_buttons();
+	catalogue_layer.set_grid(card_catalogue_grid);
+	behind_layer.set_grid(card_catalogue_grid);
 	
-func initialize_buttons(random : RandomNumberGenerator) -> void:
-	edit_button.init("Edit", random);
+func initialize_buttons() -> void:
+	edit_button.init("Edit");
 	edit_button.pressed.connect(on_edit);
 
 func on_edit() -> void:
@@ -40,13 +94,15 @@ func on_edit_mode_changed() -> void:
 	spawn_card_catalogue() if in_edit_mode else unspawn_cards();
 
 func spawn_card_catalogue() -> void:
-	var card_data : CardData;
-	var card_init_data : CardInitData = CardInitData.new(GameplayEnums.OwningPlayer.YOU, random, CardEnums.CardSleeve.DEFAULT);
+	var i : int;
+	first_row_shown = 0;
+	last_row_shown = CARD_CATALOGUE_ROWS_SHOWN;
+	first_card_shown = 0;
+	last_card_shown = CARD_CATALOGUE_MAX_CARDS_SHOWN - 1;
 	find_cards();
-	for card in catalogue_cards:
-		card_data = CardData.new(card.card_id, card_init_data);
-		card_data.eat_default(card);
-		spawn_catalogue_card(card_data);
+	for card in catalogue_cards.slice(0, CARD_CATALOGUE_MAX_CARDS_SHOWN):
+		cards_in_grid[i] = spawn_catalogue_card(System.CardData.from_json(card));
+		i += 1;
 		
 func sort_by_card_name(card_a : Dictionary, card_b : Dictionary) -> int:
 	return card_a.normalized_name < card_b.normalized_name;
@@ -56,13 +112,56 @@ func find_cards() -> void:
 	catalogue_cards.sort_custom(sort_by_card_name);
 	catalogue_layer_max_y = -CARD_CATALOGUE_MARGINS.y * (catalogue_cards.size() / CARD_CATALOGUE_COLUMNS - CARD_CATALOGUE_ROWS);
 
-func spawn_catalogue_card(card_data : CardData) -> void:
+func spawn_catalogue_card(card_data : CardData) -> GameplayCard:
 	var card : GameplayCard = System.Instance.load_child(SystemEnums.get_card_path(), catalogue_layer);
 	card.card_data = card_data;
-	card.random = random;
 	cards[card_data.instance_id] = card;
 	card.Core.initialize(card, self);
-	card.position = card_catalogue_grid.assign_position();
+	card.origin_point = card_catalogue_grid.assign_position(card_data.instance_id);
+	card.position = CARD_CATALOGUE_SPAWN_POINT;
+	card.is_moving = true;
+	card.zone = catalogue_layer;
+	card.pressed.connect(on_card_pressed);
+	card.released.connect(on_card_released);
+	return card;
+
+func on_card_pressed(card : GameplayCard) -> void:
+	if is_moving_catalogue_layer || focused_card != null:
+		return;
+	focused_card = card;
+	catalogue_click_timer.start();
+	
+func on_card_focused() -> void:
+	var card_global_position : Vector2;
+	_on_catalogue_scroll_button_released();
+	for c in cards.values():
+		var card : GameplayCard = c;
+		if card == focused_card:
+			continue;
+		behind_layer.push_card(card, self);
+	System.Children.move(top_bar, self, between_layer);
+	card_global_position = focused_card.global_position;
+	focused_card.Movement.interact(focused_card, self);
+	catalogue_layer.position = System.Vectors.default();
+	focused_card.global_position = card_global_position;
+
+func on_card_released(card : GameplayCard) -> void:
+	var card_global_position : Vector2;
+	if card != focused_card:
+		return;
+	catalogue_click_timer.stop();
+	System.Children.move(top_bar, between_layer, self);
+	for c in cards.values():
+		var another_card : GameplayCard = c;
+		if another_card == card:
+			continue;
+		catalogue_layer.push_card(another_card, self);
+	card_global_position = card.global_position;
+	catalogue_layer.sort_algorithm_grid(card);
+	card.Movement.unfocus(card, self);
+	catalogue_layer.position = catalogue_layer_target_position;
+	card.global_position = card_global_position;
+	focused_card = null;
 
 func unspawn_cards() -> void:
 	for card in cards.duplicate().values():
@@ -71,7 +170,7 @@ func unspawn_cards() -> void:
 	card_catalogue_grid.reset();
 
 func _on_catalogue_scroll_button_pressed() -> void:
-	if !in_edit_mode:
+	if !in_edit_mode || focused_card:
 		return;
 	scroll_position = get_global_mouse_position();
 	catalogue_scroll_start_position = catalogue_layer.position;
@@ -79,3 +178,7 @@ func _on_catalogue_scroll_button_pressed() -> void:
 
 func _on_catalogue_scroll_button_released() -> void:
 	is_scrolling_catalogue = false;
+
+func _on_catalogue_click_timer_timeout() -> void:
+	catalogue_click_timer.stop();
+	on_card_focused();

@@ -24,9 +24,9 @@ static func update_name(card : GameplayCard) -> void:
 
 static func activate_animations(card : GameplayCard) -> void:
 	if card.glow_state == GameplayEnums.GlowState.GLOW:
-		card.glow_node.glow(card.random);
+		card.glow_node.glow();
 	else:
-		card.glow_node.shutter(card.random);
+		card.glow_node.shutter();
 
 static func control_glow(
 	glow_state : GameplayEnums.GlowState,

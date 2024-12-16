@@ -6,8 +6,8 @@ extends ExtraDeckStand
 func _ready() -> void:
 	widget_type = GameplayEnums.WidgetType.EXTRA_DECK;
 
-func control_glow(glow_state : GameplayEnums.GlowState, random : RandomNumberGenerator) -> void:
-	glow_node.control_glow(glow_state, random);
+func control_glow(glow_state : GameplayEnums.GlowState) -> void:
+	glow_node.control_glow(glow_state);
 
 func _on_button_pressed() -> void:
 	emit_signal("pressed", widget_type);

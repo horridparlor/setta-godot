@@ -15,24 +15,24 @@ var zone_height : int;
 var zone_width : int;
 var zone_rotation : int;
 var zone_type : GameplayEnums.ZoneType = GameplayEnums.ZoneType.ROW;
-var random : RandomNumberGenerator;
+var grid : Grid;
 
 func count_cards() -> int:
 	return cards.size();
 	
-func push_card(card : GameplayCard, gameplay : Gameplay):
+func push_card(card : GameplayCard, card_scene : CardScene):
 	var previous_zone : Zone = card.zone;
 	if previous_zone:
-		take_over(card, previous_zone, gameplay);
+		take_over(card, previous_zone, card_scene);
 	card.zone = self;
 	cards.append(card);
-	reorder_cards(gameplay);
+	reorder_cards(card_scene);
 
-func take_over(card : GameplayCard, previous_zone : Zone, gameplay : Gameplay):
+func take_over(card : GameplayCard, previous_zone : Zone, card_scene : CardScene):
 	var card_data : CardData = card.card_data;
-	if zone != CardEnums.Zone.MODAL:
-		move_card_data(card_data, previous_zone, gameplay);
-	previous_zone.pull_card(card, gameplay);
+	if zone != CardEnums.Zone.MODAL and card_scene is Gameplay:
+		move_card_data(card_data, previous_zone, card_scene);
+	previous_zone.pull_card(card, card_scene);
 	System.Children.move(card, previous_zone, self);
 
 func move_card_data(card_data : CardData, previous_zone : Zone, gameplay : Gameplay) -> void:
@@ -43,17 +43,19 @@ func move_card_data(card_data : CardData, previous_zone : Zone, gameplay : Gamep
 	);
 	gameplay.update_player_stats();
 
-func reorder_cards(gameplay : Gameplay):
-	var card : GameplayCard = gameplay.focused_card;
-	if random == null:
-		random = gameplay.random;
+func set_grid(new_grid : Grid) -> void:
+	grid = new_grid;
+	zone_type = GameplayEnums.ZoneType.GRID;
+
+func reorder_cards(card_scene : CardScene):
+	var card : GameplayCard = card_scene.focused_card;
 	sort_card_position(GameplayEnums.OwningPlayer.YOU);
 	if card and card.focus_state == GameplayEnums.FocusState.INTERACT:
 		System.Children.focus(card, self);
 
-func pull_card(card : GameplayCard, gameplay : Gameplay):
+func pull_card(card : GameplayCard, card_scene : CardScene):
 	cards.erase(card);
-	reorder_cards(gameplay);
+	reorder_cards(card_scene);
 	card.zone = null;
 
 func compare_x_position(cardA : GameplayCard, cardB : GameplayCard) -> bool:
@@ -70,6 +72,15 @@ func sort_card_position(turn_player : GameplayEnums.OwningPlayer) -> void:
 			sort_algorithm_row(turn_player);
 		GameplayEnums.ZoneType.SCROLL:
 			sort_algorithm_scroll();
+
+func sort_algorithm_grid(moving_card : GameplayCard) -> void:
+	for c in cards:
+		var card : GameplayCard = c;
+		var position : Vector2 = grid.get_origin_point(card.card_data.instance_id);
+		if card == moving_card:
+			card.origin_point = position;
+		else:
+			card.position = position;
 
 func sort_algorithm_scroll() -> void:
 	var positioning_data : PositioningData = PositioningData.new(SCROLL_ORIGO);

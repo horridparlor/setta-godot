@@ -3,10 +3,8 @@ class_name NexusPage
 
 var nexus_page : NexusEnums.NexusPage;
 var is_active : bool;
-var random : RandomNumberGenerator = RandomNumberGenerator.new();
 
 func init(page : NexusEnums.NexusPage) -> void:
-	random.randomize();
 	nexus_page = page;
 	initialize();
 	is_active = true;

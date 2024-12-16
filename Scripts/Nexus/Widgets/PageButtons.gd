@@ -18,10 +18,10 @@ func get_buttons() -> Array:
 func _ready() -> void:
 	init_buttons();
 
-func init(random : RandomNumberGenerator) -> void:
+func init() -> void:
 	for b in get_buttons():
 		var button : PageButton = b;
-		button.activate_animations(random);
+		button.activate_animations();
 	is_active = true;
 	on_button_pressed(battle_button);
 

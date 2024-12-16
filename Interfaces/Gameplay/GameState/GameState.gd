@@ -10,15 +10,14 @@ var turn_phase : GameplayEnums.TurnPhase = GameplayEnums.TurnPhase.NONE;
 
 func _init(
 	you_ : PlayerData,
-	opponent_ : PlayerData,
-	random : RandomNumberGenerator
+	opponent_ : PlayerData
 ) -> void:
 	you = you_;
 	opponent = opponent_;
 	#randomize_starting_player(random);
 
-func randomize_starting_player(random : RandomNumberGenerator) -> void:
-	turn_player = System.Random.item(GameplayEnums.get_owning_players(), random);
+func randomize_starting_player() -> void:
+	turn_player = System.Random.item(GameplayEnums.get_owning_players());
 
 func get_players() -> Array:
 	return [you, opponent];

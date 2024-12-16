@@ -3,7 +3,7 @@ class_name SubmitButton
 
 signal pressed();
 
-func init(button_label : String, random : RandomNumberGenerator = null) -> void:
+func init(button_label : String) -> void:
 	pass;
 
 func press() -> void:

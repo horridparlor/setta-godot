@@ -21,7 +21,6 @@ const PAGE_BUTTONS_SLIDE_MIN_SPEED_UP : float = 0;
 const PAGE_BUTTONS_SLIDE_SPEED_DOWN : float = 1;
 const PAGE_BUTTONS_SLIDE_MIN_SPEED_DOWN : float = 200;
 
-var random : RandomNumberGenerator = RandomNumberGenerator.new();
 var active_page : NexusPage;
 var previous_page : NexusPage;
 var is_moving_pages : bool;
@@ -30,6 +29,3 @@ var page_slide_direction : int;
 var is_moving_page_buttons : bool;
 var page_buttons_target_position : Vector2;
 var page_buttons_hidden : bool;
-
-func _ready() -> void:
-	random.randomize();

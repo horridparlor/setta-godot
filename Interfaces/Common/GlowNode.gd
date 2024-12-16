@@ -77,41 +77,40 @@ func opacity_effect() -> void:
 	modulate.a = OPACITY_RESISTANCE - OPACITY_MULTIPLIER * glow_intensity;
 
 func activate_animations(
-	random : RandomNumberGenerator,
 	glow_type_ : GlowType = GlowType.LIGHT
 ) -> bool:
 	if animations_active != IsActive.NOT:
 		return false;
 	glow_type = glow_type_;
-	top_glow = random.randf_range(
+	top_glow = System.random.randf_range(
 		(OPACITY_MIN_GLOW if is_opacity() else MIN_TOP_GLOW),
 		MAX_TOP_GLOW
 	);
-	glow_intensity = random.randf_range(1.0, top_glow);
-	set_glow_speed(random);
+	glow_intensity = System.random.randf_range(1.0, top_glow);
+	set_glow_speed();
 	animations_active = IsActive.GLOWING
 	return true;
 
-func set_glow_speed(random : RandomNumberGenerator) -> void:
-	glow_speed = random.randf_range(
+func set_glow_speed() -> void:
+	glow_speed = System.random.randf_range(
 		MIN_SPEED,
 		(OPACITY_MAX_SPEED if is_opacity() else MAX_SPEED)
 	);
 
-func control_glow(glow_state : GameplayEnums.GlowState, random : RandomNumberGenerator) -> void:
+func control_glow(glow_state : GameplayEnums.GlowState) -> void:
 	match glow_state:
 		GameplayEnums.GlowState.GLOW:
-			glow(random);
+			glow();
 		GameplayEnums.GlowState.SHUTTER:
-			shutter(random);
+			shutter();
 
-func shutter(random : RandomNumberGenerator) -> void:
-	if !activate_animations(random):
-		set_glow_speed(random);
+func shutter() -> void:
+	if !activate_animations():
+		set_glow_speed();
 	animations_active = IsActive.SHUTTERING;
 
-func glow(random : RandomNumberGenerator) -> void:
-	activate_animations(random);
+func glow() -> void:
+	activate_animations();
 	if animations_active == IsActive.SHUTTERING:
 		glowing_direction = 1;		
 		radiates = true;

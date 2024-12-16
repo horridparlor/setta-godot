@@ -6,13 +6,8 @@ signal surrender();
 const FOCUS_FOLLOW_DISTANCE : int = 160;
 const HINT_TRIBUTE : String = "[center]Tribute [b]%s[/b] [i]more monsters[/i][/center]";
 
-var random : RandomNumberGenerator = RandomNumberGenerator.new();
 var game_state : GameState;
 var focus_point : Vector2;
-var focus_on : GameplayEnums.FocusOn = GameplayEnums.FocusOn.NONE;
-var active_widget : GameplayEnums.WidgetType = GameplayEnums.WidgetType.NONE;
-var focus_state : GameplayEnums.FocusState = GameplayEnums.FocusState.NONE;
-var active_modal : GameplayEnums.CardModalType = GameplayEnums.CardModalType.NONE;
 var actions_left : int;
 var play_type : GameplayEnums.PlayType;
 

@@ -35,18 +35,18 @@ static func examine(card : GameplayCard, gameplay : Gameplay):
 	card.focus_state = GameplayEnums.FocusState.EXAMINE;
 	card.Modals.examine(card, gameplay);
 	
-static func interact(card : GameplayCard, gameplay : Gameplay):
-	card.Modals.interact(card, gameplay);
+static func interact(card : GameplayCard, card_scene : CardScene):
+	card.Modals.interact(card, card_scene);
 	card.focus_state = GameplayEnums.FocusState.INTERACT;
 	card.is_moving = true;
 	card.scale_up = true;
 	set_visual_effects(card);
 	System.Children.focus(card, card.zone);
-	card.Core.control_glow(GameplayEnums.GlowState.GLOW, card, gameplay);
+	card.Core.control_glow(GameplayEnums.GlowState.GLOW, card, card_scene);
 		
-static func unfocus(card : GameplayCard, gameplay : Gameplay):
+static func unfocus(card : GameplayCard, card_scene : CardScene):
 	card.focus_state = GameplayEnums.FocusState.NONE;
-	card.Modals.close_modal(card, gameplay);
+	card.Modals.close_modal(card, card_scene);
 	card.scale_down = true;
 	set_visual_effects(card);
 	

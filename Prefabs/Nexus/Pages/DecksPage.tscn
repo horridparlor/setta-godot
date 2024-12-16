@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://sfljpoame5xt"]
+[gd_scene load_steps=6 format=3 uid="uid://sfljpoame5xt"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/Pages/DecksPage.gd" id="1_t8yx1"]
 [ext_resource type="PackedScene" uid="uid://chdrvm7emq34n" path="res://Prefabs/Login/Widgets/SubmitButton.tscn" id="2_5od0i"]
 [ext_resource type="StyleBox" uid="uid://g33qcwkq2i8d" path="res://Styles/Nexus/Widgets/TopbarBackframe.tres" id="2_7df00"]
+[ext_resource type="Script" path="res://Interfaces/Gameplay/Widgets/Zone.gd" id="2_diims"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2qxe"]
 size = Vector2(1175, 845)
@@ -10,7 +11,13 @@ size = Vector2(1175, 845)
 [node name="DecksPage" type="Node2D"]
 script = ExtResource("1_t8yx1")
 
+[node name="BehindLayer" type="Node2D" parent="."]
+script = ExtResource("2_diims")
+
+[node name="BetweenLayer" type="Node2D" parent="."]
+
 [node name="CatalogueLayer" type="Node2D" parent="."]
+script = ExtResource("2_diims")
 
 [node name="TopBar" type="Node2D" parent="."]
 
@@ -52,5 +59,11 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 0, 1)
 
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="CatalogueClickTimer" type="Timer" parent="Timers"]
+wait_time = 0.26
+
 [connection signal="pressed" from="Buttons/CatalogueScrollButton" to="." method="_on_catalogue_scroll_button_pressed"]
 [connection signal="released" from="Buttons/CatalogueScrollButton" to="." method="_on_catalogue_scroll_button_released"]
+[connection signal="timeout" from="Timers/CatalogueClickTimer" to="." method="_on_catalogue_click_timer_timeout"]

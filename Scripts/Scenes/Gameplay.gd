@@ -29,9 +29,8 @@ const Timers : GDScript = preload("res://Scripts/Scenes/Gameplay/Timers.gd");
 const Widgets : GDScript = preload("res://Scripts/Scenes/Gameplay/Widgets.gd");
 
 func _ready() -> void:
-	init_random();
 	Signals.connect_signals(self);
-	cancel_button_layer.activate_animations(random);
+	cancel_button_layer.activate_animations();
 	cancel_button.pressed.connect(on_surrender);
 
 func on_surrender() -> void:
@@ -40,9 +39,6 @@ func on_surrender() -> void:
 func init() -> void:
 	CardManager.init_game_state(self);
 	GameManager.start_game(self);
-
-func init_random() -> void:
-	random.randomize();
 	
 func _on_card_clicked(card : GameplayCard) -> void:
 	Focuser.card_clicked(card, self);

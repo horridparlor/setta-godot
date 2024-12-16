@@ -50,6 +50,7 @@ enum TimerType {
 }
 
 enum ZoneType {
+	GRID,
 	ROW,
 	SCROLL
 }

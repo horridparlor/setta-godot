@@ -1,10 +1,10 @@
-static func get_random(random : RandomNumberGenerator) -> Decklist:
+static func get_random() -> Decklist:
 	return Decklist.new(
-		get_random_main_deck(random),
-		get_random_extra_deck(random)
+		get_random_main_deck(),
+		get_random_extra_deck()
 	);
 
-static func get_random_main_deck(random : RandomNumberGenerator) -> Dictionary:
+static func get_random_main_deck() -> Dictionary:
 	var size : int = PlayerData.MAIN_DECK_SIZE;
 	var overwrite_card_id : int = System.Debug.OVERWRITE_CARD_ID;
 	if overwrite_card_id:
@@ -12,22 +12,21 @@ static func get_random_main_deck(random : RandomNumberGenerator) -> Dictionary:
 	return get_random_deck(
 		size,
 		System.main_deck_cards,
-		random,
 		PlayerData.MAIN_DECK_DUPLICATES
 	);
 
-static func get_random_extra_deck(random : RandomNumberGenerator) -> Dictionary:
-	return get_random_deck(PlayerData.EXTRA_DECK_SIZE, System.extra_deck_cards, random);
+static func get_random_extra_deck() -> Dictionary:
+	return get_random_deck(PlayerData.EXTRA_DECK_SIZE, System.extra_deck_cards);
 
 static func get_random_deck(
-	size : int, source : Dictionary, random : RandomNumberGenerator, duplicates : int = 1
+	size : int, source : Dictionary, duplicates : int = 1
 ) -> Dictionary:
 	var deck : Dictionary;
 	var card_id : int;
 	var filled : int;
 	var pool : Dictionary = source.duplicate();
 	for i in range(size):
-		card_id = System.Random.key(pool, random);
+		card_id = System.Random.key(pool);
 		if deck.has(card_id):
 			deck[card_id] += 1;
 		else:

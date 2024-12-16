@@ -21,7 +21,7 @@ func _init(
 		eat_default(System.cards[card_id]);
 	
 	owning_player = init_data.owning_player;
-	instance_id = System.Random.instance_id(init_data.random);
+	instance_id = System.Random.instance_id();
 	sleeve = init_data.sleeve;
 	zone = get_starting_deck();
 

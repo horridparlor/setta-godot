@@ -41,7 +41,7 @@ func _process(delta : float):
 func despawn(gameplay : Gameplay):
 	is_despawned = true;
 	gameplay.cards.erase(card_data.instance_id);
-	glow_node.shutter(gameplay.random);
+	glow_node.shutter();
 	gameplay.sky.push_card(self, gameplay);
 	_on_button_released();
 	Movement.unfocus(self, gameplay);

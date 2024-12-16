@@ -61,7 +61,6 @@ var scale_up : bool = false;
 var scale_down : bool = false;
 var is_despawned : bool = false;
 var base_rotation : int = 0;
-var random : RandomNumberGenerator;
 
 var zone : Zone;
 var card_data : CardData;

@@ -130,3 +130,11 @@ static func get_text_color_by_frame(card_data : CardDefaultData) -> Color:
 	return SystemEnums.TEXT_COLOR_PEARL_WHITE\
 		if get_uses_white_text(card_data)\
 		else SystemEnums.TEXT_COLOR_BLACK;
+
+static func get_default_card_init_data() -> CardInitData:
+	return CardInitData.new(GameplayEnums.OwningPlayer.YOU, CardEnums.CardSleeve.DEFAULT);
+
+static func from_json(json_data : Dictionary) -> CardData:
+	var card_data : CardData = CardData.new(json_data.card_id, get_default_card_init_data());
+	card_data.eat_default(json_data);
+	return card_data;
