@@ -4,6 +4,7 @@ extends DecksPage
 @onready var catalogue_layer : Zone = $CatalogueLayer;
 @onready var behind_layer : Zone = $BehindLayer;
 @onready var between_layer : Node2D = $BetweenLayer;
+@onready var sky : Zone = $Sky;
 @onready var catalogue_click_timer : Timer = $Timers/CatalogueClickTimer;
 @onready var top_bar : Node2D = $TopBar;
 
@@ -180,8 +181,8 @@ func on_card_released(card : GameplayCard) -> void:
 	focused_card = null;
 
 func unspawn_cards() -> void:
-	for card in cards.duplicate().values():
-		card.queue_free();
+	for card in cards.values():
+		card.despawn(self);
 	cards = {};
 	card_catalogue_grid.reset();
 	reset_cards_shown();
@@ -189,6 +190,7 @@ func unspawn_cards() -> void:
 func reset_cards_shown() -> void:
 	catalogue_cards = [];
 	catalogue_layer.position = System.Vectors.default();
+	catalogue_layer_target_position = catalogue_layer.position;
 	catalogue_layer.cards = [];
 
 func _on_catalogue_scroll_button_pressed() -> void:

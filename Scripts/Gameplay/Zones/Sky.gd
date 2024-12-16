@@ -4,4 +4,4 @@ func reorder_cards(card_scene : CardScene):
 	pass;
 
 func _ready():
-	zone = CardEnums.Zone.MODAL;
+	zone = CardEnums.Zone.SHOWCASE;

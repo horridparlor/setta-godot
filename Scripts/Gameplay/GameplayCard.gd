@@ -26,29 +26,29 @@ const Movement : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Movemen
 const Rules : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Rules.gd");
 const Sleeves : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Sleeves.gd");
 
-func _ready():
+func _ready() -> void:
 	self.scale = BASE_SCALE_HAND;
 
-func _on_button_pressed():
+func _on_button_pressed() -> void:
 	emit_signal("pressed", self);
 
-func _on_button_released():
+func _on_button_released() -> void:
 	emit_signal("released", self);
 	
-func _process(delta : float):
+func _process(delta : float) -> void:
 	Movement.movement_frame(delta, self);
 
-func despawn(gameplay : Gameplay):
+func despawn(card_scene : CardScene) -> void:
 	is_despawned = true;
-	gameplay.cards.erase(card_data.instance_id);
+	card_scene.cards.erase(card_data.instance_id);
 	glow_node.shutter();
-	gameplay.sky.push_card(self, gameplay);
+	card_scene.sky.push_card(self, card_scene);
 	_on_button_released();
-	Movement.unfocus(self, gameplay);
+	Movement.unfocus(self, card_scene);
 	fix_despawn_point();
-	Core.control_glow(GameplayEnums.GlowState.SHUTTER, self, gameplay);
+	Core.control_glow(GameplayEnums.GlowState.SHUTTER, self, card_scene);
 
-func fix_despawn_point():
+func fix_despawn_point() -> void:
 	origin_point = DESPAWN_POINT;
 	if abs(position.x) <= DESPAWN_ORIGO_RANGE:
 		origin_point.x = 0;

@@ -130,7 +130,7 @@ enum Zone {
 	MODAL,
 	NONE,
 	REMOVED,
-	SHOWCASE,
+	SHOWCASE
 }
 
 enum Face {

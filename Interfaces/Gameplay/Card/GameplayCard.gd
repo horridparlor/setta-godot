@@ -83,3 +83,6 @@ func debug(code : int, message : String = "") -> void:
 
 func do_debug() -> bool:
 	return card_data.instance_id == System.debug_id;
+
+func despawn(card_scene : CardScene) -> void:
+	pass;
