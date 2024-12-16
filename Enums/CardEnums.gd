@@ -85,17 +85,20 @@ static func enumerate_subtype(message : String) -> CardSubtype:
 			return CardSubtype.NONE;
 
 enum CardSupertype {
+	DECK_MASTER,
 	HAND_TRAP,
 	MAXIMUM,
 	NONE,
 	PENDULUM
 }
 
+const JSON_SUPERTYPE_DECK_MASTER : String = "Deck Master";
 const JSON_SUPERTYPE_HAND_TRAP : String = "Hand Trap";
 const JSON_SUPERTYPE_MAXIMUM : String = "Maximum";
 const JSON_SUPERTYPE_PENDULUM : String = "Pendulum";
 
 static var CardSupertypeName = {
+	CardSupertype.DECK_MASTER: JSON_SUPERTYPE_DECK_MASTER,
 	CardSupertype.HAND_TRAP: JSON_SUPERTYPE_HAND_TRAP,
 	CardSupertype.MAXIMUM: JSON_SUPERTYPE_MAXIMUM,
 	CardSupertype.PENDULUM: JSON_SUPERTYPE_PENDULUM
@@ -103,6 +106,8 @@ static var CardSupertypeName = {
 
 static func enumerate_supertype(message : String) -> CardSupertype:
 	match message:
+		JSON_SUPERTYPE_DECK_MASTER:
+			return CardSupertype.DECK_MASTER;
 		JSON_SUPERTYPE_HAND_TRAP:
 			return CardSupertype.HAND_TRAP;
 		JSON_SUPERTYPE_MAXIMUM:
@@ -111,6 +116,9 @@ static func enumerate_supertype(message : String) -> CardSupertype:
 			return CardSupertype.PENDULUM;
 		_:
 			return CardSupertype.NONE;
+
+static func is_deck_master(card_data : CardData) -> bool:
+	return card_data.supertype == CardSupertype.DECK_MASTER;
 
 enum Zone {
 	BACKROW,
@@ -225,3 +233,5 @@ enum CardSleeve {
 static var CardSleevePath = {
 	CardSleeve.DEFAULT: "DefaultSleeve",
 }
+
+const JSON_COST_TYPE_CONTINUOUS : String = "Continuous";

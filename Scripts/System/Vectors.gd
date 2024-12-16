@@ -18,7 +18,7 @@ static func have_distance(point_a : Vector2, point_b : Vector2, min_distance : f
 	return point_a.distance_to(point_b) >= min_distance;
 
 static func slide_towards(point_a : Vector2, point_b : Vector2,
-speed_multiplier : float, delta : float) -> Vector2:
-	var distance : float = point_a.distance_to(point_b);
+speed_multiplier : float, delta : float, min_speed : float = 0) -> Vector2:
+	var distance : float = max(point_a.distance_to(point_b), min_speed);
 	var movement : float = distance * speed_multiplier * delta;
 	return point_a.move_toward(point_b, movement);

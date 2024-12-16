@@ -9,6 +9,7 @@ var normalized_name : String;
 var is_ace : bool;
 var card_type : CardEnums.CardType;
 var card_class : CardEnums.Class;
+var secondary_class : CardEnums.Class;
 var subtype : CardEnums.CardSubtype;
 var supertype : CardEnums.CardSupertype;
 var maximum_piece : CardEnums.MaximumPiece;
@@ -28,6 +29,7 @@ func _init(
 	is_ace = json_data.isAce;
 	card_type = CardEnums.enumerate_card_type(json_data.cardType);
 	card_class = CardEnums.enumerate_class(json_data.cardClass);
+	secondary_class = CardEnums.enumerate_class(json_data.secondaryClass);
 	subtype = CardEnums.enumerate_subtype(json_data.subtype);
 	supertype = CardEnums.enumerate_supertype(json_data.supertype);
 	maximum_piece = CardEnums.enumerate_maximum_piece(json_data.maximumPiece);
@@ -142,15 +144,19 @@ func get_materials_join_symbol(json_data : Dictionary) -> String:
 			return "->";
 	return "?";
 
+func has_continuous_effect(json_data : Dictionary) -> bool:
+	return json_data.cardEffects.cost.costType == CardEnums.JSON_COST_TYPE_CONTINUOUS;
+
 func eat_cost_text(json_data : Dictionary) -> String:
 	var cost_prefix : String = "Pendulum>>" \
-		if json_data.supertype == CardEnums.JSON_SUPERTYPE_PENDULUM else "Cost:";
+		if json_data.supertype == CardEnums.JSON_SUPERTYPE_PENDULUM else "Continuous:" \
+		if has_continuous_effect(json_data) else "Cost:";
 	var raw : String = translate_encodings(json_data.costText);
 	return "[i]%s [/i]%s"\
 		% [
-			cost_prefix,
+			add_materials_font_size(cost_prefix, json_data),
 			add_materials_font_size(raw, json_data)
-		] if len(raw) else "";
+		] if len(raw.strip_edges()) else "";
 
 func eat_effect_text(json_data : Dictionary) -> String:
 	var effect_prefix : String = "Hand Trap>>" \
@@ -158,16 +164,16 @@ func eat_effect_text(json_data : Dictionary) -> String:
 	var raw : String = translate_encodings(json_data.effectText);
 	return "[i]%s [/i]%s"\
 		% [
-			effect_prefix,
+			add_materials_font_size(effect_prefix, json_data),
 			add_materials_font_size(raw, json_data)
-		] if len(raw) else "";
+		] if len(raw.strip_edges()) and !has_continuous_effect(json_data) else "";
 
 func eat_flavour_text(json_data : Dictionary) -> String:
 	var raw : String = json_data.flavourText;
 	return "[i]%s[/i]"\
 		% [
 			add_materials_font_size(raw, json_data)
-		] if len(raw) else "";
+		] if len(raw.strip_edges()) else "";
 
 func add_materials_font_size(message : String, json_data : Dictionary) -> String:
 	return "[font_size=%d]%s[/font_size]" % [
@@ -179,11 +185,11 @@ func eat_counts_as_text(json_data : Dictionary) -> String:
 	var raw = json_data.countsAsId;
 	return "[font_size=8]%s[/font_size]\n"\
 		% ["–".repeat(90)]+\
-	"Counts as a [font=%s]%s[/font]."\
+	add_materials_font_size("Counts as a [font=%s]%s[/font]."\
 		% [
 			SystemEnums.get_bold_italic_font(),
 			get_name_replacement_for_card_id(raw)
-		] if raw else "";
+		], json_data) if raw else "";
 
 func eat_materials(json_data : Dictionary) -> CardMaterials:
 	return CardMaterials.new(
@@ -209,6 +215,7 @@ func to_json() -> Dictionary:
 		"is_ace": is_ace,
 		"card_type": card_type,
 		"card_class": card_class,
+		"secondary_class": secondary_class,
 		"subtype": subtype,
 		"supertype": supertype,
 		"maximum_piece": maximum_piece,

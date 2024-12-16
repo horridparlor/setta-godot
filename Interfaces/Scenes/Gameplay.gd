@@ -1,4 +1,4 @@
-extends Node2D
+extends CardScene
 class_name Gameplay
 
 signal surrender();
@@ -6,8 +6,6 @@ signal surrender();
 const FOCUS_FOLLOW_DISTANCE : int = 160;
 const HINT_TRIBUTE : String = "[center]Tribute [b]%s[/b] [i]more monsters[/i][/center]";
 
-var cards : Dictionary;
-var focused_card : GameplayCard;
 var random : RandomNumberGenerator = RandomNumberGenerator.new();
 var game_state : GameState;
 var focus_point : Vector2;
@@ -15,10 +13,8 @@ var focus_on : GameplayEnums.FocusOn = GameplayEnums.FocusOn.NONE;
 var active_widget : GameplayEnums.WidgetType = GameplayEnums.WidgetType.NONE;
 var focus_state : GameplayEnums.FocusState = GameplayEnums.FocusState.NONE;
 var active_modal : GameplayEnums.CardModalType = GameplayEnums.CardModalType.NONE;
-var card_to_be_played : GameplayCard;
 var actions_left : int;
 var play_type : GameplayEnums.PlayType;
-var selection_type : GameplayEnums.SelectionType = GameplayEnums.SelectionType.NONE;
 
 func update_player_stats() -> void:
 	pass;
@@ -51,6 +47,3 @@ func do_wait() -> bool:
 	
 func do_examine() -> bool:
 	return focus_state in [GameplayEnums.FocusState.INTERACT, GameplayEnums.FocusState.WAITING];
-
-func is_selecting() -> bool:
-	return selection_type != GameplayEnums.SelectionType.NONE;

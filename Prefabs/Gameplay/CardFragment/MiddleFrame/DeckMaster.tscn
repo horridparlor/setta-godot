@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://drwtxbuehueju"]
+
+[ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/CardFragments/FixLayer/Effect.tres" id="1_pofg0"]
+
+[sub_resource type="Gradient" id="Gradient_wu4lm"]
+colors = PackedColorArray(0.878431, 0.780392, 0.105882, 1, 0.964706, 0.956863, 0.796078, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1a5e5"]
+gradient = SubResource("Gradient_wu4lm")
+
+[node name="MiddleFrame" type="Node2D"]
+
+[node name="Polygon2" type="Polygon2D" parent="."]
+texture = SubResource("GradientTexture1D_1a5e5")
+texture_rotation = 4.71239
+polygon = PackedVector2Array(-202, -284, 202, -284, 202, 284, -202, 284, -202, 102, -188, 102, 188, 102, 188, -146, 91, -146, 62, -222, -188, -222, -188, 102, -202, 102)
+
+[node name="AttributeCut" type="ColorRect" parent="Polygon2"]
+offset_left = 90.0
+offset_top = -148.0
+offset_right = 92.0
+offset_bottom = -146.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="AttributeCut1" type="Panel" parent="Polygon2"]
+offset_left = 60.0
+offset_top = -221.0
+offset_right = 140.0
+offset_bottom = -141.0
+rotation = -0.392699
+theme_override_styles/panel = ExtResource("1_pofg0")
+metadata/_edit_use_anchors_ = true
+
+[node name="AttributeCut2" type="Panel" parent="Polygon2"]
+offset_left = 92.0
+offset_top = -146.0
+offset_right = 172.0
+offset_bottom = -50.0
+rotation = -1.5708
+theme_override_styles/panel = ExtResource("1_pofg0")
+metadata/_edit_use_anchors_ = true

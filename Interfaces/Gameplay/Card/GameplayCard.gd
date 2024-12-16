@@ -16,6 +16,9 @@ const MODAL_MIN_HEIGHT : int = 290;
 const MODAL_OPTION_HEIGHT : int = 140;
 const SLEEVE_LOAD_PREFIX : String = "res://Prefabs/Gameplay/CardSleeves/";
 const MIDDLE_FRAME_PATH : String = "res://Prefabs/Gameplay/CardFragment/MiddleFrame/";
+const LEVEL_FRAME_PATH : String = "res://Assets/Icons/LevelFrame.png";
+const DECK_MASTER_LEVEL_FRAME_PATH : String = "res://Assets/Icons/DeckMasterLevelFrame.png";
+const DECK_MASTER_ATTRIBUTE_SPRITE_PREFIX : String = "res://Assets/Icons/Attributes/DeckMasterSize/";
 
 const MOVEMENT_SPEED : int = 10;
 const MAX_FOCUSED_SPEED : int = 3200;

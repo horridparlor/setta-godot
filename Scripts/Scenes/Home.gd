@@ -4,7 +4,7 @@ extends Home
 @onready var debug_prompt : LineEdit = $DebugPrompt;
 
 func _ready() -> void:
-	DisplayServer.window_set_current_screen(1);
+	DisplayServer.window_set_current_screen(System.Display);
 	initialize_regex();
 	load_cards();
 	update_debug_tools();
@@ -52,8 +52,7 @@ func load_cards() -> void:
 	cards = System.Json.read(SystemEnums.SaveFilePath[SystemEnums.SaveFile.CARDS]);
 	if System.Json.success(cards) && !System.Debug.ALWAYS_FETCH_CARDS:
 		set_cards(cards.cards);
-	else:
-		System.Server.request(RequestEnums.Operation.GET_CARDS, {'isGame': true}, self);
+	System.Server.request(RequestEnums.Operation.GET_CARDS, {'isGame': true}, self);
 
 func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:

@@ -14,7 +14,10 @@ extends GameplayCard
 @onready var modal_layer : Node2D = $ModalLayer;
 @onready var copiable_name : LineEdit = $GlowNode/Stats/CopiableName;
 @onready var monster_stats_layer : Node2D = $GlowNode/Monster;
+@onready var level_sprite : Sprite2D = $GlowNode/Monster/Level/LevelFrame;
 @onready var ace_badge : Node2D = $GlowNode/AceBadge;
+@onready var deck_master_primary_class_sprite : Sprite2D = $GlowNode/Monster/DeckMasterClasses/PrimaryClass;
+@onready var deck_master_secondary_class_sprite : Sprite2D = $GlowNode/Monster/DeckMasterClasses/SecondaryClass;
 
 const Core : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Core.gd");
 const Fragments : GDScript = preload("res://Scripts/Gameplay/GameplayCard/Fragments.gd");

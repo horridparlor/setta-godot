@@ -10,6 +10,7 @@ extends Login
 @onready var game_title : Control = $GameTitle;
 
 func _ready() -> void:
+	random.randomize();
 	error_label.visible = false;
 	init_form();
 	game_title.glow_node.activate_animations(random);

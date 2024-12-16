@@ -1,9 +1,56 @@
-[gd_scene load_steps=3 format=3 uid="uid://sfljpoame5xt"]
+[gd_scene load_steps=5 format=3 uid="uid://sfljpoame5xt"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/Pages/DecksPage.gd" id="1_t8yx1"]
-[ext_resource type="PackedScene" uid="uid://bqua6cga77228" path="res://Prefabs/Nexus/Pages/ComingSoonLabel.tscn" id="2_07cyk"]
+[ext_resource type="PackedScene" uid="uid://chdrvm7emq34n" path="res://Prefabs/Login/Widgets/SubmitButton.tscn" id="2_5od0i"]
+[ext_resource type="StyleBox" uid="uid://g33qcwkq2i8d" path="res://Styles/Nexus/Widgets/TopbarBackframe.tres" id="2_7df00"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y2qxe"]
+size = Vector2(1175, 845)
 
 [node name="DecksPage" type="Node2D"]
 script = ExtResource("1_t8yx1")
 
-[node name="ComingSoonLabel" parent="." instance=ExtResource("2_07cyk")]
+[node name="CatalogueLayer" type="Node2D" parent="."]
+
+[node name="TopBar" type="Node2D" parent="."]
+
+[node name="Backframe" type="Panel" parent="TopBar"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = -305.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_7df00")
+
+[node name="EditButton" parent="TopBar" instance=ExtResource("2_5od0i")]
+position = Vector2(720, -430)
+
+[node name="Buttons" type="Node2D" parent="."]
+
+[node name="CatalogueScrollButton" type="TouchScreenButton" parent="Buttons"]
+position = Vector2(-372.5, 117.5)
+shape = SubResource("RectangleShape2D_y2qxe")
+
+[node name="ColorRect" type="ColorRect" parent="Buttons/CatalogueScrollButton"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -587.5
+offset_top = -422.5
+offset_right = 587.5
+offset_bottom = 422.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 0, 1)
+
+[connection signal="pressed" from="Buttons/CatalogueScrollButton" to="." method="_on_catalogue_scroll_button_pressed"]
+[connection signal="released" from="Buttons/CatalogueScrollButton" to="." method="_on_catalogue_scroll_button_released"]

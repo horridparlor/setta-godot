@@ -29,5 +29,5 @@ func getParams() -> PackedStringArray:
 	return packed;
 
 func debug() -> void:
-	print(endpoint);
+	print(getEndpoint());
 	print(params);

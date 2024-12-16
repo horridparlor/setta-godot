@@ -1,10 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://begc2a0owkga7"]
+[gd_scene load_steps=4 format=3 uid="uid://begc2a0owkga7"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/Pages/BattlePage.gd" id="1_dxhpu"]
 [ext_resource type="PackedScene" uid="uid://chdrvm7emq34n" path="res://Prefabs/Login/Widgets/SubmitButton.tscn" id="2_ayrmy"]
+[ext_resource type="StyleBox" uid="uid://g33qcwkq2i8d" path="res://Styles/Nexus/Widgets/TopbarBackframe.tres" id="3_r1l0y"]
 
 [node name="BattlePage" type="Node2D"]
 script = ExtResource("1_dxhpu")
 
 [node name="PlayButton" parent="." instance=ExtResource("2_ayrmy")]
 position = Vector2(0, -20)
+
+[node name="Topbar" type="Node2D" parent="."]
+
+[node name="Backframe" type="Panel" parent="Topbar"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = -305.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_r1l0y")
+metadata/_edit_use_anchors_ = true
+
+[node name="LogoutButton" parent="Topbar" instance=ExtResource("2_ayrmy")]
+position = Vector2(720, -430)

@@ -6,7 +6,7 @@ func _ready() -> void:
 	button.pressed.connect(on_pressed);
 
 func init(button_label: String, random : RandomNumberGenerator = null) -> void:
-	button.text = button_label;
+	set_label(button_label);
 	if random:
 		activate_animations(random);
 
@@ -16,3 +16,12 @@ func press() -> void:
 
 func on_pressed() -> void:
 	emit_signal("pressed");
+
+func set_label(button_label : String) -> void:
+	button.text = button_label;
+
+func focus() -> void:
+	button.grab_focus();
+
+func unfocus() -> void:
+	button.release_focus();

@@ -34,4 +34,6 @@ static func get_random_deck(
 			deck[card_id] = 1;
 		if deck[card_id] == duplicates or source[card_id].is_ace:
 			pool.erase(card_id);
+			if pool.is_empty():
+				return deck;
 	return deck;

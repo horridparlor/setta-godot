@@ -1,15 +1,17 @@
-extends Node2D
+extends CardScene
 class_name NexusPage
 
 var nexus_page : NexusEnums.NexusPage;
 var is_active : bool;
+var random : RandomNumberGenerator = RandomNumberGenerator.new();
 
-func init(page : NexusEnums.NexusPage, random : RandomNumberGenerator) -> void:
+func init(page : NexusEnums.NexusPage) -> void:
+	random.randomize();
 	nexus_page = page;
-	initialize(random);
+	initialize();
 	is_active = true;
 
-func initialize(random : RandomNumberGenerator) -> void:
+func initialize() -> void:
 	pass;
 
 func is_before(other_page : NexusPage) -> bool:

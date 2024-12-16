@@ -17,7 +17,8 @@ func _init(
 	init_data : CardInitData
 ):
 	card_id = card_id_;
-	eat_default(System.cards[card_id]);
+	if System.cards.has(card_id):
+		eat_default(System.cards[card_id]);
 	
 	owning_player = init_data.owning_player;
 	instance_id = System.Random.instance_id(init_data.random);
@@ -32,6 +33,7 @@ func eat_default(json_data : Dictionary) -> void:
 	is_ace = json_data.is_ace;
 	card_type = json_data.card_type;
 	card_class = json_data.card_class;
+	secondary_class = json_data.secondary_class;
 	subtype = json_data.subtype;
 	supertype = json_data.supertype;
 	maximum_piece = json_data.maximum_piece;

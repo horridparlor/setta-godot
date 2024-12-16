@@ -1,8 +1,8 @@
 extends Node
 
-static func initialize(card : GameplayCard, gameplay : Gameplay) -> void:
+static func initialize(card : GameplayCard, card_scene : CardScene) -> void:
 	update_visuals(card);
-	control_glow(GameplayEnums.GlowState.GLOW, card, gameplay);
+	control_glow(GameplayEnums.GlowState.GLOW, card, card_scene);
 
 static func update_visuals(card : GameplayCard) -> void:
 	card.Fragments.update_artwork(card);
@@ -31,30 +31,30 @@ static func activate_animations(card : GameplayCard) -> void:
 static func control_glow(
 	glow_state : GameplayEnums.GlowState,
 	card : GameplayCard,
-	gameplay : Gameplay
+	card_scene : CardScene
 ) -> void:
-	if must_be_glowing(card, gameplay):
+	if must_be_glowing(card, card_scene):
 		glow_state = GameplayEnums.GlowState.GLOW;
-	elif must_be_shuttered(card, gameplay):
+	elif must_be_shuttered(card, card_scene):
 		glow_state = GameplayEnums.GlowState.SHUTTER;
 	card.glow_state = glow_state;
 	activate_animations(card);
 
-static func must_be_glowing(card : GameplayCard, gameplay : Gameplay) -> bool:
-	if card == gameplay.card_to_be_played or card == gameplay.focused_card:
+static func must_be_glowing(card : GameplayCard, card_scene : CardScene) -> bool:
+	if card == card_scene.card_to_be_played or card == card_scene.focused_card:
 		return true;
 	return false;
 
-static func must_be_shuttered(card : GameplayCard, gameplay : Gameplay) -> bool:
+static func must_be_shuttered(card : GameplayCard, card_scene : CardScene) -> bool:
 	if !card.zone:
-		return gameplay.selection_type != GameplayEnums.SelectionType.NONE;
-	if gameplay.is_selecting():
-		return !is_selectable(card, gameplay);
+		return card_scene.selection_type != GameplayEnums.SelectionType.NONE;
+	if card_scene.is_selecting():
+		return !is_selectable(card, card_scene);
 	match card.card_data.zone:
 		CardEnums.Zone.HAND:
-			return !card.Rules.can_be_played(card, gameplay);
+			return !card.Rules.can_be_played(card, card_scene);
 		CardEnums.Zone.EXTRA_DECK:
-			return !card.Rules.have_materials(card, gameplay);
+			return !card.Rules.have_materials(card, card_scene);
 	return false;
 
 static func is_selectable(card : GameplayCard, gameplay : Gameplay) -> bool:

@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d24s3d32wess5"]
+[gd_scene load_steps=7 format=3 uid="uid://d24s3d32wess5"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/Nexus.gd" id="1_akwjg"]
 [ext_resource type="StyleBox" uid="uid://c4hyhb2nh7d3y" path="res://Styles/Nexus/Background.tres" id="2_ydhhl"]
 [ext_resource type="Script" path="res://Scripts/Nexus/Widgets/PageButtons.gd" id="3_3scju"]
 [ext_resource type="PackedScene" uid="uid://baqn3tan2i1p4" path="res://Prefabs/Nexus/Widgets/PageButton.tscn" id="3_lvqfw"]
 [ext_resource type="StyleBox" uid="uid://d3m8rn1e0lqog" path="res://Styles/Nexus/Widgets/PageButtons/PageButtonsBackframe.tres" id="4_juf78"]
-[ext_resource type="PackedScene" uid="uid://chdrvm7emq34n" path="res://Prefabs/Login/Widgets/SubmitButton.tscn" id="5_cm45s"]
 [ext_resource type="StyleBox" uid="uid://g33qcwkq2i8d" path="res://Styles/Nexus/Widgets/TopbarBackframe.tres" id="7_ft3rl"]
 
 [node name="Nexus" type="Node2D"]
@@ -24,6 +23,25 @@ offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("2_ydhhl")
+
+[node name="Topbar" type="Node2D" parent="."]
+
+[node name="Backframe" type="Panel" parent="Topbar"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = -305.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("7_ft3rl")
+metadata/_edit_use_anchors_ = true
+
+[node name="PageLayer" type="Node2D" parent="."]
 
 [node name="PageButtons" type="Node2D" parent="."]
 position = Vector2(0, 420)
@@ -56,27 +74,3 @@ position = Vector2(358, 0)
 
 [node name="NewsButton" parent="PageButtons" instance=ExtResource("3_lvqfw")]
 position = Vector2(716, 0)
-
-[node name="Topbar" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Backframe" type="Panel" parent="Topbar"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -980.0
-offset_top = -560.0
-offset_right = 940.0
-offset_bottom = -325.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("7_ft3rl")
-
-[node name="LogoutButton" parent="Topbar" instance=ExtResource("5_cm45s")]
-position = Vector2(720, -430)
