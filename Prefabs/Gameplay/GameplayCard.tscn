@@ -138,7 +138,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DeckMasterClasses" type="Node2D" parent="GlowNode/Monster"]
-position = Vector2(0, 191)
+position = Vector2(0, 190)
 
 [node name="SecondaryClass" type="Sprite2D" parent="GlowNode/Monster/DeckMasterClasses"]
 position = Vector2(-80, 0)

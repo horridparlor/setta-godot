@@ -18,7 +18,7 @@ const PAGE_BUTTONS_BASE_Y : float = 420;
 const PAGE_BUTTONS_HIDDEN_Y : float = 710;
 const PAGE_BUTTONS_SLIDE_SPEED_UP : float = 4;
 const PAGE_BUTTONS_SLIDE_MIN_SPEED_UP : float = 0;
-const PAGE_BUTTONS_SLIDE_SPEED_DOWN : float = 1;
+const PAGE_BUTTONS_SLIDE_SPEED_DOWN : float = 1.1;
 const PAGE_BUTTONS_SLIDE_MIN_SPEED_DOWN : float = 200;
 
 var active_page : NexusPage;
