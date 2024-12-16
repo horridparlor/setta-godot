@@ -7,10 +7,10 @@ func _ready() -> void:
 	DisplayServer.window_set_current_screen(System.Display);
 	System.random.randomize();
 	initialize_regex();
-	load_cards();
 	update_debug_tools();
 	set_process_input(true);
 	System.Server.init();
+	load_cards();
 	if !System.Auth.try_auth(self):
 		initialize_login();
 

@@ -12,7 +12,7 @@ extends Login
 func _ready() -> void:
 	error_label.visible = false;
 	init_form();
-	game_title.glow_node.activate_animations(random);
+	game_title.glow_node.activate_animations();
 
 func _physics_process(delta: float) -> void:
 	var distance : float;
@@ -29,7 +29,7 @@ func init_form() -> void:
 	password_input.init("Password", "*****", true);
 	password_input.submit.connect(submit_button.press);
 	password_input.focused.connect(toggle_rails);
-	submit_button.init("Login", random);
+	submit_button.init("Login");
 	submit_button.pressed.connect(on_login);
 	
 func toggle_rails(go_up : bool = true) -> void:

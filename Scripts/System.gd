@@ -27,6 +27,7 @@ var is_ready : bool = false;
 var auth_data : AuthData;
 var server_ip : String = Server.DEFAULT_SERVER_IP;
 var random : RandomNumberGenerator = RandomNumberGenerator.new();
+var debug_string : String;
 
 static func wait(delay : float, parent : Node2D) -> void:
 	await parent.get_tree().create_timer(delay).timeout;
