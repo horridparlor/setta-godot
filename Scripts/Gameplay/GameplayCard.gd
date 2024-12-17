@@ -60,8 +60,8 @@ func fix_despawn_point() -> void:
 func _on_modal_action(action : CardEnums.CardAction) -> void:
 	emit_signal("card_action", action, self);
 
-func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
+func _on_http_response(request : OperationRequest, operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:
 		RequestEnums.Operation.FETCH_ARTWORK:
 			var image : Image = System.Image_.load_from_buffer(response.body);
-			Fragments.display_artwork(image, self, true);
+			Fragments.display_artwork(image, self, true, request);

@@ -30,6 +30,8 @@ const ROTATION_ATTACK : int = 0;
 const ROTATION_DEFENSE : int = 90;
 const MODAL_X_UPRIGHT : int = 0;
 const MODAL_X_SIDEWAYS : int = FIELD_SCALE * (SIZE.y - SIZE.x);
+const LOADING_ICON_PATH : String = "res://Prefabs/Common/Identifiers/LoadingIcon.tscn";
+const LOADING_ICON_POSITION : Vector2 = Vector2(-125, -160);
 
 const MAX_SCALE_VALUE : float = 1.0;
 const MAX_SCALE : Vector2 = Vector2(MAX_SCALE_VALUE, MAX_SCALE_VALUE);
@@ -61,6 +63,7 @@ var scale_up : bool = false;
 var scale_down : bool = false;
 var is_despawned : bool = false;
 var base_rotation : int = 0;
+var loading_icon : LoadingIcon;
 
 var zone : Zone;
 var card_data : CardData;

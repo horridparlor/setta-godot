@@ -79,7 +79,7 @@ func on_login() -> void:
 		'password': password
 	}, self);
 
-func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
+func _on_http_response(request : OperationRequest, operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:
 		RequestEnums.Operation.AUTHENTICATE:
 			if response.has('error'):

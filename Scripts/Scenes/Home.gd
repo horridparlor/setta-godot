@@ -24,6 +24,8 @@ func close_login() -> void:
 	login.queue_free();
 
 func initialize_nexus() -> void:
+	if !System.cards.size():
+		fetch_cards();
 	nexus = System.Instance.load_child(NEXUS_PATH, scene_layer);
 	nexus.logout.connect(on_logout);
 	nexus.enter_game.connect(on_enter_game);
@@ -53,9 +55,12 @@ func load_cards() -> void:
 	cards = System.Json.read(SystemEnums.SaveFilePath[SystemEnums.SaveFile.CARDS]);
 	if System.Json.success(cards) && !System.Debug.ALWAYS_FETCH_CARDS:
 		set_cards(cards.cards);
+	fetch_cards();
+
+func fetch_cards() -> void:
 	System.Server.request(RequestEnums.Operation.GET_CARDS, {'isGame': true}, self);
 
-func _on_http_response(operation : RequestEnums.Operation, response : Dictionary) -> void:
+func _on_http_response(request : OperationRequest, operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:
 		RequestEnums.Operation.AUTHENTICATE:
 			if response.has("error"):
@@ -65,7 +70,7 @@ func _on_http_response(operation : RequestEnums.Operation, response : Dictionary
 				initialize_nexus();
 		RequestEnums.Operation.GET_CARDS:
 			set_cards(response.cards);
-			if gameplay:
+			if System.Instance.exists(gameplay):
 				gameplay.init();
 
 func set_cards(source : Array):

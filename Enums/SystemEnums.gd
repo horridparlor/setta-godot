@@ -142,3 +142,16 @@ static func get_data_file_extension(type: DataFileType) -> String:
 
 static func get_json_extension() -> String:
 	return get_data_file_extension(DataFileType.SAVE);
+
+enum IconSize {
+	SMALL,
+	NORMAL
+}
+
+static var IconPixelSize = {
+	IconSize.SMALL: 90,
+	IconSize.NORMAL: 120
+}
+
+static func build_icon_path(size : IconSize, folder_path : String) -> String:
+	return folder_path + str(IconPixelSize[size]) + get_image_extension();

@@ -4,8 +4,10 @@ class_name OneTimeRequest
 var operation : RequestEnums.Operation;
 var parent : Node;
 var leave_raw : bool;
+var original_request : OperationRequest;
 
 func init(request : OperationRequest, new_parent : Node, _leave_raw : bool) -> void:
+	original_request = request;
 	leave_raw = _leave_raw;
 	if System.Debug.REQUESTS and (System.Debug.REQUESTS_FILTER == request.operation):
 		request.debug();
@@ -28,7 +30,7 @@ func complete_request(result : int, response_code : int, headers : PackedStringA
 			"error": "Server could not be reached {%s}" % [System.server_ip]
 		}
 	if operation != RequestEnums.Operation.NONE:
-		parent._on_http_response(operation, response);
+		parent._on_http_response(original_request, operation, response);
 	queue_free();
 
 func parse_response(response) -> Dictionary:

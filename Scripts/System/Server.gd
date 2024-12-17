@@ -17,9 +17,9 @@ static func store_server_configuration(json_data : Dictionary) -> void:
 static func parse_response(body : PackedByteArray):
 	return JSON.parse_string(body.get_string_from_utf8());
 
-static func request(operation : RequestEnums.Operation, params : Dictionary, parent : Node, file_path : String = ""):
+static func request(operation : RequestEnums.Operation, params : Dictionary, parent : Node, file_path : String = "", local_data : Dictionary = {}):
 	var http : HTTPRequest = OneTimeRequest.new();
-	var request = OperationRequest.new(operation, params, file_path);
+	var request = OperationRequest.new(operation, params, file_path, local_data);
 	var leave_raw = false;
 	if (request.is_fetch):
 		leave_raw = true;

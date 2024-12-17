@@ -6,15 +6,17 @@ var method : HTTPClient.Method;
 var endpoint : String;
 var is_fetch : bool;
 var file_path : String;
-var params : Dictionary
+var params : Dictionary;
+var local_data : Dictionary;
 
-func _init(operation_ : RequestEnums.Operation, params_ : Dictionary, file_path_ : String = ""):
+func _init(operation_ : RequestEnums.Operation, params_ : Dictionary, file_path_ : String = "", local_data_ : Dictionary = {}):
 	operation = operation_;
 	endpoint = RequestEnums.Endpoint[operation];
 	method = RequestEnums.getMethod(operation);
 	is_fetch = RequestEnums.OperationRequestType[operation] == RequestEnums.RequestType.FETCH;
 	file_path = file_path_;
 	params = params_;
+	local_data = local_data_;
 
 func getEndpoint() -> String:
 	return System.Server.REQUEST_PREFIX + System.server_ip + \
