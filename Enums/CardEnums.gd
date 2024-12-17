@@ -117,9 +117,6 @@ static func enumerate_supertype(message : String) -> CardSupertype:
 		_:
 			return CardSupertype.NONE;
 
-static func is_deck_master(card_data : CardData) -> bool:
-	return card_data.supertype == CardSupertype.DECK_MASTER;
-
 enum Zone {
 	BACKROW,
 	DECK,

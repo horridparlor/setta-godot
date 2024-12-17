@@ -138,3 +138,6 @@ static func from_json(json_data : Dictionary) -> CardData:
 	var card_data : CardData = CardData.new(json_data.card_id, get_default_card_init_data());
 	card_data.eat_default(json_data);
 	return card_data;
+	
+static func is_deck_master(card_data : CardData) -> bool:
+	return card_data.supertype == CardEnums.CardSupertype.DECK_MASTER;

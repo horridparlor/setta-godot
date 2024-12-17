@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://tckg64g07u71"]
+
+[ext_resource type="StyleBox" uid="uid://bchj01ix1m337" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistSlip/Trap.tres" id="1_jqbfp"]
+
+[node name="TrapBackFrame" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -40.0
+offset_right = 335.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_jqbfp")

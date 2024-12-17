@@ -1,6 +1,7 @@
 extends Node
 
 enum NexusPage {
+	NONE,
 	SHOP,
 	DECKS,
 	BATTLE,

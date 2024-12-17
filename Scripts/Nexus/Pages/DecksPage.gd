@@ -5,14 +5,21 @@ extends DecksPage
 @onready var behind_layer : Zone = $BehindLayer;
 @onready var between_layer : Node2D = $BetweenLayer;
 @onready var sky : Zone = $Sky;
-@onready var catalogue_click_timer : Timer = $Timers/CatalogueClickTimer;
 @onready var top_bar : Node2D = $TopBar;
+@onready var decklist_form : DecklistForm = $DecklistForm;
+
+@onready var catalogue_click_timer : Timer = $Timers/CatalogueClickTimer;
+@onready var double_click_timer : Timer = $Timers/DoubleClickTimer;
 
 func _physics_process(delta : float) -> void:
 	if is_scrolling_catalogue:
 		scroll_catalogue(delta);
+	if is_scrolling_decklist:
+		scroll_decklist(delta);
 	if is_moving_catalogue_layer:
 		move_catalogue_layer(delta);
+	if is_moving_decklist_layer:
+		move_decklist_layer(delta);
 
 func move_catalogue_layer(delta : float) -> void:
 	var limited_target : Vector2 = Vector2(catalogue_layer_target_position.x,
@@ -29,6 +36,27 @@ func move_catalogue_layer(delta : float) -> void:
 	if focused_card || catalogue_cards.is_empty():
 		return;
 	update_card_carousel();
+
+func limit_decklist_form_y(y : float) -> float:
+	return min(DECKLIST_FORM_MAX_Y, max(DECKLIST_FORM_MAX_Y + decklist_form.min_y + DECKLIST_FORM_DEFAULT_RANGE, y));
+
+func move_decklist_layer(delta : float) -> void:
+	var limited_target : Vector2 = Vector2(decklist_form_target_position.x,
+		limit_decklist_form_y(decklist_form_target_position.y));
+	decklist_form.position = System.Vectors.slide_towards(decklist_form.position,
+		decklist_form_target_position, DECKLIST_SCROLL_SPEED, delta);
+	decklist_form.position.y = limit_decklist_form_y(decklist_form.position.y);
+	if System.Vectors.equal(decklist_form.position, limited_target):
+		is_moving_decklist_layer = false;
+		decklist_form.position = limited_target;
+	
+func scroll_decklist(delta : float) -> void:
+	var distance : float = get_global_mouse_position().y - decklist_scroll_position.y;
+	if !is_moving_decklist_layer && abs(distance) < DECKLIST_MIN_SCROLL:
+		return;
+	decklist_form_target_position = Vector2(decklist_scroll_start_position.x, decklist_scroll_start_position.y + DECKLIST_SCROLL_MULTIPLIER * distance);
+	if !is_moving_decklist_layer:
+		is_moving_decklist_layer = true;
 
 func update_card_carousel() -> void:
 	var current_y : float = abs(catalogue_layer.position.y);
@@ -70,7 +98,7 @@ func run_catalogue_carousel(direction : int = 1) -> void:
 	last_row_shown += direction;
 
 func scroll_catalogue(delta : float) -> void:
-	var distance : float = get_global_mouse_position().y - scroll_position.y;
+	var distance : float = get_global_mouse_position().y - catalogue_scroll_position.y;
 	if !is_moving_catalogue_layer and abs(distance) < CARD_CATALOGUE_MIN_SCROLL:
 		return;
 	catalogue_layer_target_position = Vector2(catalogue_scroll_start_position.x, catalogue_scroll_start_position.y + CARD_CATALOGUE_SCROLL_MULTIPLIER * distance);
@@ -158,10 +186,22 @@ func on_card_focused() -> void:
 	focused_card.global_position = card_global_position;
 	behind_layer.sort_algorithm_grid();
 
+func toggle_card_to_decklist(card_data : CardData) -> void:
+	if !is_active:
+		return;
+	decklist_form.toggle_card(card_data);
+
 func on_card_released(card : GameplayCard) -> void:
 	var card_global_position : Vector2;
+	var card_id : int = card.card_data.card_id;
 	if card != focused_card:
 		return;
+	if previously_focused_card_id == card_id:
+		_on_double_click_timer_timeout();
+		toggle_card_to_decklist(card.card_data);
+	else:
+		previously_focused_card_id = card_id;
+		double_click_timer.start();
 	if is_moving_catalogue_layer:
 		drop_focused_card();
 		return;
@@ -196,7 +236,7 @@ func reset_cards_shown() -> void:
 func _on_catalogue_scroll_button_pressed() -> void:
 	if !in_edit_mode || focused_card:
 		return;
-	scroll_position = get_global_mouse_position();
+	catalogue_scroll_position = get_global_mouse_position();
 	catalogue_scroll_start_position = catalogue_layer.position;
 	is_scrolling_catalogue = true;
 
@@ -208,3 +248,17 @@ func _on_catalogue_click_timer_timeout() -> void:
 		return;
 	catalogue_click_timer.stop();
 	on_card_focused();
+
+func _on_double_click_timer_timeout() -> void:
+	double_click_timer.stop();
+	previously_focused_card_id = 0;
+
+func _on_decklist_scroll_button_pressed() -> void:
+	if focused_card:
+		return;
+	decklist_scroll_position = get_global_mouse_position();
+	decklist_scroll_start_position = decklist_form.position;
+	is_scrolling_decklist = true;
+
+func _on_decklist_scroll_button_released() -> void:
+	is_scrolling_decklist = false;

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8e85deupd2c6"]
+
+[ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/DecklistForm.gd" id="1_s6rbx"]
+[ext_resource type="PackedScene" uid="uid://cf2pk413uf3wq" path="res://Prefabs/Nexus/DecksPage/DecklistBlock.tscn" id="2_kw2fv"]
+
+[node name="DecklistForm" type="Node2D"]
+script = ExtResource("1_s6rbx")
+
+[node name="Blocks" type="Node2D" parent="."]
+
+[node name="MonsterBlock" parent="Blocks" instance=ExtResource("2_kw2fv")]
+
+[node name="SpellBlock" parent="Blocks" instance=ExtResource("2_kw2fv")]
+visible = false
+
+[node name="TrapBlock" parent="Blocks" instance=ExtResource("2_kw2fv")]
+visible = false
+
+[node name="ExtraBlock" parent="Blocks" instance=ExtResource("2_kw2fv")]
+visible = false
+
+[node name="SideBlock" parent="Blocks" instance=ExtResource("2_kw2fv")]
+visible = false

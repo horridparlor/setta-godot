@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxh24x0jd63qs"]
+
+[ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/CopyBars.gd" id="1_lcdy7"]
+[ext_resource type="PackedScene" uid="uid://bo55sr8hbgswm" path="res://Prefabs/Nexus/DecksPage/ThirdCopyActive.tscn" id="2_j5otu"]
+[ext_resource type="PackedScene" uid="uid://cfr0k5ioh20l7" path="res://Prefabs/Nexus/DecksPage/OneOfOneCopyActive.tscn" id="3_ku63c"]
+[ext_resource type="PackedScene" uid="uid://cpsp37oi61v27" path="res://Prefabs/Nexus/DecksPage/ThirdCopyInactive.tscn" id="3_xhppg"]
+[ext_resource type="PackedScene" uid="uid://mmbr6t4tv686" path="res://Prefabs/Nexus/DecksPage/OneOfOneCopyInactive.tscn" id="5_o8qmr"]
+[ext_resource type="PackedScene" uid="uid://dpjebrxvl5pf8" path="res://Prefabs/Nexus/DecksPage/AceCopyActive.tscn" id="6_554cr"]
+
+[node name="CopyBars" type="Node2D"]
+position = Vector2(0, 26)
+script = ExtResource("1_lcdy7")
+
+[node name="Active" type="Node2D" parent="."]
+
+[node name="FirstCopy" parent="Active" instance=ExtResource("2_j5otu")]
+visible = false
+
+[node name="SecondCopy" parent="Active" instance=ExtResource("2_j5otu")]
+visible = false
+offset_left = -15.0
+offset_right = 15.0
+
+[node name="ThirdCopy" parent="Active" instance=ExtResource("2_j5otu")]
+visible = false
+offset_left = 25.0
+offset_right = 55.0
+
+[node name="Inactive" type="Node2D" parent="."]
+
+[node name="FirstCopy" parent="Inactive" instance=ExtResource("3_xhppg")]
+visible = false
+offset_left = -55.0
+offset_right = -25.0
+
+[node name="SecondCopy" parent="Inactive" instance=ExtResource("3_xhppg")]
+visible = false
+
+[node name="ThirdCopy" parent="Inactive" instance=ExtResource("3_xhppg")]
+visible = false
+offset_left = 25.0
+offset_right = 55.0
+
+[node name="OneOfOne" type="Node2D" parent="."]
+
+[node name="OneOfOneActive" parent="OneOfOne" instance=ExtResource("3_ku63c")]
+visible = false
+
+[node name="OneOfOneInactive" parent="OneOfOne" instance=ExtResource("5_o8qmr")]
+
+[node name="AceCopyActive" parent="OneOfOne" instance=ExtResource("6_554cr")]

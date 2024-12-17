@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://ic6245tobotw"]
+
+[ext_resource type="StyleBox" uid="uid://dah6rcu3c3lep" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistSlip/Royal.tres" id="1_it2hx"]
+[ext_resource type="Texture2D" uid="uid://cv2gdyv2sqg1g" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistSlip/RoyalGradient.tres" id="2_sa2er"]
+
+[node name="RoyalBackFrame" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -40.0
+offset_right = 335.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_it2hx")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_sa2er")
+texture_rotation = 4.64956
+polygon = PackedVector2Array(545, 0, 576, 0, 655, 79, 623, 78)

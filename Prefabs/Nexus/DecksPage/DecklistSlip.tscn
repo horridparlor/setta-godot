@@ -1,0 +1,108 @@
+[gd_scene load_steps=12 format=3 uid="uid://ca2d5qxy7jbkq"]
+
+[ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/DecklistSlip.gd" id="1_2ekpm"]
+[ext_resource type="FontFile" uid="uid://ckd00l7rafrhj" path="res://Assets/FontFiles/Montserrat/Montserrat-MediumItalic.ttf" id="4_vmeob"]
+[ext_resource type="FontFile" uid="uid://blgr74hnsnmp3" path="res://Assets/FontFiles/Montserrat/Montserrat-BoldItalic.ttf" id="5_ik5lk"]
+[ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="6_g7j1w"]
+[ext_resource type="Texture2D" uid="uid://c13xbwtkpk67v" path="res://Assets/Icons/Common/thrash/thrash.png" id="7_th7co"]
+[ext_resource type="Texture2D" uid="uid://cpgui5bev0eko" path="res://Assets/Icons/Common/operation/plus.png" id="9_ae76q"]
+[ext_resource type="Texture2D" uid="uid://6h18gvdxpxk5" path="res://Assets/Icons/Common/operation/minus.png" id="10_fykhg"]
+[ext_resource type="PackedScene" uid="uid://bxh24x0jd63qs" path="res://Prefabs/Nexus/DecksPage/CopyBars.tscn" id="10_yrta5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eoupa"]
+size = Vector2(100, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_silvq"]
+size = Vector2(70, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lkssy"]
+size = Vector2(75, 80)
+
+[node name="DecklistSlip" type="Node2D"]
+script = ExtResource("1_2ekpm")
+
+[node name="BackFrameLayer" type="Node2D" parent="."]
+
+[node name="NameLabel" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -17.0
+offset_right = 158.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_g7j1w")
+theme_override_fonts/italics_font = ExtResource("4_vmeob")
+theme_override_fonts/bold_italics_font = ExtResource("5_ik5lk")
+theme_override_fonts/bold_font = ExtResource("6_g7j1w")
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+text = "Name"
+
+[node name="ThrashIcon" type="Node2D" parent="."]
+position = Vector2(180, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ThrashIcon"]
+position = Vector2(20, 0)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("7_th7co")
+
+[node name="DeleteButton" type="TouchScreenButton" parent="ThrashIcon"]
+position = Vector2(20, 0)
+shape = SubResource("RectangleShape2D_eoupa")
+
+[node name="AttributeSprite" type="Sprite2D" parent="."]
+position = Vector2(-140, -0.999998)
+
+[node name="SideGrabber" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="SideGrabber"]
+offset_left = 285.0
+offset_top = -68.0
+offset_right = 396.0
+offset_bottom = -28.0
+rotation = 0.785398
+theme_override_colors/font_color = Color(0.470588, 0.670588, 0.952941, 0.0980392)
+theme_override_fonts/font = ExtResource("4_vmeob")
+theme_override_font_sizes/font_size = 32
+text = "Side"
+horizontal_alignment = 1
+
+[node name="CopyCounter" type="Node2D" parent="."]
+position = Vector2(-245, 0)
+
+[node name="PlusIcon" type="Node2D" parent="CopyCounter"]
+
+[node name="Sprite2D" type="Sprite2D" parent="CopyCounter/PlusIcon"]
+position = Vector2(21, -8)
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("9_ae76q")
+
+[node name="AddCopy" type="TouchScreenButton" parent="CopyCounter/PlusIcon"]
+position = Vector2(35, 0)
+shape = SubResource("RectangleShape2D_silvq")
+
+[node name="MinusIcon" type="Node2D" parent="CopyCounter"]
+
+[node name="Sprite2D" type="Sprite2D" parent="CopyCounter/MinusIcon"]
+position = Vector2(-22, -8)
+scale = Vector2(0.052, 0.052)
+texture = ExtResource("10_fykhg")
+
+[node name="TakeCopy" type="TouchScreenButton" parent="CopyCounter/MinusIcon"]
+position = Vector2(-37.5, 0)
+shape = SubResource("RectangleShape2D_lkssy")
+
+[node name="CopyBars" parent="CopyCounter" instance=ExtResource("10_yrta5")]
+
+[connection signal="pressed" from="ThrashIcon/DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="pressed" from="CopyCounter/PlusIcon/AddCopy" to="." method="_on_add_copy_pressed"]
+[connection signal="pressed" from="CopyCounter/MinusIcon/TakeCopy" to="." method="_on_take_copy_pressed"]

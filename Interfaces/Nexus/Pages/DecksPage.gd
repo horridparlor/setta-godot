@@ -21,6 +21,10 @@ const CARD_CATALOGUE_SPAWN_POINT : Vector2 = Vector2(
 const CARD_CATALOGUE_TOP_SPAWN_POINT : Vector2 = Vector2(CARD_CATALOGUE_SPAWN_POINT.x, -(CARD_CATALOGUE_ROWS - 1) * CARD_CATALOGUE_MARGINS.y)
 
 const DECKLIST_SCROLL_SPEED : float = 4;
+const DECKLIST_MIN_SCROLL : int = 60;
+const DECKLIST_SCROLL_MULTIPLIER : float = 2;
+const DECKLIST_FORM_MAX_Y : float = -257;
+const DECKLIST_FORM_DEFAULT_RANGE : float = System.Window_.y - abs(DECKLIST_FORM_MAX_Y);
 
 var in_edit_mode : bool;
 var card_catalogue_grid : Grid = Grid.new(
@@ -28,11 +32,10 @@ var card_catalogue_grid : Grid = Grid.new(
 	CARD_CATALOGUE_MARGINS, CARD_CATALOGUE_MAX_CARDS_SHOWN);
 var is_scrolling_catalogue : bool;
 var is_scrolling_decklist : bool;
-var scroll_position : Vector2;
+var catalogue_scroll_position : Vector2;
 var catalogue_scroll_start_position : Vector2;
 var catalogue_layer_target_position : Vector2;
 var is_moving_catalogue_layer : bool;
-var is_moving_decklist_layer : bool;
 var catalogue_layer_max_y : float;
 var catalogue_cards : Array;
 var first_row_shown : int;
@@ -40,6 +43,12 @@ var last_row_shown : int;
 var first_card_shown : int;
 var last_card_shown : int;
 var cards_in_grid : Dictionary;
+var previously_focused_card_id : int;
+
+var is_moving_decklist_layer : bool;
+var decklist_scroll_start_position : Vector2;
+var decklist_scroll_position : Vector2;
+var decklist_form_target_position : Vector2;
 
 func toggle_edit_mode(value : bool = true) -> void:
 	in_edit_mode = value;

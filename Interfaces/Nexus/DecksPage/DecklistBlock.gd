@@ -1,0 +1,2 @@
+extends GlowNode
+class_name DecklistBlock

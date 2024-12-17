@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://do8h8d2o38p88"]
+
+[ext_resource type="StyleBox" uid="uid://2u7ynbac88ve" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistSlip/TimeTraveller.tres" id="1_nbg4n"]
+[ext_resource type="Texture2D" uid="uid://c4l54dh6bw8nw" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistSlip/TimeTravellerGradient.tres" id="2_1iua5"]
+
+[node name="TimeTravellerBackFrame" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -40.0
+offset_right = 335.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_nbg4n")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_1iua5")
+texture_rotation = 4.64956
+polygon = PackedVector2Array(545, 0, 576, 0, 655, 79, 623, 78)
