@@ -1,6 +1,8 @@
 extends Node2D
 class_name DecklistForm
 
+signal request_toggle_card(card_data);
+
 const DECKLIST_SLIP_PATH : String = "res://Prefabs/Nexus/DecksPage/DecklistSlip.tscn";
 const SLIP_STARTING_POSITION : Vector2 = Vector2(0, 100);
 const SLIP_MARGIN : Vector2 = Vector2(0, 100);

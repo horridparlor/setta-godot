@@ -28,7 +28,7 @@ func toggle_card(card_data : CardData) -> void:
 		despawn_slip(card_data);
 	else:
 		collection[card_id] = card_data;
-		card_counts[card_id] = 1;
+		card_counts[card_id] = System.CardData.get_max_copies(card_data);
 		spawn_slip(card_data);
 
 func get_collection_for_card(card_data : CardData) -> Dictionary:
@@ -56,7 +56,7 @@ func update_min_y() -> void:
 
 func on_alter_copies(copies : int, card_data : CardData) -> void:
 	if copies < 0:
-		toggle_card(card_data);
+		emit_signal("request_toggle_card", card_data);
 	else:
 		card_counts[card_data.card_id] = copies;
 		slips[card_data.card_id].set_copies(copies);

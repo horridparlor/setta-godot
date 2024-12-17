@@ -141,3 +141,8 @@ static func from_json(json_data : Dictionary) -> CardData:
 	
 static func is_deck_master(card_data : CardData) -> bool:
 	return card_data.supertype == CardEnums.CardSupertype.DECK_MASTER;
+
+static func get_max_copies(card_data : CardData) -> int:
+	if is_extra_deck(card_data) || card_data.is_ace || is_deck_master(card_data):
+		return 1;
+	return PlayerData.MAIN_DECK_DUPLICATES;

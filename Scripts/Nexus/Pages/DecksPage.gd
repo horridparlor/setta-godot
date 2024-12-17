@@ -84,7 +84,9 @@ func run_catalogue_carousel(direction : int = 1) -> void:
 		card = cards_in_grid[head_index];
 		if card == focused_card:
 			drop_focused_card();
+		cards.erase(card.card_data.card_id);
 		card.card_data = System.CardData.from_json(catalogue_cards[tail_index]);
+		cards[card.card_data.card_id] = card;
 		card.Core.update_visuals(card);
 		card.origin_point = card_catalogue_grid.assign_position(card.card_data.instance_id, direction);
 		card.position = abs(catalogue_layer.position) + Vector2(card.origin_point.x,
@@ -118,6 +120,7 @@ func initialize() -> void:
 	initialize_buttons();
 	catalogue_layer.set_grid(card_catalogue_grid);
 	behind_layer.set_grid(card_catalogue_grid);
+	decklist_form.request_toggle_card.connect(toggle_card_to_decklist);
 	
 func initialize_buttons() -> void:
 	edit_button.init("Edit");
@@ -153,7 +156,7 @@ func find_cards() -> void:
 func spawn_catalogue_card(card_data : CardData) -> GameplayCard:
 	var card : GameplayCard = System.Instance.load_child(SystemEnums.get_card_path(), catalogue_layer);
 	card.card_data = card_data;
-	cards[card_data.instance_id] = card;
+	cards[card_data.card_id] = card;
 	card.Core.initialize(card, self);
 	card.origin_point = card_catalogue_grid.assign_position(card_data.instance_id);
 	card.position = CARD_CATALOGUE_SPAWN_POINT;
@@ -198,8 +201,9 @@ func toggle_card_to_decklist(card_data : CardData) -> void:
 		cards_in_decklist.erase(card_data.card_id);
 	else:
 		cards_in_decklist[card_data.card_id] = card_data;
-	
 	decklist_form.toggle_card(card_data);
+	if cards.has(card_data.card_id):
+		update_card_glow(cards[card_data.card_id]);
 
 func on_card_released(card : GameplayCard) -> void:
 	var card_global_position : Vector2;

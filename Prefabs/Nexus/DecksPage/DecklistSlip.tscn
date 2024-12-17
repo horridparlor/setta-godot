@@ -17,7 +17,7 @@ size = Vector2(100, 80)
 size = Vector2(100, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_silvq"]
-size = Vector2(70, 80)
+size = Vector2(75, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lkssy"]
 size = Vector2(75, 80)
@@ -97,7 +97,7 @@ scale = Vector2(0.06, 0.06)
 texture = ExtResource("9_ae76q")
 
 [node name="AddCopy" type="TouchScreenButton" parent="CopyCounter/PlusIcon"]
-position = Vector2(35, 0)
+position = Vector2(37.5, 0)
 shape = SubResource("RectangleShape2D_silvq")
 
 [node name="MinusIcon" type="Node2D" parent="CopyCounter"]

@@ -5,11 +5,11 @@ extends DecklistSlip
 @onready var backframe_layer : Node2D = $BackFrameLayer;
 @onready var attribute_sprite : Sprite2D = $AttributeSprite;
 
-func init(new_data : CardData ) -> void:
+func init(new_data : CardData) -> void:
 	card_data = new_data;
 	name_label.text = card_data.normalized_name;
-	max_copies = get_max_copies();
-	set_copies(1);
+	max_copies = System.CardData.get_max_copies(card_data);
+	set_copies(max_copies);
 	set_backframe();
 	set_attribute();
 
@@ -27,18 +27,13 @@ func set_copies(new_copies : int) -> void:
 	copies = new_copies;
 	copy_bars.set_bars(copies, max_copies, card_data.is_ace);
 
-func get_max_copies() -> int:
-	if System.CardData.is_extra_deck(card_data) || card_data.is_ace || System.CardData.is_deck_master(card_data):
-		return 1;
-	return PlayerData.MAIN_DECK_DUPLICATES;
-
 func _on_add_copy_pressed() -> void:
 	if copies == max_copies:
 		return;
 	emit_signal("alter_copies", copies + 1, card_data);
 
 func _on_take_copy_pressed() -> void:
-	emit_signal("alter_copies", copies - 1, card_data);
+	emit_signal("alter_copies", max(0, copies - 1), card_data);
 
 func _on_side_grab_pressed() -> void:
 	emit_signal("alter_copies", 0, card_data);
