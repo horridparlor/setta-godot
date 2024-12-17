@@ -49,6 +49,7 @@ var is_moving_decklist_layer : bool;
 var decklist_scroll_start_position : Vector2;
 var decklist_scroll_position : Vector2;
 var decklist_form_target_position : Vector2;
+var cards_in_decklist : Dictionary;
 
 func toggle_edit_mode(value : bool = true) -> void:
 	in_edit_mode = value;

@@ -41,7 +41,7 @@ static func control_glow(
 	activate_animations(card);
 
 static func must_be_glowing(card : GameplayCard, card_scene : CardScene) -> bool:
-	if card == card_scene.card_to_be_played or card == card_scene.focused_card:
+	if card == card_scene.card_to_be_played or (card == card_scene.focused_card):
 		return true;
 	return false;
 
@@ -51,6 +51,8 @@ static func must_be_shuttered(card : GameplayCard, card_scene : CardScene) -> bo
 	if card_scene.is_selecting():
 		return !is_selectable(card, card_scene);
 	match card.card_data.zone:
+		CardEnums.Zone.CARD_CATALOGUE:
+			return card_scene.cards_in_decklist.has(card.card_data.card_id);
 		CardEnums.Zone.HAND:
 			return !card.Rules.can_be_played(card, card_scene);
 		CardEnums.Zone.EXTRA_DECK:

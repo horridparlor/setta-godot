@@ -92,10 +92,14 @@ func run_catalogue_carousel(direction : int = 1) -> void:
 		card.is_moving = true;
 		cards_in_grid.erase(card);
 		cards_in_grid[tail_index] = card;
+		update_card_glow(card);
 	first_card_shown += direction * cards_rotated;
 	last_card_shown += direction * cards_rotated;
 	first_row_shown += direction;
 	last_row_shown += direction;
+
+func update_card_glow(card : GameplayCard) -> void:
+	card.Core.control_glow(GameplayEnums.GlowState.SHUTTER if cards_in_decklist.has(card.card_data.card_id) else GameplayEnums.GlowState.GLOW, card, self);
 
 func scroll_catalogue(delta : float) -> void:
 	var distance : float = get_global_mouse_position().y - catalogue_scroll_position.y;
@@ -154,7 +158,7 @@ func spawn_catalogue_card(card_data : CardData) -> GameplayCard:
 	card.origin_point = card_catalogue_grid.assign_position(card_data.instance_id);
 	card.position = CARD_CATALOGUE_SPAWN_POINT;
 	card.is_moving = true;
-	card.zone = catalogue_layer;
+	catalogue_layer.push_card(card, self);
 	card.pressed.connect(on_card_pressed);
 	card.released.connect(on_card_released);
 	return card;
@@ -187,8 +191,14 @@ func on_card_focused() -> void:
 	behind_layer.sort_algorithm_grid();
 
 func toggle_card_to_decklist(card_data : CardData) -> void:
+	var card_already_in_deck : bool = cards_in_decklist.has(card_data.card_id);
 	if !is_active:
 		return;
+	if card_already_in_deck:
+		cards_in_decklist.erase(card_data.card_id);
+	else:
+		cards_in_decklist[card_data.card_id] = card_data;
+	
 	decklist_form.toggle_card(card_data);
 
 func on_card_released(card : GameplayCard) -> void:
@@ -219,6 +229,7 @@ func on_card_released(card : GameplayCard) -> void:
 		limit_catalogue_layer_y(catalogue_layer_target_position.y));
 	card.global_position = card_global_position;
 	focused_card = null;
+	update_card_glow(card);
 
 func unspawn_cards() -> void:
 	for card in cards.values():

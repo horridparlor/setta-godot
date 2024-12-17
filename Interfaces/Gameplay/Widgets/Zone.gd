@@ -30,8 +30,11 @@ func push_card(card : GameplayCard, card_scene : CardScene):
 
 func take_over(card : GameplayCard, previous_zone : Zone, card_scene : CardScene):
 	var card_data : CardData = card.card_data;
-	if zone != CardEnums.Zone.MODAL and card_scene is Gameplay:
-		move_card_data(card_data, previous_zone, card_scene);
+	if zone != CardEnums.Zone.MODAL:
+		if card_scene is Gameplay:
+			move_card_data(card_data, previous_zone, card_scene);
+		else:
+			card_data.zone = zone;
 	previous_zone.pull_card(card, card_scene);
 	System.Children.move(card, previous_zone, self);
 

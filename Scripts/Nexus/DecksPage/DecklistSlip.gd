@@ -39,3 +39,6 @@ func _on_add_copy_pressed() -> void:
 
 func _on_take_copy_pressed() -> void:
 	emit_signal("alter_copies", copies - 1, card_data);
+
+func _on_side_grab_pressed() -> void:
+	emit_signal("alter_copies", 0, card_data);

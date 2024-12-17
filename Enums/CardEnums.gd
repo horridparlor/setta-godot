@@ -119,6 +119,7 @@ static func enumerate_supertype(message : String) -> CardSupertype:
 
 enum Zone {
 	BACKROW,
+	CARD_CATALOGUE,
 	DECK,
 	EXTRA_DECK,
 	FIELD,
