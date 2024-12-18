@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmpf4hoidm4o5"]
+
+[ext_resource type="StyleBox" uid="uid://dxi56af0y3k4t" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistBlock/ExtraDeck.tres" id="1_oqf3h"]
+
+[node name="Frame" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -35.0
+offset_right = 340.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_oqf3h")

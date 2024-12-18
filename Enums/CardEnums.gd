@@ -32,14 +32,14 @@ enum DeckType {
 }
 
 enum CardSubtype {
-	EFFECT,
-	FUSION,
 	NONE,
 	NORMAL,
+	EFFECT,
+	FUSION,
 	REVENGE,
-	KILLER_MOVE,
 	ROYAL,
-	TIME_TRAVELLER
+	TIME_TRAVELLER,
+	KILLER_MOVE
 }
 
 const MAIN_DECK_SUBTYPES : Array = [
@@ -88,8 +88,8 @@ enum CardSupertype {
 	DECK_MASTER,
 	HAND_TRAP,
 	MAXIMUM,
-	NONE,
-	PENDULUM
+	PENDULUM,
+	NONE
 }
 
 const JSON_SUPERTYPE_DECK_MASTER : String = "Deck Master";

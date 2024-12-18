@@ -8,7 +8,11 @@ script = ExtResource("1_s6rbx")
 
 [node name="Blocks" type="Node2D" parent="."]
 
+[node name="DeckMasterBlock" parent="Blocks" instance=ExtResource("2_kw2fv")]
+visible = false
+
 [node name="MonsterBlock" parent="Blocks" instance=ExtResource("2_kw2fv")]
+visible = false
 
 [node name="SpellBlock" parent="Blocks" instance=ExtResource("2_kw2fv")]
 visible = false

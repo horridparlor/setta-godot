@@ -39,48 +39,48 @@ func initialize_buttons() -> void:
 	page_buttons.page_switched.connect(on_page_switched);
 	page_buttons.init();
 
-func on_page_switched(nexus_page : NexusEnums.NexusPage) -> void:
+func on_page_switched(nexus_page : NexusEnums.NexusPages) -> void:
 	match nexus_page:
-		NexusEnums.NexusPage.SHOP:
+		NexusEnums.NexusPages.SHOP:
 			load_page(nexus_page);
-		NexusEnums.NexusPage.DECKS:
+		NexusEnums.NexusPages.DECKS:
 			load_decks_page();
-		NexusEnums.NexusPage.BATTLE:
+		NexusEnums.NexusPages.BATTLE:
 			load_battle_page();
-		NexusEnums.NexusPage.ROGUE:
+		NexusEnums.NexusPages.ROGUE:
 			load_page(nexus_page);
-		NexusEnums.NexusPage.NEWS:
+		NexusEnums.NexusPages.NEWS:
 			load_page(nexus_page);
 
 func load_battle_page() -> void:
 	var battle_page : BattlePage;
-	load_page(NexusEnums.NexusPage.BATTLE);
+	load_page(NexusEnums.NexusPages.BATTLE);
 	battle_page = active_page;
 	battle_page.enter_game.connect(on_play);
 	battle_page.logout.connect(on_logout);
 
 func load_decks_page() -> void:
 	var decks_page : DecksPage;
-	load_page(NexusEnums.NexusPage.DECKS);
+	load_page(NexusEnums.NexusPages.DECKS);
 	decks_page = active_page;
 	decks_page.edit_deck.connect(on_edit_deck);
 	decks_page.close_deck.connect(on_close_deck);
 
-func get_page_path(nexus_page : NexusEnums.NexusPage) -> String:
+func get_page_path(nexus_page : NexusEnums.NexusPages) -> String:
 	match nexus_page:
-		NexusEnums.NexusPage.SHOP:
+		NexusEnums.NexusPages.SHOP:
 			return SHOP_PAGE_PATH;
-		NexusEnums.NexusPage.DECKS:
+		NexusEnums.NexusPages.DECKS:
 			return DECKS_PAGE_PATH;
-		NexusEnums.NexusPage.BATTLE:
+		NexusEnums.NexusPages.BATTLE:
 			return BATTLE_PAGE_PATH;
-		NexusEnums.NexusPage.ROGUE:
+		NexusEnums.NexusPages.ROGUE:
 			return ROGUE_PAGE_PATH;
-		NexusEnums.NexusPage.NEWS:
+		NexusEnums.NexusPages.NEWS:
 			return NEWS_PAGE_PATH;
 	return BATTLE_PAGE_PATH;
 
-func load_page(page : NexusEnums.NexusPage) -> void:
+func load_page(page : NexusEnums.NexusPages) -> void:
 	if is_moving_pages:
 		previous_page.queue_free();
 	previous_page = active_page;

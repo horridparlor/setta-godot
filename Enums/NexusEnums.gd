@@ -1,6 +1,6 @@
 extends Node
 
-enum NexusPage {
+enum NexusPages {
 	NONE,
 	SHOP,
 	DECKS,
@@ -9,30 +9,48 @@ enum NexusPage {
 	NEWS,
 }
 
-static func translate_nexus_page(page : NexusEnums.NexusPage) -> String:
+static func translate_nexus_page(page : NexusPages) -> String:
 	match page:
-		NexusPage.SHOP:
+		NexusPages.SHOP:
 			return "Shop";
-		NexusPage.DECKS:
+		NexusPages.DECKS:
 			return "Decks";
-		NexusPage.BATTLE:
+		NexusPages.BATTLE:
 			return "Battle";
-		NexusPage.ROGUE:
+		NexusPages.ROGUE:
 			return "Rogue";
-		NexusPage.NEWS:
+		NexusPages.NEWS:
 			return "News";
 	return "Page";
 
-static func get_nexus_page_index(page: NexusEnums.NexusPage) -> int:
+static func get_nexus_page_index(page: NexusPages) -> int:
 	match page:
-		NexusPage.SHOP:
+		NexusPages.SHOP:
 			return 1;
-		NexusPage.DECKS:
+		NexusPages.DECKS:
 			return 2;
-		NexusPage.BATTLE:
+		NexusPages.BATTLE:
 			return 3;
-		NexusPage.ROGUE:
+		NexusPages.ROGUE:
 			return 4;
-		NexusPage.NEWS:
+		NexusPages.NEWS:
 			return 5;
 	return 0;
+
+enum DecklistBlocks {
+	DECK_MASTER,
+	MONSTER,
+	SPELL,
+	TRAP,
+	EXTRA,
+	SIDE
+}
+
+static var DecklistBlockNames = {
+	DecklistBlocks.DECK_MASTER : "Deck Master",
+	DecklistBlocks.MONSTER : "Monsters",
+	DecklistBlocks.SPELL : "Spells",
+	DecklistBlocks.TRAP : "Traps",
+	DecklistBlocks.EXTRA : "Extra",
+	DecklistBlocks.SIDE : "Side"
+};

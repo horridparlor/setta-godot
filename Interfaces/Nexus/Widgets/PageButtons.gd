@@ -9,6 +9,7 @@ const DECKS_PAGE_ICON_PATH : String = PAGE_ICON_PATH + "decks.png";
 const BATTLE_PAGE_ICON_PATH : String = PAGE_ICON_PATH + "battle.png";
 const ROGUE_PAGE_ICON_PATH : String = PAGE_ICON_PATH + "rogue.png";
 const NEWS_PAGE_ICON_PATH : String = PAGE_ICON_PATH + "news.png";
+const SIZE : Vector2 = Vector2(System.Window_.x, 290);
 
 var active_button : PageButton;
 var is_active : bool;

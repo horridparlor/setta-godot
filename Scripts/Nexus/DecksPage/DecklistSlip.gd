@@ -4,6 +4,13 @@ extends DecklistSlip
 @onready var copy_bars : CopyBars = $CopyCounter/CopyBars;
 @onready var backframe_layer : Node2D = $BackFrameLayer;
 @onready var attribute_sprite : Sprite2D = $AttributeSprite;
+@onready var thrash_active_sprite : Sprite2D = $ThrashIcon/ThrashActive;
+@onready var thrash_inactive_sprite : Sprite2D = $ThrashIcon/ThrashInactive;
+@onready var plus_active_sprite : Sprite2D = $CopyCounter/PlusIcon/PlusActive;
+@onready var plus_inactive_sprite : Sprite2D = $CopyCounter/PlusIcon/PlusInactive;
+@onready var minus_active_sprite : Sprite2D = $CopyCounter/MinusIcon/MinusActive;
+@onready var minus_inactive_sprite : Sprite2D = $CopyCounter/MinusIcon/MinusInactive;
+@onready var side_grab_label : Label = $SideGrabber/Label;
 
 func init(new_data : CardData) -> void:
 	card_data = new_data;
@@ -21,6 +28,8 @@ func set_attribute() -> void:
 	attribute_sprite.texture = load(DECKSLIP_ATTRIBUTE_PATH + attribute_name + SystemEnums.get_image_extension());
 
 func _on_delete_button_pressed() -> void:
+	if !is_active || is_locked:
+		return;
 	emit_signal("alter_copies", -1, card_data);
 
 func set_copies(new_copies : int) -> void:
@@ -28,12 +37,38 @@ func set_copies(new_copies : int) -> void:
 	copy_bars.set_bars(copies, max_copies, card_data.is_ace);
 
 func _on_add_copy_pressed() -> void:
-	if copies == max_copies:
+	if copies == max_copies || !is_active || is_locked:
 		return;
 	emit_signal("alter_copies", copies + 1, card_data);
 
 func _on_take_copy_pressed() -> void:
+	if !is_active || is_locked:
+		return;
 	emit_signal("alter_copies", max(0, copies - 1), card_data);
 
 func _on_side_grab_pressed() -> void:
+	if !is_active || is_locked:
+		return;
 	emit_signal("alter_copies", 0, card_data);
+
+func get_active_count_icons() -> Array:
+	return [
+		thrash_active_sprite,
+		plus_active_sprite,
+		minus_active_sprite
+	];
+
+func get_inactive_count_icons() -> Array:
+	return [
+		thrash_inactive_sprite,
+		plus_inactive_sprite,
+		minus_inactive_sprite
+	];
+
+func update_count_icons():
+	side_grab_label.text = "" if is_locked else "Side" if System.CardData.is_main_deck(card_data) else "Main";
+	side_grab_label.add_theme_color_override("", "fff");
+	for icon in get_active_count_icons():
+		icon.visible = !is_locked;
+	for icon in get_inactive_count_icons():
+		icon.visible = is_locked;

@@ -7,7 +7,7 @@ extends PageButton
 func _ready() -> void:
 	toggle_active(false);
 
-func init(page : NexusEnums.NexusPage, sprite_path : String) -> void:
+func init(page : NexusEnums.NexusPages, sprite_path : String) -> void:
 	nexus_page = page;
 	sprite.texture = load(sprite_path);
 	title.text = NexusEnums.translate_nexus_page(nexus_page);

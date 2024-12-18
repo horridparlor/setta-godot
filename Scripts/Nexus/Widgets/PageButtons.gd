@@ -8,11 +8,11 @@ extends PageButtons
 
 func get_buttons() -> Dictionary:
 	return {
-		NexusEnums.NexusPage.SHOP: shop_button,
-		NexusEnums.NexusPage.DECKS: decks_button,
-		NexusEnums.NexusPage.BATTLE: battle_button,
-		NexusEnums.NexusPage.ROGUE: rogue_button,
-		NexusEnums.NexusPage.NEWS: news_button
+		NexusEnums.NexusPages.SHOP: shop_button,
+		NexusEnums.NexusPages.DECKS: decks_button,
+		NexusEnums.NexusPages.BATTLE: battle_button,
+		NexusEnums.NexusPages.ROGUE: rogue_button,
+		NexusEnums.NexusPages.NEWS: news_button
 	};
 
 func _ready() -> void:
@@ -23,17 +23,17 @@ func init() -> void:
 		var button : PageButton = b;
 		button.activate_animations();
 	is_active = true;
-	if System.Debug.AUTO_OPEN_NEXUS_PAGE != NexusEnums.NexusPage.NONE:
+	if System.Debug.AUTO_OPEN_NEXUS_PAGE != NexusEnums.NexusPages.NONE:
 		on_button_pressed(get_buttons()[System.Debug.AUTO_OPEN_NEXUS_PAGE]);
 	else:
 		on_button_pressed(battle_button);
 
 func init_buttons() -> void:
-	shop_button.init(NexusEnums.NexusPage.SHOP, SHOP_PAGE_ICON_PATH);
-	decks_button.init(NexusEnums.NexusPage.DECKS, DECKS_PAGE_ICON_PATH);
-	battle_button.init(NexusEnums.NexusPage.BATTLE, BATTLE_PAGE_ICON_PATH);
-	rogue_button.init(NexusEnums.NexusPage.ROGUE, ROGUE_PAGE_ICON_PATH);
-	news_button.init(NexusEnums.NexusPage.NEWS, NEWS_PAGE_ICON_PATH);
+	shop_button.init(NexusEnums.NexusPages.SHOP, SHOP_PAGE_ICON_PATH);
+	decks_button.init(NexusEnums.NexusPages.DECKS, DECKS_PAGE_ICON_PATH);
+	battle_button.init(NexusEnums.NexusPages.BATTLE, BATTLE_PAGE_ICON_PATH);
+	rogue_button.init(NexusEnums.NexusPages.ROGUE, ROGUE_PAGE_ICON_PATH);
+	news_button.init(NexusEnums.NexusPages.NEWS, NEWS_PAGE_ICON_PATH);
 	for b in get_buttons().values():
 		var button : PageButton = b;
 		button.pressed.connect(on_button_pressed);

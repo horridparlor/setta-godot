@@ -1,25 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://cf2pk413uf3wq"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/DecklistBlock.gd" id="1_t6ker"]
-[ext_resource type="StyleBox" uid="uid://poct54ldnajl" path="res://Styles/Nexus/DecksPage/DecklistForm/MainDeckFrame.tres" id="2_rwhvj"]
+[ext_resource type="PackedScene" uid="uid://4k55x8atbh30" path="res://Prefabs/Nexus/DecksPage/BlockBackframe/Monsters.tscn" id="2_bmkpt"]
 [ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="3_hb7jd"]
 
 [node name="DecklistBlock" type="Node2D"]
 script = ExtResource("1_t6ker")
 
-[node name="Frame" type="Panel" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -340.0
-offset_top = -35.0
-offset_right = 340.0
-offset_bottom = 35.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("2_rwhvj")
+[node name="Frame" parent="." instance=ExtResource("2_bmkpt")]
+visible = false
+
+[node name="FrameLayer" type="Node2D" parent="."]
 
 [node name="Label" type="RichTextLabel" parent="."]
 anchors_preset = 8

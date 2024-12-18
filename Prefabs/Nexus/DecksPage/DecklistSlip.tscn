@@ -1,14 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://ca2d5qxy7jbkq"]
+[gd_scene load_steps=17 format=3 uid="uid://ca2d5qxy7jbkq"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/DecklistSlip.gd" id="1_2ekpm"]
 [ext_resource type="PackedScene" uid="uid://dsbf71a0ki3pc" path="res://Prefabs/Nexus/DecksPage/DeckslipBackframe/Pendulum.tscn" id="2_jvik1"]
 [ext_resource type="FontFile" uid="uid://ckd00l7rafrhj" path="res://Assets/FontFiles/Montserrat/Montserrat-MediumItalic.ttf" id="4_vmeob"]
 [ext_resource type="FontFile" uid="uid://blgr74hnsnmp3" path="res://Assets/FontFiles/Montserrat/Montserrat-BoldItalic.ttf" id="5_ik5lk"]
+[ext_resource type="Texture2D" uid="uid://deahrqo4k16de" path="res://Assets/Icons/Common/thrash/ThrashActive.png" id="6_alnku"]
 [ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="6_g7j1w"]
-[ext_resource type="Texture2D" uid="uid://c13xbwtkpk67v" path="res://Assets/Icons/Common/thrash/thrash.png" id="7_th7co"]
-[ext_resource type="Texture2D" uid="uid://cpgui5bev0eko" path="res://Assets/Icons/Common/operation/plus.png" id="9_ae76q"]
-[ext_resource type="Texture2D" uid="uid://6h18gvdxpxk5" path="res://Assets/Icons/Common/operation/minus.png" id="10_fykhg"]
+[ext_resource type="Texture2D" uid="uid://dxpv4i25nwurr" path="res://Assets/Icons/Common/thrash/ThrashInactive.png" id="7_d5dhg"]
+[ext_resource type="Texture2D" uid="uid://wfxs88cshjjo" path="res://Assets/Icons/Common/thrash/PlusActive.png" id="8_g7n3h"]
+[ext_resource type="Texture2D" uid="uid://dgo3uqt2dpum0" path="res://Assets/Icons/Common/thrash/PlusInactive.png" id="9_menr4"]
+[ext_resource type="Texture2D" uid="uid://dd833sjpiqvif" path="res://Assets/Icons/Common/thrash/MinusActive.png" id="9_ulmjg"]
 [ext_resource type="PackedScene" uid="uid://bxh24x0jd63qs" path="res://Prefabs/Nexus/DecksPage/CopyBars.tscn" id="10_yrta5"]
+[ext_resource type="Texture2D" uid="uid://dwddk4c7q4t" path="res://Assets/Icons/Common/thrash/MinusInactive.png" id="11_bdb3b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eoupa"]
 size = Vector2(100, 80)
@@ -56,10 +59,14 @@ text = "Name"
 [node name="ThrashIcon" type="Node2D" parent="."]
 position = Vector2(180, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="ThrashIcon"]
-position = Vector2(20, 0)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("7_th7co")
+[node name="ThrashActive" type="Sprite2D" parent="ThrashIcon"]
+position = Vector2(20, -1)
+texture = ExtResource("6_alnku")
+
+[node name="ThrashInactive" type="Sprite2D" parent="ThrashIcon"]
+visible = false
+position = Vector2(20, -1)
+texture = ExtResource("7_d5dhg")
 
 [node name="DeleteButton" type="TouchScreenButton" parent="ThrashIcon"]
 position = Vector2(20, 0)
@@ -91,10 +98,14 @@ position = Vector2(-245, 0)
 
 [node name="PlusIcon" type="Node2D" parent="CopyCounter"]
 
-[node name="Sprite2D" type="Sprite2D" parent="CopyCounter/PlusIcon"]
+[node name="PlusActive" type="Sprite2D" parent="CopyCounter/PlusIcon"]
 position = Vector2(21, -8)
-scale = Vector2(0.06, 0.06)
-texture = ExtResource("9_ae76q")
+texture = ExtResource("8_g7n3h")
+
+[node name="PlusInactive" type="Sprite2D" parent="CopyCounter/PlusIcon"]
+visible = false
+position = Vector2(21, -8)
+texture = ExtResource("9_menr4")
 
 [node name="AddCopy" type="TouchScreenButton" parent="CopyCounter/PlusIcon"]
 position = Vector2(37.5, 0)
@@ -102,10 +113,14 @@ shape = SubResource("RectangleShape2D_silvq")
 
 [node name="MinusIcon" type="Node2D" parent="CopyCounter"]
 
-[node name="Sprite2D" type="Sprite2D" parent="CopyCounter/MinusIcon"]
+[node name="MinusActive" type="Sprite2D" parent="CopyCounter/MinusIcon"]
 position = Vector2(-22, -8)
-scale = Vector2(0.052, 0.052)
-texture = ExtResource("10_fykhg")
+texture = ExtResource("9_ulmjg")
+
+[node name="MinusInactive" type="Sprite2D" parent="CopyCounter/MinusIcon"]
+visible = false
+position = Vector2(-22, -8)
+texture = ExtResource("11_bdb3b")
 
 [node name="TakeCopy" type="TouchScreenButton" parent="CopyCounter/MinusIcon"]
 position = Vector2(-37.5, 0)

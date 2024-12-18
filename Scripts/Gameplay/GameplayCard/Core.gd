@@ -56,6 +56,8 @@ static func must_be_shuttered(card : GameplayCard, card_scene : CardScene) -> bo
 		CardEnums.Zone.HAND:
 			return !card.Rules.can_be_played(card, card_scene);
 		CardEnums.Zone.EXTRA_DECK:
+			if !card_scene is Gameplay:
+				return false;
 			return !card.Rules.have_materials(card, card_scene);
 	return false;
 

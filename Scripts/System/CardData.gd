@@ -139,10 +139,44 @@ static func from_json(json_data : Dictionary) -> CardData:
 	card_data.eat_default(json_data);
 	return card_data;
 	
-static func is_deck_master(card_data : CardData) -> bool:
+static func is_deck_master(card_data : CardDefaultData) -> bool:
 	return card_data.supertype == CardEnums.CardSupertype.DECK_MASTER;
 
-static func get_max_copies(card_data : CardData) -> int:
+static func get_max_copies(card_data : CardDefaultData) -> int:
 	if is_extra_deck(card_data) || card_data.is_ace || is_deck_master(card_data):
 		return 1;
 	return PlayerData.MAIN_DECK_DUPLICATES;
+
+static func sort_by_card_name(card_a : CardDefaultData, card_b : CardDefaultData) -> int:
+	return card_a.normalized_name < card_b.normalized_name;	
+
+static func get_deck_sort_index(card_data : CardDefaultData) -> int:
+	if is_main_deck(card_data):
+		return 0;
+	return 1;
+
+static func sort_json_by_card_type(card_a : Dictionary, card_b : Dictionary) -> int:
+	return sort_by_card_type(from_json(card_a), from_json(card_b));
+
+static func get_monster_sort_index(card_data : CardDefaultData) -> int:
+	return 1000000 * card_data.level + 1000 * card_data.atk + card_data.def;
+
+static func sort_by_card_type(card_a : CardDefaultData, card_b : CardDefaultData) -> int:
+	var deck_sort_a : int = get_deck_sort_index(card_a);
+	var deck_sort_b : int = get_deck_sort_index(card_b);
+	var monster_sort_a : int;
+	var monster_sort_b : int;
+	if deck_sort_a != deck_sort_b:
+		return deck_sort_a < deck_sort_b;
+	if card_a.card_type != card_b.card_type:
+		return card_a.card_type < card_b.card_type;
+	if card_a.subtype != card_b.subtype:
+		return card_a.subtype < card_b.subtype;
+	if card_a.supertype != card_b.supertype:
+		return card_a.supertype < card_b.supertype;
+	if is_monster(card_a):
+		monster_sort_a = get_monster_sort_index(card_a);
+		monster_sort_b = get_monster_sort_index(card_b);
+		if monster_sort_a != monster_sort_b:
+			return monster_sort_a < monster_sort_b;
+	return sort_by_card_name(card_a, card_b);

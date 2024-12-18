@@ -12,9 +12,21 @@ const DECKSLIP_ATTRIBUTE_PATH : String = "res://Assets/Icons/Attributes/SmallSiz
 var card_data : CardData;
 var copies : int;
 var max_copies : int;
+var is_active : bool;
+var is_locked : bool;
 
 func init(new_data : CardData) -> void:
 	pass;
 	
 func set_copies(new_copies : int) -> void:
+	pass;
+
+func toggle_active(value : bool = true) -> void:
+	is_active = value;
+
+func toggle_locked(value : bool = true) -> void:
+	is_locked = value;
+	update_count_icons();
+
+func update_count_icons():
 	pass;

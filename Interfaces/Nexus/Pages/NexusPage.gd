@@ -1,10 +1,10 @@
 extends CardScene
 class_name NexusPage
 
-var nexus_page : NexusEnums.NexusPage;
+var nexus_page : NexusEnums.NexusPages;
 var is_active : bool;
 
-func init(page : NexusEnums.NexusPage) -> void:
+func init(page : NexusEnums.NexusPages) -> void:
 	nexus_page = page;
 	initialize();
 	is_active = true;

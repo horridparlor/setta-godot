@@ -38,7 +38,7 @@ func move_catalogue_layer(delta : float) -> void:
 	update_card_carousel();
 
 func limit_decklist_form_y(y : float) -> float:
-	return min(DECKLIST_FORM_MAX_Y, max(DECKLIST_FORM_MAX_Y + decklist_form.min_y + DECKLIST_FORM_DEFAULT_RANGE, y));
+	return min(DECKLIST_FORM_MAX_Y, max(DECKLIST_FORM_MAX_Y + decklist_form.min_y + DECKLIST_FORM_DEFAULT_RANGE - (PageButtons.SIZE.y if !in_edit_mode else 0), y));
 
 func move_decklist_layer(delta : float) -> void:
 	var limited_target : Vector2 = Vector2(decklist_form_target_position.x,
@@ -144,13 +144,19 @@ func spawn_card_catalogue() -> void:
 	for card in catalogue_cards.slice(0, CARD_CATALOGUE_MAX_CARDS_SHOWN):
 		cards_in_grid[i] = spawn_catalogue_card(System.CardData.from_json(card));
 		i += 1;
-		
-func sort_by_card_name(card_a : Dictionary, card_b : Dictionary) -> int:
-	return card_a.normalized_name < card_b.normalized_name;
+	unlock_cards_shown();
+
+func unlock_cards_shown() -> void:
+	reset_decklist_position();
+	decklist_form.toggle_locked(false);
+	decklist_form.toggle_active();
+
+func reset_decklist_position() -> void:
+	decklist_form.position.y = DECKLIST_FORM_MAX_Y;
 
 func find_cards() -> void:
 	catalogue_cards = System.cards.values();
-	catalogue_cards.sort_custom(sort_by_card_name);
+	catalogue_cards.sort_custom(System.CardData.sort_json_by_card_type);
 	catalogue_layer_max_y = -CARD_CATALOGUE_MARGINS.y * (catalogue_cards.size() / CARD_CATALOGUE_COLUMNS - CARD_CATALOGUE_ROWS);
 
 func spawn_catalogue_card(card_data : CardData) -> GameplayCard:
@@ -247,6 +253,9 @@ func reset_cards_shown() -> void:
 	catalogue_layer.position = System.Vectors.default();
 	catalogue_layer_target_position = catalogue_layer.position;
 	catalogue_layer.cards = [];
+	decklist_form.toggle_active(false);
+	decklist_form.toggle_locked();
+	reset_decklist_position();
 
 func _on_catalogue_scroll_button_pressed() -> void:
 	if !in_edit_mode || focused_card:
