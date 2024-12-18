@@ -21,7 +21,6 @@ func on_release() -> void:
 	if !is_pressing:
 		return;
 	is_pressing = false;
-	print(get_process_delta_time(), " ", get_process_delta_time() - pressed_time, " ", MAX_PRESS_TIME);
 	if Time.get_unix_time_from_system() - pressed_time > MAX_PRESS_TIME:
 		return;
 	emit_signal("triggered");

@@ -204,6 +204,8 @@ func toggle_card_to_decklist(card_data : CardData) -> void:
 	if !is_active:
 		return;
 	if card_already_in_deck:
+		if System.CardData.is_deck_master(card_data):
+			return;
 		cards_in_decklist.erase(card_data.card_id);
 	else:
 		cards_in_decklist[card_data.card_id] = card_data;

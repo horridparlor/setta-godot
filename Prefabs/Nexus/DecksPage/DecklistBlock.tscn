@@ -1,14 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://cf2pk413uf3wq"]
+[gd_scene load_steps=8 format=3 uid="uid://cf2pk413uf3wq"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/DecklistBlock.gd" id="1_t6ker"]
 [ext_resource type="PackedScene" uid="uid://4k55x8atbh30" path="res://Prefabs/Nexus/DecksPage/BlockBackframe/Monsters.tscn" id="2_bmkpt"]
 [ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="3_hb7jd"]
+[ext_resource type="Texture2D" uid="uid://dcfs8pv2rtocs" path="res://Assets/Icons/Common/thrash/MiniTrashActive.png" id="4_gi3uo"]
+[ext_resource type="Texture2D" uid="uid://bh0ltm5igacga" path="res://Assets/Icons/Common/thrash/MiniTrashInactive.png" id="5_qusla"]
+[ext_resource type="Script" path="res://Scripts/Common/Buttons/SpringButton.gd" id="6_r1nlm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rksh"]
+size = Vector2(100, 70)
 
 [node name="DecklistBlock" type="Node2D"]
 script = ExtResource("1_t6ker")
 
 [node name="Frame" parent="." instance=ExtResource("2_bmkpt")]
-visible = false
 
 [node name="FrameLayer" type="Node2D" parent="."]
 
@@ -33,3 +38,20 @@ theme_override_font_sizes/normal_font_size = 32
 theme_override_font_sizes/bold_font_size = 32
 bbcode_enabled = true
 text = "Monsters [i](20)[/i]"
+
+[node name="TrashButton" type="Node2D" parent="."]
+position = Vector2(290, 2)
+
+[node name="TrashIconActive" type="Sprite2D" parent="TrashButton"]
+texture = ExtResource("4_gi3uo")
+
+[node name="TrashIconInactive" type="Sprite2D" parent="TrashButton"]
+visible = false
+texture = ExtResource("5_qusla")
+
+[node name="Thrash" type="TouchScreenButton" parent="TrashButton"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_8rksh")
+script = ExtResource("6_r1nlm")
+
+[connection signal="triggered" from="TrashButton/Thrash" to="." method="_on_thrash_triggered"]

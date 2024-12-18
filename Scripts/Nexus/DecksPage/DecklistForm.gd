@@ -23,6 +23,12 @@ func _ready() -> void:
 		block = b;
 		block.activate_animations();
 		block.init(get_block_enum_for_block(block));
+		block.trash.connect(on_empty_block);
+
+func on_empty_block(block : NexusEnums.DecklistBlocks) -> void:
+	var collection : Dictionary = get_collection_for_block(get_block_for_block_enum(block));
+	for card in collection.values():
+		on_alter_copies(-1, card);
 
 func toggle_card(card_data : CardData) -> void:
 	var collection : Dictionary = get_collection_for_card(card_data);
@@ -71,7 +77,6 @@ func add_to_side_deck(card_data : CardData) -> void:
 	collection.erase(card_data.card_id);
 	card_data.move_to_side_deck();
 	side_cards[card_data.card_id] = card_data;
-	print(side_cards, " ---- ", monster_cards);
 
 func get_collection_for_block(block : DecklistBlock) -> Dictionary:
 	match block:
@@ -120,7 +125,23 @@ func get_block_enum_for_block(block : DecklistBlock) -> NexusEnums.DecklistBlock
 		side_block:
 			return NexusEnums.DecklistBlocks.SIDE;	
 	return NexusEnums.DecklistBlocks.MONSTER;
-		
+
+func get_block_for_block_enum(block : NexusEnums.DecklistBlocks) -> DecklistBlock:
+	match block:
+		NexusEnums.DecklistBlocks.DECK_MASTER:
+			return deckmaster_block;
+		NexusEnums.DecklistBlocks.MONSTER:
+			return monster_block;
+		NexusEnums.DecklistBlocks.SPELL:
+			return spell_block;
+		NexusEnums.DecklistBlocks.TRAP:
+			return trap_block;
+		NexusEnums.DecklistBlocks.EXTRA:
+			return extra_block;
+		NexusEnums.DecklistBlocks.SIDE:
+			return side_block;
+	return monster_block;
+	
 func update_blocks() -> void:
 	var current_y : float;
 	var cards_above : int;
