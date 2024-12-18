@@ -5,18 +5,18 @@ static func get_random() -> Decklist:
 	);
 
 static func get_random_main_deck() -> Dictionary:
-	var size : int = PlayerData.MAIN_DECK_SIZE;
+	var size : int = System.Rules.MAIN_DECK_SIZE;
 	var overwrite_card_id : int = System.Debug.OVERWRITE_CARD_ID;
 	if overwrite_card_id:
 		return {overwrite_card_id: size}
 	return get_random_deck(
 		size,
 		System.main_deck_cards,
-		PlayerData.MAIN_DECK_DUPLICATES
+		System.Rules.MAX_COPIES
 	);
 
 static func get_random_extra_deck() -> Dictionary:
-	return get_random_deck(PlayerData.EXTRA_DECK_SIZE, System.extra_deck_cards);
+	return get_random_deck(System.Rules.EXTRA_DECK_SIZE, System.extra_deck_cards);
 
 static func get_random_deck(
 	size : int, source : Dictionary, duplicates : int = 1

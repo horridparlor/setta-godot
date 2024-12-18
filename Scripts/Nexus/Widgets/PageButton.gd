@@ -18,5 +18,5 @@ func toggle_active(state : bool = true) -> void:
 	sprite.modulate.a = opacity;
 	title.modulate.a = opacity;
 
-func _on_button_pressed() -> void:
+func _on_button_triggered() -> void:
 	emit_signal("pressed", self);

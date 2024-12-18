@@ -11,6 +11,7 @@ var owning_player : GameplayEnums.OwningPlayer;
 var controlling_player : GameplayEnums.OwningPlayer;
 var zone : CardEnums.Zone = CardEnums.Zone.NONE;
 var face : CardEnums.Face = CardEnums.Face.NONE;
+var deck_portion : CardEnums.DeckPortion = CardEnums.DeckPortion.MAIN_DECK;
 
 func _init(
 	card_id_ : int,
@@ -81,3 +82,9 @@ func _to_string() -> String:
 
 func get_position() -> CardEnums.MonsterPosition:
 	return monster_data.position if monster_data else CardEnums.MonsterPosition.ATTACK;
+
+func move_to_main_deck() -> void:
+	deck_portion = CardEnums.DeckPortion.MAIN_DECK;
+
+func move_to_side_deck() -> void:
+	deck_portion = CardEnums.DeckPortion.SIDE_DECK;

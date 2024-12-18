@@ -27,29 +27,9 @@ func set_attribute() -> void:
 	var attribute_name : String = System.CardData.get_attribute_name(card_data);
 	attribute_sprite.texture = load(DECKSLIP_ATTRIBUTE_PATH + attribute_name + SystemEnums.get_image_extension());
 
-func _on_delete_button_pressed() -> void:
-	if !is_active || is_locked:
-		return;
-	emit_signal("alter_copies", -1, card_data);
-
 func set_copies(new_copies : int) -> void:
 	copies = new_copies;
 	copy_bars.set_bars(copies, max_copies, card_data.is_ace);
-
-func _on_add_copy_pressed() -> void:
-	if copies == max_copies || !is_active || is_locked:
-		return;
-	emit_signal("alter_copies", copies + 1, card_data);
-
-func _on_take_copy_pressed() -> void:
-	if !is_active || is_locked:
-		return;
-	emit_signal("alter_copies", max(0, copies - 1), card_data);
-
-func _on_side_grab_pressed() -> void:
-	if !is_active || is_locked:
-		return;
-	emit_signal("alter_copies", 0, card_data);
 
 func get_active_count_icons() -> Array:
 	return [
@@ -66,9 +46,31 @@ func get_inactive_count_icons() -> Array:
 	];
 
 func update_count_icons():
-	side_grab_label.text = "" if is_locked else "Side" if System.CardData.is_main_deck(card_data) else "Main";
-	side_grab_label.add_theme_color_override("", "fff");
+	var in_side_deck : bool = System.CardData.in_side_deck(card_data);
+	side_grab_label.text = "" if is_locked else "Main" if in_side_deck else "Side";
+	side_grab_label.add_theme_color_override("font_color", SystemEnums.MAIN_FRAME_COLOR_NORMAL \
+		if in_side_deck else SystemEnums.MAIN_FRAME_COLOR_KILLER_MOVE);
 	for icon in get_active_count_icons():
 		icon.visible = !is_locked;
 	for icon in get_inactive_count_icons():
 		icon.visible = is_locked;
+
+func _on_side_grab_triggered() -> void:
+	if !is_active || is_locked:
+		return;
+	emit_signal("sidedeck_card", card_data);
+
+func _on_delete_button_triggered() -> void:
+	if !is_active || is_locked:
+		return;
+	emit_signal("alter_copies", -1, card_data);
+
+func _on_add_copy_triggered() -> void:
+	if copies == max_copies || !is_active || is_locked:
+		return;
+	emit_signal("alter_copies", copies + 1, card_data);
+
+func _on_take_copy_triggered() -> void:
+	if !is_active || is_locked:
+		return;
+	emit_signal("alter_copies", max(0, copies - 1), card_data);

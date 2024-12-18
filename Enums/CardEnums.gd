@@ -131,6 +131,11 @@ enum Zone {
 	SHOWCASE
 }
 
+enum DeckPortion {
+	MAIN_DECK,
+	SIDE_DECK
+}
+
 enum Face {
 	DOWN,
 	NONE,

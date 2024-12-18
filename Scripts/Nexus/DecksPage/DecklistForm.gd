@@ -44,11 +44,34 @@ func spawn_slip(card_data : CardData) -> void:
 	slip.position = SLIP_STARTING_POSITION + Vector2(0, slips.size() * SLIP_MARGIN.y);
 	slip.init(card_data);
 	slip.alter_copies.connect(on_alter_copies);
+	slip.sidedeck_card.connect(on_sidedeck_card);
 	slips[card_data.card_id] = slip;
 	if System.CardData.is_deck_master(card_data):
 		slip.toggle_locked();
 	slip.toggle_active();
 	reorder_slips();
+
+func on_sidedeck_card(card_data : CardData) -> void:
+	if System.CardData.in_side_deck(card_data):
+		return_to_main_deck(card_data);
+	else:
+		add_to_side_deck(card_data);
+	slips[card_data.card_id].update_count_icons();
+	reorder_slips();
+
+func return_to_main_deck(card_data : CardData) -> void:
+	var collection : Dictionary;
+	side_cards.erase(card_data.card_id);
+	card_data.move_to_main_deck();
+	collection = get_collection_for_card(card_data);
+	collection[card_data.card_id] = card_data;
+
+func add_to_side_deck(card_data : CardData) -> void:
+	var collection : Dictionary = get_collection_for_card(card_data);
+	collection.erase(card_data.card_id);
+	card_data.move_to_side_deck();
+	side_cards[card_data.card_id] = card_data;
+	print(side_cards, " ---- ", monster_cards);
 
 func get_collection_for_block(block : DecklistBlock) -> Dictionary:
 	match block:
@@ -67,6 +90,8 @@ func get_collection_for_block(block : DecklistBlock) -> Dictionary:
 	return monster_cards;
 
 func get_block_for_card(card_data : CardData) -> DecklistBlock:
+	if System.CardData.in_side_deck(card_data):
+		return side_block;
 	if System.CardData.is_extra_deck(card_data):
 		return extra_block;
 	match card_data.card_type:
@@ -96,7 +121,6 @@ func get_block_enum_for_block(block : DecklistBlock) -> NexusEnums.DecklistBlock
 			return NexusEnums.DecklistBlocks.SIDE;	
 	return NexusEnums.DecklistBlocks.MONSTER;
 		
-
 func update_blocks() -> void:
 	var current_y : float;
 	var cards_above : int;

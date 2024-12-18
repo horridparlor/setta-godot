@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://baqn3tan2i1p4"]
+[gd_scene load_steps=8 format=3 uid="uid://baqn3tan2i1p4"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/Widgets/PageButton.gd" id="1_0h4pk"]
 [ext_resource type="StyleBox" uid="uid://c4exxqpn7rdab" path="res://Styles/Nexus/Widgets/PageButtonActive.tres" id="2_s40dd"]
 [ext_resource type="Texture2D" uid="uid://bnr8nrlqy57fr" path="res://Assets/Icons/Nexus/battle.png" id="2_tmh3w"]
 [ext_resource type="StyleBox" uid="uid://dfu5ujtkblab" path="res://Prefabs/Nexus/Widgets/PageButtonInactive.tres" id="3_ygqri"]
+[ext_resource type="Script" path="res://Scripts/Common/Buttons/SpringButton.gd" id="4_7ywul"]
 [ext_resource type="FontFile" uid="uid://yxygawtc05lh" path="res://Assets/FontFiles/Montserrat/Montserrat-SemiBold.ttf" id="4_21g3k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n3kc4"]
@@ -53,6 +54,7 @@ grow_vertical = 2
 [node name="Button" type="TouchScreenButton" parent="Control"]
 position = Vector2(0, 135)
 shape = SubResource("RectangleShape2D_n3kc4")
+script = ExtResource("4_7ywul")
 
 [node name="Sprite2D" type="Sprite2D" parent="Control"]
 position = Vector2(0, -10)
@@ -77,4 +79,4 @@ text = "Page"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="Control/Button" to="." method="_on_button_pressed"]
+[connection signal="triggered" from="Control/Button" to="." method="_on_button_triggered"]

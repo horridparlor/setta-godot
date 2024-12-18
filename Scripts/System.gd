@@ -12,6 +12,7 @@ const Ints : GDScript = preload("res://Scripts/System/Ints.gd");
 const Instance : GDScript = preload("res://Scripts/System/Instance.gd");
 const Json : GDScript = preload("res://Scripts/System/Json.gd");
 const Random : GDScript = preload("res://Scripts/System/Random.gd");
+const Rules : GDScript = preload("res://Scripts/System/Rules.gd");
 const Scale : GDScript = preload("res://Scripts/System/Scale.gd");
 const Server : GDScript = preload("res://Scripts/System/Server.gd");
 const String_ : GDScript = preload("res://Scripts/System/String.gd");

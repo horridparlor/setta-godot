@@ -18,6 +18,8 @@ func update_label() -> void:
 		if is_countless \
 		else LABEL_MESSAGE % [block_name, count];
 	label.position.y = LABEL_POSITION_COUNTLESS if is_countless else LABEL_POSITION_WITH_COUNT;
+	label.add_theme_color_override("default_color", SystemEnums.TEXT_COLOR_PEARL_WHITE \
+		if block == NexusEnums.DecklistBlocks.SIDE else SystemEnums.TEXT_COLOR_BLACK);
 
 func update_frame() -> void:
 	System.Instance.load_child(BLOCK_BACKFRAME_PATH + System.String_.serialize(get_block_name()) + SystemEnums.get_node_extension(), frame_layer);

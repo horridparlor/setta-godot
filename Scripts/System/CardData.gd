@@ -145,7 +145,7 @@ static func is_deck_master(card_data : CardDefaultData) -> bool:
 static func get_max_copies(card_data : CardDefaultData) -> int:
 	if is_extra_deck(card_data) || card_data.is_ace || is_deck_master(card_data):
 		return 1;
-	return PlayerData.MAIN_DECK_DUPLICATES;
+	return System.Rules.MAX_COPIES;
 
 static func sort_by_card_name(card_a : CardDefaultData, card_b : CardDefaultData) -> int:
 	return card_a.normalized_name < card_b.normalized_name;	
@@ -162,10 +162,14 @@ static func get_monster_sort_index(card_data : CardDefaultData) -> int:
 	return 1000000 * card_data.level + 1000 * card_data.atk + card_data.def;
 
 static func sort_by_card_type(card_a : CardDefaultData, card_b : CardDefaultData) -> int:
+	var sided_sort_a : int = int(in_side_deck(card_a));
+	var sided_sort_b : int = int(in_side_deck(card_b));
 	var deck_sort_a : int = get_deck_sort_index(card_a);
 	var deck_sort_b : int = get_deck_sort_index(card_b);
 	var monster_sort_a : int;
 	var monster_sort_b : int;
+	if sided_sort_a != sided_sort_b:
+		return sided_sort_a < sided_sort_b;
 	if deck_sort_a != deck_sort_b:
 		return deck_sort_a < deck_sort_b;
 	if card_a.card_type != card_b.card_type:
@@ -180,3 +184,6 @@ static func sort_by_card_type(card_a : CardDefaultData, card_b : CardDefaultData
 		if monster_sort_a != monster_sort_b:
 			return monster_sort_a < monster_sort_b;
 	return sort_by_card_name(card_a, card_b);
+
+static func in_side_deck(card_data : CardData) -> bool:
+	return card_data.deck_portion == CardEnums.DeckPortion.SIDE_DECK;

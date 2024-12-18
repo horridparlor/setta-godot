@@ -4,6 +4,9 @@ const TEXT_COLOR_BLACK : Color = Color(0, 0, 0);
 const TEXT_COLOR_PEARL_WHITE : Color = Color(243, 243, 243);
 const TEXT_COLOR_WHITE : Color = Color(255, 255, 255);
 
+const MAIN_FRAME_COLOR_NORMAL : String = "e0c71b";
+const MAIN_FRAME_COLOR_KILLER_MOVE : String = "5f9bdb";
+
 enum FileExtension {
 	IMAGE,
 	NODE,

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ca2d5qxy7jbkq"]
+[gd_scene load_steps=18 format=3 uid="uid://ca2d5qxy7jbkq"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/DecklistSlip.gd" id="1_2ekpm"]
 [ext_resource type="PackedScene" uid="uid://dsbf71a0ki3pc" path="res://Prefabs/Nexus/DecksPage/DeckslipBackframe/Pendulum.tscn" id="2_jvik1"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://deahrqo4k16de" path="res://Assets/Icons/Common/thrash/ThrashActive.png" id="6_alnku"]
 [ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="6_g7j1w"]
 [ext_resource type="Texture2D" uid="uid://dxpv4i25nwurr" path="res://Assets/Icons/Common/thrash/ThrashInactive.png" id="7_d5dhg"]
+[ext_resource type="Script" path="res://Scripts/Common/Buttons/SpringButton.gd" id="8_7y71u"]
 [ext_resource type="Texture2D" uid="uid://wfxs88cshjjo" path="res://Assets/Icons/Common/thrash/PlusActive.png" id="8_g7n3h"]
 [ext_resource type="Texture2D" uid="uid://dgo3uqt2dpum0" path="res://Assets/Icons/Common/thrash/PlusInactive.png" id="9_menr4"]
 [ext_resource type="Texture2D" uid="uid://dd833sjpiqvif" path="res://Assets/Icons/Common/thrash/MinusActive.png" id="9_ulmjg"]
@@ -71,6 +72,7 @@ texture = ExtResource("7_d5dhg")
 [node name="DeleteButton" type="TouchScreenButton" parent="ThrashIcon"]
 position = Vector2(20, 0)
 shape = SubResource("RectangleShape2D_eoupa")
+script = ExtResource("8_7y71u")
 
 [node name="AttributeSprite" type="Sprite2D" parent="."]
 position = Vector2(-140, -0.999998)
@@ -83,7 +85,7 @@ offset_top = -68.0
 offset_right = 396.0
 offset_bottom = -28.0
 rotation = 0.785398
-theme_override_colors/font_color = Color(0.470588, 0.670588, 0.952941, 0.0980392)
+theme_override_colors/font_color = Color(0.470588, 0.670588, 0.952941, 1)
 theme_override_fonts/font = ExtResource("4_vmeob")
 theme_override_font_sizes/font_size = 32
 text = "Side"
@@ -92,6 +94,7 @@ horizontal_alignment = 1
 [node name="SideGrab" type="TouchScreenButton" parent="SideGrabber"]
 position = Vector2(300, 0)
 shape = SubResource("RectangleShape2D_bby5q")
+script = ExtResource("8_7y71u")
 
 [node name="CopyCounter" type="Node2D" parent="."]
 position = Vector2(-245, 0)
@@ -110,6 +113,7 @@ texture = ExtResource("9_menr4")
 [node name="AddCopy" type="TouchScreenButton" parent="CopyCounter/PlusIcon"]
 position = Vector2(37.5, 0)
 shape = SubResource("RectangleShape2D_silvq")
+script = ExtResource("8_7y71u")
 
 [node name="MinusIcon" type="Node2D" parent="CopyCounter"]
 
@@ -125,10 +129,11 @@ texture = ExtResource("11_bdb3b")
 [node name="TakeCopy" type="TouchScreenButton" parent="CopyCounter/MinusIcon"]
 position = Vector2(-37.5, 0)
 shape = SubResource("RectangleShape2D_lkssy")
+script = ExtResource("8_7y71u")
 
 [node name="CopyBars" parent="CopyCounter" instance=ExtResource("10_yrta5")]
 
-[connection signal="pressed" from="ThrashIcon/DeleteButton" to="." method="_on_delete_button_pressed"]
-[connection signal="pressed" from="SideGrabber/SideGrab" to="." method="_on_side_grab_pressed"]
-[connection signal="pressed" from="CopyCounter/PlusIcon/AddCopy" to="." method="_on_add_copy_pressed"]
-[connection signal="pressed" from="CopyCounter/MinusIcon/TakeCopy" to="." method="_on_take_copy_pressed"]
+[connection signal="triggered" from="ThrashIcon/DeleteButton" to="." method="_on_delete_button_triggered"]
+[connection signal="triggered" from="SideGrabber/SideGrab" to="." method="_on_side_grab_triggered"]
+[connection signal="triggered" from="CopyCounter/PlusIcon/AddCopy" to="." method="_on_add_copy_triggered"]
+[connection signal="triggered" from="CopyCounter/MinusIcon/TakeCopy" to="." method="_on_take_copy_triggered"]

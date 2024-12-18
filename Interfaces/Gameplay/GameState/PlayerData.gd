@@ -1,18 +1,6 @@
 extends Node
 class_name PlayerData
 
-const STARTING_LIFE : int = 8000;
-const STARTING_HAND_SIZE : int = 4;
-const DRAW_PHASE_HAND_SIZE : int = 5;
-const FIELD_SIZE : int = 3;
-const BACKROW_SIZE : int = 5;
-const PENDULUM_SIZE : int = 2;
-const ONE_TRIBUTE_LEVEL : int = 5;
-const TWO_TRIBUTE_LEVEL : int = 7;
-const MAIN_DECK_SIZE : int = 60;
-const EXTRA_DECK_SIZE : int = 15;
-const MAIN_DECK_DUPLICATES : int = 3;
-
 var cards_in_backrow : Array = [];
 var cards_in_deck : Array = [];
 var cards_in_extra_deck : Array = [];
@@ -20,7 +8,7 @@ var cards_in_hand : Array = [];
 var cards_in_grave : Array = [];
 var cards_on_field : Array = [];
 var cards_removed : Array = [];
-var life : int = STARTING_LIFE;
+var life : int = System.Rules.STARTING_LIFE;
 var owning_player : GameplayEnums.OwningPlayer;
 
 func _init(
@@ -46,7 +34,7 @@ func shuffle_deck() -> void:
 	cards_in_deck.shuffle();
 
 func draw_starting_hand() -> void:
-	draw_cards(STARTING_HAND_SIZE);
+	draw_cards(System.Rules.STARTING_HAND_SIZE);
 
 func deck_empty() -> bool:
 	return cards_in_deck.is_empty();
@@ -90,7 +78,7 @@ func count_deck() -> int:
 	return cards_in_deck.size();
 
 func commit_draw_phase() -> void:
-	draw_cards(max(DRAW_PHASE_HAND_SIZE - count_hand(), 1));
+	draw_cards(max(System.Rules.DRAW_PHASE_HAND_SIZE - count_hand(), 1));
 
 func get_top_of_deck() -> CardData:
 	return cards_in_deck[cards_in_deck.size() - 1];
@@ -136,14 +124,14 @@ func get_tributes(card : CardData) -> int:
 	if !System.CardData.is_monster(card):
 		return 0;
 	var level : int = card.monster_data.level;
-	if level < ONE_TRIBUTE_LEVEL:
+	if level < System.Rules.ONE_TRIBUTE_LEVEL:
 		return 0;
-	elif level < TWO_TRIBUTE_LEVEL:
+	elif level < System.Rules.TWO_TRIBUTE_LEVEL:
 		return 1;
 	return 2;
 
 func field_has_room(tributes : int) -> bool:
-	return (cards_on_field.size() - tributes) < FIELD_SIZE;
+	return (cards_on_field.size() - tributes) < System.Rules.FIELD_SIZE;
 
 func has_enough_tributes(tributes : int) -> bool:
 	return cards_on_field.size() >= tributes;

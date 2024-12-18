@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b4p5i8kvfec1x"]
 
-[ext_resource type="StyleBox" uid="uid://byutf7ox8dwpk" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistBlock/Traps.tres" id="1_325dl"]
+[ext_resource type="StyleBox" uid="uid://bntl3bltf537d" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistBlock/SideDeck.tres" id="1_wrsvy"]
 
 [node name="Frame" type="Panel"]
 anchors_preset = 8
@@ -14,4 +14,4 @@ offset_right = 340.0
 offset_bottom = 35.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("1_325dl")
+theme_override_styles/panel = ExtResource("1_wrsvy")
