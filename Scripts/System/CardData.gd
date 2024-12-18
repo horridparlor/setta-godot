@@ -187,3 +187,27 @@ static func sort_by_card_type(card_a : CardDefaultData, card_b : CardDefaultData
 
 static func in_side_deck(card_data : CardData) -> bool:
 	return card_data.deck_portion == CardEnums.DeckPortion.SIDE_DECK;
+
+static func get_all_cards() -> Array:
+	var cards : Array;
+	for card in System.cards.values():
+		cards.append(from_json(card));
+	cards.sort_custom(sort_by_card_type);
+	return cards;
+
+static func is_monster_class(card_class : CardEnums.Class) -> bool:
+	return card_class != CardEnums.Class.NONE;
+
+static func get_classes(card_data : CardData) -> Array:
+	return [card_data.card_class, card_data.secondary_class].filter(is_monster_class);
+
+static func can_be_with_deckmaster(card_data : CardData, deckmaster : CardData) -> bool:
+	var allowed_classes : Array = get_classes(deckmaster);
+	if !is_monster(card_data):
+		return true;
+	if is_deck_master(card_data):
+		return false;
+	for card_class in get_classes(card_data):
+		if card_class not in allowed_classes:
+			return false;
+	return true;

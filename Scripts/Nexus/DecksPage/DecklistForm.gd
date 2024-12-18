@@ -65,17 +65,26 @@ func on_empty_block(block : NexusEnums.DecklistBlocks) -> void:
 	for card in collection.values():
 		on_alter_copies(-1, card);
 
-func toggle_card(card_data : CardData) -> void:
+func toggle_card(card_data : CardData, do_reorder : bool) -> void:
 	var collection : Dictionary = get_collection_for_card(card_data);
 	var card_id : int = card_data.card_id;
 	if collection.has(card_id):
 		collection.erase(card_id);
+		update_card_count(card_data, 0);
 		card_counts.erase(card_id);
-		despawn_slip(card_data);
+		despawn_slip(card_data, do_reorder);
 	else:
 		collection[card_id] = card_data;
-		card_counts[card_id] = System.CardData.get_max_copies(card_data);
+		update_card_count(card_data, System.CardData.get_max_copies(card_data));
 		spawn_slip(card_data);
+
+func update_card_count(card_data : CardData, copies : int) -> void:
+	var block : NexusEnums.DecklistBlocks = get_block_enum_for_block(get_block_for_card(card_data));
+	var original_copies : int = 0 if !card_counts.has(card_data.card_id) else card_counts[card_data.card_id];
+	card_counts[card_data.card_id] = copies;
+	collection_counts[block] += copies - original_copies;
+	if System.CardData.is_deck_master(card_data):
+		emit_signal("deckmaster_counts_changed");
 
 func get_collection_for_card(card_data : CardData) -> Dictionary:
 	return get_collection_for_block(get_block_for_card(card_data));
@@ -87,8 +96,6 @@ func spawn_slip(card_data : CardData) -> void:
 	slip.alter_copies.connect(on_alter_copies);
 	slip.sidedeck_card.connect(on_sidedeck_card);
 	slips[card_data.card_id] = slip;
-	if System.CardData.is_deck_master(card_data):
-		slip.toggle_locked();
 	slip.toggle_active();
 	reorder_slips();
 	if !System.CardData.is_monster(card_data):
@@ -218,15 +225,16 @@ func on_alter_copies(copies : int, card_data : CardData) -> void:
 		emit_signal("request_toggle_card", card_data);
 	else:
 		change = copies - card_counts[card_data.card_id];
-		card_counts[card_data.card_id] = copies;
+		update_card_count(card_data, copies)
 		slips[card_data.card_id].set_copies(copies);
 		get_block_for_card(card_data).increment_count(change);
 
-func despawn_slip(card_data : CardData) -> void:
+func despawn_slip(card_data : CardData, do_reorder : bool) -> void:
 	var slip : DecklistSlip = slips[card_data.card_id];
 	slips.erase(card_data.card_id);
 	slip.queue_free();
-	reorder_slips();
+	if do_reorder:
+		reorder_slips();
 	if !has_slips_to_modulate || !System.CardData.is_monster(card_data):
 		return;
 	count_of_monsters -= 1;

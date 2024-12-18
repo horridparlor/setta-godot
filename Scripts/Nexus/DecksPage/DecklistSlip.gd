@@ -13,6 +13,7 @@ extends DecklistSlip
 @onready var side_grab_label : Label = $SideGrabber/Label;
 @onready var level_sprite : Sprite2D = $LevelSprite;
 @onready var level_label : Label = $LevelSprite/LevelLabel;
+@onready var side_grabber_layer : Node2D = $SideGrabber;
 
 func modulate_icons(level_modulation : float, attribute_modulation : float) -> void:
 	level_sprite.modulate.a = level_modulation;
@@ -22,6 +23,7 @@ func init(new_data : CardData) -> void:
 	card_data = new_data;
 	name_label.text = card_data.normalized_name;
 	max_copies = System.CardData.get_max_copies(card_data);
+	side_grabber_layer.visible = !System.CardData.is_deck_master(card_data);
 	set_copies(max_copies);
 	set_backframe();
 	set_attribute();

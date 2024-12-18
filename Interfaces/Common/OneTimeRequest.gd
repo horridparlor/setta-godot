@@ -1,6 +1,8 @@
 extends HTTPRequest
 class_name OneTimeRequest
 
+const TIMEOUT_TIME : float = 5;
+
 var operation : RequestEnums.Operation;
 var parent : Node;
 var leave_raw : bool;
@@ -9,6 +11,7 @@ var original_request : OperationRequest;
 func init(request : OperationRequest, new_parent : Node, _leave_raw : bool) -> void:
 	original_request = request;
 	leave_raw = _leave_raw;
+	timeout = TIMEOUT_TIME;
 	if System.Debug.REQUESTS and (System.Debug.REQUESTS_FILTER == request.operation):
 		request.debug();
 	add_parent(new_parent)

@@ -4,6 +4,7 @@ extends Home
 @onready var debug_prompt : LineEdit = $DebugPrompt;
 
 func _ready() -> void:
+	loading_icon = System.Instance.load_child(LOADING_ICON_PATH, self);
 	DisplayServer.window_set_current_screen(System.Display);
 	System.random.randomize();
 	initialize_regex();
@@ -11,10 +12,16 @@ func _ready() -> void:
 	set_process_input(true);
 	System.Server.init();
 	load_cards();
+	loading_icon.init();
 	if !System.Auth.try_auth(self):
 		initialize_login();
 
+func disable_loading_icon() -> void:
+	if System.Instance.exists(loading_icon):
+		loading_icon.queue_free();
+
 func initialize_login(error_message : String = "") -> void:
+	disable_loading_icon();
 	login = System.Instance.load_child(LOGIN_PATH, scene_layer);
 	login.authenticated.connect(close_login);
 	login.init(error_message);
@@ -24,6 +31,7 @@ func close_login() -> void:
 	login.queue_free();
 
 func initialize_nexus() -> void:
+	disable_loading_icon();
 	if !System.cards.size():
 		fetch_cards();
 	nexus = System.Instance.load_child(NEXUS_PATH, scene_layer);
@@ -69,6 +77,9 @@ func _on_http_response(request : OperationRequest, operation : RequestEnums.Oper
 				System.Auth.eat(response);
 				initialize_nexus();
 		RequestEnums.Operation.GET_CARDS:
+			if response.has("error"):
+				initialize_login(response.error);
+				return;
 			set_cards(response.cards);
 			if System.Instance.exists(gameplay):
 				gameplay.init();

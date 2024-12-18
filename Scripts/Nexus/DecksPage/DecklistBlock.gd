@@ -9,7 +9,7 @@ func init(new_block : NexusEnums.DecklistBlocks) -> void:
 	block = new_block;
 	update_label();
 	update_frame();
-	toggle_active(block != NexusEnums.DecklistBlocks.DECK_MASTER);
+	toggle_active();
 
 func get_block_name() -> String:
 	return NexusEnums.DecklistBlockNames[block]
@@ -33,5 +33,6 @@ func _on_thrash_triggered() -> void:
 	emit_signal("trash", block);
 
 func update_icons() -> void:
+	is_active = is_active && block != NexusEnums.DecklistBlocks.DECK_MASTER;
 	active_trash_sprite.visible = is_active;
 	inactive_trash_sprite.visible = !is_active;

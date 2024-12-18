@@ -85,7 +85,7 @@ func run_catalogue_carousel(direction : int = 1) -> void:
 		if card == focused_card:
 			drop_focused_card();
 		cards.erase(card.card_data.card_id);
-		card.card_data = System.CardData.from_json(catalogue_cards[tail_index]);
+		card.card_data = catalogue_cards[tail_index];
 		cards[card.card_data.card_id] = card;
 		card.Core.update_visuals(card);
 		card.origin_point = card_catalogue_grid.assign_position(card.card_data.instance_id, direction);
@@ -121,6 +121,7 @@ func initialize() -> void:
 	catalogue_layer.set_grid(card_catalogue_grid);
 	behind_layer.set_grid(card_catalogue_grid);
 	decklist_form.request_toggle_card.connect(toggle_card_to_decklist);
+	decklist_form.deckmaster_counts_changed.connect(update_chosen_deckmaster);
 	
 func initialize_buttons() -> void:
 	edit_button.init("Edit");
@@ -135,19 +136,10 @@ func on_edit_mode_changed() -> void:
 	spawn_card_catalogue() if in_edit_mode else unspawn_cards();
 
 func spawn_card_catalogue() -> void:
-	var i : int;
-	first_row_shown = 0;
-	last_row_shown = CARD_CATALOGUE_ROWS_SHOWN;
-	first_card_shown = 0;
-	last_card_shown = CARD_CATALOGUE_MAX_CARDS_SHOWN - 1;
 	find_cards();
-	for card in catalogue_cards.slice(0, CARD_CATALOGUE_MAX_CARDS_SHOWN):
-		cards_in_grid[i] = spawn_catalogue_card(System.CardData.from_json(card));
-		i += 1;
-	unlock_cards_shown();
-
-func unlock_cards_shown() -> void:
 	reset_decklist_position();
+
+func unlock_decklist_cards_shown() -> void:
 	decklist_form.toggle_locked(false);
 	decklist_form.toggle_active();
 
@@ -155,9 +147,22 @@ func reset_decklist_position() -> void:
 	decklist_form.position.y = DECKLIST_FORM_MAX_Y;
 
 func find_cards() -> void:
-	catalogue_cards = System.cards.values();
-	catalogue_cards.sort_custom(System.CardData.sort_json_by_card_type);
-	catalogue_layer_max_y = -CARD_CATALOGUE_MARGINS.y * (catalogue_cards.size() / CARD_CATALOGUE_COLUMNS - CARD_CATALOGUE_ROWS);
+	unspawn_cards();
+	catalogue_cards = all_cards.filter(func(card : CardData): return System.CardData.can_be_with_deckmaster(card, chosen_deck_master)) \
+		if has_deck_master() else all_cards.filter(System.CardData.is_deck_master);
+	catalogue_layer_max_y = -CARD_CATALOGUE_MARGINS.y * \
+		(catalogue_cards.size() / CARD_CATALOGUE_COLUMNS - CARD_CATALOGUE_ROWS);
+	spawn_catalogue_cards();
+	unlock_decklist_cards_shown();
+
+func spawn_catalogue_cards() -> void:
+	var i : int;
+	for card in catalogue_cards.slice(0, CARD_CATALOGUE_MAX_CARDS_SHOWN):
+		cards_in_grid[i] = spawn_catalogue_card(card);
+		i += 1;
+
+func has_deck_master() -> bool:
+	return decklist_form.collection_counts[NexusEnums.DecklistBlocks.DECK_MASTER];
 
 func spawn_catalogue_card(card_data : CardData) -> GameplayCard:
 	var card : GameplayCard = System.Instance.load_child(SystemEnums.get_card_path(), catalogue_layer);
@@ -199,19 +204,44 @@ func on_card_focused() -> void:
 	focused_card.global_position = card_global_position;
 	behind_layer.sort_algorithm_grid();
 
-func toggle_card_to_decklist(card_data : CardData) -> void:
+func toggle_card_to_decklist(card_data : CardData, is_mass_operation : bool = false) -> void:
 	var card_already_in_deck : bool = cards_in_decklist.has(card_data.card_id);
 	if !is_active:
 		return;
 	if card_already_in_deck:
-		if System.CardData.is_deck_master(card_data):
-			return;
 		cards_in_decklist.erase(card_data.card_id);
 	else:
 		cards_in_decklist[card_data.card_id] = card_data;
-	decklist_form.toggle_card(card_data);
+	decklist_form.toggle_card(card_data, !is_mass_operation);
 	if cards.has(card_data.card_id):
 		update_card_glow(cards[card_data.card_id]);
+	if !is_mass_operation:
+		update_chosen_deckmaster();
+
+func update_chosen_deckmaster() -> void:
+	if (chosen_deck_master != null) == has_deck_master():
+		return;
+	if has_deck_master():
+		for card in decklist_form.deckmaster_cards.values():
+			if decklist_form.card_counts[card.card_id] > 0:
+				chosen_deck_master = card;
+				break;
+		for card in get_invalid_cards_by_deck_master():
+			toggle_card_to_decklist(card, true);
+	else:
+		chosen_deck_master = null;
+	find_cards();
+		
+
+func get_invalid_cards_by_deck_master() -> Array:
+	var invalid_cards : Array;
+	var card : CardData;
+	for c in decklist_form.concat_non_backrow_collections():
+		card = c;
+		if card.card_id != chosen_deck_master.card_id && \
+		!System.CardData.can_be_with_deckmaster(card, chosen_deck_master):
+			invalid_cards.append(card);
+	return invalid_cards;
 
 func on_card_released(card : GameplayCard) -> void:
 	var card_global_position : Vector2;
@@ -251,13 +281,20 @@ func unspawn_cards() -> void:
 	reset_cards_shown();
 
 func reset_cards_shown() -> void:
-	catalogue_cards = [];
+	reset_card_catalogue();
+	catalogue_cards.clear();
 	catalogue_layer.position = System.Vectors.default();
 	catalogue_layer_target_position = catalogue_layer.position;
 	catalogue_layer.cards = [];
 	decklist_form.toggle_active(false);
 	decklist_form.toggle_locked();
 	reset_decklist_position();
+
+func reset_card_catalogue() -> void:
+	first_row_shown = 0;
+	last_row_shown = CARD_CATALOGUE_ROWS_SHOWN;
+	first_card_shown = 0;
+	last_card_shown = CARD_CATALOGUE_MAX_CARDS_SHOWN - 1;
 
 func _on_catalogue_scroll_button_pressed() -> void:
 	if !in_edit_mode || focused_card:

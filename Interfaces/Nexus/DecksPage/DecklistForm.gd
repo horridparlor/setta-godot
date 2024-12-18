@@ -2,14 +2,15 @@ extends Node2D
 class_name DecklistForm
 
 signal request_toggle_card(card_data);
+signal deckmaster_counts_changed();
 
 const DECKLIST_SLIP_PATH : String = "res://Prefabs/Nexus/DecksPage/DecklistSlip.tscn";
 const SLIP_STARTING_POSITION : Vector2 = Vector2(0, 100);
 const SLIP_MARGIN : Vector2 = Vector2(0, 100);
 const BLOCK_MARGIN : Vector2 = Vector2(0, 110);
 
-const MODULATION_SPEED : float = 0.35;
-const MODULATION_WAIT : float = 8.5;
+const MODULATION_SPEED : float = 0.3;
+const MODULATION_WAIT : float = 10.5;
 
 var deckmaster_cards : Dictionary;
 var monster_cards : Dictionary;
@@ -18,6 +19,7 @@ var trap_cards : Dictionary;
 var extra_cards : Dictionary;
 var side_cards : Dictionary;
 var card_counts : Dictionary;
+var collection_counts : Dictionary = get_default_collection_counts();
 var slips : Dictionary;
 var min_y : float;
 var active_blocks : int;
@@ -31,7 +33,13 @@ var is_modulating_in_level : bool;
 var is_modulating_in_attribute : bool;
 var count_of_monsters : int;
 
-func toggle_card(card_data : CardData) -> void:
+func get_default_collection_counts() -> Dictionary:
+	var counts : Dictionary;
+	for block in NexusEnums.DecklistBlocks.values():
+		counts[block] = 0;
+	return counts;
+
+func toggle_card(card_data : CardData, do_reorder : bool) -> void:
 	pass;
 
 func update_min_y() -> void:
@@ -68,7 +76,8 @@ func toggle_locked(value : bool = true) -> void:
 	is_locked = value;
 	for s in slips.values():
 		slip = s;
-		if System.CardData.is_deck_master(slip.card_data):
-			continue;
 		slip.toggle_locked(is_locked);
 		slip.toggle_active(!is_locked);
+
+func concat_non_backrow_collections() -> Array:
+	return deckmaster_cards.values() + monster_cards.values() + extra_cards.values() + side_cards.values();

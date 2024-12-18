@@ -185,8 +185,10 @@ static func enumerate_class(message : String) -> Class:
 			return Class.SLIME;
 		JSON_CLASS_SPARKS:
 			return Class.SPARKS;
-		_:
+		JSON_CLASS_ZOMBIE:
 			return Class.ZOMBIE;
+		_:
+			return Class.NONE;
 
 enum MaximumPiece {
 	LEFT,

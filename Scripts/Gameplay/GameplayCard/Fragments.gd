@@ -68,8 +68,11 @@ static func update_monster_visuals(card : GameplayCard) -> void:
 		if is_deck_master:
 			card.deck_master_primary_class_sprite.texture = load(
 				card.DECK_MASTER_ATTRIBUTE_SPRITE_PREFIX + CardEnums.ClassName[card.card_data.card_class] + SystemEnums.get_image_extension());
-			card.deck_master_secondary_class_sprite.texture = load(
-				card.DECK_MASTER_ATTRIBUTE_SPRITE_PREFIX + CardEnums.ClassName[card.card_data.secondary_class] + SystemEnums.get_image_extension());
+			if card.card_data.secondary_class != CardEnums.Class.NONE:
+				card.deck_master_secondary_class_sprite.texture = load(
+					card.DECK_MASTER_ATTRIBUTE_SPRITE_PREFIX + CardEnums.ClassName[card.card_data.secondary_class] + SystemEnums.get_image_extension());
+			else:
+				card.deck_master_primary_class_sprite.position.x = 0;
 		else:
 			card.deck_master_primary_class_sprite.texture = null;
 			card.deck_master_secondary_class_sprite.texture = null;
