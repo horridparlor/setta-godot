@@ -197,7 +197,7 @@ func update_blocks() -> void:
 	var has_cards : bool;
 	var cards : Dictionary;
 	var block : DecklistBlock;
-	var card_count;
+	var card_count : int;
 	active_blocks = 0;
 	for b in get_blocks():
 		block = b;
@@ -212,7 +212,7 @@ func update_blocks() -> void:
 		for card_id in cards.keys():
 			slips[card_id].position.y += current_y;
 			cards_above += 1;
-			card_count += card_counts[card_id];
+			card_count += 1 if block.block == NexusEnums.DecklistBlocks.SIDE else card_counts[card_id];
 		block.set_count(card_count);
 		current_y += BLOCK_MARGIN.y;
 

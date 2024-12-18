@@ -28,6 +28,7 @@ func init(new_data : CardData) -> void:
 	set_backframe();
 	set_attribute();
 	init_level_frame();
+	update_count_icons();
 
 func init_level_frame() -> void:
 	var is_monster : bool = System.CardData.is_monster(card_data);
@@ -72,6 +73,12 @@ func update_count_icons():
 		icon.visible = !is_locked;
 	for icon in get_inactive_count_icons():
 		icon.visible = is_locked;
+	lock_increments = System.CardData.in_side_deck(card_data);
+	if lock_increments:
+		minus_active_sprite.visible = false;
+		plus_active_sprite.visible = false;
+		minus_inactive_sprite.visible = true;
+		plus_inactive_sprite.visible = true;
 
 func _on_side_grab_triggered() -> void:
 	if !is_active || is_locked:
@@ -84,11 +91,11 @@ func _on_delete_button_triggered() -> void:
 	emit_signal("alter_copies", -1, card_data);
 
 func _on_add_copy_triggered() -> void:
-	if copies == max_copies || !is_active || is_locked:
+	if copies == max_copies || !is_active || is_locked || lock_increments:
 		return;
 	emit_signal("alter_copies", copies + 1, card_data);
 
 func _on_take_copy_triggered() -> void:
-	if !is_active || is_locked:
+	if !is_active || is_locked || lock_increments:
 		return;
 	emit_signal("alter_copies", max(0, copies - 1), card_data);

@@ -17,6 +17,7 @@ var max_copies : int;
 var is_active : bool;
 var is_locked : bool;
 var is_modulating_icons : bool;
+var lock_increments : bool;
 
 func init(new_data : CardData) -> void:
 	pass;
