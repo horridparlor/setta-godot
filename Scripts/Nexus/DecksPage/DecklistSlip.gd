@@ -11,6 +11,12 @@ extends DecklistSlip
 @onready var minus_active_sprite : Sprite2D = $CopyCounter/MinusIcon/MinusActive;
 @onready var minus_inactive_sprite : Sprite2D = $CopyCounter/MinusIcon/MinusInactive;
 @onready var side_grab_label : Label = $SideGrabber/Label;
+@onready var level_sprite : Sprite2D = $LevelSprite;
+@onready var level_label : Label = $LevelSprite/LevelLabel;
+
+func modulate_icons(level_modulation : float, attribute_modulation : float) -> void:
+	level_sprite.modulate.a = level_modulation;
+	attribute_sprite.modulate.a = attribute_modulation;
 
 func init(new_data : CardData) -> void:
 	card_data = new_data;
@@ -19,6 +25,16 @@ func init(new_data : CardData) -> void:
 	set_copies(max_copies);
 	set_backframe();
 	set_attribute();
+	init_level_frame();
+
+func init_level_frame() -> void:
+	var is_monster : bool = System.CardData.is_monster(card_data);
+	level_sprite.visible = is_monster;
+	if !is_monster:
+		return;
+	level_sprite.texture = load(DECK_MASTER_LEVEL_FRAME_PATH if System.CardData.is_deck_master(card_data) else LEVEL_FRAME_PATH);
+	level_label.text = str(card_data.level);
+	is_modulating_icons = true;
 
 func set_backframe() -> void:
 	System.Instance.load_child(BACKFRAME_PATH + System.CardData.get_middle_frame_name(card_data) + SystemEnums.get_node_extension(), backframe_layer);

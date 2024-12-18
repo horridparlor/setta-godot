@@ -25,3 +25,9 @@ visible = false
 
 [node name="SideBlock" parent="Blocks" instance=ExtResource("2_kw2fv")]
 visible = false
+
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="ModulationTimer" type="Timer" parent="Timers"]
+
+[connection signal="timeout" from="Timers/ModulationTimer" to="." method="_on_modulation_timer_timeout"]

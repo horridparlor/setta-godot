@@ -7,6 +7,8 @@ extends DecklistForm
 @onready var extra_block : DecklistBlock = $Blocks/ExtraBlock;
 @onready var side_block : DecklistBlock = $Blocks/SideBlock;
 
+@onready var modulation_timer : Timer = $Timers/ModulationTimer;
+
 func get_blocks() -> Array:
 	return [
 		deckmaster_block,
@@ -24,6 +26,39 @@ func _ready() -> void:
 		block.activate_animations();
 		block.init(get_block_enum_for_block(block));
 		block.trash.connect(on_empty_block);
+	modulation_timer.wait_time = MODULATION_WAIT;
+	reset_icon_modulation();
+
+func _physics_process(delta : float) -> void:
+	if is_modulating_icons:
+		modulate_icons(delta);
+
+func modulate_icons(delta : float) -> void:
+	var level_modulation : float;
+	var attribute_modulation : float;
+	var slip : DecklistSlip;
+	modulation_charge += MODULATION_SPEED * delta;
+	level_modulation = get_icon_modulation(is_modulating_in_level, modulation_charge);
+	attribute_modulation = get_icon_modulation(is_modulating_in_attribute, modulation_charge);
+	for s in slips.values():
+		slip = s;
+		if slip.is_modulating_icons:
+			slip.modulate_icons(level_modulation, attribute_modulation);
+	if modulation_charge >= 1:
+		is_modulating_icons = false;
+		modulation_timer.start();
+
+func get_icon_modulation(is_modulating_in : bool, modulation_charge : float) -> float:
+	if is_modulating_in:
+		return modulation_charge;
+	else:
+		return 1 - modulation_charge;
+
+func reset_icon_modulation(do_start : bool = false) -> void:
+	is_modulating_in_level = false;
+	is_modulating_in_attribute = true;
+	if do_start:
+		modulation_timer.start();
 
 func on_empty_block(block : NexusEnums.DecklistBlocks) -> void:
 	var collection : Dictionary = get_collection_for_block(get_block_for_block_enum(block));
@@ -56,6 +91,13 @@ func spawn_slip(card_data : CardData) -> void:
 		slip.toggle_locked();
 	slip.toggle_active();
 	reorder_slips();
+	if !System.CardData.is_monster(card_data):
+		return;
+	slip.modulate_icons(int(is_modulating_in_level), int(is_modulating_in_attribute));
+	count_of_monsters += 1;
+	if !has_slips_to_modulate:
+		has_slips_to_modulate = true;
+		reset_icon_modulation(true);
 
 func on_sidedeck_card(card_data : CardData) -> void:
 	if System.CardData.in_side_deck(card_data):
@@ -185,3 +227,25 @@ func despawn_slip(card_data : CardData) -> void:
 	slips.erase(card_data.card_id);
 	slip.queue_free();
 	reorder_slips();
+	if !has_slips_to_modulate || !System.CardData.is_monster(card_data):
+		return;
+	count_of_monsters -= 1;
+	if count_of_monsters == 0:
+		modulation_timer.stop();
+		has_slips_to_modulate = false;
+		is_modulating_icons = false;
+		reset_icon_modulation();
+			
+
+func update_blocks_active() -> void:
+	var block : DecklistBlock;
+	for b in get_blocks():
+		block = b;
+		block.toggle_active(is_active);
+
+func _on_modulation_timer_timeout() -> void:
+	modulation_timer.stop();
+	is_modulating_in_level = !is_modulating_in_level;
+	is_modulating_in_attribute = !is_modulating_in_attribute;
+	modulation_charge = 0;
+	is_modulating_icons = true;

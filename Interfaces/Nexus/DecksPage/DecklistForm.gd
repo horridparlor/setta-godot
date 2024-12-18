@@ -8,6 +8,9 @@ const SLIP_STARTING_POSITION : Vector2 = Vector2(0, 100);
 const SLIP_MARGIN : Vector2 = Vector2(0, 100);
 const BLOCK_MARGIN : Vector2 = Vector2(0, 110);
 
+const MODULATION_SPEED : float = 0.35;
+const MODULATION_WAIT : float = 8.5;
+
 var deckmaster_cards : Dictionary;
 var monster_cards : Dictionary;
 var spell_cards : Dictionary;
@@ -20,6 +23,13 @@ var min_y : float;
 var active_blocks : int;
 var is_active : bool;
 var is_locked : bool;
+
+var modulation_charge : float;
+var is_modulating_icons : bool;
+var has_slips_to_modulate : bool;
+var is_modulating_in_level : bool;
+var is_modulating_in_attribute : bool;
+var count_of_monsters : int;
 
 func toggle_card(card_data : CardData) -> void:
 	pass;
@@ -46,8 +56,12 @@ func get_sorted_slips() -> Array:
 	sorted_slips.sort_custom(sort_slips);
 	return sorted_slips;
 
+func update_blocks_active() -> void:
+	pass;
+
 func toggle_active(value : bool = true) -> void:
 	is_active = value;
+	update_blocks_active();
 
 func toggle_locked(value : bool = true) -> void:
 	var slip : DecklistSlip;
