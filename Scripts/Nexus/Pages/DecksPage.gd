@@ -120,7 +120,7 @@ func initialize() -> void:
 	initialize_buttons();
 	catalogue_layer.set_grid(card_catalogue_grid);
 	behind_layer.set_grid(card_catalogue_grid);
-	decklist_form.request_toggle_card.connect(toggle_card_to_decklist);
+	decklist_form.request_toggle_card.connect(toggle_card_to_deck);
 	decklist_form.deckmaster_counts_changed.connect(update_chosen_deckmaster);
 	
 func initialize_buttons() -> void:
@@ -204,15 +204,19 @@ func on_card_focused() -> void:
 	focused_card.global_position = card_global_position;
 	behind_layer.sort_algorithm_grid();
 
-func toggle_card_to_decklist(card_data : CardData, is_mass_operation : bool = false) -> void:
+func toggle_card_to_deck(card_data : CardData) -> void:
+	toggle_card_to_decklist(card_data, false, false);
+
+func toggle_card_to_decklist(card_data : CardData, is_mass_operation : bool = false, for_all_decks : bool = true) -> void:
 	var card_already_in_deck : bool = cards_in_decklist.has(card_data.card_id);
 	if !is_active:
 		return;
+	decklist_form.toggle_card(card_data, !is_mass_operation, for_all_decks);
 	if card_already_in_deck:
-		cards_in_decklist.erase(card_data.card_id);
+		if !decklist_form.card_in_any_deck(card_data):
+			cards_in_decklist.erase(card_data.card_id);
 	else:
 		cards_in_decklist[card_data.card_id] = card_data;
-	decklist_form.toggle_card(card_data, !is_mass_operation);
 	if cards.has(card_data.card_id):
 		update_card_glow(cards[card_data.card_id]);
 	if !is_mass_operation:

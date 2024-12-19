@@ -67,7 +67,7 @@ func get_default_collection_counts() -> Dictionary:
 		counts[block] = 0;
 	return counts;
 
-func toggle_card(card_data : CardData, do_reorder : bool) -> void:
+func toggle_card(card_data : CardData, do_reorder : bool, for_all_decks : bool) -> void:
 	pass;
 
 func update_min_y() -> void:
@@ -134,3 +134,6 @@ func concat_non_backrow_collections() -> Array:
 
 func erase_count(card_data : CardData) -> void:
 	get_counts(card_data).erase(card_data.card_id);
+
+func card_in_any_deck(card_data : CardData) -> bool:
+	return main_deck_slips.has(card_data.card_id) || side_deck_slips.has(card_data.card_id);

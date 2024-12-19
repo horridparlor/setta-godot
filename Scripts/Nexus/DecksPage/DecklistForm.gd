@@ -65,11 +65,20 @@ func on_empty_block(block : NexusEnums.DecklistBlocks) -> void:
 	for card in collection.values():
 		on_alter_copies(-1, card);
 
-func toggle_card(card_data : CardData, do_reorder : bool) -> void:
-	if get_collection_for_card(card_data).has(card_data.card_id):
-		despawn_card(card_data, do_reorder)
+func toggle_card(card_data : CardData, do_reorder : bool, for_all_decks : bool) -> void:
+	if for_all_decks && card_in_any_deck(card_data):
+		despawn_card_from_all_decks(card_data, do_reorder);
+	elif !for_all_decks && get_collection_for_card(card_data).has(card_data.card_id):
+		despawn_card(card_data, do_reorder);
 	else:
 		spawn_card(card_data, System.CardData.get_max_copies(card_data));
+
+func despawn_card_from_all_decks(card_data : CardData, do_reorder : bool) -> void:
+	var card_id : int = card_data.card_id;
+	if main_deck_counts.has(card_id):
+		despawn_card(main_deck_slips[card_id].card_data, do_reorder);
+	if side_deck_counts.has(card_id):
+		despawn_card(side_deck_slips[card_id].card_data, do_reorder);
 
 func despawn_card(card_data : CardData, do_reorder : bool) -> void:
 	get_collection_for_card(card_data).erase(card_data.card_id);
