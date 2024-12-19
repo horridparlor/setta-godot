@@ -40,6 +40,22 @@ func count_main_deck() -> int:
 		collection_counts[NexusEnums.DecklistBlocks.SPELL] + \
 		collection_counts[NexusEnums.DecklistBlocks.TRAP];
 
+func get_block_enum_for_card(card_data : CardData) -> NexusEnums.DecklistBlocks:
+	return NexusEnums.DecklistBlocks.MONSTER;
+
+func get_max_copies_fit(card_data : CardData) -> int:
+	return min(card_data.max_copies, get_deck_room_for_card(card_data));
+
+func get_deck_room_for_card(card_data : CardData) -> int:
+	match get_block_enum_for_card(card_data):
+		NexusEnums.DecklistBlocks.DECK_MASTER:
+			return 1;
+		NexusEnums.DecklistBlocks.EXTRA:
+			return System.Rules.EXTRA_DECK_SIZE - count_extra_deck();
+		NexusEnums.DecklistBlocks.SIDE:
+			return System.Rules.SIDE_DECK_SIZE - count_side_deck();
+	return System.Rules.MAIN_DECK_SIZE - count_main_deck();
+
 func count_extra_deck() -> int:
 	return collection_counts[NexusEnums.DecklistBlocks.EXTRA];
 

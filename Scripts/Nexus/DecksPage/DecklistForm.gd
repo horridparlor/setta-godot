@@ -71,7 +71,7 @@ func toggle_card(card_data : CardData, do_reorder : bool, for_all_decks : bool) 
 	elif !for_all_decks && get_collection_for_card(card_data).has(card_data.card_id):
 		despawn_card(card_data, do_reorder);
 	else:
-		spawn_card(card_data, card_data.max_copies);
+		spawn_card(card_data, get_max_copies_fit(card_data));
 
 func despawn_card_from_all_decks(card_data : CardData, do_reorder : bool) -> void:
 	var card_id : int = card_data.card_id;
@@ -94,8 +94,11 @@ func spawn_card(card_data : CardData, copies : int = 0) -> void:
 func increment_card_count(card_data : CardData, increment : int) -> int:
 	return update_card_count(card_data, get_count(card_data) + increment);
 
+func get_block_enum_for_card(card_data : CardData) -> NexusEnums.DecklistBlocks:
+	return get_block_enum_for_block(get_block_for_card(card_data));
+
 func update_card_count(card_data : CardData, copies : int) -> int:
-	var block : NexusEnums.DecklistBlocks = get_block_enum_for_block(get_block_for_card(card_data));
+	var block : NexusEnums.DecklistBlocks = get_block_enum_for_card(card_data);
 	var counts : Dictionary = get_counts(card_data);
 	var original_copies : int = get_count(card_data);
 	counts[card_data.card_id] = copies;
@@ -269,8 +272,7 @@ func on_alter_copies(copies : int, card_data : CardData) -> void:
 	if copies < 0:
 		emit_signal("request_toggle_card", card_data);
 	else:
-		alter_card_copies(card_data, copies);
-		if in_both_decks(card_data):
+		if alter_card_copies(card_data, copies) && in_both_decks(card_data):
 			alter_copies_in_other_deck(card_data, copies);
 
 func alter_copies_in_other_deck(card_data : CardData, copies : int) -> void:
@@ -284,11 +286,17 @@ func alter_copies_in_other_deck(card_data : CardData, copies : int) -> void:
 	if !other_deck_slip.set_copies(increment_card_count(other_deck_slip.card_data, -extra_copies)):
 		despawn_card(other_deck_slip.card_data, true);
 
-func alter_card_copies(card_data : CardData, copies : int) -> void:
+func alter_card_copies(card_data : CardData, copies : int) -> int:
 	var change : int = copies - get_count(card_data);
+	var vacant_change : int;
+	if change > 0:
+		vacant_change = min(change, get_deck_room_for_card(card_data));
+		copies += vacant_change - change;
+		change = vacant_change;
 	update_card_count(card_data, copies)
 	get_slip(card_data).set_copies(copies);
 	get_block_for_card(card_data).increment_count(change);
+	return change
 
 func despawn_slip(card_data : CardData, do_reorder : bool) -> void:
 	var slip : DecklistSlip = get_slip(card_data);
