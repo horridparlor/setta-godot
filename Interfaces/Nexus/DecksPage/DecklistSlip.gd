@@ -1,4 +1,4 @@
-extends Node2D
+extends GlowNode
 class_name DecklistSlip
 
 signal alter_copies(new_amount, card_data);

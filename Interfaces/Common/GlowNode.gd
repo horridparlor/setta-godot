@@ -2,6 +2,7 @@ extends Node2D
 class_name GlowNode
 
 enum IsActive {
+	BASELINING,
 	GLOWING,
 	NOT,
 	SHUTTERING,
@@ -42,6 +43,8 @@ func _physics_process(delta : float) -> void:
 			glow_frame(delta);
 		IsActive.SHUTTERING:
 			shutter_frame(delta);
+		IsActive.BASELINING:
+			baseline_frame(delta);
 
 func glow_frame(delta : float) -> void:
 	glow_intensity += glowing_direction * glow_speed * \
@@ -58,6 +61,13 @@ func shutter_frame(delta : float) -> void:
 		* (OPACITY_SPEED_MULTIPLIER if is_opacity() else 1) * delta;
 	if glow_intensity <= SHUTTERED_INTENSITY:
 		glow_intensity = SHUTTERED_INTENSITY;
+	do_effect();
+
+func baseline_frame(delta : float) -> void:
+	glow_intensity += glow_speed * SHUTTER_SPEED_MULTIPLIER \
+		* (OPACITY_SPEED_MULTIPLIER if is_opacity() else 1) * delta;
+	if glow_intensity >= 1:
+		glow_intensity = 1;
 	do_effect();
 
 func do_effect() -> void:
@@ -108,6 +118,13 @@ func shutter() -> void:
 	if !activate_animations():
 		set_glow_speed();
 	animations_active = IsActive.SHUTTERING;
+
+func full_shutter() -> void:
+	shutter();
+	glow_intensity = SHUTTERED_INTENSITY;
+
+func baseline() -> void:
+	animations_active = IsActive.BASELINING;
 
 func glow() -> void:
 	activate_animations();

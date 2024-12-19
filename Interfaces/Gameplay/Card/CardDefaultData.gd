@@ -2,6 +2,8 @@ extends Node
 class_name CardDefaultData
 
 var card_id : int;
+var errata_of_id : int;
+var counts_as_id : int;
 var owner_id : int;
 var card_name : String;
 var display_name : String;
@@ -24,6 +26,8 @@ func _init(
 	json_data : Dictionary
 ):
 	card_id = json_data.cardId;
+	errata_of_id = json_data.errataOfId if json_data.errataOfId else 0;
+	counts_as_id = json_data.countsAsId if json_data.countsAsId else 0;
 	owner_id = json_data.ownerId;
 	card_name = json_data.cardName;
 	is_ace = json_data.isAce;
@@ -208,6 +212,8 @@ func eat_text_sizes(json_data : Dictionary) -> CardTextSizes:
 func to_json() -> Dictionary:
 	return {
 		"card_id": card_id,
+		"errata_of_id": errata_of_id,
+		"counts_as_id": counts_as_id,
 		"owner_id": owner_id,
 		"card_name": card_name,
 		"display_name": display_name,

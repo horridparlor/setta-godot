@@ -123,6 +123,7 @@ func spawn_slip(card_data : CardData, card_count : int) -> void:
 	slip.init(card_data, card_count);
 	slip.alter_copies.connect(on_alter_copies);
 	slip.sidedeck_card.connect(on_sidedeck_card);
+	slip.reference_card.connect(on_reference_card);
 	put_slip(card_data, slip);
 	slip.toggle_active();
 	reorder_slips();
@@ -133,6 +134,11 @@ func spawn_slip(card_data : CardData, card_count : int) -> void:
 	if !has_slips_to_modulate:
 		has_slips_to_modulate = true;
 		reset_icon_modulation(true);
+	if referenced_card && card_data.card_id == referenced_card.card_id:
+		slip.full_shutter();
+
+func on_reference_card(card_data : CardData) -> void:
+	emit_signal("reference_card", card_data);
 
 func on_sidedeck_card(card_data : CardData) -> void:
 	var is_from_main_deck : bool = System.CardData.in_main_deck(card_data);

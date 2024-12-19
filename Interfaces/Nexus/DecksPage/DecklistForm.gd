@@ -3,6 +3,7 @@ class_name DecklistForm
 
 signal request_toggle_card(card_data);
 signal deckmaster_counts_changed();
+signal reference_card(card_data);
 
 const DECKLIST_SLIP_PATH : String = "res://Prefabs/Nexus/DecksPage/DecklistSlip.tscn";
 const SLIP_STARTING_POSITION : Vector2 = Vector2(0, 100);
@@ -35,6 +36,7 @@ var has_slips_to_modulate : bool;
 var is_modulating_in_level : bool;
 var is_modulating_in_attribute : bool;
 var count_of_monsters : int;
+var referenced_card : CardData;
 
 func has_competing_ace(card_data : CardData, treat_as_main_deck_card : bool = false) -> bool:
 	return card_data.is_ace && aces[System.CardData.get_ace_gategory(card_data, treat_as_main_deck_card)];
@@ -140,6 +142,14 @@ func get_count(card_data : CardData) -> int:
 
 func get_slip(card_data : CardData) -> DecklistSlip:
 	return get_slip_collection(card_data)[card_data.card_id];
+
+func get_slips_for_card(card_data : CardData) -> Array:
+	var slips : Array;
+	if main_deck_counts.has(card_data.card_id):
+		slips.append(main_deck_slips[card_data.card_id]);
+	if side_deck_counts.has(card_data.card_id):
+		slips.append(side_deck_slips[card_data.card_id]);
+	return slips;
 
 func put_slip(card_data : CardData, slip : DecklistSlip) -> void:
 	get_slip_collection(card_data)[card_data.card_id] = slip;

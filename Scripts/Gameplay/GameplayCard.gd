@@ -65,3 +65,6 @@ func _on_http_response(request : OperationRequest, operation : RequestEnums.Oper
 		RequestEnums.Operation.FETCH_ARTWORK:
 			var image : Image = System.Image_.load_from_buffer(response.body);
 			Fragments.display_artwork(image, self, true, request);
+	
+	
+	

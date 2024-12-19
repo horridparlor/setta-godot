@@ -201,17 +201,21 @@ static func get_all_cards() -> Array:
 static func is_monster_class(card_class : CardEnums.Class) -> bool:
 	return card_class != CardEnums.Class.NONE;
 
-static func get_classes(card_data : CardData) -> Array:
-	return [card_data.card_class, card_data.secondary_class].filter(is_monster_class);
+static func get_classes(card_data : CardData) -> Dictionary:
+	var monster_classes : Array = [card_data.card_class, card_data.secondary_class].filter(is_monster_class);
+	var classes : Dictionary;
+	for monster_class in monster_classes:
+		classes[monster_class] = null;
+	return classes;
 
 static func can_be_with_deckmaster(card_data : CardData, deckmaster : CardData) -> bool:
-	var allowed_classes : Array = get_classes(deckmaster);
-	if !is_monster(card_data):
+	var allowed_classes : Dictionary = get_classes(deckmaster);
+	if !is_monster(card_data) || card_data.card_id == deckmaster.card_id:
 		return true;
 	if is_deck_master(card_data):
 		return false;
 	for card_class in get_classes(card_data):
-		if card_class not in allowed_classes:
+		if !allowed_classes.has(card_class):
 			return false;
 	return true;
 
@@ -228,3 +232,24 @@ static func get_ace_gategory(card_data : CardData, treat_as_main_deck_card : boo
 		CardEnums.CardType.TRAP:
 			return CardEnums.AceCategory.TRAP;
 	return CardEnums.AceCategory.NONE;
+
+static func get_referenced_ids(card_data : CardData) -> Dictionary:
+	var ids : Dictionary;
+	var valid_ids : Array = [
+		card_data.card_id,
+		card_data.errata_of_id,
+		card_data.counts_as_id,
+		card_data.materials.primary_material_id,
+		card_data.materials.secondary_material_id,
+		card_data.materials.tertiary_material_id
+	].filter(func(value): return value);
+	for id in valid_ids:
+		ids[int(id)] = null;
+	return ids;
+
+static func is_referenced_by(card_data : CardData, referenced_card : CardData) -> bool:
+	var referenced_ids : Dictionary = get_referenced_ids(referenced_card);
+	for id in get_referenced_ids(card_data):
+		if referenced_ids.has(id):
+			return true;
+	return false;

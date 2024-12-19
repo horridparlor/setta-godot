@@ -122,7 +122,26 @@ func initialize() -> void:
 	behind_layer.set_grid(card_catalogue_grid);
 	decklist_form.request_toggle_card.connect(toggle_card_to_deck);
 	decklist_form.deckmaster_counts_changed.connect(update_chosen_deckmaster);
-	
+	decklist_form.reference_card.connect(on_reference_card);
+
+func on_reference_card(card_data : CardData) -> void:
+	var is_currently_referenced : bool = card_data.card_id == decklist_form.referenced_card.card_id if decklist_form.referenced_card else false;
+	if !has_deck_master():
+		return;
+	if decklist_form.referenced_card == null || !is_currently_referenced:
+		set_reference(card_data);
+	else:
+		if is_currently_referenced:
+			decklist_form.referenced_card = card_data;
+		clear_reference();
+	find_cards();
+
+func set_reference(card_data : CardData) -> void:
+	clear_reference();
+	for slip in decklist_form.get_slips_for_card(card_data):
+		slip.shutter();
+	decklist_form.referenced_card = card_data;
+
 func initialize_buttons() -> void:
 	edit_button.init("Edit");
 	edit_button.pressed.connect(on_edit);
@@ -142,18 +161,27 @@ func spawn_card_catalogue() -> void:
 func unlock_decklist_cards_shown() -> void:
 	decklist_form.toggle_locked(false);
 	decklist_form.toggle_active();
+	for card in cards.values():
+		if decklist_form.card_in_any_deck(card.card_data):
+			update_card_glow(card);
 
 func reset_decklist_position() -> void:
 	decklist_form.position.y = DECKLIST_FORM_MAX_Y;
 
 func find_cards() -> void:
 	unspawn_cards();
-	catalogue_cards = all_cards.filter(func(card : CardData): return System.CardData.can_be_with_deckmaster(card, chosen_deck_master)) \
-		if has_deck_master() else all_cards.filter(System.CardData.is_deck_master);
+	catalogue_cards = get_filtered_cards() if has_deck_master() \
+		else all_cards.filter(System.CardData.is_deck_master);
 	catalogue_layer_max_y = -CARD_CATALOGUE_MARGINS.y * \
 		(catalogue_cards.size() / CARD_CATALOGUE_COLUMNS - CARD_CATALOGUE_ROWS);
 	spawn_catalogue_cards();
 	unlock_decklist_cards_shown();
+
+func get_filtered_cards() -> Array:
+	var deckmaster_legal_cards : Array = all_cards.filter(func(card : CardData): return System.CardData.can_be_with_deckmaster(card, chosen_deck_master));
+	return deckmaster_legal_cards.filter(func(card : CardData): 
+		return System.CardData.is_referenced_by(card, decklist_form.referenced_card)) \
+		if decklist_form.referenced_card != null else deckmaster_legal_cards;
 
 func spawn_catalogue_cards() -> void:
 	var i : int;
@@ -215,6 +243,9 @@ func toggle_card_to_decklist(card_data : CardData, is_mass_operation : bool = fa
 	if card_already_in_deck:
 		if !decklist_form.card_in_any_deck(card_data):
 			cards_in_decklist.erase(card_data.card_id);
+			if decklist_form.referenced_card && card_data.card_id == decklist_form.referenced_card.card_id:
+				decklist_form.referenced_card = null;
+				find_cards();
 	else:
 		cards_in_decklist[card_data.card_id] = card_data;
 	if cards.has(card_data.card_id):
@@ -234,8 +265,14 @@ func update_chosen_deckmaster() -> void:
 			toggle_card_to_decklist(card, true);
 	else:
 		chosen_deck_master = null;
+	clear_reference();
 	find_cards();
-		
+
+func clear_reference() -> void:
+	if decklist_form.referenced_card:
+		for slip in decklist_form.get_slips_for_card(decklist_form.referenced_card):
+			slip.baseline();
+	decklist_form.referenced_card = null;		
 
 func get_invalid_cards_by_deck_master() -> Array:
 	var invalid_cards : Array;

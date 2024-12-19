@@ -29,6 +29,8 @@ func _init(
 	zone = get_starting_deck();
 
 func eat_default(json_data : Dictionary) -> void:
+	errata_of_id = json_data.errata_of_id;
+	counts_as_id = json_data.counts_as_id;
 	owner_id = json_data.owner_id;
 	card_name = json_data.card_name;
 	display_name = json_data.display_name;

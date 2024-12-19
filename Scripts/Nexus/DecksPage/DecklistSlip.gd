@@ -101,3 +101,6 @@ func _on_take_copy_triggered() -> void:
 	if !is_active || is_locked || lock_increments:
 		return;
 	emit_signal("alter_copies", max(0, copies - 1), card_data);
+
+func _on_reference_triggered() -> void:
+	emit_signal("reference_card", card_data);
