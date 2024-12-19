@@ -4,12 +4,18 @@ extends DecklistBlock
 @onready var frame_layer : Node2D = $FrameLayer;
 @onready var active_trash_sprite : Sprite2D = $TrashButton/TrashIconActive;
 @onready var inactive_trash_sprite : Sprite2D = $TrashButton/TrashIconInactive;
+@onready var down_arrow_sprite : Sprite2D = $CollapseButton/DownArrowSprite;
 
 func init(new_block : NexusEnums.DecklistBlocks) -> void:
 	block = new_block;
 	update_label();
 	update_frame();
 	toggle_active();
+	init_down_arrow();
+	toggle_collapsed();
+
+func init_down_arrow() -> void:
+	down_arrow_sprite.texture = load(WHITE_DOWN_ARROW_PATH if block == NexusEnums.DecklistBlocks.SIDE else BLACK_DOWN_ARROW_PATH);
 
 func get_block_name() -> String:
 	return NexusEnums.DecklistBlockNames[block]
@@ -36,3 +42,9 @@ func update_icons() -> void:
 	is_active = is_active && block != NexusEnums.DecklistBlocks.DECK_MASTER;
 	active_trash_sprite.visible = is_active;
 	inactive_trash_sprite.visible = !is_active;
+
+func update_down_arrow() -> void:
+	down_arrow_sprite.rotation_degrees = 0 if is_collapsed else 180;
+
+func _on_collapse_triggered() -> void:
+	emit_signal("collapse", block, !is_collapsed);

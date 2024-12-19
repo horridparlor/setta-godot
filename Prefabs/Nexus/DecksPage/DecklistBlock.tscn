@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cf2pk413uf3wq"]
+[gd_scene load_steps=10 format=3 uid="uid://cf2pk413uf3wq"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/DecklistBlock.gd" id="1_t6ker"]
 [ext_resource type="PackedScene" uid="uid://4k55x8atbh30" path="res://Prefabs/Nexus/DecksPage/BlockBackframe/Monsters.tscn" id="2_bmkpt"]
@@ -6,9 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://dcfs8pv2rtocs" path="res://Assets/Icons/Common/thrash/MiniTrashActive.png" id="4_gi3uo"]
 [ext_resource type="Texture2D" uid="uid://bh0ltm5igacga" path="res://Assets/Icons/Common/thrash/MiniTrashInactive.png" id="5_qusla"]
 [ext_resource type="Script" path="res://Scripts/Common/Buttons/SpringButton.gd" id="6_r1nlm"]
+[ext_resource type="Texture2D" uid="uid://oolbjlpj4q0m" path="res://Assets/Icons/Common/down/DownArrowBlack.png" id="7_jc1il"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8rksh"]
 size = Vector2(100, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jt08l"]
+size = Vector2(120, 70)
 
 [node name="DecklistBlock" type="Node2D"]
 script = ExtResource("1_t6ker")
@@ -54,4 +58,16 @@ position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_8rksh")
 script = ExtResource("6_r1nlm")
 
+[node name="CollapseButton" type="Node2D" parent="."]
+position = Vector2(-280, 0)
+
+[node name="DownArrowSprite" type="Sprite2D" parent="CollapseButton"]
+position = Vector2(0, 2)
+texture = ExtResource("7_jc1il")
+
+[node name="Collapse" type="TouchScreenButton" parent="CollapseButton"]
+shape = SubResource("RectangleShape2D_jt08l")
+script = ExtResource("6_r1nlm")
+
 [connection signal="triggered" from="TrashButton/Thrash" to="." method="_on_thrash_triggered"]
+[connection signal="triggered" from="CollapseButton/Collapse" to="." method="_on_collapse_triggered"]

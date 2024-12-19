@@ -26,6 +26,7 @@ func _ready() -> void:
 		block.activate_animations();
 		block.init(get_block_enum_for_block(block));
 		block.trash.connect(on_empty_block);
+		block.collapse.connect(on_collapse_block);
 	modulation_timer.wait_time = MODULATION_WAIT;
 	reset_icon_modulation();
 
@@ -64,6 +65,10 @@ func on_empty_block(block : NexusEnums.DecklistBlocks) -> void:
 	var collection : Dictionary = get_collection_for_block(get_block_for_block_enum(block));
 	for card in collection.values():
 		on_alter_copies(-1, card);
+
+func on_collapse_block(block : NexusEnums.DecklistBlocks, value : bool) -> void:
+	get_block_for_block_enum(block).toggle_collapsed(value);
+	reorder_slips();
 
 func toggle_card(card_data : CardData, do_reorder : bool, for_all_decks : bool) -> void:
 	if for_all_decks && card_in_any_deck(card_data):
@@ -248,6 +253,7 @@ func update_blocks() -> void:
 	var block : DecklistBlock;
 	var card_count : int;
 	var is_side_deck : bool;
+	var cards_collapsed : int;
 	active_blocks = 0;
 	for b in get_blocks():
 		block = b;
@@ -257,13 +263,18 @@ func update_blocks() -> void:
 		has_cards = !cards.is_empty();
 		block.visible = has_cards;
 		if !has_cards:
+			block.toggle_collapsed();
 			continue;
 		active_blocks += 1;
 		block.position.y = current_y + cards_above * SLIP_MARGIN.y;
 		for card_data in cards.values():
-			get_slip(card_data).position.y += current_y;
-			cards_above += 1;
 			card_count += get_count(card_data);
+			get_slip(card_data).visible = block.is_collapsed;
+			if !block.is_collapsed:
+				cards_collapsed += 1;
+				continue;
+			get_slip(card_data).position.y += current_y - cards_collapsed * SLIP_MARGIN.y;
+			cards_above += 1;
 		block.set_count(card_count);
 		current_y += BLOCK_MARGIN.y;
 
