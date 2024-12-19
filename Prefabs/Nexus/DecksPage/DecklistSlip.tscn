@@ -28,7 +28,7 @@ size = Vector2(75, 80)
 size = Vector2(75, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_umlba"]
-size = Vector2(280, 80)
+size = Vector2(260, 80)
 
 [node name="DecklistSlip" type="Node2D"]
 script = ExtResource("1_2ekpm")
@@ -161,7 +161,7 @@ script = ExtResource("8_7y71u")
 [node name="ReferenceButton" type="Node2D" parent="."]
 
 [node name="Reference" type="TouchScreenButton" parent="ReferenceButton"]
-position = Vector2(10, 0)
+position = Vector2(20, 0)
 shape = SubResource("RectangleShape2D_umlba")
 script = ExtResource("8_7y71u")
 

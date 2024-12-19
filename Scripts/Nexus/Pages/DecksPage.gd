@@ -152,7 +152,11 @@ func on_edit() -> void:
 func on_edit_mode_changed() -> void:
 	edit_button.unfocus();
 	edit_button.set_label("Close" if in_edit_mode else "Edit");
-	spawn_card_catalogue() if in_edit_mode else unspawn_cards();
+	if in_edit_mode:
+		spawn_card_catalogue();
+	else:
+		unspawn_cards();
+		reset_decklist_position();
 
 func spawn_card_catalogue() -> void:
 	find_cards();
@@ -329,7 +333,6 @@ func reset_cards_shown() -> void:
 	catalogue_layer.cards = [];
 	decklist_form.toggle_active(false);
 	decklist_form.toggle_locked();
-	reset_decklist_position();
 
 func reset_card_catalogue() -> void:
 	first_row_shown = 0;
