@@ -104,12 +104,14 @@ func on_play() -> void:
 func on_edit_deck() -> void:
 	var decks_page : DecksPage = active_page;
 	decks_page.toggle_edit_mode();
+	decks_page.clear_filters();
 	page_buttons.toggle_active(false);
 	toggle_moving_page_buttons(false);
 
 func on_close_deck() -> void:
 	var decks_page : DecksPage = active_page;
 	decks_page.toggle_edit_mode(false);
+	decks_page.clear_filters();
 	page_buttons.toggle_active();
 	toggle_moving_page_buttons();
 

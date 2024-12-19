@@ -7,6 +7,8 @@ signal collapse(block, value);
 const BLOCK_BACKFRAME_PATH : String = "res://Prefabs/Nexus/DecksPage/BlockBackframe/";
 const LABEL_MESSAGE : String = "[center]%s [i](%s)[/i][/center]";
 const COUNTLESS_LABEL_MESSAGE : String = "[center]%s[/center]";
+const ONLY_COUNT_LABEL_MESSAGE : String = "[center]%s[i] / 60[/i][/center]";
+const FULL_LABEL_TEXT : String = "[center]Full[/center]";
 const LABEL_POSITION_COUNTLESS : float = -18;
 const LABEL_POSITION_WITH_COUNT : float = -23.5
 const BLACK_DOWN_ARROW_PATH : String = "res://Assets/Icons/Common/down/DownArrowBlack.png";

@@ -11,6 +11,11 @@ extends DecksPage
 @onready var catalogue_click_timer : Timer = $Timers/CatalogueClickTimer;
 @onready var double_click_timer : Timer = $Timers/DoubleClickTimer;
 
+@onready var search_bar : TextInput = $TopBar/SearchBar;
+
+func _ready() -> void:
+	search_bar.init("", "Search");
+
 func _physics_process(delta : float) -> void:
 	if is_scrolling_catalogue:
 		scroll_catalogue(delta);
@@ -126,7 +131,7 @@ func initialize() -> void:
 
 func on_reference_card(card_data : CardData) -> void:
 	var is_currently_referenced : bool = card_data.card_id == decklist_form.referenced_card.card_id if decklist_form.referenced_card else false;
-	if !has_deck_master():
+	if !in_edit_mode || !has_deck_master() || decklist_form.get_slip(card_data).global_position.y < DECKLIST_FORM_MAX_Y - decklist_form.SLIP_MARGIN.y / 2:
 		return;
 	if decklist_form.referenced_card == null || !is_currently_referenced:
 		set_reference(card_data);
@@ -185,7 +190,13 @@ func get_filtered_cards() -> Array:
 	var deckmaster_legal_cards : Array = all_cards.filter(func(card : CardData): return System.CardData.can_be_with_deckmaster(card, chosen_deck_master));
 	return deckmaster_legal_cards.filter(func(card : CardData): 
 		return System.CardData.is_referenced_by(card, decklist_form.referenced_card)) \
-		if decklist_form.referenced_card != null else deckmaster_legal_cards;
+		if decklist_form.referenced_card != null else filter_by_filters(deckmaster_legal_cards);
+
+func filter_by_filters(legal_cards : Array) -> Array:
+	if search_string.length():
+		legal_cards = legal_cards.filter(func(card : CardData):
+			return System.CardData.has_search_string(card, search_string));
+	return legal_cards;
 
 func spawn_catalogue_cards() -> void:
 	var i : int;
@@ -269,8 +280,13 @@ func update_chosen_deckmaster() -> void:
 			toggle_card_to_decklist(card, true);
 	else:
 		chosen_deck_master = null;
-	clear_reference();
+	clear_filters();
 	find_cards();
+
+func clear_filters() -> void:
+	search_bar.set_text();
+	search_string = "";
+	clear_reference();
 
 func clear_reference() -> void:
 	if decklist_form.referenced_card:
@@ -369,3 +385,11 @@ func _on_decklist_scroll_button_pressed() -> void:
 
 func _on_decklist_scroll_button_released() -> void:
 	is_scrolling_decklist = false;
+
+func _on_search_bar_submit_message(message : String) -> void:
+	var new_search_string : String = message.strip_edges().to_lower();
+	if new_search_string == search_string || !has_deck_master():
+		return;
+	search_string = new_search_string;
+	if in_edit_mode:
+		find_cards();

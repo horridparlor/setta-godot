@@ -12,9 +12,11 @@ func focus_entered() -> void:
 
 func on_submit(message: String):
 	emit_signal("submit");
+	emit_signal("submit_message", message);
 
-func init(input_title : String, placeholder_text : String, is_secret : bool = false) -> void: 
-	title.text = input_title;
+func init(input_title : String, placeholder_text : String, is_secret : bool = false) -> void:
+	if System.Instance.exists(title): 
+		title.text = input_title;
 	input.placeholder_text = placeholder_text;
 	if is_secret:
 		input.secret = true;
@@ -29,7 +31,7 @@ func unfocus() -> void:
 func get_text() -> String:
 	return input.text;
 
-func set_text(message : String) -> void:
+func set_text(message : String = "") -> void:
 	input.text = message;
 
 func set_placeholder_text(message : String) -> void:

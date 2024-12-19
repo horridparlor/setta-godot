@@ -253,3 +253,7 @@ static func is_referenced_by(card_data : CardData, referenced_card : CardData) -
 		if referenced_ids.has(id):
 			return true;
 	return false;
+
+static func has_search_string(card_data : CardData, message : String) -> bool:
+	return card_data.normalized_name.to_lower().contains(message) \
+		|| card_data.effects_text.to_lower().contains(message);

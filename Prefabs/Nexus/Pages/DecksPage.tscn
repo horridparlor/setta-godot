@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://sfljpoame5xt"]
+[gd_scene load_steps=11 format=3 uid="uid://sfljpoame5xt"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/Pages/DecksPage.gd" id="1_t8yx1"]
 [ext_resource type="PackedScene" uid="uid://chdrvm7emq34n" path="res://Prefabs/Login/Widgets/SubmitButton.tscn" id="2_5od0i"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Gameplay/Zones/Sky.gd" id="3_3xmtj"]
 [ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/CardCatalogue.gd" id="4_qqtxa"]
 [ext_resource type="PackedScene" uid="uid://b8e85deupd2c6" path="res://Prefabs/Nexus/DecksPage/DecklistForm.tscn" id="6_1wp2j"]
+[ext_resource type="PackedScene" uid="uid://cceu0nmir4td8" path="res://Prefabs/Nexus/DecksPage/Filters/NameSearchBar.tscn" id="8_diq47"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2qxe"]
 size = Vector2(1175, 845)
@@ -32,6 +33,7 @@ script = ExtResource("4_qqtxa")
 script = ExtResource("3_3xmtj")
 
 [node name="TopBar" type="Node2D" parent="."]
+position = Vector2(0, -430)
 
 [node name="Backframe" type="Panel" parent="TopBar"]
 anchors_preset = 8
@@ -40,15 +42,20 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -960.0
-offset_top = -810.0
+offset_top = -380.0
 offset_right = 960.0
-offset_bottom = -305.0
+offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("2_7df00")
 
 [node name="EditButton" parent="TopBar" instance=ExtResource("2_5od0i")]
-position = Vector2(720, -430)
+position = Vector2(720, 0)
+
+[node name="SearchBar" parent="TopBar" instance=ExtResource("8_diq47")]
+layout_direction = 1
+offset_left = -690.0
+offset_right = -690.0
 
 [node name="Buttons" type="Node2D" parent="."]
 
@@ -83,6 +90,7 @@ wait_time = 0.26
 [node name="DoubleClickTimer" type="Timer" parent="Timers"]
 wait_time = 0.26
 
+[connection signal="submit_message" from="TopBar/SearchBar" to="." method="_on_search_bar_submit_message"]
 [connection signal="pressed" from="Buttons/CatalogueScrollButton" to="." method="_on_catalogue_scroll_button_pressed"]
 [connection signal="released" from="Buttons/CatalogueScrollButton" to="." method="_on_catalogue_scroll_button_released"]
 [connection signal="pressed" from="Buttons/DecklistScrollButton" to="." method="_on_decklist_scroll_button_pressed"]

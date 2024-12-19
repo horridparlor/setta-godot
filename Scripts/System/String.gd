@@ -26,3 +26,7 @@ static func contains(message : String, substring : String) -> bool:
 
 static func last(message : String) -> String:
 	return message[len(message) - 1] if len(message) else "";
+
+static func split(message : String) -> Array:
+	var words : Array = message.split(" ");
+	return words.filter(func(message : String): return message.length());

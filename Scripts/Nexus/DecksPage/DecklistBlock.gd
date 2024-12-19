@@ -22,11 +22,14 @@ func get_block_name() -> String:
 
 func update_label() -> void:
 	var block_name : String = get_block_name();
-	var is_countless : bool = block == NexusEnums.DecklistBlocks.DECK_MASTER;
-	label.text = COUNTLESS_LABEL_MESSAGE % block_name \
-		if is_countless \
+	var is_deck_master : bool = block == NexusEnums.DecklistBlocks.DECK_MASTER;
+	var is_countless : bool = count == 0;
+	var is_full_main_deck : bool = is_deck_master && count == System.Rules.MAIN_DECK_SIZE;
+	label.text = COUNTLESS_LABEL_MESSAGE % block_name if is_countless \
+		else FULL_LABEL_TEXT if is_full_main_deck else ONLY_COUNT_LABEL_MESSAGE % [count] \
+		if is_deck_master \
 		else LABEL_MESSAGE % [block_name, count];
-	label.position.y = LABEL_POSITION_COUNTLESS if is_countless else LABEL_POSITION_WITH_COUNT;
+	label.position.y = LABEL_POSITION_COUNTLESS if is_countless || is_full_main_deck else LABEL_POSITION_WITH_COUNT;
 	label.add_theme_color_override("default_color", SystemEnums.TEXT_COLOR_PEARL_WHITE \
 		if block == NexusEnums.DecklistBlocks.SIDE else SystemEnums.TEXT_COLOR_BLACK);
 

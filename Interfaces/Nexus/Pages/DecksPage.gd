@@ -53,9 +53,14 @@ var cards_in_decklist : Dictionary;
 var all_cards : Array = System.CardData.get_all_cards();
 var chosen_deck_master : CardData;
 
+var search_string : String;
+
 func toggle_edit_mode(value : bool = true) -> void:
 	in_edit_mode = value;
 	on_edit_mode_changed();
 
 func on_edit_mode_changed() -> void:
+	pass;
+
+func clear_filters() -> void:
 	pass;

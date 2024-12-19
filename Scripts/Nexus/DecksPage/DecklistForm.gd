@@ -281,7 +281,8 @@ func update_blocks() -> void:
 				continue;
 			get_slip(card_data).position.y += current_y - cards_collapsed * SLIP_MARGIN.y;
 			cards_above += 1;
-		block.set_count(card_count);
+		block.set_count(card_count if block.block != NexusEnums.DecklistBlocks.DECK_MASTER else \
+			count_main_deck());
 		current_y += BLOCK_MARGIN.y;
 
 func update_min_y() -> void:

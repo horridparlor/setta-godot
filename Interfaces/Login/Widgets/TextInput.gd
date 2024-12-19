@@ -2,6 +2,7 @@ extends Control
 class_name TextInput
 
 signal submit();
+signal submit_message();
 signal focused();
 
 func init(input_title : String, placeholder_text : String, is_secret : bool = false) -> void:
@@ -16,7 +17,7 @@ func unfocus() -> void:
 func get_text() -> String:
 	return "";
 	
-func set_text(message : String) -> void:
+func set_text(message : String = "") -> void:
 	pass;
 
 func set_placeholder_text(message : String) -> void:
