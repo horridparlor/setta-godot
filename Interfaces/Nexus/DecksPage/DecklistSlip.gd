@@ -19,11 +19,11 @@ var is_locked : bool;
 var is_modulating_icons : bool;
 var lock_increments : bool;
 
-func init(new_data : CardData) -> void:
+func init(new_data : CardData, copies : int) -> void:
 	pass;
 	
-func set_copies(new_copies : int) -> void:
-	pass;
+func set_copies(new_copies : int) -> int:
+	return 0;
 
 func toggle_active(value : bool = true) -> void:
 	is_active = value;

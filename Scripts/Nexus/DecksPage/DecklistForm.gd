@@ -71,7 +71,7 @@ func toggle_card(card_data : CardData, do_reorder : bool, for_all_decks : bool) 
 	elif !for_all_decks && get_collection_for_card(card_data).has(card_data.card_id):
 		despawn_card(card_data, do_reorder);
 	else:
-		spawn_card(card_data, System.CardData.get_max_copies(card_data));
+		spawn_card(card_data, card_data.max_copies);
 
 func despawn_card_from_all_decks(card_data : CardData, do_reorder : bool) -> void:
 	var card_id : int = card_data.card_id;
@@ -89,7 +89,7 @@ func despawn_card(card_data : CardData, do_reorder : bool) -> void:
 func spawn_card(card_data : CardData, copies : int = 0) -> void:
 	get_collection_for_card(card_data)[card_data.card_id] = card_data;
 	update_card_count(card_data, copies);
-	spawn_slip(card_data);
+	spawn_slip(card_data, copies);
 
 func increment_card_count(card_data : CardData, increment : int) -> int:
 	return update_card_count(card_data, get_count(card_data) + increment);
@@ -107,10 +107,10 @@ func update_card_count(card_data : CardData, copies : int) -> int:
 func get_collection_for_card(card_data : CardData) -> Dictionary:
 	return get_collection_for_block(get_block_for_card(card_data));
 
-func spawn_slip(card_data : CardData) -> void:
+func spawn_slip(card_data : CardData, card_count : int) -> void:
 	var slip : DecklistSlip = System.Instance.load_child(DECKLIST_SLIP_PATH, self);
 	slip.position = SLIP_STARTING_POSITION + Vector2(0, get_slips().size() * SLIP_MARGIN.y);
-	slip.init(card_data);
+	slip.init(card_data, card_count);
 	slip.alter_copies.connect(on_alter_copies);
 	slip.sidedeck_card.connect(on_sidedeck_card);
 	put_slip(card_data, slip);
@@ -128,18 +128,19 @@ func on_sidedeck_card(card_data : CardData) -> void:
 	var is_from_main_deck : bool = System.CardData.in_main_deck(card_data);
 	var is_in_main_deck : bool = is_from_main_deck || main_deck_counts.has(card_data.card_id);
 	var is_in_side_deck : bool = !is_from_main_deck || side_deck_counts.has(card_data.card_id);
+	var copies_to_move : int = 1;
 	if is_from_main_deck:
 		if !can_add_to_side_deck(card_data):
-				return;
+				copies_to_move = 0;
 		if !is_in_side_deck:
 			spawn_to_side_deck(card_data);
-		move_copy_to_side_deck(card_data);
+		move_copies_to_side_deck(card_data, copies_to_move);
 	else:
 		if !can_add_to_main_deck(card_data):
-				return;
+				copies_to_move = 0;
 		if !is_in_main_deck:
 			spawn_to_main_deck(card_data);
-		move_copy_to_main_deck(card_data);
+		move_copies_to_main_deck(card_data, copies_to_move);
 
 func spawn_to_main_deck(card_data : CardData) -> void:
 	var new_data : CardData = card_data.copy();
@@ -151,20 +152,21 @@ func spawn_to_side_deck(card_data : CardData) -> void:
 	new_data.move_to_side_deck();
 	spawn_card(new_data);
 
-func move_copy_to_main_deck(card_data : CardData) -> void:
-	move_between_decks(card_data, -1);
+func move_copies_to_main_deck(card_data : CardData, copies : int) -> void:
+	move_between_decks(card_data, copies, -1);
 
-func move_copy_to_side_deck(card_data : CardData) -> void:
-	move_between_decks(card_data);
+func move_copies_to_side_deck(card_data : CardData, copies : int) -> void:
+	move_between_decks(card_data, copies);
 
-func move_between_decks(card_data : CardData, direction : int = 1) -> void:
+func move_between_decks(card_data : CardData, copies_to_move : int, direction : int = 1) -> void:
 	var card_id : int = card_data.card_id;
 	var main_deck_slip : DecklistSlip = main_deck_slips[card_id];
 	var side_deck_slip : DecklistSlip = side_deck_slips[card_id];
 	var from_slip : DecklistSlip = main_deck_slip if direction > 0 else side_deck_slip;
 	var to_slip : DecklistSlip = side_deck_slip if direction > 0 else main_deck_slip;
-	from_slip.set_copies(increment_card_count(from_slip.card_data, -1));
-	to_slip.set_copies(increment_card_count(to_slip.card_data, 1));
+	if get_count(from_slip.card_data):
+		from_slip.set_copies(increment_card_count(from_slip.card_data, -copies_to_move));
+		to_slip.set_copies(increment_card_count(to_slip.card_data, copies_to_move));
 	if from_slip.copies == 0:
 		despawn_card(from_slip.card_data, false);
 	reorder_slips();
@@ -264,14 +266,29 @@ func update_min_y() -> void:
 	min_y = (1 + get_slips().size()) * -SLIP_MARGIN.y + max(0, active_blocks - 1) * -BLOCK_MARGIN.y;
 
 func on_alter_copies(copies : int, card_data : CardData) -> void:
-	var change : int;
 	if copies < 0:
 		emit_signal("request_toggle_card", card_data);
 	else:
-		change = copies - get_count(card_data);
-		update_card_count(card_data, copies)
-		get_slip(card_data).set_copies(copies);
-		get_block_for_card(card_data).increment_count(change);
+		alter_card_copies(card_data, copies);
+		if in_both_decks(card_data):
+			alter_copies_in_other_deck(card_data, copies);
+
+func alter_copies_in_other_deck(card_data : CardData, copies : int) -> void:
+	var in_main_deck : bool = System.CardData.in_main_deck(card_data);
+	var main_deck_slip : DecklistSlip = main_deck_slips[card_data.card_id];
+	var side_deck_slip : DecklistSlip = side_deck_slips[card_data.card_id];
+	var other_deck_slip : DecklistSlip = side_deck_slip if in_main_deck else main_deck_slip;
+	var extra_copies : int = max(0, (get_count(main_deck_slip.card_data) + get_count(side_deck_slip.card_data)) - card_data.max_copies);
+	if !extra_copies:
+		return;
+	if !other_deck_slip.set_copies(increment_card_count(other_deck_slip.card_data, -extra_copies)):
+		despawn_card(other_deck_slip.card_data, true);
+
+func alter_card_copies(card_data : CardData, copies : int) -> void:
+	var change : int = copies - get_count(card_data);
+	update_card_count(card_data, copies)
+	get_slip(card_data).set_copies(copies);
+	get_block_for_card(card_data).increment_count(change);
 
 func despawn_slip(card_data : CardData, do_reorder : bool) -> void:
 	var slip : DecklistSlip = get_slip(card_data);

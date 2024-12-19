@@ -7,6 +7,8 @@ var instance_id : int;
 var sleeve : CardEnums.CardSleeve;
 var monster_data : MonsterData;
 
+var max_copies : int;
+
 var owning_player : GameplayEnums.OwningPlayer;
 var controlling_player : GameplayEnums.OwningPlayer;
 var zone : CardEnums.Zone = CardEnums.Zone.NONE;
@@ -46,6 +48,7 @@ func eat_default(json_data : Dictionary) -> void:
 		atk = json_data.atk;
 		def = json_data.def;
 		monster_data = MonsterData.new(level, atk, def);
+	max_copies = System.CardData.get_max_copies(self);
 
 func add_card_names(effects_text : String) -> String:
 	var regex_match : RegExMatch;

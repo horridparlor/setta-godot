@@ -96,9 +96,9 @@ func get_slip_collection(card_data : CardData) -> Dictionary:
 func get_counts(card_data : CardData) -> Dictionary:
 	return main_deck_counts if System.CardData.in_main_deck(card_data) else side_deck_counts;
 
-func get_count(card_data : CardData, go_negative : bool = false) -> int:
+func get_count(card_data : CardData) -> int:
 	var counts : Dictionary = get_counts(card_data);
-	return counts[card_data.card_id] if counts.has(card_data.card_id) else -1 if go_negative else 0;
+	return counts[card_data.card_id] if counts.has(card_data.card_id) else 0;
 
 func get_slip(card_data : CardData) -> DecklistSlip:
 	return get_slip_collection(card_data)[card_data.card_id];
@@ -137,3 +137,6 @@ func erase_count(card_data : CardData) -> void:
 
 func card_in_any_deck(card_data : CardData) -> bool:
 	return main_deck_slips.has(card_data.card_id) || side_deck_slips.has(card_data.card_id);
+
+func in_both_decks(card_data : CardData) -> bool:
+	return main_deck_slips.has(card_data.card_id) && side_deck_slips.has(card_data.card_id);

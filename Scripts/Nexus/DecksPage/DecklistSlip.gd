@@ -19,15 +19,16 @@ func modulate_icons(level_modulation : float, attribute_modulation : float) -> v
 	level_sprite.modulate.a = level_modulation;
 	attribute_sprite.modulate.a = attribute_modulation;
 
-func init(new_data : CardData) -> void:
+func init(new_data : CardData, copies : int) -> void:
 	card_data = new_data;
 	name_label.text = card_data.normalized_name;
-	max_copies = System.CardData.get_max_copies(card_data);
+	max_copies = card_data.max_copies;
 	side_grabber_layer.visible = !System.CardData.is_deck_master(card_data);
 	set_copies(max_copies);
 	set_backframe();
 	set_attribute();
 	init_level_frame();
+	set_copies(copies);
 	update_count_icons();
 
 func init_level_frame() -> void:
@@ -46,9 +47,10 @@ func set_attribute() -> void:
 	var attribute_name : String = System.CardData.get_attribute_name(card_data);
 	attribute_sprite.texture = load(DECKSLIP_ATTRIBUTE_PATH + attribute_name + SystemEnums.get_image_extension());
 
-func set_copies(new_copies : int) -> void:
+func set_copies(new_copies : int) -> int:
 	copies = new_copies;
 	copy_bars.set_bars(copies, max_copies, card_data.is_ace);
+	return copies;
 
 func get_active_count_icons() -> Array:
 	return [
