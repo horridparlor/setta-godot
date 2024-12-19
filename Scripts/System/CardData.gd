@@ -188,6 +188,9 @@ static func sort_by_card_type(card_a : CardDefaultData, card_b : CardDefaultData
 static func in_side_deck(card_data : CardData) -> bool:
 	return card_data.deck_portion == CardEnums.DeckPortion.SIDE_DECK;
 
+static func in_main_deck(card_data : CardData) -> bool:
+	return !in_side_deck(card_data);
+
 static func get_all_cards() -> Array:
 	var cards : Array;
 	for card in System.cards.values():

@@ -223,7 +223,7 @@ func update_chosen_deckmaster() -> void:
 		return;
 	if has_deck_master():
 		for card in decklist_form.deckmaster_cards.values():
-			if decklist_form.card_counts[card.card_id] > 0:
+			if decklist_form.main_deck_counts[card.card_id] > 0:
 				chosen_deck_master = card;
 				break;
 		for card in get_invalid_cards_by_deck_master():

@@ -88,3 +88,6 @@ func move_to_main_deck() -> void:
 
 func move_to_side_deck() -> void:
 	deck_portion = CardEnums.DeckPortion.SIDE_DECK;
+
+func copy() -> CardData:
+	return System.CardData.from_json(to_json());

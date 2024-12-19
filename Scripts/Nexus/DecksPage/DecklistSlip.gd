@@ -73,7 +73,7 @@ func update_count_icons():
 		icon.visible = !is_locked;
 	for icon in get_inactive_count_icons():
 		icon.visible = is_locked;
-	lock_increments = System.CardData.in_side_deck(card_data);
+	lock_increments = System.CardData.is_deck_master(card_data);
 	if lock_increments:
 		minus_active_sprite.visible = false;
 		plus_active_sprite.visible = false;
