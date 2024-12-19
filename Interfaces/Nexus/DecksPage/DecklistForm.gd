@@ -27,6 +27,7 @@ var min_y : float;
 var active_blocks : int;
 var is_active : bool;
 var is_locked : bool;
+var aces : Dictionary = get_default_aces();
 
 var modulation_charge : float;
 var is_modulating_icons : bool;
@@ -34,6 +35,15 @@ var has_slips_to_modulate : bool;
 var is_modulating_in_level : bool;
 var is_modulating_in_attribute : bool;
 var count_of_monsters : int;
+
+func has_competing_ace(card_data : CardData, treat_as_main_deck_card : bool = false) -> bool:
+	return card_data.is_ace && aces[System.CardData.get_ace_gategory(card_data, treat_as_main_deck_card)];
+
+func toggle_ace(card_data : CardData, value : bool = true) -> void:
+	var ace_category : CardEnums.AceCategory = System.CardData.get_ace_gategory(card_data);
+	if ace_category == CardEnums.AceCategory.NONE:
+		return;
+	aces[ace_category] = value;
 
 func count_main_deck() -> int:
 	return collection_counts[NexusEnums.DecklistBlocks.MONSTER] + \
@@ -46,7 +56,7 @@ func get_block_enum_for_card(card_data : CardData) -> NexusEnums.DecklistBlocks:
 func get_max_copies_fit(card_data : CardData) -> int:
 	return min(card_data.max_copies, get_deck_room_for_card(card_data));
 
-func get_deck_room_for_card(card_data : CardData) -> int:
+func get_room_for_non_ace_card(card_data : CardData) -> int:
 	match get_block_enum_for_card(card_data):
 		NexusEnums.DecklistBlocks.DECK_MASTER:
 			return 1;
@@ -55,6 +65,12 @@ func get_deck_room_for_card(card_data : CardData) -> int:
 		NexusEnums.DecklistBlocks.SIDE:
 			return System.Rules.SIDE_DECK_SIZE - count_side_deck();
 	return System.Rules.MAIN_DECK_SIZE - count_main_deck();
+
+func get_deck_room_for_card(card_data : CardData) -> int:
+	var room : int = get_room_for_non_ace_card(card_data);
+	if card_data.is_ace:
+		return min(room, 0 if has_competing_ace(card_data) else 1);
+	return room;
 
 func count_extra_deck() -> int:
 	return collection_counts[NexusEnums.DecklistBlocks.EXTRA];
@@ -72,7 +88,7 @@ func side_deck_full() -> bool:
 	return count_side_deck() >= System.Rules.SIDE_DECK_SIZE;
 
 func can_add_to_main_deck(card_data : CardData) -> bool:
-	return !(main_deck_full() if System.CardData.is_main_deck(card_data) else side_deck_full());
+	return !(main_deck_full() if System.CardData.is_main_deck(card_data) else side_deck_full()) && !has_competing_ace(card_data, true);
 
 func can_add_to_side_deck(card_data : CardData) -> bool:
 	return !side_deck_full();
@@ -82,6 +98,12 @@ func get_default_collection_counts() -> Dictionary:
 	for block in NexusEnums.DecklistBlocks.values():
 		counts[block] = 0;
 	return counts;
+
+func get_default_aces() -> Dictionary:
+	var aces : Dictionary;
+	for category in CardEnums.AceCategory.values():
+		aces[category] = false;
+	return aces;
 
 func toggle_card(card_data : CardData, do_reorder : bool, for_all_decks : bool) -> void:
 	pass;

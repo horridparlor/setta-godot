@@ -103,6 +103,8 @@ func update_card_count(card_data : CardData, copies : int) -> int:
 	var original_copies : int = get_count(card_data);
 	counts[card_data.card_id] = copies;
 	collection_counts[block] += copies - original_copies;
+	if card_data.is_ace:
+		toggle_ace(card_data, copies > 0 || (!original_copies && has_competing_ace(card_data)));
 	if System.CardData.is_deck_master(card_data):
 		emit_signal("deckmaster_counts_changed");
 	return copies;

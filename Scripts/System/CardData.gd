@@ -214,3 +214,17 @@ static func can_be_with_deckmaster(card_data : CardData, deckmaster : CardData) 
 		if card_class not in allowed_classes:
 			return false;
 	return true;
+
+static func get_ace_gategory(card_data : CardData, treat_as_main_deck_card : bool = false) -> CardEnums.AceCategory:
+	if System.CardData.in_side_deck(card_data) && !treat_as_main_deck_card:
+		return CardEnums.AceCategory.NONE;
+	if System.CardData.is_extra_deck(card_data):
+		return CardEnums.AceCategory.EXTRA;
+	match card_data.card_type:
+		CardEnums.CardType.MONSTER:
+			return CardEnums.AceCategory.MONSTER;
+		CardEnums.CardType.SPELL:
+			return CardEnums.AceCategory.SPELL;
+		CardEnums.CardType.TRAP:
+			return CardEnums.AceCategory.TRAP;
+	return CardEnums.AceCategory.NONE;

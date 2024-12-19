@@ -240,3 +240,11 @@ static var CardSleevePath = {
 }
 
 const JSON_COST_TYPE_CONTINUOUS : String = "Continuous";
+
+enum AceCategory {
+	NONE,
+	MONSTER,
+	SPELL,
+	TRAP,
+	EXTRA
+}
