@@ -286,7 +286,8 @@ func update_blocks() -> void:
 		current_y += BLOCK_MARGIN.y;
 
 func update_min_y() -> void:
-	min_y = (1 + get_slips().size()) * -SLIP_MARGIN.y + max(0, active_blocks - 1) * -BLOCK_MARGIN.y;
+	min_y = (1 + get_slips().filter(func(slip : DecklistSlip):
+		return slip.visible).size()) * -SLIP_MARGIN.y + max(0, active_blocks - 1) * -BLOCK_MARGIN.y;
 
 func on_alter_copies(copies : int, card_data : CardData) -> void:
 	if copies < 0:
