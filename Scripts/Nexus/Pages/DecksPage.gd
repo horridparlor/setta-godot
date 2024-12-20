@@ -86,6 +86,8 @@ func run_catalogue_carousel(direction : int = 1) -> void:
 	);
 	var head_index : int;
 	var tail_index : int;
+	if cards_rotated == 0:
+		return;
 	for i in range(cards_rotated):
 		head_index = first_card_shown + i;
 		tail_index = last_card_shown + i + 1;
