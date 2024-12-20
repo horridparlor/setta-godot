@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://sfljpoame5xt"]
+[gd_scene load_steps=15 format=3 uid="uid://sfljpoame5xt"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/Pages/DecksPage.gd" id="1_t8yx1"]
 [ext_resource type="PackedScene" uid="uid://chdrvm7emq34n" path="res://Prefabs/Login/Widgets/SubmitButton.tscn" id="2_5od0i"]
@@ -8,6 +8,12 @@
 [ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/CardCatalogue.gd" id="4_qqtxa"]
 [ext_resource type="PackedScene" uid="uid://b8e85deupd2c6" path="res://Prefabs/Nexus/DecksPage/DecklistForm.tscn" id="6_1wp2j"]
 [ext_resource type="PackedScene" uid="uid://cceu0nmir4td8" path="res://Prefabs/Nexus/DecksPage/Filters/NameSearchBar.tscn" id="8_diq47"]
+[ext_resource type="Texture2D" uid="uid://depmdy0o42b3e" path="res://Assets/Icons/Common/cross/CrossActive.png" id="9_88xp5"]
+[ext_resource type="Script" path="res://Scripts/Common/Buttons/SpringButton.gd" id="9_sjktr"]
+[ext_resource type="Texture2D" uid="uid://cb4rbexwcuckb" path="res://Assets/Icons/Common/cross/CrossInactive.png" id="10_uexhk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6mubh"]
+size = Vector2(140, 130)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2qxe"]
 size = Vector2(1175, 845)
@@ -49,13 +55,33 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("2_7df00")
 
-[node name="EditButton" parent="TopBar" instance=ExtResource("2_5od0i")]
-position = Vector2(720, 0)
-
 [node name="SearchBar" parent="TopBar" instance=ExtResource("8_diq47")]
 layout_direction = 1
 offset_left = -690.0
 offset_right = -690.0
+
+[node name="FiltersButton" parent="TopBar" instance=ExtResource("2_5od0i")]
+position = Vector2(-60, 0)
+
+[node name="SaveButton" parent="TopBar" instance=ExtResource("2_5od0i")]
+position = Vector2(365, 0)
+
+[node name="EditButton" parent="TopBar" instance=ExtResource("2_5od0i")]
+position = Vector2(750, 0)
+
+[node name="ClearFiltersButton" type="Node2D" parent="TopBar"]
+position = Vector2(-340, 0)
+
+[node name="ClearFilters" type="TouchScreenButton" parent="TopBar/ClearFiltersButton"]
+shape = SubResource("RectangleShape2D_6mubh")
+script = ExtResource("9_sjktr")
+
+[node name="CrossActiveSprite" type="Sprite2D" parent="TopBar/ClearFiltersButton"]
+texture = ExtResource("9_88xp5")
+
+[node name="CrossInactiveSprite" type="Sprite2D" parent="TopBar/ClearFiltersButton"]
+visible = false
+texture = ExtResource("10_uexhk")
 
 [node name="Buttons" type="Node2D" parent="."]
 
@@ -91,6 +117,7 @@ wait_time = 0.26
 wait_time = 0.26
 
 [connection signal="submit_message" from="TopBar/SearchBar" to="." method="_on_search_bar_submit_message"]
+[connection signal="triggered" from="TopBar/ClearFiltersButton/ClearFilters" to="." method="_on_clear_filters_triggered"]
 [connection signal="pressed" from="Buttons/CatalogueScrollButton" to="." method="_on_catalogue_scroll_button_pressed"]
 [connection signal="released" from="Buttons/CatalogueScrollButton" to="." method="_on_catalogue_scroll_button_released"]
 [connection signal="pressed" from="Buttons/DecklistScrollButton" to="." method="_on_decklist_scroll_button_pressed"]

@@ -17,3 +17,9 @@ func focus() -> void:
 
 func unfocus() -> void:
 	pass;
+
+func make_primary() -> void:
+	pass;
+
+func make_secondary() -> void:
+	pass;

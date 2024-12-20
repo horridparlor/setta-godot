@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://chdrvm7emq34n"]
 
 [ext_resource type="Script" path="res://Scripts/Login/Widgets/SubmitButton.gd" id="1_myqn1"]
-[ext_resource type="Theme" uid="uid://djtpaaf5prvki" path="res://Styles/Login/Widgets/SubmitButton.tres" id="2_7qssa"]
+[ext_resource type="Theme" uid="uid://djtpaaf5prvki" path="res://Styles/Login/Widgets/SubmitButton.tres" id="2_4tat5"]
 [ext_resource type="FontFile" uid="uid://di4abqxuqvl4h" path="res://Assets/FontFiles/Montserrat/Montserrat-ExtraBold.ttf" id="3_n7qu1"]
 [ext_resource type="StyleBox" uid="uid://bo7d3ypqnrf4o" path="res://Styles/Login/Widgets/SubmitButton/SubmitButtonFocus.tres" id="4_g666l"]
 [ext_resource type="StyleBox" uid="uid://b5ftgs230hqny" path="res://Styles/Login/Widgets/SubmitButton/SubmitButtonHover.tres" id="5_d45df"]
@@ -23,7 +23,7 @@ offset_right = 153.0
 offset_bottom = 57.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_7qssa")
+theme = ExtResource("2_4tat5")
 theme_override_fonts/font = ExtResource("3_n7qu1")
 theme_override_font_sizes/font_size = 80
 theme_override_styles/focus = ExtResource("4_g666l")

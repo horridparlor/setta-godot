@@ -1,6 +1,7 @@
 extends DecksPage
 
 @onready var edit_button : SubmitButton = $TopBar/EditButton;
+@onready var save_button : SubmitButton = $TopBar/SaveButton;
 @onready var catalogue_layer : Zone = $CatalogueLayer;
 @onready var behind_layer : Zone = $BehindLayer;
 @onready var between_layer : Node2D = $BetweenLayer;
@@ -12,9 +13,13 @@ extends DecksPage
 @onready var double_click_timer : Timer = $Timers/DoubleClickTimer;
 
 @onready var search_bar : TextInput = $TopBar/SearchBar;
+@onready var filters_button : SubmitButton = $TopBar/FiltersButton;
+@onready var clear_filters_active_sprite : Sprite2D = $TopBar/ClearFiltersButton/CrossActiveSprite;
+@onready var clear_filters_inactive_sprite : Sprite2D = $TopBar/ClearFiltersButton/CrossInactiveSprite;
 
 func _ready() -> void:
 	search_bar.init("", "Search");
+	update_clear_filters_button();
 
 func _physics_process(delta : float) -> void:
 	if is_scrolling_catalogue:
@@ -146,10 +151,14 @@ func set_reference(card_data : CardData) -> void:
 	for slip in decklist_form.get_slips_for_card(card_data):
 		slip.shutter();
 	decklist_form.referenced_card = card_data;
+	update_clear_filters_button();
 
 func initialize_buttons() -> void:
 	edit_button.init("Edit");
+	edit_button.make_primary();
 	edit_button.pressed.connect(on_edit);
+	save_button.init("Copy");
+	filters_button.init("New");
 
 func on_edit() -> void:
 	emit_signal("close_deck" if in_edit_mode else "edit_deck");
@@ -157,6 +166,10 @@ func on_edit() -> void:
 func on_edit_mode_changed() -> void:
 	edit_button.unfocus();
 	edit_button.set_label("Close" if in_edit_mode else "Edit");
+	edit_button.make_secondary() if in_edit_mode else edit_button.make_primary();
+	save_button.set_label("Save" if in_edit_mode else "Copy");
+	save_button.make_primary() if in_edit_mode else save_button.make_secondary();
+	filters_button.set_label("Filters" if in_edit_mode else "New")
 	if in_edit_mode:
 		spawn_card_catalogue();
 	else:
@@ -185,6 +198,7 @@ func find_cards() -> void:
 		(catalogue_cards.size() / CARD_CATALOGUE_COLUMNS - CARD_CATALOGUE_ROWS);
 	spawn_catalogue_cards();
 	unlock_decklist_cards_shown();
+	update_clear_filters_button();
 
 func get_filtered_cards() -> Array:
 	var deckmaster_legal_cards : Array = all_cards.filter(func(card : CardData): return System.CardData.can_be_with_deckmaster(card, chosen_deck_master));
@@ -287,12 +301,14 @@ func clear_filters() -> void:
 	search_bar.set_text();
 	search_string = "";
 	clear_reference();
+	update_clear_filters_button();
 
 func clear_reference() -> void:
 	if decklist_form.referenced_card:
 		for slip in decklist_form.get_slips_for_card(decklist_form.referenced_card):
 			slip.baseline();
-	decklist_form.referenced_card = null;		
+	decklist_form.referenced_card = null;
+	update_clear_filters_button();
 
 func get_invalid_cards_by_deck_master() -> Array:
 	var invalid_cards : Array;
@@ -391,5 +407,21 @@ func _on_search_bar_submit_message(message : String) -> void:
 	if new_search_string == search_string || !has_deck_master():
 		return;
 	search_string = new_search_string;
+	if in_edit_mode:
+		find_cards();
+	else:
+		update_clear_filters_button();
+
+func has_filters() -> bool:
+	return search_string.length() || decklist_form.referenced_card != null;
+
+func update_clear_filters_button() -> void:
+	clear_filters_active_sprite.visible = has_filters();
+	clear_filters_inactive_sprite.visible = !clear_filters_active_sprite.visible;
+
+func _on_clear_filters_triggered() -> void:
+	if !has_filters() || !is_active:
+		return;
+	clear_filters();
 	if in_edit_mode:
 		find_cards();
