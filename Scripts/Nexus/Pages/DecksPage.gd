@@ -81,7 +81,8 @@ func run_catalogue_carousel(direction : int = 1) -> void:
 	var card : GameplayCard;
 	var cards_rotated : int = min(
 		CARD_CATALOGUE_COLUMNS,
-		(catalogue_cards.size() - 1 - last_card_shown) if direction > 0 else first_card_shown
+		(catalogue_cards.size() - 1 - last_card_shown) if direction > 0 else first_card_shown \
+			if last_card_shown + 1 < catalogue_cards.size() else catalogue_cards.size() % CARD_CATALOGUE_COLUMNS
 	);
 	var head_index : int;
 	var tail_index : int;
@@ -195,7 +196,7 @@ func find_cards() -> void:
 	catalogue_cards = get_filtered_cards() if has_deck_master() \
 		else all_cards.filter(System.CardData.is_deck_master);
 	catalogue_layer_max_y = -CARD_CATALOGUE_MARGINS.y * \
-		(catalogue_cards.size() / CARD_CATALOGUE_COLUMNS - CARD_CATALOGUE_ROWS);
+		((catalogue_cards.size() + CARD_CATALOGUE_COLUMNS - 1) / CARD_CATALOGUE_COLUMNS - CARD_CATALOGUE_ROWS);
 	spawn_catalogue_cards();
 	unlock_decklist_cards_shown();
 	update_clear_filters_button();
