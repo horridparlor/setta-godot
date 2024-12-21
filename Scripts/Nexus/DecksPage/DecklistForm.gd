@@ -287,7 +287,6 @@ func update_blocks() -> void:
 				cards_collapsed += 1;
 				continue;
 			get_slip(card_data).position.y += current_y - cards_collapsed * SLIP_MARGIN.y;
-			print(get_slip(card_data).position.y);
 			cards_above += 1;
 		current_y += BLOCK_MARGIN.y;
 

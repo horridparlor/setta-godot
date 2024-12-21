@@ -132,7 +132,7 @@ func _on_http_response(request : OperationRequest, operation : RequestEnums.Oper
 			if response.has("error"):
 				on_toast(response.error, SystemEnums.ToastTheme.FAILURE);
 				return;
-			set_decklists(response.decklists);
+			System.Decklist.set_decklists_from_json(response.decklists);
 
 func set_cards(source : Array):
 	var cards : Dictionary;
@@ -161,18 +161,11 @@ func load_decklists() -> void:
 	var decklists : Dictionary;
 	decklists = System.Json.read(SystemEnums.SaveFilePath[SystemEnums.SaveFile.DECKLISTS]);
 	if System.Json.success(decklists):
-		set_decklists(decklists.decklists);
+		System.Decklist.set_decklists_from_json(decklists.decklists);
 	fetch_decklists();
 
 func fetch_decklists() -> void:
 	System.Server.request(RequestEnums.Operation.GET_DECKLISTS, {}, self);
-
-func set_decklists(source : Array):
-	var decklists : Dictionary;
-	for decklist in source:
-		decklists[decklist.id] = decklist;
-	System.decklists = decklists;
-	System.Json.write({"decklists": source}, SystemEnums.SaveFilePath[SystemEnums.SaveFile.DECKLISTS]);
 
 func update_debug_tools() -> void:
 	debug_prompt.visible = System.debug_mode != SystemEnums.DebugMode.NONE;

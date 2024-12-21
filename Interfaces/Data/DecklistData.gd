@@ -44,17 +44,18 @@ func erase_cards() -> void:
 	cards = [];
 
 func eat_json(json_data : Dictionary) -> void:
-	decklist_id = json_data.id;
+	decklist_id = json_data.decklistId;
 	decklist_name = json_data.name;
 	is_valid = json_data.isValid;
 	cards = [];
 	for json in json_data.cards:
-		cards.append(CardInDecklist.new(int(json.id), int(json.copies), System.DecklistBlock.to_enum(json.deckBlock)));
+		cards.append(CardInDecklist.new(int(json.cardId), int(json.copies), System.DecklistBlock.to_enum(json.deckBlock)));
 
 func get_json() -> Dictionary:
 	return {
 		"decklistId": decklist_id,
 		"name": decklist_name,
+		"isValid": is_valid,
 		"cards": get_cards_json()
 	}
 

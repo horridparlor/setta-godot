@@ -498,10 +498,18 @@ func on_decklist_posted(response : Dictionary) -> void:
 	on_toast("Deck created");
 	chosen_decklist.eat_posted(response);
 	decklists[chosen_decklist.decklist_id] = chosen_decklist;
+	System.chosen_decklist_id = chosen_decklist.decklist_id;
+	save_decklists_state();
 
 func on_decklist_put(response : Dictionary) -> void:
 	on_toast("Deck saved");
 	chosen_decklist.eat_put(response);
+	save_decklists_state();
+
+func save_decklists_state() -> void:
+	System.Decklist.set_decklists(decklists);
+	System.store_user_state();
+	
 
 func _on_filters_button_pressed() -> void:
 	if !is_active:

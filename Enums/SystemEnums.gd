@@ -126,12 +126,14 @@ enum DebugMode {
 
 enum SaveFile {
 	CARDS,
-	DECKLISTS
+	DECKLISTS,
+	USER_STATE
 }
 
 static var SaveFilePath = {
 	SaveFile.CARDS: "cards",
-	SaveFile.DECKLISTS: "decklists"
+	SaveFile.DECKLISTS: "decklists",
+	SaveFile.USER_STATE: "user-state"
 }
 
 enum DataFileType {
