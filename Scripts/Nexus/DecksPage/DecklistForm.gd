@@ -273,22 +273,22 @@ func update_blocks() -> void:
 		cards = get_collection_for_block(block);
 		has_cards = !cards.is_empty();
 		block.visible = has_cards || System.DecklistBlock.is_deck_master(block.block);
+		if has_cards:
+			active_blocks += 1;
+			block.position.y = current_y + cards_above * SLIP_MARGIN.y;
+			for card_data in cards.values():
+				card_count += get_copies(card_data);
+				get_slip(card_data).visible = block.is_collapsed;
+				if !block.is_collapsed:
+					cards_collapsed += 1;
+					continue;
+				get_slip(card_data).position.y += current_y - cards_collapsed * SLIP_MARGIN.y;
+				cards_above += 1;
+			current_y += BLOCK_MARGIN.y;
+		else:
+			block.toggle_collapsed();
 		block.set_count(card_count if block.block != NexusEnums.DecklistBlock.DECK_MASTER else \
 			count_main_deck());
-		if !has_cards:
-			block.toggle_collapsed();
-			continue;
-		active_blocks += 1;
-		block.position.y = current_y + cards_above * SLIP_MARGIN.y;
-		for card_data in cards.values():
-			card_count += get_copies(card_data);
-			get_slip(card_data).visible = block.is_collapsed;
-			if !block.is_collapsed:
-				cards_collapsed += 1;
-				continue;
-			get_slip(card_data).position.y += current_y - cards_collapsed * SLIP_MARGIN.y;
-			cards_above += 1;
-		current_y += BLOCK_MARGIN.y;
 
 func update_min_y() -> void:
 	min_y = (1 + get_slips().filter(func(slip : DecklistSlip):
@@ -321,6 +321,8 @@ func alter_card_copies(card_data : CardData, copies : int) -> int:
 		change = vacant_change;
 	update_card_count(card_data, copies)
 	get_slip(card_data).set_copies(copies);
+	if System.CardData.in_main_deck(card_data) && System.CardData.is_main_deck(card_data):
+		deckmaster_block.increment_count(change);
 	get_block_for_card(card_data).increment_count(change);
 	return change
 

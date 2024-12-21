@@ -31,14 +31,13 @@ func initialize_decklists() -> void:
 	if decklists.is_empty():
 		spawn_new_decklist();
 		return;
-	chosen_decklist = decklists.values()[0];
+	chosen_decklist = decklists[System.chosen_decklist_id] if decklists.has(System.chosen_decklist_id) else decklists.values()[0];
 	eat_chosen_decklist();
 
 func spawn_new_decklist(cards : Array = []) -> void:
 	chosen_decklist = DecklistData.new();
 	chosen_decklist.cards = cards;
 	eat_chosen_decklist();
-	decklist_form.update_blocks();
 
 func eat_chosen_decklist() -> void:
 	chosen_deck_master = null;
@@ -504,6 +503,7 @@ func on_decklist_posted(response : Dictionary) -> void:
 func on_decklist_put(response : Dictionary) -> void:
 	on_toast("Deck saved");
 	chosen_decklist.eat_put(response);
+	print(System.chosen_decklist_id);
 	save_decklists_state();
 
 func save_decklists_state() -> void:

@@ -239,12 +239,17 @@ func spawn_card(card_data : CardData, copies : int = 0) -> void:
 	
 func eat_decklist(decklist : DecklistData) -> void:
 	var card : CardInDecklist;
+	var card_data : CardData;
 	delete_all_slips();
 	delete_all_cards();
 	for c in decklist.cards:
 		card = c;
-		spawn_card(System.CardData.from_id(card.card_id), card.copies);
+		card_data = System.CardData.from_id(card.card_id);
+		if System.DecklistBlock.is_side_deck(card.block):
+			card_data.move_to_side_deck();
+		spawn_card(card_data, card.copies);
 	for slip in get_slips():
 		slip.toggle_locked();
+	reorder_slips();
 	toggle_active(false);
 	

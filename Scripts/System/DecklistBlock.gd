@@ -1,6 +1,9 @@
 static func is_deck_master(block : NexusEnums.DecklistBlock) -> bool:
 	return block == NexusEnums.DecklistBlock.DECK_MASTER;
 
+static func is_side_deck(block : NexusEnums.DecklistBlock) -> bool:
+	return block == NexusEnums.DecklistBlock.SIDE;
+
 static func to_json(block : NexusEnums.DecklistBlock) -> String:
 	match block:
 		NexusEnums.DecklistBlock.DECK_MASTER:
