@@ -10,15 +10,23 @@ enum RequestType {
 
 enum Operation {
 	AUTHENTICATE,
+	DELETE_DECKLIST,
 	GET_CARDS,
+	GET_DECKLISTS,
 	FETCH_ARTWORK,
-	NONE
+	NONE,
+	POST_DECKLIST,
+	PUT_DECKLIST
 }
 
 static var OperationRequestType = {
 	Operation.AUTHENTICATE: RequestType.POST,
+	Operation.DELETE_DECKLIST: RequestType.DELETE,
 	Operation.GET_CARDS: RequestType.GET,
+	Operation.GET_DECKLISTS: RequestType.GET,
 	Operation.FETCH_ARTWORK: RequestType.FETCH,
+	Operation.POST_DECKLIST: RequestType.POST,
+	Operation.PUT_DECKLIST: RequestType.PUT
 }
 
 static func getMethod(operation: Operation) -> HTTPClient.Method:
@@ -31,10 +39,18 @@ static func getMethod(operation: Operation) -> HTTPClient.Method:
 			return HTTPClient.Method.METHOD_DELETE;
 	return HTTPClient.Method.METHOD_GET;
 
+const AUTHENTICATE_ENDPOINT = 'authenticate';
+const DECKLIST_ENDPOINT = 'decklist';
+const DECKLISTS_ENDPOINT = 'decklists';
+
 static var Endpoint = {
-	Operation.AUTHENTICATE: 'authenticate',
+	Operation.AUTHENTICATE: AUTHENTICATE_ENDPOINT,
+	Operation.DELETE_DECKLIST: DECKLIST_ENDPOINT,
 	Operation.GET_CARDS: 'cards?isGame=1',
+	Operation.GET_DECKLISTS: DECKLISTS_ENDPOINT,
 	Operation.FETCH_ARTWORK: 'small-art/',
+	Operation.POST_DECKLIST: DECKLIST_ENDPOINT,
+	Operation.PUT_DECKLIST: DECKLIST_ENDPOINT
 }
 
 enum ImageFileType {

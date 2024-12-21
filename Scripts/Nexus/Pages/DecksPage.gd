@@ -20,6 +20,10 @@ extends DecksPage
 func _ready() -> void:
 	search_bar.init("", "Search");
 	update_clear_filters_button();
+	initialize_decklists();
+
+func initialize_decklists() -> void:
+	chosen_decklist = DecklistData.new();
 
 func _physics_process(delta : float) -> void:
 	if is_scrolling_catalogue:
@@ -222,7 +226,7 @@ func spawn_catalogue_cards() -> void:
 		i += 1;
 
 func has_deck_master() -> bool:
-	return decklist_form.collection_counts[NexusEnums.DecklistBlocks.DECK_MASTER];
+	return decklist_form.collection_counts[NexusEnums.DecklistBlock.DECK_MASTER];
 
 func spawn_catalogue_card(card_data : CardData) -> GameplayCard:
 	var card : GameplayCard = System.Instance.load_child(SystemEnums.get_card_path(), catalogue_layer);
@@ -289,10 +293,7 @@ func update_chosen_deckmaster() -> void:
 	if (chosen_deck_master != null) == has_deck_master():
 		return;
 	if has_deck_master():
-		for card in decklist_form.deckmaster_cards.values():
-			if decklist_form.main_deck_counts[card.card_id] > 0:
-				chosen_deck_master = card;
-				break;
+		chosen_deck_master = decklist_form.get_deck_master();
 		for card in get_invalid_cards_by_deck_master():
 			toggle_card_to_decklist(card, true);
 	else:
@@ -428,3 +429,25 @@ func _on_clear_filters_triggered() -> void:
 	clear_filters();
 	if in_edit_mode:
 		find_cards();
+
+func _on_save_button_pressed() -> void:
+	if !is_active || !has_deck_master():
+		return;
+	save_deck() if in_edit_mode else copy_deck();
+
+func copy_deck() -> void:
+	pass;
+
+func save_deck() -> void:
+	chosen_decklist.eat_cards(decklist_form);
+	chosen_decklist.upload(self);
+
+func _on_http_response(request : OperationRequest, operation : RequestEnums.Operation, response : Dictionary) -> void:
+	print(response);
+	match operation:
+		RequestEnums.Operation.POST_DECKLIST:
+			if response.has("error"):
+				return;
+		RequestEnums.Operation.PUT_DECKLIST:
+			if response.has("error"):
+				return;

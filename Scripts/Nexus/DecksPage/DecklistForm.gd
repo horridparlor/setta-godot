@@ -61,12 +61,13 @@ func reset_icon_modulation(do_start : bool = false) -> void:
 	if do_start:
 		modulation_timer.start();
 
-func on_empty_block(block : NexusEnums.DecklistBlocks) -> void:
-	var collection : Dictionary = get_collection_for_block(get_block_for_block_enum(block));
-	for card in collection.values():
+func on_empty_block(block : NexusEnums.DecklistBlock) -> void:
+	var source : Array = get_all_cards() if System.DecklistBlock.is_deck_master(block) \
+		else get_collection_for_block(get_block_for_block_enum(block)).values();
+	for card in source:
 		on_alter_copies(-1, card);
 
-func on_collapse_block(block : NexusEnums.DecklistBlocks, value : bool) -> void:
+func on_collapse_block(block : NexusEnums.DecklistBlock, value : bool) -> void:
 	get_block_for_block_enum(block).toggle_collapsed(value);
 	reorder_slips();
 
@@ -97,15 +98,15 @@ func spawn_card(card_data : CardData, copies : int = 0) -> void:
 	spawn_slip(card_data, copies);
 
 func increment_card_count(card_data : CardData, increment : int) -> int:
-	return update_card_count(card_data, get_count(card_data) + increment);
+	return update_card_count(card_data, get_copies(card_data) + increment);
 
-func get_block_enum_for_card(card_data : CardData) -> NexusEnums.DecklistBlocks:
+func get_block_enum_for_card(card_data : CardData) -> NexusEnums.DecklistBlock:
 	return get_block_enum_for_block(get_block_for_card(card_data));
 
 func update_card_count(card_data : CardData, copies : int) -> int:
-	var block : NexusEnums.DecklistBlocks = get_block_enum_for_card(card_data);
-	var counts : Dictionary = get_counts(card_data);
-	var original_copies : int = get_count(card_data);
+	var block : NexusEnums.DecklistBlock = get_block_enum_for_card(card_data);
+	var counts : Dictionary = get_copies_collection(card_data);
+	var original_copies : int = get_copies(card_data);
 	counts[card_data.card_id] = copies;
 	collection_counts[block] += copies - original_copies;
 	if card_data.is_ace:
@@ -180,7 +181,7 @@ func move_between_decks(card_data : CardData, copies_to_move : int, direction : 
 	var side_deck_slip : DecklistSlip = side_deck_slips[card_id];
 	var from_slip : DecklistSlip = main_deck_slip if direction > 0 else side_deck_slip;
 	var to_slip : DecklistSlip = side_deck_slip if direction > 0 else main_deck_slip;
-	if get_count(from_slip.card_data):
+	if get_copies(from_slip.card_data):
 		from_slip.set_copies(increment_card_count(from_slip.card_data, -copies_to_move));
 		to_slip.set_copies(increment_card_count(to_slip.card_data, copies_to_move));
 	if from_slip.copies == 0:
@@ -219,35 +220,35 @@ func get_block_for_card(card_data : CardData) -> DecklistBlock:
 			return trap_block;
 	return monster_block;
 
-func get_block_enum_for_block(block : DecklistBlock) -> NexusEnums.DecklistBlocks:
+func get_block_enum_for_block(block : DecklistBlock) -> NexusEnums.DecklistBlock:
 	match block:
 		deckmaster_block:
-			return NexusEnums.DecklistBlocks.DECK_MASTER;
+			return NexusEnums.DecklistBlock.DECK_MASTER;
 		monster_block:
-			return NexusEnums.DecklistBlocks.MONSTER;
+			return NexusEnums.DecklistBlock.MONSTER;
 		spell_block:
-			return NexusEnums.DecklistBlocks.SPELL;
+			return NexusEnums.DecklistBlock.SPELL;
 		trap_block:
-			return NexusEnums.DecklistBlocks.TRAP;
+			return NexusEnums.DecklistBlock.TRAP;
 		extra_block:
-			return NexusEnums.DecklistBlocks.EXTRA;
+			return NexusEnums.DecklistBlock.EXTRA;
 		side_block:
-			return NexusEnums.DecklistBlocks.SIDE;	
-	return NexusEnums.DecklistBlocks.MONSTER;
+			return NexusEnums.DecklistBlock.SIDE;	
+	return NexusEnums.DecklistBlock.MONSTER;
 
-func get_block_for_block_enum(block : NexusEnums.DecklistBlocks) -> DecklistBlock:
+func get_block_for_block_enum(block : NexusEnums.DecklistBlock) -> DecklistBlock:
 	match block:
-		NexusEnums.DecklistBlocks.DECK_MASTER:
+		NexusEnums.DecklistBlock.DECK_MASTER:
 			return deckmaster_block;
-		NexusEnums.DecklistBlocks.MONSTER:
+		NexusEnums.DecklistBlock.MONSTER:
 			return monster_block;
-		NexusEnums.DecklistBlocks.SPELL:
+		NexusEnums.DecklistBlock.SPELL:
 			return spell_block;
-		NexusEnums.DecklistBlocks.TRAP:
+		NexusEnums.DecklistBlock.TRAP:
 			return trap_block;
-		NexusEnums.DecklistBlocks.EXTRA:
+		NexusEnums.DecklistBlock.EXTRA:
 			return extra_block;
-		NexusEnums.DecklistBlocks.SIDE:
+		NexusEnums.DecklistBlock.SIDE:
 			return side_block;
 	return monster_block;
 	
@@ -264,7 +265,7 @@ func update_blocks() -> void:
 	for b in get_blocks():
 		block = b;
 		card_count = 0;
-		is_side_deck = block.block == NexusEnums.DecklistBlocks.SIDE;
+		is_side_deck = block.block == NexusEnums.DecklistBlock.SIDE;
 		cards = get_collection_for_block(block);
 		has_cards = !cards.is_empty();
 		block.visible = has_cards;
@@ -274,14 +275,14 @@ func update_blocks() -> void:
 		active_blocks += 1;
 		block.position.y = current_y + cards_above * SLIP_MARGIN.y;
 		for card_data in cards.values():
-			card_count += get_count(card_data);
+			card_count += get_copies(card_data);
 			get_slip(card_data).visible = block.is_collapsed;
 			if !block.is_collapsed:
 				cards_collapsed += 1;
 				continue;
 			get_slip(card_data).position.y += current_y - cards_collapsed * SLIP_MARGIN.y;
 			cards_above += 1;
-		block.set_count(card_count if block.block != NexusEnums.DecklistBlocks.DECK_MASTER else \
+		block.set_count(card_count if block.block != NexusEnums.DecklistBlock.DECK_MASTER else \
 			count_main_deck());
 		current_y += BLOCK_MARGIN.y;
 
@@ -301,14 +302,14 @@ func alter_copies_in_other_deck(card_data : CardData, copies : int) -> void:
 	var main_deck_slip : DecklistSlip = main_deck_slips[card_data.card_id];
 	var side_deck_slip : DecklistSlip = side_deck_slips[card_data.card_id];
 	var other_deck_slip : DecklistSlip = side_deck_slip if in_main_deck else main_deck_slip;
-	var extra_copies : int = max(0, (get_count(main_deck_slip.card_data) + get_count(side_deck_slip.card_data)) - card_data.max_copies);
+	var extra_copies : int = max(0, (get_copies(main_deck_slip.card_data) + get_copies(side_deck_slip.card_data)) - card_data.max_copies);
 	if !extra_copies:
 		return;
 	if !other_deck_slip.set_copies(increment_card_count(other_deck_slip.card_data, -extra_copies)):
 		despawn_card(other_deck_slip.card_data, true);
 
 func alter_card_copies(card_data : CardData, copies : int) -> int:
-	var change : int = copies - get_count(card_data);
+	var change : int = copies - get_copies(card_data);
 	var vacant_change : int;
 	if change > 0:
 		vacant_change = min(change, get_deck_room_for_card(card_data));

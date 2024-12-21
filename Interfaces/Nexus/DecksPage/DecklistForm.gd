@@ -38,6 +38,22 @@ var is_modulating_in_attribute : bool;
 var count_of_monsters : int;
 var referenced_card : CardData;
 
+func get_collections() -> Dictionary:
+	return {
+		NexusEnums.DecklistBlock.DECK_MASTER: deckmaster_cards,
+		NexusEnums.DecklistBlock.MONSTER: monster_cards,
+		NexusEnums.DecklistBlock.SPELL: spell_cards,
+		NexusEnums.DecklistBlock.TRAP: trap_cards,
+		NexusEnums.DecklistBlock.EXTRA: extra_cards,
+		NexusEnums.DecklistBlock.SIDE: side_cards,
+	};
+
+func get_all_cards() -> Array:
+	var all_cards : Array;
+	for collection in get_collections().values():
+		all_cards += collection.values();
+	return all_cards;
+
 func has_competing_ace(card_data : CardData, treat_as_main_deck_card : bool = false) -> bool:
 	return card_data.is_ace && aces[System.CardData.get_ace_gategory(card_data, treat_as_main_deck_card)];
 
@@ -48,23 +64,23 @@ func toggle_ace(card_data : CardData, value : bool = true) -> void:
 	aces[ace_category] = value;
 
 func count_main_deck() -> int:
-	return collection_counts[NexusEnums.DecklistBlocks.MONSTER] + \
-		collection_counts[NexusEnums.DecklistBlocks.SPELL] + \
-		collection_counts[NexusEnums.DecklistBlocks.TRAP];
+	return collection_counts[NexusEnums.DecklistBlock.MONSTER] + \
+		collection_counts[NexusEnums.DecklistBlock.SPELL] + \
+		collection_counts[NexusEnums.DecklistBlock.TRAP];
 
-func get_block_enum_for_card(card_data : CardData) -> NexusEnums.DecklistBlocks:
-	return NexusEnums.DecklistBlocks.MONSTER;
+func get_block_enum_for_card(card_data : CardData) -> NexusEnums.DecklistBlock:
+	return NexusEnums.DecklistBlock.MONSTER;
 
 func get_max_copies_fit(card_data : CardData) -> int:
 	return min(card_data.max_copies, get_deck_room_for_card(card_data));
 
 func get_room_for_non_ace_card(card_data : CardData) -> int:
 	match get_block_enum_for_card(card_data):
-		NexusEnums.DecklistBlocks.DECK_MASTER:
+		NexusEnums.DecklistBlock.DECK_MASTER:
 			return 1;
-		NexusEnums.DecklistBlocks.EXTRA:
+		NexusEnums.DecklistBlock.EXTRA:
 			return System.Rules.EXTRA_DECK_SIZE - count_extra_deck();
-		NexusEnums.DecklistBlocks.SIDE:
+		NexusEnums.DecklistBlock.SIDE:
 			return System.Rules.SIDE_DECK_SIZE - count_side_deck();
 	return System.Rules.MAIN_DECK_SIZE - count_main_deck();
 
@@ -75,10 +91,10 @@ func get_deck_room_for_card(card_data : CardData) -> int:
 	return room;
 
 func count_extra_deck() -> int:
-	return collection_counts[NexusEnums.DecklistBlocks.EXTRA];
+	return collection_counts[NexusEnums.DecklistBlock.EXTRA];
 
 func count_side_deck() -> int:
-	return collection_counts[NexusEnums.DecklistBlocks.SIDE];
+	return collection_counts[NexusEnums.DecklistBlock.SIDE];
 
 func main_deck_full() -> bool:
 	return count_main_deck() >= System.Rules.MAIN_DECK_SIZE;
@@ -97,7 +113,7 @@ func can_add_to_side_deck(card_data : CardData) -> bool:
 
 func get_default_collection_counts() -> Dictionary:
 	var counts : Dictionary;
-	for block in NexusEnums.DecklistBlocks.values():
+	for block in NexusEnums.DecklistBlock.values():
 		counts[block] = 0;
 	return counts;
 
@@ -133,11 +149,11 @@ func get_slips() -> Array:
 func get_slip_collection(card_data : CardData) -> Dictionary:
 	return main_deck_slips if System.CardData.in_main_deck(card_data) else side_deck_slips;
 
-func get_counts(card_data : CardData) -> Dictionary:
+func get_copies_collection(card_data : CardData) -> Dictionary:
 	return main_deck_counts if System.CardData.in_main_deck(card_data) else side_deck_counts;
 
-func get_count(card_data : CardData) -> int:
-	var counts : Dictionary = get_counts(card_data);
+func get_copies(card_data : CardData) -> int:
+	var counts : Dictionary = get_copies_collection(card_data);
 	return counts[card_data.card_id] if counts.has(card_data.card_id) else 0;
 
 func get_slip(card_data : CardData) -> DecklistSlip:
@@ -181,10 +197,16 @@ func concat_non_backrow_collections() -> Array:
 	return deckmaster_cards.values() + monster_cards.values() + extra_cards.values() + side_cards.values();
 
 func erase_count(card_data : CardData) -> void:
-	get_counts(card_data).erase(card_data.card_id);
+	get_copies_collection(card_data).erase(card_data.card_id);
 
 func card_in_any_deck(card_data : CardData) -> bool:
 	return main_deck_slips.has(card_data.card_id) || side_deck_slips.has(card_data.card_id);
 
 func in_both_decks(card_data : CardData) -> bool:
 	return main_deck_slips.has(card_data.card_id) && side_deck_slips.has(card_data.card_id);
+
+func get_deck_master() -> CardData:
+	for card in deckmaster_cards.values():
+		if main_deck_counts[card.card_id] > 0:
+			return card;
+	return null;

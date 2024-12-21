@@ -37,7 +37,7 @@ static func get_nexus_page_index(page: NexusPages) -> int:
 			return 5;
 	return 0;
 
-enum DecklistBlocks {
+enum DecklistBlock {
 	DECK_MASTER,
 	MONSTER,
 	SPELL,
@@ -47,10 +47,10 @@ enum DecklistBlocks {
 }
 
 static var DecklistBlockNames = {
-	DecklistBlocks.DECK_MASTER : "Deck Master",
-	DecklistBlocks.MONSTER : "Monsters",
-	DecklistBlocks.SPELL : "Spells",
-	DecklistBlocks.TRAP : "Traps",
-	DecklistBlocks.EXTRA : "Extra",
-	DecklistBlocks.SIDE : "Side"
+	NexusEnums.DecklistBlock.DECK_MASTER : "Deck Master",
+	NexusEnums.DecklistBlock.MONSTER : "Monsters",
+	NexusEnums.DecklistBlock.SPELL : "Spells",
+	NexusEnums.DecklistBlock.TRAP : "Traps",
+	NexusEnums.DecklistBlock.EXTRA : "Extra",
+	NexusEnums.DecklistBlock.SIDE : "Side"
 };

@@ -17,7 +17,12 @@ func init(request : OperationRequest, new_parent : Node, _leave_raw : bool) -> v
 	add_parent(new_parent)
 	operation = request.operation;
 	self.request_completed.connect(self.complete_request);
-	request(request.getEndpoint(), [], request.method, str(request.params));
+	request(request.getEndpoint(), get_headers(), request.method, str(request.params));
+
+func get_headers() -> PackedStringArray:
+	return [
+		"Authorization: Bearer " + System.auth_data.authToken if System.auth_data else ""
+	];
 
 func add_parent(new_parent : Node) -> void:
 	parent = new_parent;

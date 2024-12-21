@@ -30,3 +30,10 @@ static func last(message : String) -> String:
 static func split(message : String) -> Array:
 	var words : Array = message.split(" ");
 	return words.filter(func(message : String): return message.length());
+
+static func get_time() -> String:
+	var datetime: Dictionary = Time.get_datetime_dict_from_unix_time(Time.get_unix_time_from_system());
+	return "%04d-%02d-%02d %02d:%02d:%02d" % [
+		datetime.year, datetime.month, datetime.day,
+		datetime.hour, datetime.minute, datetime.second
+	];

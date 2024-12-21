@@ -6,7 +6,7 @@ extends DecklistBlock
 @onready var inactive_trash_sprite : Sprite2D = $TrashButton/TrashIconInactive;
 @onready var down_arrow_sprite : Sprite2D = $CollapseButton/DownArrowSprite;
 
-func init(new_block : NexusEnums.DecklistBlocks) -> void:
+func init(new_block : NexusEnums.DecklistBlock) -> void:
 	block = new_block;
 	update_label();
 	update_frame();
@@ -15,14 +15,14 @@ func init(new_block : NexusEnums.DecklistBlocks) -> void:
 	toggle_collapsed();
 
 func init_down_arrow() -> void:
-	down_arrow_sprite.texture = load(WHITE_DOWN_ARROW_PATH if block == NexusEnums.DecklistBlocks.SIDE else BLACK_DOWN_ARROW_PATH);
+	down_arrow_sprite.texture = load(WHITE_DOWN_ARROW_PATH if block == NexusEnums.DecklistBlock.SIDE else BLACK_DOWN_ARROW_PATH);
 
 func get_block_name() -> String:
 	return NexusEnums.DecklistBlockNames[block]
 
 func update_label() -> void:
 	var block_name : String = get_block_name();
-	var is_deck_master : bool = block == NexusEnums.DecklistBlocks.DECK_MASTER;
+	var is_deck_master : bool = System.DecklistBlock.is_deck_master(block);
 	var is_countless : bool = count == 0;
 	var is_full_main_deck : bool = is_deck_master && count == System.Rules.MAIN_DECK_SIZE;
 	label.text = COUNTLESS_LABEL_MESSAGE % block_name if is_countless \
@@ -31,7 +31,7 @@ func update_label() -> void:
 		else LABEL_MESSAGE % [block_name, count];
 	label.position.y = LABEL_POSITION_COUNTLESS if is_countless || is_full_main_deck else LABEL_POSITION_WITH_COUNT;
 	label.add_theme_color_override("default_color", SystemEnums.TEXT_COLOR_PEARL_WHITE \
-		if block == NexusEnums.DecklistBlocks.SIDE else SystemEnums.TEXT_COLOR_BLACK);
+		if block == NexusEnums.DecklistBlock.SIDE else SystemEnums.TEXT_COLOR_BLACK);
 
 func update_frame() -> void:
 	System.Instance.load_child(BLOCK_BACKFRAME_PATH + System.String_.serialize(get_block_name()) + SystemEnums.get_node_extension(), frame_layer);
@@ -42,7 +42,7 @@ func _on_thrash_triggered() -> void:
 	emit_signal("trash", block);
 
 func update_icons() -> void:
-	is_active = is_active && block != NexusEnums.DecklistBlocks.DECK_MASTER;
+	is_active = is_active;
 	active_trash_sprite.visible = is_active;
 	inactive_trash_sprite.visible = !is_active;
 

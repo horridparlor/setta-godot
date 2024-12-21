@@ -14,12 +14,12 @@ const LABEL_POSITION_WITH_COUNT : float = -23.5
 const BLACK_DOWN_ARROW_PATH : String = "res://Assets/Icons/Common/down/DownArrowBlack.png";
 const WHITE_DOWN_ARROW_PATH : String = "res://Assets/Icons/Common/down/DownArrowWhite.png";
 
-var block : NexusEnums.DecklistBlocks;
+var block : NexusEnums.DecklistBlock;
 var count : int;
 var is_active : bool;
 var is_collapsed : bool;
 
-func init(new_block : NexusEnums.DecklistBlocks) -> void:
+func init(new_block : NexusEnums.DecklistBlock) -> void:
 	pass;
 
 func set_count(new_count : int) -> void:

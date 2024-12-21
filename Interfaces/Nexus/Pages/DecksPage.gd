@@ -52,6 +52,8 @@ var decklist_form_target_position : Vector2;
 var cards_in_decklist : Dictionary;
 var all_cards : Array = System.CardData.get_all_cards();
 var chosen_deck_master : CardData;
+var decklists : Dictionary;
+var chosen_decklist : DecklistData;
 
 var search_string : String;
 
