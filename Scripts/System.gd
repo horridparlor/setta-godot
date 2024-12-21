@@ -37,22 +37,23 @@ var debug_string : String;
 static func wait(delay : float, parent : Node2D) -> void:
 	await parent.get_tree().create_timer(delay).timeout;
 
-func init() -> void:
+static func init() -> void:
 	create_directories();
+	init_user_state();
 	Server.init();
 
 static func create_directories() -> void:
 	Image_.create_directory();
 	Json.create_directory();
 
-func init_user_state() -> void:
+static func init_user_state() -> void:
 	var json_data : Dictionary = Json.read(SystemEnums.SaveFilePath[SystemEnums.SaveFile.USER_STATE]);
 	if Json.is_error(json_data):
 		return;
-	chosen_decklist_id = json_data.chosen_decklist_id;
+	System.chosen_decklist_id = json_data.chosen_decklist_id;
 
-func store_user_state() -> void:
+static func store_user_state() -> void:
 	var user_state : Dictionary = {
-		"chosen_decklist_id": chosen_decklist_id
+		"chosen_decklist_id": System.chosen_decklist_id
 	};
 	Json.write(user_state, SystemEnums.SaveFilePath[SystemEnums.SaveFile.USER_STATE]);

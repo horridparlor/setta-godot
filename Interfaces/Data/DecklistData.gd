@@ -47,6 +47,9 @@ func eat_json(json_data : Dictionary) -> void:
 	decklist_id = json_data.decklistId;
 	decklist_name = json_data.name;
 	is_valid = json_data.isValid;
+	eat_cards_json(json_data);
+
+func eat_cards_json(json_data : Dictionary) -> void:
 	cards = [];
 	for json in json_data.cards:
 		cards.append(CardInDecklist.new(int(json.cardId), int(json.copies), System.DecklistBlock.to_enum(json.deckBlock)));

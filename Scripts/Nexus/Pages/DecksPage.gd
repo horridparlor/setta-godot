@@ -34,9 +34,10 @@ func initialize_decklists() -> void:
 	chosen_decklist = decklists[System.chosen_decklist_id] if decklists.has(System.chosen_decklist_id) else decklists.values()[0];
 	eat_chosen_decklist();
 
-func spawn_new_decklist(cards : Array = []) -> void:
+func spawn_new_decklist(json_data : Dictionary = {}) -> void:
 	chosen_decklist = DecklistData.new();
-	chosen_decklist.cards = cards;
+	if !json_data.is_empty():
+		chosen_decklist.eat_cards_json(json_data);
 	eat_chosen_decklist();
 
 func eat_chosen_decklist() -> void:
@@ -471,7 +472,7 @@ func _on_save_button_pressed() -> void:
 	save_deck() if in_edit_mode else copy_deck();
 
 func copy_deck() -> void:
-	spawn_new_decklist(chosen_decklist.cards);
+	spawn_new_decklist(chosen_decklist.get_json());
 	on_toast("Deck copied");
 
 func save_deck() -> void:
@@ -510,7 +511,6 @@ func save_decklists_state() -> void:
 	System.Decklist.set_decklists(decklists);
 	System.store_user_state();
 	
-
 func _on_filters_button_pressed() -> void:
 	if !is_active:
 		return;
@@ -523,4 +523,5 @@ func on_new_deck() -> void:
 	if chosen_decklist.is_new_empty():
 		return;
 	spawn_new_decklist();
+	on_edit();
 	on_toast("Empty deck created");
