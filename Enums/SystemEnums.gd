@@ -125,11 +125,13 @@ enum DebugMode {
 }
 
 enum SaveFile {
-	CARDS
+	CARDS,
+	DECKLISTS
 }
 
 static var SaveFilePath = {
-	SaveFile.CARDS: "cards"
+	SaveFile.CARDS: "cards",
+	SaveFile.DECKLISTS: "decklists"
 }
 
 enum DataFileType {
@@ -158,3 +160,9 @@ static var IconPixelSize = {
 
 static func build_icon_path(size : IconSize, folder_path : String) -> String:
 	return folder_path + str(IconPixelSize[size]) + get_image_extension();
+
+enum ToastTheme {
+	SUCCESS,
+	FAILURE,
+	WARNING
+}

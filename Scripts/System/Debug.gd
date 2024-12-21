@@ -1,5 +1,4 @@
 const REQUESTS : bool = true;
-const REQUESTS_FILTER : RequestEnums.Operation = RequestEnums.Operation.POST_DECKLIST;
+const REQUESTS_FILTER : RequestEnums.Operation = RequestEnums.Operation.GET_DECKLISTS;
 const OVERWRITE_CARD_ID : int = 0;
-const ALWAYS_FETCH_CARDS : bool = false;
-const AUTO_OPEN_NEXUS_PAGE : NexusEnums.NexusPages = NexusEnums.NexusPages.DECKS;
+const AUTO_OPEN_NEXUS_PAGE : NexusEnums.NexusPages = NexusEnums.NexusPages.NONE;

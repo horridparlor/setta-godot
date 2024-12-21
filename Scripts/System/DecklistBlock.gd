@@ -16,3 +16,19 @@ static func to_json(block : NexusEnums.DecklistBlock) -> String:
 		NexusEnums.DecklistBlock.SIDE:
 			return 'side';
 	return 'monster';
+
+static func to_enum(block : String) -> NexusEnums.DecklistBlock:
+	match block:
+		'deckMaster':
+			return NexusEnums.DecklistBlock.DECK_MASTER;
+		'monster':
+			return NexusEnums.DecklistBlock.MONSTER;
+		'spell':
+			return NexusEnums.DecklistBlock.SPELL;
+		'trap':
+			return NexusEnums.DecklistBlock.TRAP;
+		'extra':
+			return NexusEnums.DecklistBlock.EXTRA;
+		'side':
+			return NexusEnums.DecklistBlock.SIDE;
+	return NexusEnums.DecklistBlock.MONSTER;

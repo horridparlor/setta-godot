@@ -8,6 +8,8 @@ extends DecklistBlock
 
 func init(new_block : NexusEnums.DecklistBlock) -> void:
 	block = new_block;
+	visible = System.DecklistBlock.is_deck_master(block);
+	update_icons();
 	update_label();
 	update_frame();
 	toggle_active();
@@ -42,7 +44,6 @@ func _on_thrash_triggered() -> void:
 	emit_signal("trash", block);
 
 func update_icons() -> void:
-	is_active = is_active;
 	active_trash_sprite.visible = is_active;
 	inactive_trash_sprite.visible = !is_active;
 

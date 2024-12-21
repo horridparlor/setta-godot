@@ -1,6 +1,8 @@
 extends Node2D
 class_name CardScene
 
+signal toast(message, theme);
+
 var cards : Dictionary;
 var focused_card : GameplayCard;
 var card_to_be_played : GameplayCard;
@@ -12,3 +14,12 @@ var active_modal : GameplayEnums.CardModalType = GameplayEnums.CardModalType.NON
 
 func is_selecting() -> bool:
 	return selection_type != GameplayEnums.SelectionType.NONE;
+
+func on_toast(message : String, theme : SystemEnums.ToastTheme = SystemEnums.ToastTheme.SUCCESS) -> void:
+	emit_signal("toast", message, theme);
+
+func on_toast_failure(message : String) -> void:
+	on_toast(message, SystemEnums.ToastTheme.FAILURE);
+
+func on_toast_warning(message : String) -> void:
+	on_toast(message, SystemEnums.ToastTheme.WARNING);

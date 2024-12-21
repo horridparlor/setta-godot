@@ -4,6 +4,7 @@ class_name DecklistForm
 signal request_toggle_card(card_data);
 signal deckmaster_counts_changed();
 signal reference_card(card_data);
+signal toast(message, theme);
 
 const DECKLIST_SLIP_PATH : String = "res://Prefabs/Nexus/DecksPage/DecklistSlip.tscn";
 const SLIP_STARTING_POSITION : Vector2 = Vector2(0, 100);
@@ -210,3 +211,40 @@ func get_deck_master() -> CardData:
 		if main_deck_counts[card.card_id] > 0:
 			return card;
 	return null;
+
+func delete_all_slips() -> void:
+	var slip : DecklistSlip;
+	for s in get_slips():
+		slip = s;
+		slip.queue_free();
+	main_deck_slips = {};
+	side_deck_slips = {};
+
+func delete_all_cards() -> void:
+	deckmaster_cards = {};
+	monster_cards = {};
+	spell_cards = {};
+	trap_cards = {};
+	extra_cards = {};
+	side_cards = {};
+	
+	collection_counts = get_default_collection_counts();
+	aces = get_default_aces();
+	
+	main_deck_counts = {};
+	side_deck_counts = {};
+
+func spawn_card(card_data : CardData, copies : int = 0) -> void:
+	pass;
+	
+func eat_decklist(decklist : DecklistData) -> void:
+	var card : CardInDecklist;
+	delete_all_slips();
+	delete_all_cards();
+	for c in decklist.cards:
+		card = c;
+		spawn_card(System.CardData.from_id(card.card_id), card.copies);
+	for slip in get_slips():
+		slip.toggle_locked();
+	toggle_active(false);
+	

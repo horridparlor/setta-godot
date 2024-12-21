@@ -23,7 +23,27 @@ func _ready() -> void:
 	initialize_decklists();
 
 func initialize_decklists() -> void:
+	var decklist : DecklistData;
+	for json_data in System.decklists.values():
+		decklist = DecklistData.new();
+		decklist.eat_json(json_data);
+		decklists[decklist.decklist_id] = decklist;
+	if decklists.is_empty():
+		spawn_new_decklist();
+		return;
+	chosen_decklist = decklists.values()[0];
+	eat_chosen_decklist();
+
+func spawn_new_decklist(cards : Array = []) -> void:
 	chosen_decklist = DecklistData.new();
+	chosen_decklist.cards = cards;
+	eat_chosen_decklist();
+	decklist_form.update_blocks();
+
+func eat_chosen_decklist() -> void:
+	chosen_deck_master = null;
+	decklist_form.eat_decklist(chosen_decklist);
+	update_chosen_deckmaster();
 
 func _physics_process(delta : float) -> void:
 	if is_scrolling_catalogue:
@@ -140,6 +160,7 @@ func initialize() -> void:
 	decklist_form.request_toggle_card.connect(toggle_card_to_deck);
 	decklist_form.deckmaster_counts_changed.connect(update_chosen_deckmaster);
 	decklist_form.reference_card.connect(on_reference_card);
+	decklist_form.toast.connect(on_toast);
 
 func on_reference_card(card_data : CardData) -> void:
 	var is_currently_referenced : bool = card_data.card_id == decklist_form.referenced_card.card_id if decklist_form.referenced_card else false;
@@ -159,6 +180,7 @@ func set_reference(card_data : CardData) -> void:
 		slip.shutter();
 	decklist_form.referenced_card = card_data;
 	update_clear_filters_button();
+	on_toast("Referencing: %s" % card_data.normalized_name);
 
 func initialize_buttons() -> void:
 	edit_button.init("Edit");
@@ -169,6 +191,13 @@ func initialize_buttons() -> void:
 
 func on_edit() -> void:
 	emit_signal("close_deck" if in_edit_mode else "edit_deck");
+
+func on_close_deck() -> void:
+	toggle_edit_mode(false);
+	clear_filters();
+	chosen_decklist.eat_cards(decklist_form);
+	if chosen_decklist.has_unsaved_changes:
+		on_toast_warning("Unsaved changes");
 
 func on_edit_mode_changed() -> void:
 	edit_button.unfocus();
@@ -198,6 +227,8 @@ func reset_decklist_position() -> void:
 	decklist_form.position.y = DECKLIST_FORM_MAX_Y;
 
 func find_cards() -> void:
+	if !in_edit_mode:
+		return;
 	unspawn_cards();
 	catalogue_cards = get_filtered_cards() if has_deck_master() \
 		else all_cards.filter(System.CardData.is_deck_master);
@@ -217,6 +248,8 @@ func filter_by_filters(legal_cards : Array) -> Array:
 	if search_string.length():
 		legal_cards = legal_cards.filter(func(card : CardData):
 			return System.CardData.has_search_string(card, search_string));
+	if legal_cards.is_empty():
+		on_toast_warning("No cards found");
 	return legal_cards;
 
 func spawn_catalogue_cards() -> void:
@@ -431,23 +464,55 @@ func _on_clear_filters_triggered() -> void:
 		find_cards();
 
 func _on_save_button_pressed() -> void:
-	if !is_active || !has_deck_master():
+	if !is_active:
+		return;
+	if !has_deck_master():
+		on_toast_warning("No Deck Master");
 		return;
 	save_deck() if in_edit_mode else copy_deck();
 
 func copy_deck() -> void:
-	pass;
+	spawn_new_decklist(chosen_decklist.cards);
+	on_toast("Deck copied");
 
 func save_deck() -> void:
 	chosen_decklist.eat_cards(decklist_form);
 	chosen_decklist.upload(self);
 
 func _on_http_response(request : OperationRequest, operation : RequestEnums.Operation, response : Dictionary) -> void:
-	print(response);
 	match operation:
 		RequestEnums.Operation.POST_DECKLIST:
 			if response.has("error"):
+				on_toast_failure(response.error);
+				chosen_decklist.toggle_active();
 				return;
+			on_decklist_posted(response);
 		RequestEnums.Operation.PUT_DECKLIST:
 			if response.has("error"):
+				on_toast_failure(response.error);
+				chosen_decklist.toggle_active();
 				return;
+			on_decklist_put(response);
+
+func on_decklist_posted(response : Dictionary) -> void:
+	on_toast("Deck created");
+	chosen_decklist.eat_posted(response);
+	decklists[chosen_decklist.decklist_id] = chosen_decklist;
+
+func on_decklist_put(response : Dictionary) -> void:
+	on_toast("Deck saved");
+	chosen_decklist.eat_put(response);
+
+func _on_filters_button_pressed() -> void:
+	if !is_active:
+		return;
+	on_filters() if in_edit_mode else on_new_deck();
+
+func on_filters() -> void:
+	on_toast_warning("Coming soon");
+
+func on_new_deck() -> void:
+	if chosen_decklist.is_new_empty():
+		return;
+	spawn_new_decklist();
+	on_toast("Empty deck created");

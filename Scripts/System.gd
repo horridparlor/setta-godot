@@ -17,12 +17,14 @@ const Rules : GDScript = preload("res://Scripts/System/Rules.gd");
 const Scale : GDScript = preload("res://Scripts/System/Scale.gd");
 const Server : GDScript = preload("res://Scripts/System/Server.gd");
 const String_ : GDScript = preload("res://Scripts/System/String.gd");
+const Toast : GDScript = preload("res://Scripts/System/Toast.gd");
 const Vectors : GDScript = preload("res://Scripts/System/Vectors.gd");
 const Window_ : Vector2 = Vector2(1920, 1080);
 
 var debug_mode : SystemEnums.DebugMode = SystemEnums.DebugMode.NONE;
 var debug_id : int;
 var cards : Dictionary;
+var decklists : Dictionary;
 var main_deck_cards : Dictionary;
 var extra_deck_cards : Dictionary;
 var is_ready : bool = false;
@@ -36,6 +38,7 @@ static func wait(delay : float, parent : Node2D) -> void:
 
 static func init() -> void:
 	create_directories();
+	Server.init();
 
 static func create_directories() -> void:
 	Image_.create_directory();

@@ -29,6 +29,7 @@ func _ready() -> void:
 		block.collapse.connect(on_collapse_block);
 	modulation_timer.wait_time = MODULATION_WAIT;
 	reset_icon_modulation();
+	toggle_active(false);
 
 func _physics_process(delta : float) -> void:
 	if is_modulating_icons:
@@ -62,10 +63,13 @@ func reset_icon_modulation(do_start : bool = false) -> void:
 		modulation_timer.start();
 
 func on_empty_block(block : NexusEnums.DecklistBlock) -> void:
-	var source : Array = get_all_cards() if System.DecklistBlock.is_deck_master(block) \
+	var is_deck_master : bool = System.DecklistBlock.is_deck_master(block);
+	var source : Array = get_all_cards() if is_deck_master \
 		else get_collection_for_block(get_block_for_block_enum(block)).values();
 	for card in source:
 		on_alter_copies(-1, card);
+	if is_deck_master:
+		emit_signal("toast", "Deck cleared", SystemEnums.ToastTheme.SUCCESS);
 
 func on_collapse_block(block : NexusEnums.DecklistBlock, value : bool) -> void:
 	get_block_for_block_enum(block).toggle_collapsed(value);
@@ -268,7 +272,9 @@ func update_blocks() -> void:
 		is_side_deck = block.block == NexusEnums.DecklistBlock.SIDE;
 		cards = get_collection_for_block(block);
 		has_cards = !cards.is_empty();
-		block.visible = has_cards;
+		block.visible = has_cards || System.DecklistBlock.is_deck_master(block.block);
+		block.set_count(card_count if block.block != NexusEnums.DecklistBlock.DECK_MASTER else \
+			count_main_deck());
 		if !has_cards:
 			block.toggle_collapsed();
 			continue;
@@ -281,9 +287,8 @@ func update_blocks() -> void:
 				cards_collapsed += 1;
 				continue;
 			get_slip(card_data).position.y += current_y - cards_collapsed * SLIP_MARGIN.y;
+			print(get_slip(card_data).position.y);
 			cards_above += 1;
-		block.set_count(card_count if block.block != NexusEnums.DecklistBlock.DECK_MASTER else \
-			count_main_deck());
 		current_y += BLOCK_MARGIN.y;
 
 func update_min_y() -> void:
@@ -338,9 +343,10 @@ func despawn_slip(card_data : CardData, do_reorder : bool) -> void:
 
 func update_blocks_active() -> void:
 	var block : DecklistBlock;
+	var has_cards : bool = get_all_cards().size();
 	for b in get_blocks():
 		block = b;
-		block.toggle_active(is_active);
+		block.toggle_active(is_active && has_cards);
 
 func _on_modulation_timer_timeout() -> void:
 	modulation_timer.stop();

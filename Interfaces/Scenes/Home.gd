@@ -7,6 +7,8 @@ const LOGIN_PATH : String = SCENE_FOLDER_PATH + "Login.tscn";
 const NEXUS_PATH : String = SCENE_FOLDER_PATH + "Nexus.tscn";
 const DEBUG_MODE_CODE : Array = [KEY_KP_8, KEY_KP_8, KEY_KP_2, KEY_KP_2, KEY_KP_4, KEY_KP_6, KEY_KP_4, KEY_KP_6, KEY_KP_1, KEY_KP_3];
 const LOADING_ICON_PATH : String = "res://Prefabs/Common/Identifiers/LoadingIcon.tscn";
+const TOAST_Y_MARGIN : float = 75;
+const TOAST_SPAWN_Y_MARGIN : float = System.Window_.y / 4;
 
 var id_regex : RegEx = RegEx.new();
 var gameplay : Gameplay;
@@ -14,6 +16,9 @@ var login : Login;
 var nexus : Nexus;
 var current_code_index : int = 0;
 var loading_icon : LoadingIcon;
+var toast_messages : Dictionary;
+var toast_y : float;
+var is_moving_toasts : bool;
 
 var cheat_deal_regex : RegEx = RegEx.new();
 var cheat_draw_regex : RegEx = RegEx.new();

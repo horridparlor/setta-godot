@@ -86,6 +86,7 @@ func load_page(page : NexusEnums.NexusPages) -> void:
 	previous_page = active_page;
 	active_page = System.Instance.load_child(get_page_path(page), page_layer);
 	active_page.init(page);
+	active_page.toast.connect(on_toast);
 	if previous_page:
 		previous_page.toggle_active(false);
 		page_slide_direction = 1 if active_page.is_before(previous_page) else -1;
@@ -110,8 +111,7 @@ func on_edit_deck() -> void:
 
 func on_close_deck() -> void:
 	var decks_page : DecksPage = active_page;
-	decks_page.toggle_edit_mode(false);
-	decks_page.clear_filters();
+	decks_page.on_close_deck();
 	page_buttons.toggle_active();
 	toggle_moving_page_buttons();
 

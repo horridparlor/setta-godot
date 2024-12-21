@@ -139,6 +139,9 @@ static func from_json(json_data : Dictionary) -> CardData:
 	card_data.eat_default(json_data);
 	return card_data;
 	
+static func from_id(card_id : int) -> CardData:
+	return from_json(System.cards[card_id]);
+	
 static func is_deck_master(card_data : CardDefaultData) -> bool:
 	return card_data.supertype == CardEnums.CardSupertype.DECK_MASTER;
 

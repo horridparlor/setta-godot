@@ -10,11 +10,29 @@ func _ready() -> void:
 	initialize_regex();
 	update_debug_tools();
 	set_process_input(true);
-	System.Server.init();
+	System.init();
 	load_cards();
 	loading_icon.init();
 	if !System.Auth.try_auth(self):
 		initialize_login();
+		return;
+	load_decklists();
+
+func _physics_process(delta : float) -> void:
+	if is_moving_toasts:
+		move_toasts(delta);
+
+func move_toasts(delta : float) -> void:
+	var toast : ToastMessage;
+	is_moving_toasts = false;
+	for t in toast_messages.values():
+		toast = t;
+		toast.position = System.Vectors.slide_towards(toast.position, toast.origin_point, toast.SPEED, delta);
+		if System.Vectors.equal(toast.position, toast.origin_point):
+			toast.position = toast.origin_point;
+			toast.is_moving = false;
+		else:
+			is_moving_toasts = true;
 
 func disable_loading_icon() -> void:
 	if System.Instance.exists(loading_icon):
@@ -32,12 +50,40 @@ func close_login() -> void:
 
 func initialize_nexus() -> void:
 	disable_loading_icon();
-	if !System.cards.size():
+	if System.cards.is_empty():
 		fetch_cards();
+	if System.decklists.is_empty():
+		fetch_decklists();
 	nexus = System.Instance.load_child(NEXUS_PATH, scene_layer);
 	nexus.logout.connect(on_logout);
 	nexus.enter_game.connect(on_enter_game);
+	nexus.toast.connect(on_toast);
 	nexus.init();
+
+func on_toast(message : String, theme : SystemEnums.ToastTheme = SystemEnums.ToastTheme.SUCCESS) -> void:
+	var toast_message : ToastMessage = System.Toast.make_toast(message, theme, self);
+	toast_message.despawn.connect(on_despawn_toast);
+	toast_messages[toast_message.instance_id] = toast_message;
+	toast_y = toast_message.position.y;
+	toast_message.origin_point = toast_message.position;
+	toast_message.position.y += TOAST_SPAWN_Y_MARGIN;
+	reorder_toasts();
+
+func on_despawn_toast(instance_id : int) -> void:
+	var toast_message : ToastMessage = toast_messages[instance_id];
+	toast_messages.erase(instance_id);
+	toast_message.queue_free();
+	reorder_toasts();
+
+func reorder_toasts() -> void:
+	var current_y : float = toast_y;
+	var messages : Array = toast_messages.values();
+	messages.reverse();
+	for toast in messages:
+		toast.origin_point.y = current_y;
+		toast.is_moving = true;
+		current_y -= TOAST_Y_MARGIN;
+	is_moving_toasts = toast_messages.size();
 
 func on_logout() -> void:
 	initialize_login();
@@ -59,9 +105,8 @@ func on_surrender() -> void:
 
 func load_cards() -> void:
 	var cards : Dictionary;
-	System.init();
 	cards = System.Json.read(SystemEnums.SaveFilePath[SystemEnums.SaveFile.CARDS]);
-	if System.Json.success(cards) && !System.Debug.ALWAYS_FETCH_CARDS:
+	if System.Json.success(cards):
 		set_cards(cards.cards);
 	fetch_cards();
 
@@ -83,6 +128,11 @@ func _on_http_response(request : OperationRequest, operation : RequestEnums.Oper
 			set_cards(response.cards);
 			if System.Instance.exists(gameplay):
 				gameplay.init();
+		RequestEnums.Operation.GET_DECKLISTS:
+			if response.has("error"):
+				on_toast(response.error, SystemEnums.ToastTheme.FAILURE);
+				return;
+			set_decklists(response.decklists);
 
 func set_cards(source : Array):
 	var cards : Dictionary;
@@ -106,6 +156,23 @@ func set_cards(source : Array):
 	System.extra_deck_cards = extra_deck_cards;
 	System.Json.write({"cards": source}, SystemEnums.SaveFilePath[SystemEnums.SaveFile.CARDS]);
 	System.is_ready = true;
+
+func load_decklists() -> void:
+	var decklists : Dictionary;
+	decklists = System.Json.read(SystemEnums.SaveFilePath[SystemEnums.SaveFile.DECKLISTS]);
+	if System.Json.success(decklists):
+		set_decklists(decklists.decklists);
+	fetch_decklists();
+
+func fetch_decklists() -> void:
+	System.Server.request(RequestEnums.Operation.GET_DECKLISTS, {}, self);
+
+func set_decklists(source : Array):
+	var decklists : Dictionary;
+	for decklist in source:
+		decklists[decklist.id] = decklist;
+	System.decklists = decklists;
+	System.Json.write({"decklists": source}, SystemEnums.SaveFilePath[SystemEnums.SaveFile.DECKLISTS]);
 
 func update_debug_tools() -> void:
 	debug_prompt.visible = System.debug_mode != SystemEnums.DebugMode.NONE;

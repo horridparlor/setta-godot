@@ -3,6 +3,7 @@ class_name Nexus
 
 signal enter_game();
 signal logout();
+signal toast(message);
 
 const PAGES_PATH : String = "res://Prefabs/Nexus/Pages/";
 const SHOP_PAGE_PATH : String = PAGES_PATH + "ShopPage.tscn";
@@ -29,3 +30,6 @@ var page_slide_direction : int;
 var is_moving_page_buttons : bool;
 var page_buttons_target_position : Vector2;
 var page_buttons_hidden : bool;
+
+func on_toast(message : String, theme : SystemEnums.ToastTheme = SystemEnums.ToastTheme.SUCCESS) -> void:
+	emit_signal("toast", message, theme);

@@ -117,6 +117,7 @@ wait_time = 0.26
 wait_time = 0.26
 
 [connection signal="submit_message" from="TopBar/SearchBar" to="." method="_on_search_bar_submit_message"]
+[connection signal="pressed" from="TopBar/FiltersButton" to="." method="_on_filters_button_pressed"]
 [connection signal="pressed" from="TopBar/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="triggered" from="TopBar/ClearFiltersButton/ClearFilters" to="." method="_on_clear_filters_triggered"]
 [connection signal="pressed" from="Buttons/CatalogueScrollButton" to="." method="_on_catalogue_scroll_button_pressed"]

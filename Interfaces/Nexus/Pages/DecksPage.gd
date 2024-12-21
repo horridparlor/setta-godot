@@ -66,3 +66,6 @@ func on_edit_mode_changed() -> void:
 
 func clear_filters() -> void:
 	pass;
+
+func on_close_deck() -> void:
+	pass;
