@@ -168,3 +168,12 @@ enum ToastTheme {
 	FAILURE,
 	WARNING
 }
+
+enum BooleanOption {
+	NONE,
+	TRUE,
+	FALSE
+}
+
+func read_boolean(option : BooleanOption) -> bool:
+	return option == BooleanOption.TRUE;

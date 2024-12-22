@@ -61,6 +61,7 @@ var all_cards : Array = System.CardData.get_all_cards();
 var chosen_deck_master : CardData;
 var decklists : Dictionary;
 var chosen_decklist : DecklistData;
+var card_filters : CardFilters = CardFilters.new();
 
 var is_moving_meta_data : bool;
 var meta_data_origin_point : Vector2;
@@ -84,10 +85,14 @@ func on_close_deck() -> void:
 
 func open_decklist_filters() -> void:
 	decklist_filters = System.Instance.load_child(DECKLIST_FILTERS_PATH, self);
-	decklist_filters.init();
+	decklist_filters.init(card_filters);
 	decklist_filters.close.connect(close_decklist_filters);
+	decklist_filters.submit_filters.connect(on_submit_filters);
 	is_filters_modal_open = true;
 	toggle_active(false);
+
+func on_submit_filters(filters : CardFilters) -> void:
+	pass;
 
 func close_decklist_filters() -> void:
 	decklist_filters .queue_free();

@@ -313,6 +313,9 @@ func get_filtered_cards() -> Array:
 		if decklist_form.referenced_card != null else filter_by_filters(deckmaster_legal_cards);
 
 func filter_by_filters(legal_cards : Array) -> Array:
+	if card_filters.is_filtering():
+		legal_cards = legal_cards.filter(func(card : CardData):
+			return System.CardData.matches_filters(card, card_filters));
 	if search_string.length():
 		legal_cards = legal_cards.filter(func(card : CardData):
 			return System.CardData.has_search_string(card, search_string));
@@ -343,7 +346,7 @@ func spawn_catalogue_card(card_data : CardData) -> GameplayCard:
 	return card;
 
 func on_card_pressed(card : GameplayCard) -> void:
-	if focused_card != null:
+	if focused_card != null || !is_active:
 		return;
 	focused_card = card;
 	catalogue_click_timer.start();
@@ -406,6 +409,7 @@ func clear_filters() -> void:
 	search_bar.set_text();
 	search_string = "";
 	clear_reference();
+	card_filters = CardFilters.new();
 	update_clear_filters_button();
 
 func clear_reference() -> void:
@@ -478,7 +482,7 @@ func reset_card_catalogue() -> void:
 	last_card_shown = CARD_CATALOGUE_MAX_CARDS_SHOWN - 1;
 
 func _on_catalogue_scroll_button_pressed() -> void:
-	if !in_edit_mode || focused_card:
+	if !in_edit_mode || focused_card || !is_active:
 		return;
 	catalogue_scroll_position = get_global_mouse_position();
 	catalogue_scroll_start_position = catalogue_layer.position;
@@ -500,7 +504,7 @@ func _on_double_click_timer_timeout() -> void:
 	previously_focused_card_id = 0;
 
 func _on_decklist_scroll_button_pressed() -> void:
-	if focused_card:
+	if focused_card || !is_active:
 		return;
 	decklist_scroll_position = get_global_mouse_position();
 	decklist_scroll_start_position = decklist_form.position;
@@ -637,3 +641,8 @@ func on_new_deck() -> void:
 		spawn_new_decklist();
 	on_edit();
 	on_toast("Choose Deck Master");
+
+func on_submit_filters(filters : CardFilters) -> void:
+	card_filters = filters;
+	decklist_filters.on_close();
+	find_cards();

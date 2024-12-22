@@ -82,11 +82,14 @@ static func default(init_data : CardInitData) -> CardData:
 	card.zone = CardEnums.Zone.SHOWCASE;
 	return card;
 
+static func get_deck(card_data : CardDefaultData) -> CardEnums.DeckType:
+	return CardEnums.DeckType.MAIN if card_data.subtype in CardEnums.MAIN_DECK_SUBTYPES else CardEnums.DeckType.EXTRA;
+
 static func is_main_deck(card_data : CardDefaultData) -> bool:
-	return card_data.subtype in CardEnums.MAIN_DECK_SUBTYPES;
+	return card_data.deck == CardEnums.DeckType.MAIN;
 
 static func is_extra_deck(card_data : CardDefaultData) -> bool:
-	return card_data.subtype not in CardEnums.MAIN_DECK_SUBTYPES;
+	return card_data.deck == CardEnums.DeckType.EXTRA;
 
 static func is_monster(card_data : CardDefaultData) -> bool:
 	return card_data.card_type == CardEnums.CardType.MONSTER;
@@ -260,3 +263,24 @@ static func is_referenced_by(card_data : CardData, referenced_card : CardData) -
 static func has_search_string(card_data : CardData, message : String) -> bool:
 	return card_data.normalized_name.to_lower().contains(message) \
 		|| card_data.effects_text.to_lower().contains(message);
+
+static func matches_filters(card_data : CardData, card_filters : CardFilters) -> bool:
+	if card_filters.card_type != CardFilters.DEFAULT_CARD_TYPE && \
+	card_data.card_type != card_filters.card_type:
+		return false;
+	if card_filters.subtype != CardFilters.DEFAULT_SUBTYPE && \
+	card_data.subtype != card_filters.subtype:
+		return false;
+	if card_filters.supertype != CardFilters.DEFAULT_SUPERTYPE && \
+	card_data.supertype != card_filters.supertype:
+		return false;
+	if card_filters.card_class != CardFilters.DEFAULT_CARD_CLASS && \
+	card_data.card_class != card_filters.card_class:
+		return false;
+	if card_filters.is_ace != CardFilters.DEFAULT_IS_ACE && \
+	card_data.is_ace != SystemEnums.read_boolean(card_filters.is_ace):
+		return false;
+	if card_filters.deck != CardFilters.DEFAULT_DECK && \
+	card_data.deck != card_filters.deck:
+		return false;
+	return true;

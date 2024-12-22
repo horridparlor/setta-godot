@@ -8,6 +8,7 @@ var owner_id : int;
 var card_name : String;
 var display_name : String;
 var normalized_name : String;
+var deck : CardEnums.DeckType;
 var is_ace : bool;
 var card_type : CardEnums.CardType;
 var card_class : CardEnums.Class;
@@ -46,6 +47,7 @@ func _init(
 	
 	display_name = get_display_name(json_data);
 	normalized_name = System.CardData.get_normalized_name(self);
+	deck = System.CardData.get_deck(self);
 
 func get_display_name(json_data : Dictionary) -> String:
 	return "[font_size=%d]%s[/font_size]"\

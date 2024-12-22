@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://888x5efri8g"]
+[gd_scene load_steps=8 format=3 uid="uid://888x5efri8g"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/DecklistFilters.gd" id="1_mdsnu"]
 [ext_resource type="StyleBox" uid="uid://xs3x5vh43n0" path="res://Styles/Nexus/DecksPage/DecklistFilters/Backframe.tres" id="2_731tb"]
 [ext_resource type="Texture2D" uid="uid://c3ykdbatvwjx0" path="res://Assets/Icons/Common/cross/crossBox.png" id="3_1yx14"]
 [ext_resource type="Script" path="res://Scripts/Common/Buttons/SpringButton.gd" id="4_vdpyi"]
-[ext_resource type="FontFile" uid="uid://3kkavvgbrq0y" path="res://Assets/FontFiles/Montserrat/Montserrat-Medium.ttf" id="5_ue1dj"]
+[ext_resource type="PackedScene" uid="uid://bi005j0o1ut50" path="res://Prefabs/Common/Selectors/EnumSelector.tscn" id="5_qefc7"]
+[ext_resource type="PackedScene" uid="uid://chdrvm7emq34n" path="res://Prefabs/Login/Widgets/SubmitButton.tscn" id="6_qri3q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nod50"]
 size = Vector2(150, 150)
@@ -58,24 +59,22 @@ script = ExtResource("4_vdpyi")
 
 [node name="TypeFilters" type="Node2D" parent="FiltersForm"]
 
-[node name="CardTypeSelector" type="OptionButton" parent="FiltersForm/TypeFilters"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -700.0
-offset_top = -30.0
-offset_right = -420.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_ue1dj")
-theme_override_font_sizes/font_size = 32
+[node name="CardTypeSelector" parent="FiltersForm/TypeFilters" instance=ExtResource("5_qefc7")]
 
 [node name="ImportantFilters" type="Node2D" parent="FiltersForm"]
 
 [node name="StatFilters" type="Node2D" parent="FiltersForm"]
 
+[node name="BottomButtons" type="Node2D" parent="."]
+position = Vector2(0, 340)
+
+[node name="FilterButton" parent="BottomButtons" instance=ExtResource("6_qri3q")]
+position = Vector2(-220, 0)
+
+[node name="ClearButton" parent="BottomButtons" instance=ExtResource("6_qri3q")]
+position = Vector2(220, 0)
+
 [connection signal="triggered" from="CloseButton/CloseModal" to="." method="_on_close_modal_triggered"]
 [connection signal="timeout" from="Timers/ModulateTimer" to="." method="_on_modulate_timer_timeout"]
+[connection signal="pressed" from="BottomButtons/FilterButton" to="." method="_on_filter_button_pressed"]
+[connection signal="pressed" from="BottomButtons/ClearButton" to="." method="_on_clear_button_pressed"]

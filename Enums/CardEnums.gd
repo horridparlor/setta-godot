@@ -27,6 +27,7 @@ static func enumerate_card_type(message : String) -> CardType:
 			return CardType.TRAP;
 
 enum DeckType {
+	NONE,
 	MAIN,
 	EXTRA
 }
