@@ -26,6 +26,24 @@ func _ready() -> void:
 
 func initialize_meta_data_signals() -> void:
 	decklist_meta_data.name_changed.connect(on_decklist_name_change);
+	decklist_meta_data.save.connect(save_deck);
+	decklist_meta_data.delete.connect(delete_deck);
+	decklist_meta_data.roll_deck.connect(on_roll_decklist);
+	decklist_meta_data.toggle_active();
+
+func on_roll_decklist(direction : int = 1) -> void:
+	var decks : Array = decklists.keys();
+	var current_index : int = decks.find(System.chosen_decklist_id) + direction;
+	if decks.is_empty():
+		on_toast_warning("No saved decklist");
+		return;
+	if current_index < 0:
+		current_index = decks.size() - 1;
+	elif current_index >= decks.size():
+		current_index = 0;
+	System.chosen_decklist_id = decks[current_index];
+	on_toast("Decklist %s/%s" % [current_index + 1, decks.size()]);
+	load_previously_chosen_decklist();
 
 func on_decklist_name_change(message : String) -> void:
 	if message == chosen_decklist.decklist_name:
@@ -62,11 +80,15 @@ func initialize_decklists() -> void:
 		decklist = DecklistData.new();
 		decklist.eat_json(json_data);
 		decklists[decklist.decklist_id] = decklist;
+	load_previously_chosen_decklist();
+
+func load_previously_chosen_decklist() -> void:
 	if decklists.is_empty():
 		spawn_new_decklist();
 		return;
 	chosen_decklist = decklists[System.chosen_decklist_id] if decklists.has(System.chosen_decklist_id) else decklists.values()[0];
 	eat_chosen_decklist();
+	save_decklists_state();
 
 func spawn_new_decklist(json_data : Dictionary = {}) -> void:
 	chosen_decklist = DecklistData.new();
@@ -219,6 +241,8 @@ func initialize_buttons() -> void:
 	filters_button.init("New");
 
 func on_edit() -> void:
+	if !is_active:
+		return;
 	emit_signal("close_deck" if in_edit_mode else "edit_deck");
 
 func on_close_deck() -> void:
@@ -243,12 +267,14 @@ func on_edit_mode_changed() -> void:
 func open_edit_mode() -> void:
 	spawn_card_catalogue();
 	meta_data_origin_point = META_DATA_AWAY_POSITION;
+	decklist_meta_data.toggle_active(false);
 	is_moving_meta_data = true;
 
 func close_edit_mode() -> void:
 	unspawn_cards();
 	reset_decklist_position();
 	meta_data_origin_point = META_DATA_ACTIVE_POSITION;
+	decklist_meta_data.toggle_active();
 	is_moving_meta_data = true;
 
 func spawn_card_catalogue() -> void:
@@ -505,32 +531,68 @@ func _on_clear_filters_triggered() -> void:
 func _on_save_button_pressed() -> void:
 	if !is_active:
 		return;
-	if !has_deck_master():
-		on_toast_warning("No Deck Master");
-		return;
 	save_deck() if in_edit_mode else copy_deck();
 
 func copy_deck() -> void:
+	if !has_deck_master():
+		on_toast_warning("No Deck Master");
+		return;
 	spawn_new_decklist(chosen_decklist.get_json());
 	on_toast("Deck copied");
 
 func save_deck() -> void:
+	if !has_deck_master():
+		on_toast_warning("No Deck Master");
+		return;
 	decklist_meta_data.force_unsubmitted_updates();
 	chosen_decklist.eat_cards(decklist_form);
+	toggle_active(false);
+	if !chosen_decklist.has_unsaved_changes:
+		on_toast("Deck saved");
+		toggle_active(true);
+		return;
 	chosen_decklist.upload(self);
+
+func delete_deck() -> void:
+	if chosen_decklist.is_new():
+		load_previously_chosen_decklist();
+		on_toast("Deck cleared");
+		return;
+	toggle_active(false);
+	chosen_decklist.delete(self);	
+
+func on_delete_decklist(response : Dictionary) -> void:
+	var decklist_id : int = response.decklistId;
+	var decks : Array = decklists.keys();
+	var current_index : int = decks.find(decklist_id) - 1;
+	if decks.size() > current_index:
+		System.chosen_decklist_id = decks[current_index];
+	decklists.erase(decklist_id);
+	load_previously_chosen_decklist();
+	on_toast("Decklist deleted");
+	toggle_active(true);
 
 func _on_http_response(request : OperationRequest, operation : RequestEnums.Operation, response : Dictionary) -> void:
 	match operation:
+		RequestEnums.Operation.DELETE_DECKLIST:
+			if response.has("error"):
+				on_toast_failure(response.error);
+				chosen_decklist.toggle_active();
+				toggle_active();
+				return;
+			on_delete_decklist(response);
 		RequestEnums.Operation.POST_DECKLIST:
 			if response.has("error"):
 				on_toast_failure(response.error);
 				chosen_decklist.toggle_active();
+				toggle_active();
 				return;
 			on_decklist_posted(response);
 		RequestEnums.Operation.PUT_DECKLIST:
 			if response.has("error"):
 				on_toast_failure(response.error);
 				chosen_decklist.toggle_active();
+				toggle_active();
 				return;
 			on_decklist_put(response);
 
@@ -540,12 +602,13 @@ func on_decklist_posted(response : Dictionary) -> void:
 	decklists[chosen_decklist.decklist_id] = chosen_decklist;
 	System.chosen_decklist_id = chosen_decklist.decklist_id;
 	save_decklists_state();
+	toggle_active();
 
 func on_decklist_put(response : Dictionary) -> void:
 	on_toast("Deck saved");
 	chosen_decklist.eat_put(response);
-	print(System.chosen_decklist_id);
 	save_decklists_state();
+	toggle_active();
 
 func save_decklists_state() -> void:
 	System.Decklist.set_decklists(decklists);
@@ -558,11 +621,10 @@ func _on_filters_button_pressed() -> void:
 	on_filters() if in_edit_mode else on_new_deck();
 
 func on_filters() -> void:
-	on_toast_warning("Coming soon");
+	on_toast_warning("Coming Soon");
 
 func on_new_deck() -> void:
-	if chosen_decklist.is_new_empty():
-		return;
-	spawn_new_decklist();
+	if !chosen_decklist.is_new() || !chosen_decklist.is_empty():
+		spawn_new_decklist();
 	on_edit();
 	on_toast("Choose Deck Master");

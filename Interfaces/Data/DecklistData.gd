@@ -50,9 +50,11 @@ func eat_json(json_data : Dictionary) -> void:
 	eat_cards_json(json_data);
 
 func eat_cards_json(json_data : Dictionary) -> void:
+	var original_cards_json = JSON.stringify(get_cards_json());
 	cards = [];
 	for json in json_data.cards:
 		cards.append(CardInDecklist.new(int(json.cardId), int(json.copies), System.DecklistBlock.to_enum(json.deckBlock)));
+	has_unsaved_changes = JSON.stringify(get_cards_json()) != original_cards_json;
 
 func get_json() -> Dictionary:
 	return {
@@ -78,6 +80,12 @@ func upload(parent : Node) -> void:
 		else RequestEnums.Operation.POST_DECKLIST, \
 		get_json(), parent);
 
+func delete(parent : Node) -> void:
+	if !is_active:
+		return;
+	toggle_active(false);
+	System.Server.request(RequestEnums.Operation.DELETE_DECKLIST, get_json(), parent);
+
 func eat_posted(response : Dictionary) -> void:
 	decklist_id = response.decklistId;
 	is_valid = response.isValid;
@@ -94,8 +102,11 @@ func on_save_success() -> void:
 func toggle_active(value : bool = true) -> void:
 	is_active = value;
 
-func is_new_empty() -> bool:
-	return decklist_id == 0 and cards.is_empty();
+func is_new() -> bool:
+	return decklist_id == 0;
+
+func is_empty() -> bool:
+	return cards.is_empty();
 
 func get_cards_in_decklist() -> Dictionary:
 	var collection : Dictionary;
