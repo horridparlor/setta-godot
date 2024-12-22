@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://sfljpoame5xt"]
+[gd_scene load_steps=16 format=3 uid="uid://sfljpoame5xt"]
 
 [ext_resource type="Script" path="res://Scripts/Nexus/Pages/DecksPage.gd" id="1_t8yx1"]
 [ext_resource type="PackedScene" uid="uid://chdrvm7emq34n" path="res://Prefabs/Login/Widgets/SubmitButton.tscn" id="2_5od0i"]
 [ext_resource type="StyleBox" uid="uid://g33qcwkq2i8d" path="res://Styles/Nexus/Widgets/TopbarBackframe.tres" id="2_7df00"]
 [ext_resource type="Script" path="res://Interfaces/Gameplay/Widgets/Zone.gd" id="2_diims"]
 [ext_resource type="Script" path="res://Scripts/Gameplay/Zones/Sky.gd" id="3_3xmtj"]
+[ext_resource type="PackedScene" uid="uid://ct6nwq8vy238v" path="res://Prefabs/Nexus/DecksPage/DecklistMetaData.tscn" id="3_dcu3o"]
 [ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/CardCatalogue.gd" id="4_qqtxa"]
 [ext_resource type="PackedScene" uid="uid://b8e85deupd2c6" path="res://Prefabs/Nexus/DecksPage/DecklistForm.tscn" id="6_1wp2j"]
 [ext_resource type="PackedScene" uid="uid://cceu0nmir4td8" path="res://Prefabs/Nexus/DecksPage/Filters/NameSearchBar.tscn" id="8_diq47"]
@@ -26,6 +27,9 @@ script = ExtResource("1_t8yx1")
 
 [node name="DecklistForm" parent="." instance=ExtResource("6_1wp2j")]
 position = Vector2(560, -257)
+
+[node name="DecklistMetaData" parent="." instance=ExtResource("3_dcu3o")]
+position = Vector2(-540, -170)
 
 [node name="BehindLayer" type="Node2D" parent="."]
 script = ExtResource("2_diims")

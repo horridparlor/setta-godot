@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://ct6nwq8vy238v"]
+
+[ext_resource type="Script" path="res://Scripts/Nexus/DecksPage/DecklistMetaData.gd" id="1_b5j1x"]
+[ext_resource type="PackedScene" uid="uid://v6r60b5r6hn5" path="res://Prefabs/Login/Widgets/TextInput.tscn" id="2_2gdh4"]
+[ext_resource type="FontFile" uid="uid://c3vhrrc52vift" path="res://Assets/FontFiles/Montserrat/Montserrat-Bold.ttf" id="3_0p7xl"]
+[ext_resource type="Texture2D" uid="uid://depmdy0o42b3e" path="res://Assets/Icons/Common/cross/CrossActive.png" id="4_dtrd7"]
+
+[node name="DecklistMetaData" type="Node2D"]
+script = ExtResource("1_b5j1x")
+
+[node name="DeckName" parent="." instance=ExtResource("2_2gdh4")]
+
+[node name="ValidStatus" type="Node2D" parent="."]
+
+[node name="ValidLabel" type="Label" parent="ValidStatus"]
+offset_left = 441.0
+offset_top = -29.0
+offset_right = 581.0
+offset_bottom = 21.0
+theme_override_fonts/font = ExtResource("3_0p7xl")
+theme_override_font_sizes/font_size = 40
+text = "Invalid"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="ValidStatus"]
+position = Vector2(640, 0)
+texture = ExtResource("4_dtrd7")
+
+[connection signal="submit_message" from="DeckName" to="." method="_on_deck_name_submit_message"]

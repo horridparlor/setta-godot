@@ -8,6 +8,7 @@ extends DecksPage
 @onready var sky : Zone = $Sky;
 @onready var top_bar : Node2D = $TopBar;
 @onready var decklist_form : DecklistForm = $DecklistForm;
+@onready var decklist_meta_data : DecklistMetaData = $DecklistMetaData;
 
 @onready var catalogue_click_timer : Timer = $Timers/CatalogueClickTimer;
 @onready var double_click_timer : Timer = $Timers/DoubleClickTimer;
@@ -21,6 +22,39 @@ func _ready() -> void:
 	search_bar.init("", "Search");
 	update_clear_filters_button();
 	initialize_decklists();
+	initialize_meta_data_signals();
+
+func initialize_meta_data_signals() -> void:
+	decklist_meta_data.name_changed.connect(on_decklist_name_change);
+
+func on_decklist_name_change(message : String) -> void:
+	if message == chosen_decklist.decklist_name:
+		return;
+	chosen_decklist.decklist_name = message;
+	chosen_decklist.has_unsaved_changes = true;
+
+func _physics_process(delta : float) -> void:
+	if is_scrolling_catalogue:
+		scroll_catalogue(delta);
+	if is_scrolling_decklist:
+		scroll_decklist(delta);
+	if is_moving_catalogue_layer:
+		move_catalogue_layer(delta);
+	if is_moving_decklist_layer:
+		move_decklist_layer(delta);
+	if is_moving_meta_data:
+		move_meta_data_layer(delta);
+
+func move_meta_data_layer(delta : float) -> void:
+	decklist_meta_data.position = System.Vectors.slide_towards(
+		decklist_meta_data.position,
+		meta_data_origin_point,
+		META_DATA_MOVE_IN_SPEED if meta_data_origin_point == META_DATA_ACTIVE_POSITION else META_DATA_MOVE_OUT_SPEED,
+		delta
+	);
+	if System.Vectors.equal(decklist_meta_data.position, meta_data_origin_point):
+		decklist_meta_data.position = meta_data_origin_point;
+		is_moving_meta_data = false;
 
 func initialize_decklists() -> void:
 	var decklist : DecklistData;
@@ -43,17 +77,12 @@ func spawn_new_decklist(json_data : Dictionary = {}) -> void:
 func eat_chosen_decklist() -> void:
 	chosen_deck_master = null;
 	decklist_form.eat_decklist(chosen_decklist);
+	cards_in_decklist = chosen_decklist.get_cards_in_decklist();
 	update_chosen_deckmaster();
+	update_meta_data();
 
-func _physics_process(delta : float) -> void:
-	if is_scrolling_catalogue:
-		scroll_catalogue(delta);
-	if is_scrolling_decklist:
-		scroll_decklist(delta);
-	if is_moving_catalogue_layer:
-		move_catalogue_layer(delta);
-	if is_moving_decklist_layer:
-		move_decklist_layer(delta);
+func update_meta_data() -> void:
+	decklist_meta_data.eat_decklist(chosen_decklist);
 
 func move_catalogue_layer(delta : float) -> void:
 	var limited_target : Vector2 = Vector2(catalogue_layer_target_position.x,
@@ -121,9 +150,9 @@ func run_catalogue_carousel(direction : int = 1) -> void:
 		card = cards_in_grid[head_index];
 		if card == focused_card:
 			drop_focused_card();
-		cards.erase(card.card_data.card_id);
+		cards.erase(card.card_data.errata_of_id);
 		card.card_data = catalogue_cards[tail_index];
-		cards[card.card_data.card_id] = card;
+		cards[card.card_data.errata_of_id] = card;
 		card.Core.update_visuals(card);
 		card.origin_point = card_catalogue_grid.assign_position(card.card_data.instance_id, direction);
 		card.position = abs(catalogue_layer.position) + Vector2(card.origin_point.x,
@@ -138,7 +167,7 @@ func run_catalogue_carousel(direction : int = 1) -> void:
 	last_row_shown += direction;
 
 func update_card_glow(card : GameplayCard) -> void:
-	card.Core.control_glow(GameplayEnums.GlowState.SHUTTER if cards_in_decklist.has(card.card_data.card_id) else GameplayEnums.GlowState.GLOW, card, self);
+	card.Core.control_glow(GameplayEnums.GlowState.SHUTTER if cards_in_decklist.has(card.card_data.errata_of_id) else GameplayEnums.GlowState.GLOW, card, self);
 
 func scroll_catalogue(delta : float) -> void:
 	var distance : float = get_global_mouse_position().y - catalogue_scroll_position.y;
@@ -163,7 +192,7 @@ func initialize() -> void:
 	decklist_form.toast.connect(on_toast);
 
 func on_reference_card(card_data : CardData) -> void:
-	var is_currently_referenced : bool = card_data.card_id == decklist_form.referenced_card.card_id if decklist_form.referenced_card else false;
+	var is_currently_referenced : bool = card_data.errata_of_id == decklist_form.referenced_card.errata_of_id if decklist_form.referenced_card else false;
 	if !in_edit_mode || !has_deck_master() || decklist_form.get_slip(card_data).global_position.y < DECKLIST_FORM_MAX_Y - decklist_form.SLIP_MARGIN.y / 2:
 		return;
 	if decklist_form.referenced_card == null || !is_currently_referenced:
@@ -207,10 +236,20 @@ func on_edit_mode_changed() -> void:
 	save_button.make_primary() if in_edit_mode else save_button.make_secondary();
 	filters_button.set_label("Filters" if in_edit_mode else "New")
 	if in_edit_mode:
-		spawn_card_catalogue();
+		open_edit_mode();
 	else:
-		unspawn_cards();
-		reset_decklist_position();
+		close_edit_mode();
+
+func open_edit_mode() -> void:
+	spawn_card_catalogue();
+	meta_data_origin_point = META_DATA_AWAY_POSITION;
+	is_moving_meta_data = true;
+
+func close_edit_mode() -> void:
+	unspawn_cards();
+	reset_decklist_position();
+	meta_data_origin_point = META_DATA_ACTIVE_POSITION;
+	is_moving_meta_data = true;
 
 func spawn_card_catalogue() -> void:
 	find_cards();
@@ -264,7 +303,7 @@ func has_deck_master() -> bool:
 func spawn_catalogue_card(card_data : CardData) -> GameplayCard:
 	var card : GameplayCard = System.Instance.load_child(SystemEnums.get_card_path(), catalogue_layer);
 	card.card_data = card_data;
-	cards[card_data.card_id] = card;
+	cards[card_data.errata_of_id] = card;
 	card.Core.initialize(card, self);
 	card.origin_point = card_catalogue_grid.assign_position(card_data.instance_id);
 	card.position = CARD_CATALOGUE_SPAWN_POINT;
@@ -305,20 +344,20 @@ func toggle_card_to_deck(card_data : CardData) -> void:
 	toggle_card_to_decklist(card_data, false, false);
 
 func toggle_card_to_decklist(card_data : CardData, is_mass_operation : bool = false, for_all_decks : bool = true) -> void:
-	var card_already_in_deck : bool = cards_in_decklist.has(card_data.card_id);
+	var card_already_in_deck : bool = cards_in_decklist.has(card_data.errata_of_id);
 	if !is_active:
 		return;
 	decklist_form.toggle_card(card_data, !is_mass_operation, for_all_decks);
 	if card_already_in_deck:
 		if !decklist_form.card_in_any_deck(card_data):
-			cards_in_decklist.erase(card_data.card_id);
-			if decklist_form.referenced_card && card_data.card_id == decklist_form.referenced_card.card_id:
+			cards_in_decklist.erase(card_data.errata_of_id);
+			if decklist_form.referenced_card && card_data.errata_of_id == decklist_form.referenced_card.errata_of_id:
 				decklist_form.referenced_card = null;
 				find_cards();
 	else:
-		cards_in_decklist[card_data.card_id] = card_data;
-	if cards.has(card_data.card_id):
-		update_card_glow(cards[card_data.card_id]);
+		cards_in_decklist[card_data.errata_of_id] = card_data;
+	if cards.has(card_data.errata_of_id):
+		update_card_glow(cards[card_data.errata_of_id]);
 	if !is_mass_operation:
 		update_chosen_deckmaster();
 
@@ -352,14 +391,14 @@ func get_invalid_cards_by_deck_master() -> Array:
 	var card : CardData;
 	for c in decklist_form.concat_non_backrow_collections():
 		card = c;
-		if card.card_id != chosen_deck_master.card_id && \
+		if card.errata_of_id != chosen_deck_master.errata_of_id && \
 		!System.CardData.can_be_with_deckmaster(card, chosen_deck_master):
 			invalid_cards.append(card);
 	return invalid_cards;
 
 func on_card_released(card : GameplayCard) -> void:
 	var card_global_position : Vector2;
-	var card_id : int = card.card_data.card_id;
+	var card_id : int = card.card_data.errata_of_id;
 	if card != focused_card:
 		return;
 	if previously_focused_card_id == card_id:
@@ -476,6 +515,7 @@ func copy_deck() -> void:
 	on_toast("Deck copied");
 
 func save_deck() -> void:
+	decklist_meta_data.force_unsubmitted_updates();
 	chosen_decklist.eat_cards(decklist_form);
 	chosen_decklist.upload(self);
 
@@ -510,6 +550,7 @@ func on_decklist_put(response : Dictionary) -> void:
 func save_decklists_state() -> void:
 	System.Decklist.set_decklists(decklists);
 	System.store_user_state();
+	update_meta_data();
 	
 func _on_filters_button_pressed() -> void:
 	if !is_active:
@@ -524,4 +565,4 @@ func on_new_deck() -> void:
 		return;
 	spawn_new_decklist();
 	on_edit();
-	on_toast("Empty deck created");
+	on_toast("Choose Deck Master");

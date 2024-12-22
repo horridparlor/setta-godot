@@ -96,3 +96,11 @@ func toggle_active(value : bool = true) -> void:
 
 func is_new_empty() -> bool:
 	return decklist_id == 0 and cards.is_empty();
+
+func get_cards_in_decklist() -> Dictionary:
+	var collection : Dictionary;
+	var card : CardInDecklist;
+	for c in cards:
+		card = c;
+		collection[card.card_id] = System.CardData.from_id(card.card_id);
+	return collection;

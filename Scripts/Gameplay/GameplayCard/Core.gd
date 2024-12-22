@@ -52,7 +52,7 @@ static func must_be_shuttered(card : GameplayCard, card_scene : CardScene) -> bo
 		return !is_selectable(card, card_scene);
 	match card.card_data.zone:
 		CardEnums.Zone.CARD_CATALOGUE:
-			return card_scene.cards_in_decklist.has(card.card_data.card_id);
+			return card_scene.cards_in_decklist.has(card.card_data.errata_of_id);
 		CardEnums.Zone.HAND:
 			return !card.Rules.can_be_played(card, card_scene);
 		CardEnums.Zone.EXTRA_DECK:
