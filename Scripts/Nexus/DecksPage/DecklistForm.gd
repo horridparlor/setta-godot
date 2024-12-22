@@ -32,6 +32,8 @@ func _ready() -> void:
 	toggle_active(false);
 
 func _physics_process(delta : float) -> void:
+	if !is_active:
+		return;
 	if is_modulating_icons:
 		modulate_icons(delta);
 
@@ -72,6 +74,8 @@ func on_empty_block(block : NexusEnums.DecklistBlock) -> void:
 		emit_signal("toast", "Deck cleared", SystemEnums.ToastTheme.SUCCESS);
 
 func on_collapse_block(block : NexusEnums.DecklistBlock, value : bool) -> void:
+	if !is_active:
+		return;
 	get_block_for_block_enum(block).toggle_collapsed(value);
 	reorder_slips();
 
@@ -143,6 +147,8 @@ func spawn_slip(card_data : CardData, card_count : int) -> void:
 		slip.full_shutter();
 
 func on_reference_card(card_data : CardData) -> void:
+	if !is_active:
+		return;
 	emit_signal("reference_card", card_data);
 
 func on_sidedeck_card(card_data : CardData) -> void:
@@ -150,6 +156,8 @@ func on_sidedeck_card(card_data : CardData) -> void:
 	var is_in_main_deck : bool = is_from_main_deck || main_deck_counts.has(card_data.card_id);
 	var is_in_side_deck : bool = !is_from_main_deck || side_deck_counts.has(card_data.card_id);
 	var copies_to_move : int = 1;
+	if !is_active:
+		return;
 	if is_from_main_deck:
 		if !can_add_to_side_deck(card_data):
 				copies_to_move = 0;
@@ -295,6 +303,8 @@ func update_min_y() -> void:
 		return slip.visible).size()) * -SLIP_MARGIN.y + max(0, active_blocks - 1) * -BLOCK_MARGIN.y;
 
 func on_alter_copies(copies : int, card_data : CardData) -> void:
+	if !is_active:
+		return;
 	if copies < 0:
 		emit_signal("request_toggle_card", card_data);
 	else:

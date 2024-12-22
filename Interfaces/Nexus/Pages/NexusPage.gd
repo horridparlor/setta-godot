@@ -18,3 +18,7 @@ func is_before(other_page : NexusPage) -> bool:
 
 func toggle_active(value : bool = true) -> void:
 	is_active = value;
+	on_toggle_active();
+
+func on_toggle_active() -> void:
+	pass;

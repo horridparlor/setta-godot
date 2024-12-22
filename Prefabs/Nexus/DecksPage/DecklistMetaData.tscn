@@ -53,6 +53,7 @@ position = Vector2(214, 0)
 position = Vector2(-215, 165)
 
 [node name="Sprite2D" type="Sprite2D" parent="Buttons/RollBackButton"]
+modulate = Color(1, 1, 1, 0.701961)
 rotation = 3.14159
 texture = ExtResource("6_b82q4")
 
@@ -64,6 +65,7 @@ script = ExtResource("7_23jds")
 position = Vector2(214, 165)
 
 [node name="Sprite2D" type="Sprite2D" parent="Buttons/RollForwardsButton"]
+modulate = Color(1, 1, 1, 0.701961)
 texture = ExtResource("6_b82q4")
 
 [node name="RollForward" type="TouchScreenButton" parent="Buttons/RollForwardsButton"]

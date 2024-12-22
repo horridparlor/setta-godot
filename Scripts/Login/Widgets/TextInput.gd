@@ -36,3 +36,6 @@ func set_text(message : String = "") -> void:
 
 func set_placeholder_text(message : String) -> void:
 	input.placeholder_text = message;
+
+func toggle_active(value : bool = true) -> void:
+	input.editable = value;

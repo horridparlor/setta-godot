@@ -22,3 +22,6 @@ func set_text(message : String = "") -> void:
 
 func set_placeholder_text(message : String) -> void:
 	pass;
+
+func toggle_active(value : bool = true) -> void:
+	pass;

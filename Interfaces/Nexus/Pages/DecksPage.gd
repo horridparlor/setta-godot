@@ -4,6 +4,8 @@ class_name DecksPage
 signal edit_deck();
 signal close_deck();
 
+const DECKLIST_FILTERS_PATH : String = "res://Prefabs/Nexus/DecksPage/DecklistFilters.tscn";
+
 const CARD_CATALOGUE_STARTING_POSITION : Vector2 = Vector2(-840, -145);
 const CARD_CATALOGUE_COLUMNS : int = 5;
 const CARD_CATALOGUE_ROWS : float = 2.72;
@@ -64,6 +66,8 @@ var is_moving_meta_data : bool;
 var meta_data_origin_point : Vector2;
 
 var search_string : String;
+var decklist_filters : DecklistFilters;
+var is_filters_modal_open : bool;
 
 func toggle_edit_mode(value : bool = true) -> void:
 	in_edit_mode = value;
@@ -77,3 +81,13 @@ func clear_filters() -> void:
 
 func on_close_deck() -> void:
 	pass;
+
+func open_decklist_filters() -> void:
+	decklist_filters = System.Instance.load_child(DECKLIST_FILTERS_PATH, self);
+	is_filters_modal_open = true;
+	toggle_active(false);
+
+func close_decklist_filters() -> void:
+	decklist_filters .queue_free();
+	is_filters_modal_open = false;
+	toggle_active();

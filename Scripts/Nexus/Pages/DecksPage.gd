@@ -129,6 +129,8 @@ func limit_decklist_form_y(y : float) -> float:
 func move_decklist_layer(delta : float) -> void:
 	var limited_target : Vector2 = Vector2(decklist_form_target_position.x,
 		limit_decklist_form_y(decklist_form_target_position.y));
+	if !is_active:
+		return;
 	decklist_form.position = System.Vectors.slide_towards(decklist_form.position,
 		decklist_form_target_position, DECKLIST_SCROLL_SPEED, delta);
 	decklist_form.position.y = limit_decklist_form_y(decklist_form.position.y);
@@ -622,7 +624,11 @@ func _on_filters_button_pressed() -> void:
 	on_filters() if in_edit_mode else on_new_deck();
 
 func on_filters() -> void:
-	on_toast_warning("Coming Soon");
+	close_decklist_filters() if is_filters_modal_open else open_decklist_filters();
+
+func on_toggle_active() -> void:
+	decklist_form.toggle_active(is_active && in_edit_mode);
+	search_bar.toggle_active(is_active);
 
 func on_new_deck() -> void:
 	if !chosen_decklist.is_new() || !chosen_decklist.is_empty():
