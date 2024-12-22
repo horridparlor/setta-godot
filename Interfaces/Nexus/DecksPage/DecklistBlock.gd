@@ -17,6 +17,7 @@ const WHITE_DOWN_ARROW_PATH : String = "res://Assets/Icons/Common/down/DownArrow
 var block : NexusEnums.DecklistBlock;
 var count : int;
 var is_active : bool;
+var is_locked : bool;
 var is_collapsed : bool;
 
 func init(new_block : NexusEnums.DecklistBlock) -> void:
@@ -37,6 +38,9 @@ func update_icons() -> void:
 
 func toggle_active(value : bool = true) -> void:
 	is_active = value;
+
+func toggle_locked(value : bool = true) -> void:
+	is_locked = value;
 	update_icons();
 
 func update_down_arrow() -> void:

@@ -476,7 +476,7 @@ func reset_cards_shown() -> void:
 	catalogue_layer.position = System.Vectors.default();
 	catalogue_layer_target_position = catalogue_layer.position;
 	catalogue_layer.cards = [];
-	decklist_form.toggle_active(false);
+	decklist_form.toggle_active(false, true);
 	decklist_form.toggle_locked();
 
 func reset_card_catalogue() -> void:

@@ -30,6 +30,7 @@ var active_blocks : int;
 var is_active : bool;
 var is_locked : bool;
 var aces : Dictionary = get_default_aces();
+var allow_blocks_to_collapse : bool;
 
 var modulation_charge : float;
 var is_modulating_icons : bool;
@@ -182,8 +183,15 @@ func get_sorted_slips() -> Array:
 func update_blocks_active() -> void:
 	pass;
 
-func toggle_active(value : bool = true) -> void:
+func update_blocks_locked() -> void:
+	pass;
+
+func get_blocks() -> Array:
+	return [];
+
+func toggle_active(value : bool = true, allow_to_collapse : bool = false) -> void:
 	is_active = value;
+	allow_blocks_to_collapse = allow_to_collapse;
 	update_blocks_active();
 
 func toggle_locked(value : bool = true) -> void:
@@ -193,6 +201,7 @@ func toggle_locked(value : bool = true) -> void:
 		slip = s;
 		slip.toggle_locked(is_locked);
 		slip.toggle_active(!is_locked);
+	update_blocks_locked();
 
 func concat_non_backrow_collections() -> Array:
 	return deckmaster_cards.values() + monster_cards.values() + extra_cards.values() + side_cards.values();
@@ -252,4 +261,5 @@ func eat_decklist(decklist : DecklistData) -> void:
 		slip.toggle_locked();
 	reorder_slips();
 	toggle_active(false);
+	allow_blocks_to_collapse = true;
 	

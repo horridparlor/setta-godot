@@ -95,6 +95,7 @@ static func enumerate_subtype(message : String) -> CardSubtype:
 
 enum CardSupertype {
 	DECK_MASTER,
+	DOMAIN,
 	HAND_TRAP,
 	MAXIMUM,
 	PENDULUM,
@@ -102,12 +103,14 @@ enum CardSupertype {
 }
 
 const JSON_SUPERTYPE_DECK_MASTER : String = "Deck Master";
+const JSON_SUPERTYPE_DOMAIN : String = "Domain";
 const JSON_SUPERTYPE_HAND_TRAP : String = "Hand Trap";
 const JSON_SUPERTYPE_MAXIMUM : String = "Maximum";
 const JSON_SUPERTYPE_PENDULUM : String = "Pendulum";
 
 static var CardSupertypeName = {
 	CardSupertype.DECK_MASTER: JSON_SUPERTYPE_DECK_MASTER,
+	CardSupertype.DOMAIN: JSON_SUPERTYPE_DOMAIN,
 	CardSupertype.HAND_TRAP: JSON_SUPERTYPE_HAND_TRAP,
 	CardSupertype.MAXIMUM: JSON_SUPERTYPE_MAXIMUM,
 	CardSupertype.PENDULUM: JSON_SUPERTYPE_PENDULUM

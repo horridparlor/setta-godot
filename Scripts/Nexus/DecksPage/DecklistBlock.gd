@@ -39,13 +39,13 @@ func update_frame() -> void:
 	System.Instance.load_child(BLOCK_BACKFRAME_PATH + System.String_.serialize(get_block_name()) + SystemEnums.get_node_extension(), frame_layer);
 
 func _on_thrash_triggered() -> void:
-	if !is_active:
+	if !is_active or is_locked:
 		return;
 	emit_signal("trash", block);
 
 func update_icons() -> void:
-	active_trash_sprite.visible = is_active;
-	inactive_trash_sprite.visible = !is_active;
+	active_trash_sprite.visible = !is_locked;
+	inactive_trash_sprite.visible = is_locked;
 
 func update_down_arrow() -> void:
 	down_arrow_sprite.rotation_degrees = 0 if is_collapsed else 180;

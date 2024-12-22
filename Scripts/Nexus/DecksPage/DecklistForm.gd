@@ -74,7 +74,7 @@ func on_empty_block(block : NexusEnums.DecklistBlock) -> void:
 		emit_signal("toast", "Deck cleared", SystemEnums.ToastTheme.SUCCESS);
 
 func on_collapse_block(block : NexusEnums.DecklistBlock, value : bool) -> void:
-	if !is_active:
+	if !is_active and !allow_blocks_to_collapse:
 		return;
 	get_block_for_block_enum(block).toggle_collapsed(value);
 	reorder_slips();
@@ -351,13 +351,18 @@ func despawn_slip(card_data : CardData, do_reorder : bool) -> void:
 		is_modulating_icons = false;
 		reset_icon_modulation();
 			
-
 func update_blocks_active() -> void:
+	var block : DecklistBlock;
+	for b in get_blocks():
+		block = b;
+		block.toggle_active(is_active);
+
+func update_blocks_locked() -> void:
 	var block : DecklistBlock;
 	var has_cards : bool = get_all_cards().size();
 	for b in get_blocks():
 		block = b;
-		block.toggle_active(is_active && has_cards);
+		block.toggle_locked(is_locked || !has_cards);
 
 func _on_modulation_timer_timeout() -> void:
 	modulation_timer.stop();

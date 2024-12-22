@@ -17,7 +17,7 @@ func init(request : OperationRequest, new_parent : Node, _leave_raw : bool) -> v
 	add_parent(new_parent)
 	operation = request.operation;
 	self.request_completed.connect(self.complete_request);
-	request(request.getEndpoint(), get_headers(), request.method, str(request.params));
+	request(request.getEndpoint(), get_headers(), request.method, JSON.stringify(request.params));
 
 func get_headers() -> PackedStringArray:
 	return [
