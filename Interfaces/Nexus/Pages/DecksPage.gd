@@ -84,6 +84,8 @@ func on_close_deck() -> void:
 
 func open_decklist_filters() -> void:
 	decklist_filters = System.Instance.load_child(DECKLIST_FILTERS_PATH, self);
+	decklist_filters.init();
+	decklist_filters.close.connect(close_decklist_filters);
 	is_filters_modal_open = true;
 	toggle_active(false);
 
