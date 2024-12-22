@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 
 func move_pages(delta : float) -> void:
 	previous_page.position = System.Vectors.slide_towards(previous_page.position,
-		Vector2(page_slide_direction * System.Window_.x, 0), PAGE_SLIDE_SPEED, delta, PAGE_AWAY_MIN_SPEED);
+		Vector2(page_slide_direction * 2 * System.Window_.x, 0), PAGE_SLIDE_OUT_SPEED, delta);
 	active_page.position = System.Vectors.slide_towards(active_page.position,
 		Vector2(0, 0), PAGE_SLIDE_SPEED, delta);
 	if is_moving_pages_blockingly and System.Vectors.equal(active_page.position,

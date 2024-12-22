@@ -1,6 +1,24 @@
 extends DecklistFilters
 
+@onready var card_type_selector : OptionButton = $FiltersForm/TypeFilters/CardTypeSelector;
+
 @onready var modulate_timer : Timer = $Timers/ModulateTimer;
+
+func _ready() -> void:
+	set_selector_options();
+
+func set_selector_options() -> void:
+	set_type_selector_options();
+
+func set_type_selector_options() -> void:
+	set_card_type_selector_options();
+
+func set_card_type_selector_options() -> void:
+	card_type_selector.add_item("–");
+	for option in CardEnums.CardType.values():
+		if option == CardEnums.CardType.NONE:
+			continue;
+		card_type_selector.add_item(CardEnums.CardTypeName[option]);
 
 func _physics_process(delta : float) -> void:
 	if is_opening:

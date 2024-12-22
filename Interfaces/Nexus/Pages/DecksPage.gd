@@ -28,10 +28,10 @@ const DECKLIST_SCROLL_MULTIPLIER : float = 2;
 const DECKLIST_FORM_MAX_Y : float = -257;
 const DECKLIST_FORM_DEFAULT_RANGE : float = System.Window_.y - abs(DECKLIST_FORM_MAX_Y);
 
-const META_DATA_MOVE_OUT_SPEED : float = 5;
+const META_DATA_MOVE_OUT_SPEED : float = 1.4;
 const META_DATA_MOVE_IN_SPEED : float = 8;
 const META_DATA_ACTIVE_POSITION : Vector2 = Vector2(-540, -170);
-const META_DATA_AWAY_POSITION : Vector2 = META_DATA_ACTIVE_POSITION - Vector2(1110, 0);
+const META_DATA_AWAY_POSITION : Vector2 = META_DATA_ACTIVE_POSITION - Vector2(5 / 4 * System.Window_.x, 0);
 
 var in_edit_mode : bool;
 var card_catalogue_grid : Grid = Grid.new(

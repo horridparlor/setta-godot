@@ -491,6 +491,8 @@ func _on_catalogue_click_timer_timeout() -> void:
 	if is_moving_catalogue_layer:
 		return;
 	catalogue_click_timer.stop();
+	if !is_active:
+		return;
 	on_card_focused();
 
 func _on_double_click_timer_timeout() -> void:
