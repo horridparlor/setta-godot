@@ -8,6 +8,7 @@ var cards : Array;
 
 var is_active : bool;
 var has_unsaved_changes : bool;
+var eaten_name : String;
 
 func _init(id_ : int = 0, name_ : String = "", is_valid_ : bool = false, cards_ : Array = []):
 	decklist_id = id_;
@@ -21,20 +22,25 @@ func eat_cards(decklist_form : DecklistForm) -> void:
 	var collections : Dictionary = decklist_form.get_collections();
 	var card : CardData;
 	var old_cards_json : String = JSON.stringify(get_cards_json());
+	var copies : int;
 	erase_cards();
 	for b in collections:
 		block = b;
 		for c in collections[block].values():
 			card = c;
-			cards.append(CardInDecklist.new(card.errata_of_id, decklist_form.get_copies(card), block));
+			copies = decklist_form.get_copies(card);
+			if !copies:
+				continue;
+			cards.append(CardInDecklist.new(card.errata_of_id, copies, block));
 	if JSON.stringify(get_cards_json()) != old_cards_json:
 		has_unsaved_changes = true;
-	if decklist_name.is_empty():
-		eat_name(decklist_form);
+	eat_name(decklist_form);
 
 func eat_name(decklist_form : DecklistForm) -> void:
 	var deck_master : CardData = decklist_form.get_deck_master();
-	decklist_name = "%s (%s)" % [deck_master.normalized_name if deck_master else "My Deck", System.String_.get_time()];
+	eaten_name = "%s (%s)" % [deck_master.normalized_name if deck_master else "My Deck", System.String_.get_time()];
+	if decklist_name.is_empty():
+		decklist_name = eaten_name;
 
 func erase_cards() -> void:
 	var card : CardInDecklist;
@@ -50,11 +56,9 @@ func eat_json(json_data : Dictionary) -> void:
 	eat_cards_json(json_data);
 
 func eat_cards_json(json_data : Dictionary) -> void:
-	var original_cards_json = JSON.stringify(get_cards_json());
 	cards = [];
 	for json in json_data.cards:
 		cards.append(CardInDecklist.new(int(json.cardId), int(json.copies), System.DecklistBlock.to_enum(json.deckBlock)));
-	has_unsaved_changes = JSON.stringify(get_cards_json()) != original_cards_json;
 
 func get_json() -> Dictionary:
 	return {
@@ -76,6 +80,8 @@ func upload(parent : Node) -> void:
 	if !is_active || !has_unsaved_changes:
 		return;
 	toggle_active(false);
+	if decklist_name.is_empty():
+		decklist_name = eaten_name;
 	System.Server.request(RequestEnums.Operation.PUT_DECKLIST if decklist_id \
 		else RequestEnums.Operation.POST_DECKLIST, \
 		get_json(), parent);

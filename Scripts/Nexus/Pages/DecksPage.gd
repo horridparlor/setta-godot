@@ -94,6 +94,7 @@ func spawn_new_decklist(json_data : Dictionary = {}) -> void:
 	chosen_decklist = DecklistData.new();
 	if !json_data.is_empty():
 		chosen_decklist.eat_cards_json(json_data);
+	chosen_decklist.has_unsaved_changes = true;
 	eat_chosen_decklist();
 
 func eat_chosen_decklist() -> void:
