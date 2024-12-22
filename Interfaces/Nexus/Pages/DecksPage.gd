@@ -83,6 +83,9 @@ func clear_filters() -> void:
 func on_close_deck() -> void:
 	pass;
 
+func has_deck_master() -> bool:
+	return false;
+
 func open_decklist_filters() -> void:
 	decklist_filters = System.Instance.load_child(DECKLIST_FILTERS_PATH, self);
 	decklist_filters.init(card_filters);

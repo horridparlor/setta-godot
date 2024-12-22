@@ -37,6 +37,7 @@ func eat_default(json_data : Dictionary) -> void:
 	card_name = json_data.card_name;
 	display_name = json_data.display_name;
 	normalized_name = json_data.normalized_name;
+	deck = json_data.deck;
 	is_ace = json_data.is_ace;
 	card_type = json_data.card_type;
 	card_class = json_data.card_class;

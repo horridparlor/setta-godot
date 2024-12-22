@@ -174,6 +174,3 @@ enum BooleanOption {
 	TRUE,
 	FALSE
 }
-
-func read_boolean(option : BooleanOption) -> bool:
-	return option == BooleanOption.TRUE;

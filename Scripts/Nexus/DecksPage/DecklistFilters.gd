@@ -1,6 +1,11 @@
 extends DecklistFilters
 
 @onready var card_type_selector : EnumSelector = $FiltersForm/TypeFilters/CardTypeSelector;
+@onready var subtype_selector : EnumSelector = $FiltersForm/TypeFilters/SubtypeSelector;
+@onready var supertype_selector : EnumSelector = $FiltersForm/TypeFilters/SupertypeSelector;
+@onready var deck_selector : EnumSelector = $FiltersForm/ImportantFilters/DeckSelector;
+@onready var class_selector : EnumSelector = $FiltersForm/ImportantFilters/ClassSelector;
+@onready var is_ace_selector : EnumSelector = $FiltersForm/ImportantFilters/IsAceSelector
 
 @onready var filter_button : SubmitButton = $BottomButtons/FilterButton;
 @onready var clear_button : SubmitButton = $BottomButtons/ClearButton;
@@ -17,19 +22,46 @@ func init_buttons() -> void:
 
 func init_selectors() -> void:
 	init_type_selectors();
+	init_important_selectors();
 
 func init_type_selectors() -> void:
 	init_card_type_selector();
+	init_subtype_selector();
+	init_supertype_selector();
+
+func init_important_selectors() -> void:
+	init_deck_selector();
+	init_class_selector();
+	init_is_ace_selector();
 
 func init_card_type_selector() -> void:
-	var options : Dictionary;
-	var index : int = 1;
-	for option in CardEnums.CardType.values():
-		if option == CardEnums.CardType.NONE:
-			continue;
-		options[index] = EnumOption.new(CardEnums.CardTypeName[option], option);
-		index += 1;
+	var options : Dictionary = System.Enums.build_options(
+		CardEnums.CardType.values(), CardEnums.CardTypeName, CardEnums.CardType.NONE);
 	card_type_selector.init("Card Type", options, CardEnums.CardType.NONE, init_filters.card_type);
+
+func init_subtype_selector() -> void:
+	var options : Dictionary = System.Enums.build_options(
+		CardEnums.CardSubtype.values(), CardEnums.CardSubtypeName, CardEnums.CardSubtype.NONE);
+	subtype_selector.init("Subtype", options, CardEnums.CardSubtype.NONE, init_filters.subtype);
+
+func init_supertype_selector() -> void:
+	var options : Dictionary = System.Enums.build_options(
+		CardEnums.CardSupertype.values(), CardEnums.CardSupertypeName, CardEnums.CardSupertype.NONE);
+	supertype_selector.init("Supertype", options, CardEnums.CardSupertype.NONE, init_filters.supertype);
+
+func init_deck_selector() -> void:
+	var options : Dictionary = System.Enums.build_options(
+		CardEnums.DeckType.values(), CardEnums.DeckTypeName, CardEnums.DeckType.NONE);
+	deck_selector.init("Deck", options, CardEnums.DeckType.NONE, init_filters.deck);
+
+func init_class_selector() -> void:
+	var options : Dictionary = System.Enums.build_options(
+		CardEnums.Class.values(), CardEnums.ClassName, CardEnums.Class.NONE);
+	class_selector.init("Class", options, CardEnums.Class.NONE, init_filters.card_class);
+
+func init_is_ace_selector() -> void:
+	var options : Dictionary = System.Enums.build_boolean_options("Ace");
+	is_ace_selector.init("Is Ace", options, SystemEnums.BooleanOption.NONE, init_filters.is_ace);
 
 func _physics_process(delta : float) -> void:
 	if is_opening:
@@ -73,7 +105,14 @@ func _on_filter_button_pressed() -> void:
 	on_filter();
 
 func on_filter() -> void:
-	var filters : CardFilters = CardFilters.new(card_type_selector.get_chosen().value);
+	var filters : CardFilters = CardFilters.new(
+		card_type_selector.get_value(),
+		subtype_selector.get_value(),
+		supertype_selector.get_value(),
+		class_selector.get_value(),
+		is_ace_selector.get_value(),
+		deck_selector.get_value()
+	);
 	if filters.get_json_string() == init_filters.get_json_string():
 		on_close();
 		return;
@@ -86,7 +125,12 @@ func _on_clear_button_pressed() -> void:
 
 func get_selectors() -> Array:
 	return [
-		card_type_selector
+		card_type_selector,
+		subtype_selector,
+		supertype_selector,
+		deck_selector,
+		class_selector,
+		is_ace_selector
 	];
 
 func clear_filters() -> void:

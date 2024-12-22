@@ -58,10 +58,26 @@ script = ExtResource("4_vdpyi")
 [node name="FiltersForm" type="Node2D" parent="."]
 
 [node name="TypeFilters" type="Node2D" parent="FiltersForm"]
+position = Vector2(0, -200)
 
 [node name="CardTypeSelector" parent="FiltersForm/TypeFilters" instance=ExtResource("5_qefc7")]
+position = Vector2(-420, 0)
+
+[node name="SubtypeSelector" parent="FiltersForm/TypeFilters" instance=ExtResource("5_qefc7")]
+
+[node name="SupertypeSelector" parent="FiltersForm/TypeFilters" instance=ExtResource("5_qefc7")]
+position = Vector2(420, 0)
 
 [node name="ImportantFilters" type="Node2D" parent="FiltersForm"]
+position = Vector2(0, 40)
+
+[node name="DeckSelector" parent="FiltersForm/ImportantFilters" instance=ExtResource("5_qefc7")]
+position = Vector2(-420, 0)
+
+[node name="ClassSelector" parent="FiltersForm/ImportantFilters" instance=ExtResource("5_qefc7")]
+
+[node name="IsAceSelector" parent="FiltersForm/ImportantFilters" instance=ExtResource("5_qefc7")]
+position = Vector2(420, 0)
 
 [node name="StatFilters" type="Node2D" parent="FiltersForm"]
 

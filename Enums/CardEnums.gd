@@ -32,6 +32,14 @@ enum DeckType {
 	EXTRA
 }
 
+const JSON_DECK_MAIN : String = "Main";
+const JSON_DECK_EXTRA : String = "Extra";
+
+static var DeckTypeName = {
+	DeckType.MAIN: JSON_DECK_MAIN,
+	DeckType.EXTRA: JSON_DECK_EXTRA
+}
+
 enum CardSubtype {
 	NONE,
 	NORMAL,
@@ -149,10 +157,10 @@ enum MonsterPosition {
 }
 
 enum Class {
+	NONE,
 	ABYSS,
 	DRAGON,
 	KAWAII,
-	NONE,
 	SLIME,
 	SPARKS,
 	ZOMBIE,

@@ -165,7 +165,7 @@ static func sort_json_by_card_type(card_a : Dictionary, card_b : Dictionary) -> 
 	return sort_by_card_type(from_json(card_a), from_json(card_b));
 
 static func get_monster_sort_index(card_data : CardDefaultData) -> int:
-	return 1000000 * card_data.level + 1000 * card_data.atk + card_data.def;
+	return 10000000 * card_data.level + 1000 * card_data.atk + card_data.def;
 
 static func sort_by_card_type(card_a : CardDefaultData, card_b : CardDefaultData) -> int:
 	var sided_sort_a : int = int(in_side_deck(card_a));
@@ -278,7 +278,7 @@ static func matches_filters(card_data : CardData, card_filters : CardFilters) ->
 	card_data.card_class != card_filters.card_class:
 		return false;
 	if card_filters.is_ace != CardFilters.DEFAULT_IS_ACE && \
-	card_data.is_ace != SystemEnums.read_boolean(card_filters.is_ace):
+	card_data.is_ace != System.Enums.read_boolean(card_filters.is_ace):
 		return false;
 	if card_filters.deck != CardFilters.DEFAULT_DECK && \
 	card_data.deck != card_filters.deck:

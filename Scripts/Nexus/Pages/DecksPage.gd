@@ -157,10 +157,11 @@ func update_card_carousel() -> void:
 
 func run_catalogue_carousel(direction : int = 1) -> void:
 	var card : GameplayCard;
+	var final_row_cards : int = catalogue_cards.size() % CARD_CATALOGUE_COLUMNS;
 	var cards_rotated : int = min(
 		CARD_CATALOGUE_COLUMNS,
 		(catalogue_cards.size() - 1 - last_card_shown) if direction > 0 else first_card_shown \
-			if last_card_shown + 1 < catalogue_cards.size() else catalogue_cards.size() % CARD_CATALOGUE_COLUMNS
+			if last_card_shown + 1 < catalogue_cards.size() else (final_row_cards if final_row_cards else CARD_CATALOGUE_COLUMNS)
 	);
 	var head_index : int;
 	var tail_index : int;
@@ -218,7 +219,7 @@ func initialize() -> void:
 
 func on_reference_card(card_data : CardData) -> void:
 	var is_currently_referenced : bool = card_data.errata_of_id == decklist_form.referenced_card.errata_of_id if decklist_form.referenced_card else false;
-	if !in_edit_mode || !has_deck_master() || decklist_form.get_slip(card_data).global_position.y < DECKLIST_FORM_MAX_Y - decklist_form.SLIP_MARGIN.y / 2:
+	if !in_edit_mode || decklist_form.get_slip(card_data).global_position.y < DECKLIST_FORM_MAX_Y - decklist_form.SLIP_MARGIN.y / 2:
 		return;
 	if decklist_form.referenced_card == null || !is_currently_referenced:
 		set_reference(card_data);
@@ -298,7 +299,8 @@ func find_cards() -> void:
 	if !in_edit_mode:
 		return;
 	unspawn_cards();
-	catalogue_cards = get_filtered_cards() if has_deck_master() \
+	catalogue_cards = get_filtered_cards() if has_deck_master() or \
+		decklist_form.referenced_card != null or card_filters.is_filtering() \
 		else all_cards.filter(System.CardData.is_deck_master);
 	catalogue_layer_max_y = -CARD_CATALOGUE_MARGINS.y * \
 		((catalogue_cards.size() + CARD_CATALOGUE_COLUMNS - 1) / CARD_CATALOGUE_COLUMNS - CARD_CATALOGUE_ROWS);
@@ -307,7 +309,9 @@ func find_cards() -> void:
 	update_clear_filters_button();
 
 func get_filtered_cards() -> Array:
-	var deckmaster_legal_cards : Array = all_cards.filter(func(card : CardData): return System.CardData.can_be_with_deckmaster(card, chosen_deck_master));
+	var deckmaster_legal_cards : Array = \
+		all_cards.filter(func(card : CardData): return System.CardData.can_be_with_deckmaster(card, chosen_deck_master)) \
+		if has_deck_master() else all_cards;
 	return deckmaster_legal_cards.filter(func(card : CardData): 
 		return System.CardData.is_referenced_by(card, decklist_form.referenced_card)) \
 		if decklist_form.referenced_card != null else filter_by_filters(deckmaster_legal_cards);
@@ -524,7 +528,7 @@ func _on_search_bar_submit_message(message : String) -> void:
 		update_clear_filters_button();
 
 func has_filters() -> bool:
-	return search_string.length() || decklist_form.referenced_card != null;
+	return search_string.length() || decklist_form.referenced_card != null || card_filters.is_filtering();
 
 func update_clear_filters_button() -> void:
 	clear_filters_active_sprite.visible = has_filters();
@@ -644,5 +648,6 @@ func on_new_deck() -> void:
 
 func on_submit_filters(filters : CardFilters) -> void:
 	card_filters = filters;
+	update_clear_filters_button();
 	decklist_filters.on_close();
 	find_cards();

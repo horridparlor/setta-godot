@@ -220,6 +220,7 @@ func to_json() -> Dictionary:
 		"card_name": card_name,
 		"display_name": display_name,
 		"normalized_name": normalized_name,
+		"deck": deck,
 		"is_ace": is_ace,
 		"card_type": card_type,
 		"card_class": card_class,

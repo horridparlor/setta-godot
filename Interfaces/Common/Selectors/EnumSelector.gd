@@ -10,5 +10,8 @@ func init(label_message : String, new_options : Dictionary, default = null, pres
 func get_chosen() -> EnumOption:
 	return chosen_option;
 
+func get_value():
+	return get_chosen().value;
+
 func clear() -> void:
 	pass;

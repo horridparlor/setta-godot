@@ -7,6 +7,7 @@ const Debug : GDScript = preload("res://Scripts/System/Debug.gd");
 const Decklist : GDScript = preload("res://Scripts/System/Decklist.gd");
 const DecklistBlock : GDScript = preload("res://Scripts/System/DecklistBlock.gd");
 const Display : int = 1;
+const Enums : GDScript = preload("res://Scripts/System/Enums.gd");
 const Floats : GDScript = preload("res://Scripts/System/Floats.gd");
 const Image_ : GDScript = preload("res://Scripts/System/Image.gd");
 const Ints : GDScript = preload("res://Scripts/System/Ints.gd");
