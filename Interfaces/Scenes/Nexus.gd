@@ -22,6 +22,7 @@ const PAGE_BUTTONS_SLIDE_MIN_SPEED_UP : float = 0;
 const PAGE_BUTTONS_SLIDE_SPEED_DOWN : float = 1;
 const PAGE_BUTTONS_SLIDE_MIN_SPEED_DOWN : float = 200;
 
+var is_active : bool;
 var active_page : NexusPage;
 var previous_page : NexusPage;
 var is_moving_pages : bool;
@@ -33,3 +34,18 @@ var page_buttons_hidden : bool;
 
 func on_toast(message : String, theme : SystemEnums.ToastTheme = SystemEnums.ToastTheme.SUCCESS) -> void:
 	emit_signal("toast", message, theme);
+
+func on_toast_warning(message : String) -> void:
+	on_toast(message, SystemEnums.ToastTheme.WARNING);
+
+func on_toast_error(message : String) -> void:
+	on_toast(message, SystemEnums.ToastTheme.ERROR);
+
+func toggle_active(value : bool = true) -> void:
+	is_active = value;
+	if System.Instance.exists(active_page):
+		active_page.toggle_active(is_active);
+	on_toggle_active();
+
+func on_toggle_active() -> void:
+	pass;

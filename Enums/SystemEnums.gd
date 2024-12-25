@@ -165,7 +165,7 @@ static func build_icon_path(size : IconSize, folder_path : String) -> String:
 
 enum ToastTheme {
 	SUCCESS,
-	FAILURE,
+	ERROR,
 	WARNING
 }
 

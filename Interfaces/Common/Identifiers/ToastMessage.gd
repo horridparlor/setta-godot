@@ -27,7 +27,7 @@ func get_theme_path(theme : SystemEnums.ToastTheme) -> String:
 	match theme:
 		SystemEnums.ToastTheme.SUCCESS:
 			return SUCCESS_LOAD_THEME;
-		SystemEnums.ToastTheme.FAILURE:
+		SystemEnums.ToastTheme.ERROR:
 			return FAILURE_LOAD_THEME;
 		SystemEnums.ToastTheme.WARNING:
 			return WARNING_LOAD_THEME;

@@ -40,7 +40,7 @@ static func get_random_deck(
 static func set_decklists_from_json(source : Array) -> void:
 	var decklists : Dictionary;
 	for decklist in source:
-		decklists[decklist.decklistId] = decklist;
+		decklists[int(decklist.decklistId)] = decklist;
 	System.decklists = decklists;
 	System.Json.write({"decklists": source}, SystemEnums.SaveFilePath[SystemEnums.SaveFile.DECKLISTS]);
 

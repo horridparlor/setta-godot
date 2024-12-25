@@ -130,7 +130,7 @@ func _on_http_response(request : OperationRequest, operation : RequestEnums.Oper
 				gameplay.init();
 		RequestEnums.Operation.GET_DECKLISTS:
 			if response.has("error"):
-				on_toast(response.error, SystemEnums.ToastTheme.FAILURE);
+				on_toast(response.error, SystemEnums.ToastTheme.ERROR);
 				return;
 			System.Decklist.set_decklists_from_json(response.decklists);
 

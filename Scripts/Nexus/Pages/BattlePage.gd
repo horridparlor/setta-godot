@@ -15,4 +15,6 @@ func on_play_button_pressed() -> void:
 	emit_signal("enter_game");
 	
 func on_logout() -> void:
+	if !is_active:
+		return;
 	emit_signal("logout");

@@ -26,6 +26,9 @@ func move_pages(delta : float) -> void:
 		is_moving_pages = false;
 		previous_page.queue_free();
 
+func on_toggle_active() -> void:
+	page_buttons.toggle_active(is_active);
+
 func move_page_buttons(delta : float) -> void:
 	page_buttons.position = System.Vectors.slide_towards(page_buttons.position,
 		page_buttons_target_position,
@@ -100,7 +103,11 @@ func on_logout() -> void:
 	emit_signal("logout");
 
 func on_play() -> void:
-	emit_signal("enter_game");
+	if !System.decklists.has(System.chosen_decklist_id) || !System.decklists[System.chosen_decklist_id].isValid:
+		on_toast_error("Invalid Decklist");
+		return;
+	toggle_active(false);
+	#emit_signal("enter_game");
 
 func on_edit_deck() -> void:
 	var decks_page : DecksPage = active_page;

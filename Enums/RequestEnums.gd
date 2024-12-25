@@ -11,6 +11,7 @@ enum RequestType {
 enum Operation {
 	AUTHENTICATE,
 	DELETE_DECKLIST,
+	FIND_MATCH,
 	GET_CARDS,
 	GET_DECKLISTS,
 	FETCH_ARTWORK,
@@ -22,6 +23,7 @@ enum Operation {
 static var OperationRequestType = {
 	Operation.AUTHENTICATE: RequestType.POST,
 	Operation.DELETE_DECKLIST: RequestType.DELETE,
+	Operation.FIND_MATCH: RequestType.POST,
 	Operation.GET_CARDS: RequestType.GET,
 	Operation.GET_DECKLISTS: RequestType.GET,
 	Operation.FETCH_ARTWORK: RequestType.FETCH,
@@ -39,13 +41,17 @@ static func getMethod(operation: Operation) -> HTTPClient.Method:
 			return HTTPClient.Method.METHOD_DELETE;
 	return HTTPClient.Method.METHOD_GET;
 
+const GAMEPLAY_ENDPOINT_FOLDER = 'gameplay/';
+
 const AUTHENTICATE_ENDPOINT = 'authenticate';
 const DECKLIST_ENDPOINT = 'decklist';
 const DECKLISTS_ENDPOINT = 'decklists';
+const FIND_MATCH_ENDPOINT = GAMEPLAY_ENDPOINT_FOLDER + 'find-match';
 
 static var Endpoint = {
 	Operation.AUTHENTICATE: AUTHENTICATE_ENDPOINT,
 	Operation.DELETE_DECKLIST: DECKLIST_ENDPOINT,
+	Operation.FIND_MATCH: FIND_MATCH_ENDPOINT,
 	Operation.GET_CARDS: 'cards?isGame=1',
 	Operation.GET_DECKLISTS: DECKLISTS_ENDPOINT,
 	Operation.FETCH_ARTWORK: 'small-art/',

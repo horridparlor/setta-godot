@@ -19,7 +19,7 @@ func on_toast(message : String, theme : SystemEnums.ToastTheme = SystemEnums.Toa
 	emit_signal("toast", message, theme);
 
 func on_toast_failure(message : String) -> void:
-	on_toast(message, SystemEnums.ToastTheme.FAILURE);
+	on_toast(message, SystemEnums.ToastTheme.ERROR);
 
 func on_toast_warning(message : String) -> void:
 	on_toast(message, SystemEnums.ToastTheme.WARNING);
