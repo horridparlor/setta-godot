@@ -59,8 +59,8 @@ static func update_middle_frame(card : GameplayCard) -> void:
 static func update_monster_visuals(card : GameplayCard) -> void:
 	var card_data : CardData = card.card_data;
 	var is_deck_master : bool = System.CardData.is_deck_master(card_data);
+	card.level_label.text = str(card_data.monster_data.level);
 	if System.CardData.is_monster(card_data):
-		card.level_label.text = str(card_data.monster_data.level);
 		card.level_sprite.texture = load(card.DECK_MASTER_LEVEL_FRAME_PATH if is_deck_master else card.LEVEL_FRAME_PATH);
 		card.atk_label.text = str(card_data.monster_data.atk);
 		card.def_label.text = str(card_data.monster_data.def);

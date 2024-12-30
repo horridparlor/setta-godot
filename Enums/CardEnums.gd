@@ -8,8 +8,8 @@ enum CardType {
 }
 
 const JSON_TYPE_MONSTER : String = "Monster";
-const JSON_TYPE_SPELL : String = "Spell";
-const JSON_TYPE_TRAP : String = "Trap";
+const JSON_TYPE_SPELL : String = "Skill";
+const JSON_TYPE_TRAP : String = "Trick";
 
 static var CardTypeName = {
 	CardType.MONSTER: JSON_TYPE_MONSTER,

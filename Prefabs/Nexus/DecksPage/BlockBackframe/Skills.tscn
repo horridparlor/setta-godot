@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bqjwolnv7h87j"]
 
-[ext_resource type="StyleBox" uid="uid://jgu4d7rjtvaq" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistBlock/Spells.tres" id="1_wk03o"]
+[ext_resource type="StyleBox" uid="uid://jgu4d7rjtvaq" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistBlock/Skills.tres" id="1_jvse1"]
 
 [node name="Frame" type="Panel"]
 anchors_preset = 8
@@ -14,4 +14,4 @@ offset_right = 340.0
 offset_bottom = 35.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("1_wk03o")
+theme_override_styles/panel = ExtResource("1_jvse1")

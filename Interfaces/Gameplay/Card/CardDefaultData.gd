@@ -154,8 +154,8 @@ func has_continuous_effect(json_data : Dictionary) -> bool:
 	return json_data.cardEffects.cost.costType == CardEnums.JSON_COST_TYPE_CONTINUOUS;
 
 func eat_cost_text(json_data : Dictionary) -> String:
-	var cost_prefix : String = "Pendulum>>" \
-		if json_data.supertype == CardEnums.JSON_SUPERTYPE_PENDULUM else "Continuous:" \
+	var cost_prefix : String = "Trigger>>" \
+		if json_data.cardType == CardEnums.JSON_TYPE_TRAP else "Continuous:" \
 		if has_continuous_effect(json_data) else "Cost:";
 	var raw : String = translate_encodings(json_data.costText);
 	return "[i]%s [/i]%s"\

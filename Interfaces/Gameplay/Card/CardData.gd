@@ -29,6 +29,7 @@ func _init(
 	zone = get_starting_deck();
 
 func eat_default(json_data : Dictionary) -> void:
+	var is_monster = System.CardData.is_monster(self);
 	errata_of_id = json_data.errata_of_id;
 	if !errata_of_id:
 		errata_of_id = card_id;
@@ -48,11 +49,10 @@ func eat_default(json_data : Dictionary) -> void:
 	materials = CardMaterials.from_list(json_data.materials);
 	text_sizes = CardTextSizes.from_list(json_data.text_sizes);
 	effects_text = add_card_names(json_data.effects_text);
-	if System.CardData.is_monster(self):
-		level = json_data.level;
-		atk = json_data.atk;
-		def = json_data.def;
-		monster_data = MonsterData.new(level, atk, def);
+	level = json_data.level;
+	atk = json_data.atk if is_monster else 0;
+	def = json_data.def if is_monster else 0;
+	monster_data = MonsterData.new(level, atk, def);
 	max_copies = System.CardData.get_max_copies(self);
 
 func add_card_names(effects_text : String) -> String:

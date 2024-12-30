@@ -107,7 +107,7 @@ func on_play() -> void:
 		on_toast_error("Invalid Decklist");
 		return;
 	toggle_active(false);
-	#emit_signal("enter_game");
+	emit_signal("enter_game");
 
 func on_edit_deck() -> void:
 	var decks_page : DecksPage = active_page;

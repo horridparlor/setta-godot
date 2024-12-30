@@ -3,7 +3,7 @@
 [ext_resource type="StyleBox" uid="uid://b1ddbvuydh6pm" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistSlip/Pendulum.tres" id="1_o0f7v"]
 
 [sub_resource type="Gradient" id="Gradient_ek4tw"]
-colors = PackedColorArray(0.878431, 0.780392, 0.105882, 1, 0.298039, 0.721569, 0.443137, 1)
+colors = PackedColorArray(0.92549, 0.803922, 0.117647, 1, 0.505882, 0.792157, 0.427451, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_4731n"]
 gradient = SubResource("Gradient_ek4tw")

@@ -184,11 +184,10 @@ static func sort_by_card_type(card_a : CardDefaultData, card_b : CardDefaultData
 		return card_a.subtype < card_b.subtype;
 	if card_a.supertype != card_b.supertype:
 		return card_a.supertype < card_b.supertype;
-	if is_monster(card_a):
-		monster_sort_a = get_monster_sort_index(card_a);
-		monster_sort_b = get_monster_sort_index(card_b);
-		if monster_sort_a != monster_sort_b:
-			return monster_sort_a < monster_sort_b;
+	monster_sort_a = get_monster_sort_index(card_a);
+	monster_sort_b = get_monster_sort_index(card_b);
+	if monster_sort_a != monster_sort_b:
+		return monster_sort_a < monster_sort_b;
 	return sort_by_card_name(card_a, card_b);
 
 static func in_side_deck(card_data : CardData) -> bool:

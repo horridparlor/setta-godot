@@ -4,7 +4,7 @@ extends GameplayCard
 @onready var effect_label: RichTextLabel = $GlowNode/Stats/EffectText;
 @onready var artwork: Sprite2D = $GlowNode/InnerFrame/ArtFrame/Artwork;
 @onready var name_label : RichTextLabel = $GlowNode/Stats/CardName;
-@onready var level_label : Label = $GlowNode/Monster/Level/LevelFrame/Level;
+@onready var level_label : Label = $GlowNode/LevelFrame/Level;
 @onready var atk_label : Label = $GlowNode/Monster/Attack/AttackFrame/Atk;
 @onready var def_label : Label = $GlowNode/Monster/Defense/DefenseFrame/Def;
 @onready var attribute_sprite : Sprite2D = $GlowNode/Attribute/AttributeFrame/Attribute;
@@ -14,7 +14,7 @@ extends GameplayCard
 @onready var modal_layer : Node2D = $ModalLayer;
 @onready var copiable_name : LineEdit = $GlowNode/Stats/CopiableName;
 @onready var monster_stats_layer : Node2D = $GlowNode/Monster;
-@onready var level_sprite : Sprite2D = $GlowNode/Monster/Level/LevelFrame;
+@onready var level_sprite : Sprite2D = $GlowNode/LevelFrame;
 @onready var ace_badge : Node2D = $GlowNode/AceBadge;
 @onready var deck_master_primary_class_sprite : Sprite2D = $GlowNode/Monster/DeckMasterClasses/PrimaryClass;
 @onready var deck_master_secondary_class_sprite : Sprite2D = $GlowNode/Monster/DeckMasterClasses/SecondaryClass;

@@ -6,7 +6,7 @@
 [node name="MiddleFrame" type="Node2D"]
 
 [node name="Polygon2" type="Polygon2D" parent="."]
-color = Color(0.701961, 0.380392, 0.886275, 1)
+color = Color(0.741176, 0.443137, 0.890196, 1)
 texture_rotation = 1.5708
 polygon = PackedVector2Array(-202, -284, 202, -284, 202, 284, -202, 284, -202, 102, -188, 102, 188, 102, 188, -146, 91, -146, 62, -222, -188, -222, -188, 102, -202, 102)
 

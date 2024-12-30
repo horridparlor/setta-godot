@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://evuvgwmr6d3s"]
 
 [ext_resource type="StyleBox" uid="uid://c5jpuc2kmq0st" path="res://Styles/Gameplay/CardFragments/FixLayer/Effect.tres" id="1_40lhv"]
-[ext_resource type="StyleBox" uid="uid://yeld5yrj8p67" path="res://Styles/Gameplay/CardFragments/MiddleFrame/EffectFrame/Spell.tres" id="2_auu4l"]
+[ext_resource type="StyleBox" uid="uid://yeld5yrj8p67" path="res://Styles/Gameplay/CardFragments/MiddleFrame/EffectFrame/Skill.tres" id="2_auu4l"]
 
 [sub_resource type="Gradient" id="Gradient_wu4lm"]
-colors = PackedColorArray(0.878431, 0.780392, 0.105882, 1, 0.298039, 0.721569, 0.443137, 1)
+colors = PackedColorArray(0.92549, 0.803922, 0.117647, 1, 0.505882, 0.792157, 0.427451, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_1a5e5"]
 gradient = SubResource("Gradient_wu4lm")
