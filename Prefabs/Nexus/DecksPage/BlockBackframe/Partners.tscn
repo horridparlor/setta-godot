@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://4k55x8atbh30"]
 
-[ext_resource type="StyleBox" uid="uid://da1ru6wpd2c7a" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistBlock/Monsters.tres" id="1_qdcak"]
+[ext_resource type="StyleBox" uid="uid://da1ru6wpd2c7a" path="res://Styles/Nexus/DecksPage/DecklistForm/DecklistBlock/Partners.tres" id="1_qdcak"]
 
 [node name="Frame" type="Panel"]
 anchors_preset = 8

@@ -47,8 +47,8 @@ enum DecklistBlock {
 }
 
 static var DecklistBlockNames = {
-	NexusEnums.DecklistBlock.DECK_MASTER : "Deck Master",
-	NexusEnums.DecklistBlock.MONSTER : "Monsters",
+	NexusEnums.DecklistBlock.DECK_MASTER : "Queen",
+	NexusEnums.DecklistBlock.MONSTER : "Partners",
 	NexusEnums.DecklistBlock.SPELL : "Skills",
 	NexusEnums.DecklistBlock.TRAP : "Tricks",
 	NexusEnums.DecklistBlock.EXTRA : "Lovers",
