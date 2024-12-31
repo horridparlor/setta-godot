@@ -548,14 +548,14 @@ func _on_save_button_pressed() -> void:
 
 func copy_deck() -> void:
 	if !has_deck_master():
-		on_toast_warning("No Deck Master");
+		on_toast_warning("No Queen");
 		return;
 	spawn_new_decklist(chosen_decklist.get_json());
 	on_toast("Deck copied");
 
 func save_deck() -> void:
 	if !has_deck_master():
-		on_toast_warning("No Deck Master");
+		on_toast_warning("No Queen");
 		return;
 	decklist_meta_data.force_unsubmitted_updates();
 	chosen_decklist.eat_cards(decklist_form);
@@ -644,7 +644,7 @@ func on_new_deck() -> void:
 	if !chosen_decklist.is_new() || !chosen_decklist.is_empty():
 		spawn_new_decklist();
 	on_edit();
-	on_toast("Choose Deck Master");
+	on_toast("Choose Queen");
 
 func on_submit_filters(filters : CardFilters) -> void:
 	card_filters = filters;
