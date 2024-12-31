@@ -28,7 +28,7 @@ func update_label() -> void:
 	var is_countless : bool = count == 0;
 	var is_full_main_deck : bool = is_deck_master && count == System.Rules.MAIN_DECK_SIZE;
 	label.text = COUNTLESS_LABEL_MESSAGE % block_name if is_countless \
-		else FULL_LABEL_TEXT if is_full_main_deck else ONLY_COUNT_LABEL_MESSAGE % [count] \
+		else FULL_LABEL_TEXT if is_full_main_deck else ONLY_COUNT_LABEL_MESSAGE % [count, System.Rules.MAIN_DECK_SIZE] \
 		if is_deck_master \
 		else LABEL_MESSAGE % [block_name, count];
 	label.position.y = LABEL_POSITION_COUNTLESS if is_countless || is_full_main_deck else LABEL_POSITION_WITH_COUNT;
