@@ -51,6 +51,6 @@ static var DecklistBlockNames = {
 	NexusEnums.DecklistBlock.MONSTER : "Monsters",
 	NexusEnums.DecklistBlock.SPELL : "Skills",
 	NexusEnums.DecklistBlock.TRAP : "Tricks",
-	NexusEnums.DecklistBlock.EXTRA : "Extra",
+	NexusEnums.DecklistBlock.EXTRA : "Lovers",
 	NexusEnums.DecklistBlock.SIDE : "Side"
 };

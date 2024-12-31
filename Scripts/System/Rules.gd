@@ -1,5 +1,5 @@
-const MAIN_DECK_SIZE : int = 60;
-const EXTRA_DECK_SIZE : int = 15;
+const MAIN_DECK_SIZE : int = 50;
+const EXTRA_DECK_SIZE : int = 8;
 const SIDE_DECK_SIZE : int = 15;
 const MAX_COPIES : int = 3;
 
