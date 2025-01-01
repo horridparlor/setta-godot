@@ -1,8 +1,8 @@
 const REQUEST_PREFIX : String = "http://";
-const DEFAULT_SERVER_IP : String = "127.0.0.1";
+const DEFAULT_SERVER_IP : String = "cinder.fi";
 const PORT : String = ":8000/";
 const API_PATH : String = PORT + "api/user/";
-const ASSETS_PATH : String = PORT + "setta-assets/";
+const ASSETS_PATH : String = PORT + "cinder-assets/";
 const SERVER_CONFIGURATION_FILE_NAME : String = "server-configuration";
 
 static func init() -> void:

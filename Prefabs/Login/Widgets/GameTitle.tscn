@@ -18,25 +18,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -174.0
-offset_top = -63.0
-offset_right = 50.0
-offset_bottom = 36.0
+offset_left = -261.0
+offset_top = -55.0
+offset_right = 209.0
+offset_bottom = 44.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_glfe7")
-theme_override_font_sizes/font_size = 80
-text = "Setta"
+theme_override_font_sizes/font_size = 56
+text = "Cinder Hearts"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ValuePromise" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -197.5
-offset_top = 40.0
-offset_right = 197.5
-offset_bottom = 80.0
+offset_left = -220.0
+offset_top = 27.0
+offset_right = 175.0
+offset_bottom = 67.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("3_imin5")
 theme_override_font_sizes/font_size = 32
@@ -46,5 +48,5 @@ text = "Competitive Card Game"
 script = ExtResource("4_icluv")
 
 [node name="LevelFrame" type="Sprite2D" parent="GlowNode"]
-position = Vector2(116, -20)
+position = Vector2(247, 7)
 texture = ExtResource("4_ol12c")

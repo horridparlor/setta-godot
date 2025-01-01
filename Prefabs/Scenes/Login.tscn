@@ -91,7 +91,7 @@ offset_right = 1061.0
 offset_bottom = -269.0
 
 [node name="GameTitle" parent="." instance=ExtResource("7_hpoy1")]
-offset_left = 728.0
-offset_top = -391.0
-offset_right = 728.0
-offset_bottom = -391.0
+offset_left = 643.0
+offset_top = -423.0
+offset_right = 643.0
+offset_bottom = -423.0
