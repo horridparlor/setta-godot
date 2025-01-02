@@ -25,6 +25,10 @@ SystemEnums="*res://Enums/SystemEnums.gd"
 RequestEnums="*res://Enums/RequestEnums.gd"
 NexusEnums="*res://Enums/NexusEnums.gd"
 
+[debug]
+
+file_logging/enable_file_logging=true
+
 [display]
 
 window/size/viewport_width=1920

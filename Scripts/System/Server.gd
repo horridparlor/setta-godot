@@ -6,6 +6,7 @@ const SERVER_CONFIGURATION_FILE_NAME : String = "server-configuration";
 
 static func init() -> void:
 	var json_data : Dictionary = System.Json.read(SERVER_CONFIGURATION_FILE_NAME);
+	System.Steam_.steam_init();
 	if (System.Json.is_error(json_data)):
 		return;
 	System.server_ip = json_data.server_ip;

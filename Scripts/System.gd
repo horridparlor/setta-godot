@@ -17,6 +17,7 @@ const Random : GDScript = preload("res://Scripts/System/Random.gd");
 const Rules : GDScript = preload("res://Scripts/System/Rules.gd");
 const Scale : GDScript = preload("res://Scripts/System/Scale.gd");
 const Server : GDScript = preload("res://Scripts/System/Server.gd");
+const Steam_ : GDScript = preload("res://Scripts/System/Steam.gd");
 const String_ : GDScript = preload("res://Scripts/System/String.gd");
 const Toast : GDScript = preload("res://Scripts/System/Toast.gd");
 const Vectors : GDScript = preload("res://Scripts/System/Vectors.gd");
@@ -34,6 +35,7 @@ var auth_data : AuthData;
 var server_ip : String = Server.DEFAULT_SERVER_IP;
 var random : RandomNumberGenerator = RandomNumberGenerator.new();
 var debug_string : String;
+var steam_data : SteamData;
 
 static func wait(delay : float, parent : Node2D) -> void:
 	await parent.get_tree().create_timer(delay).timeout;

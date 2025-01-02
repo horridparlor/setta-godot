@@ -1426,7 +1426,7 @@ cache/0/32/0/glyphs/72/size = Vector2(18, 20)
 cache/0/32/0/glyphs/72/uv_rect = Rect2(41, 1, 18, 20)
 cache/0/32/0/glyphs/72/texture_idx = 0
 
-[sub_resource type="Image" id="Image_yr0p6"]
+[sub_resource type="Image" id="Image_ofwsb"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////YP///2H///8A////AP///wD///8A////AP///wD///8A////AP///2D///9h////AP///wD///8A////YP///7////+/////Yf///wD///8A////AP///wD///8A////AP///2D///+/////v////2H///8A////AP///2H///+/////v////7////9h////AP///wD///8A////AP///2D///+/////v////7////9g////AP///wD///8A////Yf///7////+/////v////2H///8A////AP///2D///+/////v////7////9g////AP///wD///8A////AP///wD///9h////v////7////+/////Yf///2D///+/////v////7////9g////AP///wD///8A////AP///wD///8A////AP///2H///+/////v////7////+/////v////7////9g////AP///wD///8A////AP///wD///8A////AP///wD///8A////Yf///7////+/////v////7////9g////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///2D///+/////v////7////+/////Yf///wD///8A////AP///wD///8A////AP///wD///8A////AP///2D///+/////v////7////+/////v////7////9h////AP///wD///8A////AP///wD///8A////AP///2D///+/////v////7////9g////Yf///7////+/////v////2H///8A////AP///wD///8A////AP///2D///+/////v////7////9g////AP///wD///9h////v////7////+/////Yf///wD///8A////AP///2D///+/////v////7////9g////AP///wD///8A////AP///2H///+/////v////7////9h////AP///wD///9h////v////7////9g////AP///wD///8A////AP///wD///8A////Yf///7////+/////YP///wD///8A////AP///2H///9g////AP///wD///8A////AP///wD///8A////AP///wD///9h////YP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -1436,7 +1436,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_sgm6l"]
-image = SubResource("Image_yr0p6")
+image = SubResource("Image_ofwsb")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6pdum"]
 content_margin_left = 4.0
@@ -1487,7 +1487,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[sub_resource type="Image" id="Image_rchwt"]
+[sub_resource type="Image" id="Image_hqt0k"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AbOzsxS8vLwT////Af///wD///8A////AP///wCzs7MUtLS0QLS0tEC8vLwT////AP///wD///8A////ALy8vBO0tLRAtLS0QLy8vBP///8A////AP///wD///8A////Aby8vBO8vLwT////Af///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -1497,9 +1497,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_i6dwu"]
-image = SubResource("Image_rchwt")
+image = SubResource("Image_hqt0k")
 
-[sub_resource type="Image" id="Image_ap6ph"]
+[sub_resource type="Image" id="Image_rk8q2"]
 data = {
 "data": PackedByteArray("tbW1MLOzszLV1dUG////AP///wD///8AtLS0QLS0tECzs7MytLS0QLS0tDbV1dUG////AP///wC0tLRAtLS0QMzMzAWysrI1tLS0QLS0tDbV1dUG////ALS0tEC0tLRA////AMzMzAW2trY0tLS0QLS0tDP///8AtLS0QLS0tED///8A1dXVBrS0tDa0tLRAs7OzMv///wC0tLRAtLS0QNXV1Qa0tLQ2tLS0QLe3tzWqqqoG////ALS0tEC0tLRAtra2MbS0tEC3t7c1qqqqBv///wD///8AtLS0QLS0tEC1tbUptra2Maqqqgb///8A////AP///wC0tLRAtLS0QA=="),
 "format": "RGBA8",
@@ -1509,7 +1509,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_0wj84"]
-image = SubResource("Image_ap6ph")
+image = SubResource("Image_rk8q2")
 
 [resource]
 default_font = ExtResource("1_t484n")
