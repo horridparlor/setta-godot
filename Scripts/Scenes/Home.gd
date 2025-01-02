@@ -50,7 +50,7 @@ func close_login() -> void:
 
 func initialize_nexus() -> void:
 	disable_loading_icon();
-	if System.cards.is_empty():
+	if !has_fetched_cards:
 		fetch_cards();
 	if System.decklists.is_empty():
 		fetch_decklists();
@@ -111,6 +111,7 @@ func load_cards() -> void:
 	fetch_cards();
 
 func fetch_cards() -> void:
+	has_fetched_cards = true;
 	System.Server.request(RequestEnums.Operation.GET_CARDS, {'isGame': true}, self);
 
 func _on_http_response(request : OperationRequest, operation : RequestEnums.Operation, response : Dictionary) -> void:

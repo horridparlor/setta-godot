@@ -1,8 +1,7 @@
 const REQUEST_PREFIX : String = "http://";
 const DEFAULT_SERVER_IP : String = "cinder.fi";
-const PORT : String = ":8000/";
-const API_PATH : String = PORT + "api/user/";
-const ASSETS_PATH : String = PORT + "cinder-assets/";
+const API_PATH : String = "/api/user/";
+const ASSETS_PATH : String = "/cinder-assets/";
 const SERVER_CONFIGURATION_FILE_NAME : String = "server-configuration";
 
 static func init() -> void:

@@ -19,6 +19,7 @@ var loading_icon : LoadingIcon;
 var toast_messages : Dictionary;
 var toast_y : float;
 var is_moving_toasts : bool;
+var has_fetched_cards : bool;
 
 var cheat_deal_regex : RegEx = RegEx.new();
 var cheat_draw_regex : RegEx = RegEx.new();

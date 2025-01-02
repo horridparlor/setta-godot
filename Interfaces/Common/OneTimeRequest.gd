@@ -8,21 +8,21 @@ var parent : Node;
 var leave_raw : bool;
 var original_request : OperationRequest;
 
-func init(request : OperationRequest, new_parent : Node, _leave_raw : bool) -> void:
-	original_request = request;
+func init(op_request : OperationRequest, new_parent : Node, _leave_raw : bool) -> void:
+	original_request = op_request;
 	leave_raw = _leave_raw;
 	timeout = TIMEOUT_TIME;
-	if System.Debug.REQUESTS and (System.Debug.REQUESTS_FILTER == request.operation):
-		request.debug();
+	if System.Debug.REQUESTS and (System.Debug.REQUESTS_FILTER == op_request.operation):
+		op_request.debug();
 	add_parent(new_parent)
-	operation = request.operation;
+	operation = op_request.operation;
 	self.request_completed.connect(self.complete_request);
-	request(request.getEndpoint(), get_headers(), request.method, JSON.stringify(request.params));
+	request(op_request.get_endpoint(), get_headers(), op_request.method, JSON.stringify(op_request.params));
 
 func get_headers() -> PackedStringArray:
 	return [
-		"Authorization: Bearer " + System.auth_data.authToken if System.auth_data else ""
-	];
+		"Authorization: Bearer " + System.auth_data.authToken
+	] if System.auth_data else [];
 
 func add_parent(new_parent : Node) -> void:
 	parent = new_parent;
@@ -33,6 +33,8 @@ func complete_request(result : int, response_code : int, headers : PackedStringA
 	if !leave_raw:
 		response = System.Server.parse_response(body);
 	response = parse_response(response);
+	if System.Debug.RESPONSES and (System.Debug.REQUESTS_FILTER == original_request.operation):
+		printt(result, response_code, headers, response);
 	if response.is_empty():
 		response = {
 			"error": "Server could not be reached {%s}" % [System.server_ip]

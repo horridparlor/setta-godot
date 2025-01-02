@@ -16,7 +16,6 @@ static func load_artwork(card : GameplayCard) -> void:
 static func fetch_artwork(card : GameplayCard) -> void:
 	if card.artwork.texture == null:
 		toggle_loading_icon(card);
-	print(get_artwork_fetch_path(card));
 	System.Server.request(RequestEnums.Operation.FETCH_ARTWORK, {}, card, get_artwork_fetch_path(card), {
 		"card_name": System.CardData.get_serialized_name(card.card_data)
 	});
